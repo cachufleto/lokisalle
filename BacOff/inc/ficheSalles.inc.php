@@ -5,7 +5,7 @@ if(!isset($_SESSION['user'])){
 }
 
 // extraction des données SQL
-if( modCheck('_formulaire', $_id, 'membres') ){
+if( modCheck('_formulaire', $_id, 'salles') ){
 
 	// traitement POST du formulaire
 	$msg = ($_valider)? postCheck('_formulaire', TRUE) : '';
@@ -26,7 +26,7 @@ if( modCheck('_formulaire', $_id, 'membres') ){
 			$form = formulaireAfficherMod($_formulaire); 
 		
 		} elseif(!empty($_POST['valide']) && $_POST['valide'] == 'Annuler'){
-				header('Location:?nav=users');
+				header('Location:?nav=gestionSalles&pos=P-'.$position.'');
 				exit();	
 		} else {
 			

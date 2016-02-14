@@ -1,0 +1,12 @@
+<!-- V 2.3 : site de base -->
+<!-- V 2.4.1 : mise ne place du liens d'inscription dans la page de connexion -->
+<!-- V 2.4.2 : Correction du maintiens de la langue de navigation -->
+<!-- V 2.4.3 : Mise en cookie le pseudo -->
+<!-- V 2.4.4 : Changement de la table membre par membres -->
+<!-- V 2.4.5 : ajout des onglets menu pour la gestion des sales -->
+<!-- V 2.5.1 : Upload image dans photo, formulaire salle -->
+<!-- V 2.8.1 : liste des sales, insertion des nouvelles sales -->
+<!-- V 2.8.2 : Fiches de salles front -->
+<!-- BUG : enregistrement du fichier si formulaire en erreur -->
+<!-- BUG : fonctionnement ADMIN	 -->
+V 2.8.2

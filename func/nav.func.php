@@ -6,20 +6,24 @@
 # RETURN Boolean
 function listeMenu(){
 	
-	global $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin;
-	
+	global $_trad, $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin, $navAdmin, $navFooter;
+
+	// control du menu principal
+	$_liste = (utilisateurEstAdmin())? $_reglesAdmin : ((utilisateurEstConnecte())? $_reglesMembre : $_reglesAll);
+	foreach($_liste as $key)
+		if(!isset($_pages[$key])) 
+			exit($_trad['laRubrique'] . $key . (utilisateurEstAdmin())? $_trad['pasDansMenuAdmin'] : ((utilisateurEstConnecte())? $_trad['pasDansMenuMembre'] : $_trad['pasDansMenu']));
+
+	// ontrol du footer
+	foreach($navFooter as $key)
+		if(!isset($_pages[$key])) 
+			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuFooter']);
+
+	// control du menu administrateur
 	if(utilisateurEstAdmin())
-		foreach($_reglesAdmin as $key)
-			if(isset($_pages[$key])) $_pages[$key]['affiche'] = true;
-			else exit("La rubrique '$key' n'exsite pas dans le menu Admin!");
-	elseif(utilisateurEstConnecte())
-		foreach($_reglesMembre as $key)
-			if(isset($_pages[$key])) $_pages[$key]['affiche'] = true;
-			else exit("La rubrique '$key' n'exsite pas dans le menu des membres!");
-	else
-		foreach($_reglesAll as $key)
-			if(isset($_pages[$key])) $_pages[$key]['affiche'] = true;
-			else exit("La rubrique '$key' n'exsite pas dans le menu!");
+		foreach($navAdmin as $key)
+			if(!isset($_pages[$key])) 
+				exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuAdmin']);
 	return; 
 }
 
@@ -30,26 +34,33 @@ function listeMenu(){
 # [@_pages] => array('nav'...)
 # [@titre] => string titre de la page
 # RETURN string liste <li>...</li>
-function liste_nav(){
+function liste_nav($liste=''){
 	
-	global $_trad, $nav, $_pages, $titre;
+	global $_trad, $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
 	
 	$menu = '';
-	$titre = '';
-	
-	// generation de la liste de nav
-	foreach ($_pages as $item => $info){
-		if($info['affiche']) {
-			$active = ($item == $nav)? 'active' : '';
-			if(empty($titre) && ($item == $nav)) 
-				$titre = $info['titre'];
-			
-			$menu .= '
-			<li class="' . $active . '">
-			<a href="?nav='. $item .'">' . 
-			$_trad['nav'][$item] . '</a></li>';
-		}
+
+	if(empty($liste)){
+
+		$_liste = (utilisateurEstAdmin())? $_reglesAdmin : ((utilisateurEstConnecte())? $_reglesMembre : $_reglesAll);
+
+	} else {
+		// generation de la liste de nav
+		$_liste = ${$liste};
 	}
 	
+	// affichage pour affichage ou edition! 
+
+	$ADM = ($liste == 'navFooter' && preg_match('/BacOff/', $_SERVER['PHP_SELF']))? LINKADM : '';
+
+	// generation de la liste de nav
+	foreach ($_liste as $item){
+		$info = $_pages[$item];
+		$active = ($item == $nav)? 'active' : '';
+		$class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';		
+		$menu .= '
+		<li class="' . $active .' '. $class.'"><a href="'. $info['link'] . $ADM .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a></li>';
+	}
+
 	return $menu;
 }

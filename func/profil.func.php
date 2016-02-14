@@ -1,5 +1,5 @@
 <?php
-# FUNCTIONS Formulares
+# fonctions formulaires
 include_once FUNC . 'form.func.php';
 
 # Fonction formulaireValider()
@@ -9,19 +9,27 @@ include_once FUNC . 'form.func.php';
 function formulaireValider(){
 	
 	global $_trad, $_formulaire, $minLen;
-
+	
+	// control d'intrusion du membre
+	if($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){
+		//_debug($_formulaire, 'SQL');
+		return '<div class="alert">'.$_trad['erreur']['NULL'].'!!!!!</div>';
+	}
 	$msg = 	$erreur = false;
-	$sql_champs = $sql_Value = '';
+	$sql_set = '';
 	// active le controle pour les champs telephone et gsm
 	$controlTelephone = true;
+
+	$id_membre = $_formulaire['id_membre']['sql'];
 
 	foreach ($_formulaire as $key => $info){
 		
 		$label = $_trad['champ'][$key];
 		$valeur = (isset($info['valide']))? $info['valide'] : NULL;
 		
-		if('valide' != $key)
-			if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength'])  && !empty($valeur))
+		if('valide' != $key && 'id_membre' != $key){
+			
+			if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']) && !empty($valeur))
 			{
 
 				$erreur = true; 
@@ -29,7 +37,9 @@ function formulaireValider(){
 					': ' . $_trad['erreur']['doitContenirEntre'] . $minLen . 
 					' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
 
-			} elseif (testObligatoire($info) && empty($valeur)){
+			} 
+			
+			if ('vide' != testObligatoire($info) && !testObligatoire($info) && empty($valeur)){
 
 				$erreur = true; 
 				$_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
@@ -37,34 +47,18 @@ function formulaireValider(){
 			} else {
 
 				switch($key){
-					case 'pseudo': // il est obligatoire
-												
-						if (!testAlphaNumerique($valeur)) 
-						{
-							$erreur = true; 
-							$_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label. ' "' .$valeur. 
-								'", ' . $_trad['erreur']['aphanumeriqueSansSpace'];
-						
-						} else {
-
-							$sql = "SELECT pseudo FROM membres WHERE pseudo='$valeur'";
-							$membre = executeRequete ($sql); 
-							
-							// si la requete tourne un enregistreme, c'est que 'pseudo' est déjà utilisé en BDD.
-							if($membre->num_rows > 0) 
-							{
-								$erreur = true; 
-								$msg .= '<br/>' . $_trad['erreur']['pseudoIndisponble'];
-							}
-						}
-						
+					
+					case 'pseudo': 
+					case 'mdp': 
+					case 'id_membre':
+						// je ne fait riens
 					break;
 					
 					case 'email': // il est obligatoire
 
 						if (testFormatMail($valeur)) {
 							
-							$sql = "SELECT email FROM membres WHERE email='$valeur'";
+							$sql = "SELECT email FROM membres WHERE id_membre != ". $_formulaire['id_membre']['sql'] ." and email='$valeur'";
 							$membre = executeRequete($sql); 
 							
 							// si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
@@ -136,11 +130,20 @@ function formulaireValider(){
 								$erreur = true;
 								$_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label . 
 									': '.$_trad['erreur']['queDesChiffres'];
-							
 							}
 					
 						}
 						
+					break;
+					
+					case 'statut':
+
+						if(testADMunique($valeur, $id_membre)){
+								$erreur = true; 
+								$msg .= '<br/>' . $_trad['numAdmInsufisant'];
+								$_formulaire['statut']['valide'] = 'ADM';
+						}
+
 					break;
 					
 					default:
@@ -153,13 +156,13 @@ function formulaireValider(){
 						}
 					
 					}
-				
-				// Construction de la requettes
-				if(!empty($valeur)){
-					$sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-					$sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
-				}
 			}
+			// Construction de la requettes
+			// le mot de passe doit être traité differement
+		
+			$sql_set .= ((!empty($sql_set) && !empty($valeur))? ", " : "") . ((!empty($valeur))? "$key = '$valeur'" : '');
+				
+		}
 	}
 
 	// control sur les numero de telephones
@@ -176,10 +179,12 @@ function formulaireValider(){
 
 	}else{
 		
-		// insertion en BDD
-		$sql = " INSERT INTO membres ($sql_champs) VALUES ($sql_Value) ";
-		echo $sql;
-		executeRequete ($sql);
+		// mise à jour de la base des données
+		$sql = 'UPDATE membres SET '.$sql_set.'  WHERE id_membre = '.$_formulaire['id_membre']['sql'];
+
+		if (!empty($sql_set)) 
+			executeRequete ($sql);
+		else echo 'ATTENTION';
 		// ouverture d'une session
 		$msg = "OK";
 		

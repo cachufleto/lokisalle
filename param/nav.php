@@ -9,103 +9,130 @@ if(!defined('RACINE_SITE')) {
 ////////////////////////////
 
 $_pages['home'] = array(
-		'affiche' => true,
-		'titre' => $_trad['nav']['locationDesSalles']); //'Location des salles');
-			
-$_pages['detail'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['detailDuProduit']); //'Detail du produit');
-		
-$_pages['reservation'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['toutesNosOffres']); //'Toutes nos offres');
-		
-$_pages['recherche'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['resultatDeVotreRecherche']); //'Resultat de votre recherche');
-		
-$_pages['mdpperdu'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['MotDePasseOublie']); //'Mot de passe Oublié');
-		
-$_pages['inscription'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['seInscrire']); //'S\'inscrire');
-		
-$_pages['mentions'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['mentionsLegales']); //'Mentions légales');
-		
-$_pages['cgv'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['conditionsGeneralesVente']); //'Conditions Générales de Vente');
-		
-$_pages['plan'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['plan']); //'Plan du site');
+		'link' => LINK,
+		'affiche' => true);
 
+$_pages['detail'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['reservation'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['recherche'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['mdpperdu'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['inscription'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['mentions'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['cgv'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['plan'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
 $_pages['newsletter'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['newsletter']); //'S\'inscrire à la newsletter'); 
-		
+		'link' => LINK,
+		'affiche' => false);
+			
 $_pages['contact'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['nousContacter']); //'Nous Contacter'); 
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['salles'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['ficheSalles'] = array(
+		'link' => LINK,
+		'affiche' => false);
 
 /************   MEMBRE    **************/
 
 $_pages['actif'] = array(
+		'link' => LINK,
 		'affiche' => false);
 		
 $_pages['out'] = array(
+		'link' => LINK,
 		'affiche' => false);
 
 $_pages['panier'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['mesAchats']); //'Mes achats');
-		
+		'link' => LINK,
+		'affiche' => false);
+			
 $_pages['mjprofil'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['mettreJourMesInformations']);
-
+		'link' => LINK,
+		'affiche' => false);
+			
 $_pages['profil'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['monProfil']);
-		
+		'link' => LINK,
+		'affiche' => false);
+			
+$_pages['ficheMembre'] = array(
+		'link' => LINK,
+		'affiche' => false);
+			
 /************   ADMIN    **************/
 
 $_pages['backoffice'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['ADMIN']);
-		
-$_pages['admin_boutique'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['ADMIN']);
-		
-$_pages['admin_users'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['ADMIN']);
-		
-$_pages['admin_ventes'] = array(
-		'affiche' => false,
-		'titre' => $_trad['nav']['ADMIN']);
+		'link' => LINK.LINKADM,
+		'class' => 'admin',
+		'affiche' => false);
+			
+$_pages['boutique'] = array(
+		'link' => LINK.LINKADM,
+		'affiche' => false);
+			
+$_pages['users'] = array(
+		'link' => LINK.LINKADM,
+		'affiche' => false);
+			
+$_pages['ventes'] = array(
+		'link' => LINK.LINKADM,
+		'affiche' => false);
+			
+$_pages['gestionSalles'] = array(
+		'link' => LINK.LINKADM,
+		'affiche' => false);
+			
+$_pages['editerSalles'] = array(
+		'link' => LINK.LINKADM,
+		'affiche' => false);
 
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
-$_reglesAll = array('home', 'reservation', 'recherche', 'inscription', 'actif', 'panier');
-$_reglesMembre = array('home','reservation', 'recherche', 'profil', 'out', 'panier');
-$_reglesAdmin = array('profil','backoffice','admin_boutique','admin_users','admin_ventes','contact','out');
-$_navFoot = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
+$_reglesAll = array('home', 'reservation', 'recherche', 'salles', 'panier', 'actif');
+$_reglesMembre = array('home','reservation', 'recherche', 'salles', 'panier', 'profil', 'out');
+$_reglesAdmin = array('home', 'profil', 'salles', 'backoffice', 'out');
+
+$navAdmin = array('home', 'gestionSalles','users','ventes','out' );
+
+$navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
+
 
 ////////////////////////////
 ///// NAV //////////////////
-////////////////////////////
+///////////////////////	/////
 // page de navigation
 $nav = (isset ($_GET['nav']) && !empty($_GET['nav']) && isset ($_pages[ $_GET['nav'] ]))? $_GET['nav'] : 'home';
 
 // REGLE D'orientation des pages actif et out ver connection
 if('actif' == $nav || 'out' == $nav) $nav = 'connection';
 
-// if($_SESSION[])
-$_nav = explode("_", $nav);
-$__page = ((empty($_nav[1]))? INC . $_nav[0] : ADM . $_nav[1]) . '.inc.php';
-$__func = FUNC . ((empty($_nav[1]))? $_nav[0] : $_nav[1]) . '.func.php';
+// cas spécifique
+$nav = ($nav=='users')? 'home' : $nav;
+// page a inclure
+$__page = INC . $nav . '.inc.php';

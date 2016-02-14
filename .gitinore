@@ -1,7 +1,7 @@
 # ignorer uniquement le fichier TODO à la racine du projet
 /TODO
-# ignorer tous les fichiers dans le répertoire build
-build/
+# ignorer tous les fichiers dans le répertoire photo
+photo/
 # ignorer doc/notes.txt, mais pas doc/server/arch.txt
 */*/*.txt
 */*/*.bak

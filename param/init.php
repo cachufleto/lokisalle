@@ -4,33 +4,28 @@ if(!defined('RACINE_SITE')) {
 	exit();
 }
 
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 ////////////////////////////
 ///// BDD //////////////////
 ////////////////////////////
+$BDD = array();
 switch($_SERVER["SERVER_NAME"]){
 
 	case 'domoquick.fr':
-		$SERVEUR_BDD = 'rdbms';
-		$USER = 'U2407285';
-		$PASS = '20Seajar!';
-		$BDD = 'DB2407285';
+		$BDD['SERVEUR_BDD'] = 'rdbms';
+		$BDD['USER'] = 'U2407285';
+		$BDD['PASS'] = '20Seajar!';
+		$BDD['BDD'] = 'DB2407285';
 	break;
 
 	default:
-		$SERVEUR_BDD = 'localhost';
-		$USER = 'root';
-		$PASS = '';
-		$BDD = 'lokisalle';
+		$BDD['SERVEUR_BDD'] = 'localhost';
+		$BDD['USER'] = 'root';
+		$BDD['PASS'] = '';
+		$BDD['BDD'] = 'lokisalle';
 }
-
-$mysqli = @new mysqli($SERVEUR_BDD, $USER, $PASS, $BDD);
-
-// Jamais de ma vie je ne metterais un @ pour cacher une erreur sauf si je le gere proprement avec ifx_affected_rows
-if($mysqli->connect_error) {
-	die("Un probleme est survenu lors de la connexion a la BDD" . $mysqli->connect_error);
-}
-
-$mysqli->set_charset("utf-8"); // en cas de souci d'encodage avec l'utf-8
 
 ////////////////////////////
 ///// VAR //////////////////
@@ -43,3 +38,13 @@ $msg = "";
 
 // déclaration d'une variable qui nous servira à afficher des messages de debug
 $_debug = array();
+
+// valeur par default
+$_SESSION['lang'] = (isset($_SESSION['lang']))? $_SESSION['lang'] : 'fr';
+// recuperation du cookis lang
+$_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
+// changement de lang par le user
+$_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
+
+// définition des cookis
+setcookie( 'Lokisalle[lang]' , $_SESSION['lang'], time()+360000 );
