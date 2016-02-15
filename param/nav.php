@@ -114,9 +114,9 @@ $_pages['editerSalles'] = array(
 		'affiche' => false);
 
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
-$_reglesAll = array('home', 'reservation', 'recherche', 'salles', 'panier', 'actif');
-$_reglesMembre = array('home','reservation', 'recherche', 'salles', 'panier', 'profil', 'out');
-$_reglesAdmin = array('home', 'profil', 'salles', 'backoffice', 'out');
+$_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');
+$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
+$_reglesAdmin = array('home', 'profil', 'salles', 'recherche', 'backoffice', 'out');
 
 $navAdmin = array('home', 'gestionSalles','users','ventes','out' );
 

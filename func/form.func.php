@@ -507,8 +507,8 @@ function controlImageUpload($key, &$info) {
 			if($infosImg[2] >= 1 && $infosImg[2] <= 14)
 			{
 				// On verifie les dimensions et taille de l'image;
-				echo $infosImg[0]." <= " . WIDTH_MAX. ") && (" . $infosImg[1]." <= ".HEIGHT_MAX.") && ("; 
-				echo filesize($_FILES[$key]['tmp_name'])." <= ".MAX_SIZE."))";
+				// echo $infosImg[0]." <= " . WIDTH_MAX. ") && (" . $infosImg[1]." <= ".HEIGHT_MAX.") && ("; 
+				// echo filesize($_FILES[$key]['tmp_name'])." <= ".MAX_SIZE."))";
 				
 				if(($infosImg[0] <= WIDTH_MAX) && ($infosImg[1] <= HEIGHT_MAX) && (filesize($_FILES[$key]['tmp_name']) <= MAX_SIZE))
 				{
@@ -549,7 +549,8 @@ function controlImageUpload($key, &$info) {
 		// Sinon on affiche une erreur pour le champ vide
 		$info['message'] = $_trad['erreur']['veuillezRemplirFormulaire'];
 	}
-	echo $info['message'];
+
+	//echo $info['message'];
 	return true;
 
 }

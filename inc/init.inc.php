@@ -4,14 +4,13 @@
 
 $___script = str_replace('\\', '/', '/'.$_SERVER['PHP_SELF']);
 $___script = str_replace('//', '', $___script);
-$___file = explode('/', $___script);
 $___appel = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
-$___param = $___file[count($___file)-1]; //'index.php';
+$___param = basename($___script); //'index.php';
+$___dossier = dirname($___script).'/';
 
 define("LINKADM", 'BacOff/');
-$___dossier = str_replace($___param, '', $___script);
 define("RACINE_SERVER",str_replace($___script, '', $___appel));
-define("RACINE_SITE", str_replace(LINKADM, '', str_replace($___param, '', $___script)));
+define("RACINE_SITE", str_replace(LINKADM, '', dirname($___script).'/'));
 define("APP", RACINE_SERVER.RACINE_SITE);
 define("ADM", APP.LINKADM);
 define("INC", APP.'inc/');
@@ -24,15 +23,6 @@ define('TARGET', APP.'photo/');    // Repertoire cible
 define('MAX_SIZE', 100000000);    // Taille max en octets du fichier
 define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels
-/************************************************************
- * Creation du repertoire cible si inexistant
- *************************************************************/
-if( !is_dir(TARGET) ) {
-  if( !mkdir(TARGET, 0755) ) {
-  	exit($_trad['erreur']['leRepertoireNePeutEtreCree']);
-  }
-}
-
 
 
 if(!file_exists(APP.'index.php')) exit();
@@ -52,6 +42,15 @@ require_once(FUNC . "com.func.php");
 // chargement de la langue
 require_once(PARAM . "trad/fr/traduction.php");
 include_once(PARAM . "trad/". $_SESSION['lang']."/traduction.php");
+
+/************************************************************
+ * Creation du repertoire cible si inexistant
+ *************************************************************/
+if( !is_dir(TARGET) ) {
+  if( !mkdir(TARGET, 0755) ) {
+  	exit($_trad['erreur']['leRepertoireNePeutEtreCree']);
+  }
+}
 
 // gestion de session
 include_once(INC . "session.inc.php");

@@ -2,7 +2,8 @@
 <?php
 $_link = '';
 foreach($_linkCss as $link)
-  $_link .= '<link href="'. $link .'" rel="stylesheet">';
+  $_link .= '
+    <link href="'. $link .'" rel="stylesheet">';
 
 ?>
 <html lang="fr">
@@ -12,12 +13,11 @@ foreach($_linkCss as $link)
     <meta name="description" content="Projet DIWoo10 2015 - 2016, Lokisalle">
     <meta name="author" content="Carlos PAZ DUPRIEZ">
     <link rel="icon" href="<?php echo LINK;  ?>img/lokisalle.png">
-	<title><?php echo $titre; ?></title>
 
     <?php echo $_link; ?>
+
     <script src="<?php echo LINK;  ?>js/script.js" type="text/javascript"></script>
-
+  <title><?php echo $titre; ?></title>
   </head>
-
   <body>
   <div id="content">

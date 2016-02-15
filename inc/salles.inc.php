@@ -1,5 +1,6 @@
 <?php
 
+// 
 if(isset($_GET)){
   if(!empty($_GET['reserver'])){
     $_SESSION['panier'][$_GET['reserver']] = true;
@@ -7,6 +8,8 @@ if(isset($_GET)){
     $_SESSION['panier'][$_GET['enlever']] = false;
   }
 }
+
+
 
 
 // selection de tout les users sauffe le super-ADMIN

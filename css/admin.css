@@ -1,7 +1,7 @@
-.navbar {
+#content .navbar {
     background-color: #6D1907;
 }
 
-.navbar ul li a admin{
+#content .navbar ul li a admin{
 		display: none;
 	}

@@ -1,5 +1,8 @@
 <?php 
 
+// Fonctions navigation
+require_once(FUNC."nav.func.php");
+
 listeMenu();
 $_link = $_SERVER["QUERY_STRING"];
 ?>
