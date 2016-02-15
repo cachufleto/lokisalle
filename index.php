@@ -22,12 +22,13 @@ if(file_exists($__page) ){
 	$__func = FUNC . $nav . '.func.php';
 	if(file_exists($__func) )
 		require_once($__func);
-
+	echo '<div id="' . $nav . '" class="content">';
 	require_once($__page);
+	echo '</div>';
 }
 else require_once(INC . "erreur.inc.php");
 
-// insertion Pied de page
-require_once(INC . "footer.inc.php");
 // affichage des debug
 if(DEBUG) include_once(INC . "debug.inc.php");
+// insertion Pied de page
+require_once(INC . "footer.inc.php");

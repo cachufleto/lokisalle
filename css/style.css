@@ -15,20 +15,13 @@ table td {
 	border: 1px solid black;
 }
 
-#contenu {
-	margin-left:20px;
-	margin-right:20px;
-}
-
 img.trombi {
 	width: 100px;
 }
+
 .alert {
 	color:red !important;
 	padding-bottom: 10px;
-}
-.rectifier {
-	color:blue !important;
 }
 
 .erreur {
@@ -44,13 +37,19 @@ img.trombi {
 	padding-left: 12px;
 }
 
-.navbar {
+#content {
+	margin-left:20px;
+	margin-right:20px;
+	overflow: hidden;
+}
+
+#content .navbar {
     width: 100%;
     float: left;
     height: 50px;
     background-color: #82949C;
 }
-.navbar ul li {
+#content .navbar ul li {
     color: white;
     width: auto;
     display: inline;
@@ -60,20 +59,20 @@ img.trombi {
     padding-right: 15px;
 }
 
-.navbar ul li.active{
+#content .navbar ul li.active{
 	background-color: #55787D;
 }
 
-.navbar ul li a {
+#content .navbar ul li a {
 		color:white;
 		text-decoration: none;
 	}
-.navbar ul li.admin a,
-.navbar ul li a.admin{
+#content .navbar ul li.admin a,
+#content .navbar ul li a.admin{
 		color:red;
 	}
 
-.navbar img.logo {
+#content .navbar img.logo {
 	width: 50px;
 	height: 50px;
 	position: relative;
@@ -81,19 +80,35 @@ img.trombi {
 	margin-top: -16px;
 }
 
-#ficheSalle,
-#formulaire{
-	padding:13px;
-	display:block;
-	width:420px;	
-}
-.ligneForm{
-	display:inline-block;
-	width:400px;
+#content nav.footer {
+	z-index: 999;
+	position: fixed;
+	bottom: 0%
 }
 
-.label,
-.champs{
-	float:left;
-	width:160px;
+#formulaire {
+	padding:13px;
+	display:block;
+	width:420px;
+	margin-left: calc(50% - 210px );
 }
+#formulaire .ligneForm{
+	display:inline-block;
+	width:100%;
+	height: 40px;
+}
+
+#formulaire .label,
+#formulaire .champs{
+	float:left;
+	width:50%;
+}
+
+#formulaire div.rectifier{
+	height: 64px;
+}
+
+#formulaire label.rectifier {
+	color:blue !important;
+}
+

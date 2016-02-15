@@ -1,5 +1,4 @@
-	</div> <!-- contenu-->
-    <nav class="navbar">
+    <nav class="navbar footer">
 	  <ul class="">
 		<?php 
 			echo liste_nav('navFooter');
@@ -11,5 +10,6 @@
 		</li>
 	  </ul>
 	</nav>
+	</div> <!-- contenu-->
   </body>
 </html>

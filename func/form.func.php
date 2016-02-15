@@ -1,4 +1,4 @@
-<?php
+F<?php
 # FUNCTIONS FORMULAIRES
 
 # Fonction postCheck() 
@@ -40,21 +40,19 @@ function formulaireAfficher($_form){
 		$trad = ($champ == 'valide')? '' : $_trad['champ'][$champ];
 		if($info['type'] != 'hidden') {
 			$formulaire .=  '
-			<div class="ligneForm">
+			<div class="ligneForm'. ((!empty($info['rectification']))? ' rectifier' : '') .'">
 				<label class="label">' .  $trad;
-			$formulaire .= (isset($info['obligatoire']))? "*": '';
+			$formulaire .= (isset($info['obligatoire']))? '<span class="alert">*</span>': '';
 			$formulaire .= '</label>';
-			$formulaire .= '<div class="champs">' . typeForm($champ, $info) . '</div></div>';
+			$formulaire .= '<div class="champs">' . typeForm($champ, $info) . '</div>';
 			
 			if(!empty($info['rectification']))
 			{
 			$formulaire .=  '
-				<div class="ligneForm">
 				<label class="label rectifier">'. $_trad['rectifier'] .' '.$_trad['champ'][$champ].' </label>
-				<div class="champs">' . typeForm($champ.'2', $info) . '</div>
-			</div>';
+				<div class="champs">' . typeForm($champ.'2', $info) . '</div>';
 			}
-			$formulaire .= ((isset($info['message']))? '<div class="erreur">' .$info['message']. '</div>': '');
+			$formulaire .= ((isset($info['message']))? '<div class="erreur">' .$info['message']. '</div>': '') . '</div>';
 		
 		} else $formulaire .= typeForm($champ, $info);
 		

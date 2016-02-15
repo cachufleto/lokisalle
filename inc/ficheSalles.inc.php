@@ -16,10 +16,10 @@ if( modCheck('_formulaire', $_id, 'salles') ){
 	exit();
 }	// RECUPERATION du formulaire
 ?>
-    <principal>
+    <principal clas="<?php echo $nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
-		<div id="ficheSalle">
+		<div id="formulaire">
 			<?php  
 			// affichage
 			echo $msg, $form; 

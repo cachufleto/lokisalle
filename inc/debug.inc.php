@@ -1,4 +1,6 @@
-<div style="display:block; height: 100px;">&nbsp;</div>
+
+<div  id='debug'>
+<div  style="display:block; height: 100px;">&nbsp;</div>
 <hr>
 DEBUG -----------
 <hr>
@@ -27,5 +29,5 @@ _debug(LINK, 'LINK');
 _debug($_trad, '_trad');
 
 debug();
-
+echo '</div>';
 if(isset($_GET['info']) && $_GET['info'] == 'PHP') phpinfo();

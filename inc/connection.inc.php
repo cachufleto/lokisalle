@@ -17,7 +17,7 @@ $form = '
 			</form>';
 } ?>
 
-    <principal>
+    <principal clas="<?php echo $nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
 		<div id="formulaire">
@@ -26,11 +26,13 @@ $form = '
 			echo $msg;
 			echo $form;
 			?>
-		</div>
-		<div>
-		<a href="?nav=inscription"><?php echo $_trad['pasEncoreMembreInscrivez-vous']; ?></a>
+		<div class="ligneForm">
+				<label class="label"><?php echo $_trad['pasEncoreMembre']; ?></label>
+				<div class="champs"><a href="?nav=inscription"><?php echo $_trad['inscrivezVous']; ?></a></div>
 		</div>
 		<hr />
-		<span class="alert">BUG // Securiser le mot passe par cryptage!!!<br>
-		Donner la possibillité de garder la connexion automatique...</span>
+		<span class="alert">
+		BUG // Securiser le mot passe par cryptage!!!<br>
+		</span>
+		</div>
 	</principal>

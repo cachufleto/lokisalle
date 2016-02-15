@@ -20,4 +20,4 @@ foreach($_linkCss as $link)
   </head>
 
   <body>
-  <div id="contenu">
+  <div id="content">
