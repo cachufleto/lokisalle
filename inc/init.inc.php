@@ -8,15 +8,16 @@ $___appel = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
 $___param = basename($___script); //'index.php';
 $___dossier = dirname($___script).'/';
 
-define("LINKADM", 'BacOff/');
+define("REPADMIN", 'BacOff/');
 define("RACINE_SERVER",str_replace($___script, '', $___appel));
-define("RACINE_SITE", str_replace(LINKADM, '', dirname($___script).'/'));
+define("RACINE_SITE", str_replace(REPADMIN, '', dirname($___script).'/'));
 define("APP", RACINE_SERVER.RACINE_SITE);
-define("ADM", APP.LINKADM);
+define("ADM", APP.REPADMIN);
 define("INC", APP.'inc/');
 define("FUNC", APP.'func/');
 define("PARAM", APP.'param/');
-define("LINK", 'http://'. (str_replace(LINKADM, '', $_SERVER["HTTP_HOST"].'/'.$___dossier)));
+define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$___dossier)));
+define("LINKADMIN", LINK.REPADMIN);
 
 // Constantes upload images
 define('TARGET', APP.'photo/');    // Repertoire cible
@@ -36,6 +37,7 @@ define("DEBUG", $debug);
 session_start();
 
 $_linkCss[] = LINK.'css/style.css';
+$_linkJs[] = LINK.'js/script.js';
 
 require_once(PARAM . "init.php");
 require_once(FUNC . "com.func.php");

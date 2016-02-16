@@ -8,17 +8,15 @@ require_once(INC . "header.inc.php");
 // insertion menu de navigation
 $_menu = '';
 require_once(INC . "nav.inc.php");
-
 //CONTENEUR
 echo '<div id="' . $nav . '" class="content">';
-
+	
 // insertion des pages dinamiques
 if(file_exists($__page) ){
 
 	$__param = PARAM . $nav . '.param.php';
 	if(file_exists($__param) )
 		require_once($__param);
-
 	$__func = FUNC . $nav . '.func.php';
 	if(file_exists($__func) )
 		require_once($__func);

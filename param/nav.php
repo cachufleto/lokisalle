@@ -89,34 +89,34 @@ $_pages['ficheMembre'] = array(
 /************   ADMIN    **************/
 
 $_pages['backoffice'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'class' => 'admin',
 		'affiche' => false);
 			
 $_pages['boutique'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'affiche' => false);
 			
 $_pages['users'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'affiche' => false);
 			
 $_pages['ventes'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'affiche' => false);
 			
 $_pages['gestionSalles'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'affiche' => false);
 			
 $_pages['editerSalles'] = array(
-		'link' => LINK.LINKADM,
+		'link' => LINKADMIN,
 		'affiche' => false);
 
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
 $_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');
 $_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
-$_reglesAdmin = array('home', 'profil', 'salles', 'recherche', 'backoffice', 'out');
+$_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'recherche', 'backoffice', 'out');
 
 $navAdmin = array('home', 'gestionSalles','users','ventes','out' );
 

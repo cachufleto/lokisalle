@@ -30,8 +30,7 @@ function connectMysqli(){
 # BLOQUANT
 # RETURN object
 //function executeRequete($req, $connexion = 'mysqli') {
-function executeRequete($req) {
-
+function executeRequete($req) {	
 	
 	$connexion = connectMysqli();
 
@@ -47,12 +46,11 @@ function executeRequete($req) {
 	return $resultat;
 }
 
-# Fonction executeRequete()
+# Fonction executeMultiRequete()
 # Exe requette SQL
 # $req => string SQL
 # BLOQUANT
 # RETURN object
-//function executeRequete($req, $connexion = 'mysqli') {
 function executeMultiRequete($req) {
 
 	

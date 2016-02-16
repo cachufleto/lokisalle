@@ -1,7 +1,8 @@
     <nav class="navbar footer">
 	  <ul class="">
 		<?php 
-			echo liste_nav('navFooter');
+			$menu = liste_nav('navFooter');			
+			echo $menu['menu'];
 		?>
 		<li>
 		<?php 

@@ -45,9 +45,9 @@ while ($data = $membres->fetch_assoc()) {
 
   $table .= "<tr><td>". $data['id_salle'] . "</td><td>". $data['titre'] . "</td><td>". $data['capacite'] . "</td>
             <td>". $_trad[$data['categorie']] . "</td>";
-//  $table .= "<td><a href='". LINK.LINKADM.'?nav=profil&id='.$data['id_salle'] . "'>".$_trad['modifier']."</a>";
- // $table .= ($data['active'] == 1 )?" <a href='". LINK.LINKADM.'?nav=users&delete='.$data['id_salle'] . "'>".$_trad['delete']."</a>" :
- //           " <a href='". LINK.LINKADM.'?nav=users&active='.$data['id_salle'] . "'>".$_trad['activer']."</a>";
+//  $table .= "<td><a href='". LINKADMIN.'?nav=profil&id='.$data['id_salle'] . "'>".$_trad['modifier']."</a>";
+ // $table .= ($data['active'] == 1 )?" <a href='". LINKADMIN.'?nav=users&delete='.$data['id_salle'] . "'>".$_trad['delete']."</a>" :
+ //           " <a href='". LINKADMIN.'?nav=users&active='.$data['id_salle'] . "'>".$_trad['activer']."</a>";
 
   $table .= "</td></tr>";
   # code...

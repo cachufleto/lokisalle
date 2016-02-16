@@ -7,7 +7,7 @@ include_once FUNC . 'form.func.php';
 # @_formulaire => tableau des items
 # RETURN string msg
 function formulaireValider(){
-	
+	echo __FUNCTION__;
 	global $_trad, $_formulaire, $minLen;
 	
 	// control d'intrusion du membre

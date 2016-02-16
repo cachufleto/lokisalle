@@ -146,7 +146,7 @@ $_trad['titre']['users'] = "membres";
 $_trad['titre']['ventes'] = "commandes";
 
 /* trad pour les Valeurs des options BDD */
-$_trad['value']['ADM'] = "ADMINISTRATEUR";
+$_trad['value']['ADM'] = "ADMIN";
 $_trad['value']['C'] = "Conferences";
 $_trad['value']['COL'] = "COLLABORATEUR";
 $_trad['value']['F'] = "Fêtes";

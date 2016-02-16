@@ -39,13 +39,13 @@ while ($data = $membres->fetch_assoc()) {
 
   $table .= '
     <tr><td>'. $data['id_salle'] . '</td><td>'. $data['titre'] . '</td><td>'. $data['capacite'] . '</td><td>'. 
-    $_trad['value'][$data['categorie']] . '</td><td><a href="'. LINK.LINKADM.'?nav=ficheSalles&id='.$data['id_salle'] . 
+    $_trad['value'][$data['categorie']] . '</td><td><a href="'. LINKADMIN.'?nav=ficheSalles&id='.$data['id_salle'] . 
     '&pos='.$position.'" id="P-'. $position.'" ><img class="trombi" src="'. LINK.'photo/'.$data['photo'] . 
     '" ></a></td><td>';
 
-  $table .= "<td><a href='". LINK.LINKADM.'?nav=ficheSalles&id='.$data['id_salle'] . "'>".$_trad['modifier']."</a>";
-  $table .= ($data['active'] == 1 )?" <a href='". LINK.LINKADM.'?nav=gestionSalles&delete='.$data['id_salle'] . "'>".$_trad['delete']."</a>" :
-             " <a href='". LINK.LINKADM.'?nav=gestionSalles&active='.$data['id_salle'] . "'>".$_trad['activer']."</a>";
+  $table .= "<td><a href='". LINKADMIN.'?nav=ficheSalles&id='.$data['id_salle'] . "'>".$_trad['modifier']."</a>";
+  $table .= ($data['active'] == 1 )?" <a href='". LINKADMIN.'?nav=gestionSalles&delete='.$data['id_salle'] . "'>".$_trad['delete']."</a>" :
+             " <a href='". LINKADMIN.'?nav=gestionSalles&active='.$data['id_salle'] . "'>".$_trad['activer']."</a>";
 
   $table .= "</td></tr>";
   # code...
@@ -63,7 +63,7 @@ $table = '<table>'.$table.'
       <div class="starter-template">
         <h1><span class="glyphicon glyphicon-pencil "></span><?php echo $titre; ?></h1>
 	   <hr />
-     Ajouter une salle <a href="<?php echo LINK.LINKADM; ?>?nav=editerSalles">AJOUTER</a>
+     Ajouter une salle <a href="<?php echo LINKADMIN; ?>?nav=editerSalles">AJOUTER</a>
       <hr />
       </div>
       <div class="">

@@ -1,4 +1,4 @@
-F<?php
+<?php
 # FUNCTIONS FORMULAIRES
 
 # Fonction postCheck() 
@@ -7,6 +7,7 @@ F<?php
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
 function postCheck($nomFormulaire, $mod=FALSE){
+
 	
 	global $_trad, ${$nomFormulaire};
 
@@ -33,6 +34,8 @@ function postCheck($nomFormulaire, $mod=FALSE){
 #$_form => tableau des items
 # RETURN string du formulaire
 function formulaireAfficher($_form){
+	
+
 	global $_trad;
 	//global $_formIncription;
 	$formulaire = '';
@@ -66,6 +69,8 @@ function formulaireAfficher($_form){
 # $info => tableau des informations relatives a l'item
 # RETURN [balises] texte
 function typeForm($champ, $info){
+	
+
 	global $_trad;
 
 	$valeur = (!empty($info['valide']))? $info['valide'] : $info['defaut'];
@@ -162,6 +167,7 @@ function typeForm($champ, $info){
 
 function testADMunique($statut, $id_membre){
 
+
 	if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
 		{
 		
@@ -189,6 +195,7 @@ function testADMunique($statut, $id_membre){
 # $mod => condition pour une action de mise à jour en BDD
 # RETURN string message d'alerte
 function postValide($nom_form, $mod=FALSE){
+
 	
 	global $msg, $_trad, ${$nom_form};
 	$ok = true;
@@ -266,6 +273,7 @@ function postValide($nom_form, $mod=FALSE){
 # RETURN string
 function radioCheck($info, $value) {
 
+
 	// info['valide'] => valeur du formulaire
 	return (!empty($info['valide']) && $info['valide'] == $value)? true : false;
 
@@ -278,6 +286,7 @@ function radioCheck($info, $value) {
 # RETURN string
 function selectCheck($info, $value) {
 
+
 	// info['valide'] => valeur du formulaire
 	return (!empty($info['valide']) && $info['valide'] == $value)? 'selected="selected"' : '';
 
@@ -289,6 +298,7 @@ function selectCheck($info, $value) {
 # RETURN Boolean
 function testNumerique($valeur){	
 
+
 	return preg_match('#[a-zA-Z.\s.-]#', $valeur);
 
 }
@@ -298,6 +308,7 @@ function testNumerique($valeur){
 # $value => valeur à tester
 # RETURN Boolean
 function testAlphaNumerique($valeur){	
+
 		
 	return preg_match('#^[a-zA-Z0-9._-]+$#', $valeur );
 
@@ -308,6 +319,7 @@ function testAlphaNumerique($valeur){
 # $value => valeur à tester
 # RETURN Boolean
 function testFormatMail($valeur){	
+
 		
 	return filter_var($valeur, FILTER_VALIDATE_EMAIL);
 
@@ -318,6 +330,7 @@ function testFormatMail($valeur){
 # $value => valeur à tester
 # RETURN Boolean
 function testObligatoire($info){	
+
 	
 	return isset($info['obligatoire'])? $info['obligatoire'] : false;			
 
@@ -330,6 +343,7 @@ function testObligatoire($info){
 # @minLen => limite minimal établi par default
 # RETURN Boolean true si authorizé
 function testLongeurChaine($valeur, $maxLen=250){
+
 	
 	global $minLen;
 	
@@ -345,6 +359,7 @@ function testLongeurChaine($valeur, $maxLen=250){
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
 function modCheck($nomFormulaire, $_id, $table){
+
 	
 	global ${$nomFormulaire};
 	
@@ -375,7 +390,7 @@ function modCheck($nomFormulaire, $_id, $table){
 #$_form => tableau des items
 # RETURN string du formulaire
 function formulaireAfficherInfo($_form){
-	
+
 	global $_trad;
 	//global $_formIncription;
 	$formulaire = '';
@@ -383,9 +398,6 @@ function formulaireAfficherInfo($_form){
 		
 		$value = isset($info['valide'])? $info['valide'] : '';
 		
-		if($champ == 'sexe') 
-			$value = isset($_trad['value'][$value])? $_trad['value'][$value] : $_trad['indefinie'];
-
 		if($info['type'] != 'hidden') 
 		{
 			if($champ == 'valide'){
@@ -425,6 +437,7 @@ function formulaireAfficherInfo($_form){
 #$_form => tableau des items
 # RETURN string du formulaire
 function formulaireAfficherMod($_form){
+
 	
 	global $_trad;
 	//global $_formIncription;
@@ -485,6 +498,7 @@ function formulaireAfficherMod($_form){
 #$info => donées relatives au champ
 # RETURN boolean
 function controlImageUpload($key, &$info) {
+
 
 	global $_trad;
 	// Tableaux de donnees

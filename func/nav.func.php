@@ -10,11 +10,12 @@ function listeMenu(){
 
 	// control du menu principal
 	$_liste = (utilisateurEstAdmin())? $_reglesAdmin : ((utilisateurEstConnecte())? $_reglesMembre : $_reglesAll);
+
 	foreach($_liste as $key)
 		if(!isset($_pages[$key])) 
 			exit($_trad['laRubrique'] . $key . (utilisateurEstAdmin())? $_trad['pasDansMenuAdmin'] : ((utilisateurEstConnecte())? $_trad['pasDansMenuMembre'] : $_trad['pasDansMenu']));
 
-	// ontrol du footer
+	// control du footer
 	foreach($navFooter as $key)
 		if(!isset($_pages[$key])) 
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuFooter']);
@@ -51,16 +52,17 @@ function liste_nav($liste=''){
 	
 	// affichage pour affichage ou edition! 
 
-	$ADM = ($liste == 'navFooter' && preg_match('/BacOff/', $_SERVER['PHP_SELF']))? LINKADM : '';
+	$ADM = ($liste == 'navFooter' && preg_match('/BacOff/', $_SERVER['PHP_SELF']))? LINKADMIN : '';
 
 	// generation de la liste de nav
+	$col = count($_liste);
 	foreach ($_liste as $item){
 		$info = $_pages[$item];
 		$active = ($item == $nav)? 'active' : '';
 		$class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';		
 		$menu .= '
-		<li class="' . $active .' '. $class.'"><a href="'. $info['link'] . $ADM .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a></li>';
+		<li class="' . $active .' '. $class.' col-'.$col.'"><a href="'. $info['link'] . $ADM .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a></li>';
 	}
 
-	return $menu;
+	return array('menu'=>$menu, 'class'=>$class . ' col-'.$col);
 }

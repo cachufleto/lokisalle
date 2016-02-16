@@ -29,11 +29,11 @@ echo $a, $i++, ' - ',  "define('RACINE_SITE', str_replace($___param, '', $___scr
 define("APP", RACINE_SERVER.RACINE_SITE);
 echo $a, $i++, ' - ',  "define('APP', RACINE_SERVER.RACINE_SITE));", $a, $b, APP;
 
-define("LINKADM", 'BacOff/');
-echo $a, $i++, ' - ',  "define('LINKADM', 'BacOff/'));", $a, $b, LINKADM;
+define("LINKADMIN", 'BacOff/');
+echo $a, $i++, ' - ',  "define('LINKADMIN', 'BacOff/'));", $a, $b, LINKADMIN;
 
-define("ADM", APP.LINKADM);
-echo $a, $i++, ' - ',  "define('ADM', APP.LINKADM));", $a, $b, ADM;
+define("ADM", APP.LINKADMIN);
+echo $a, $i++, ' - ',  "define('ADM', APP.LINKADMIN));", $a, $b, ADM;
 
 define("INC", APP.'inc/');
 echo $a, $i++, ' - ',  "define('INC', APP.'inc/'));", $a, $b, INC;

@@ -67,11 +67,7 @@ $_formulaire['capacite'] = array(
 
 $_formulaire['categorie'] = array(
 	'type' => 'radio',
-	'option' => array(
-		$_trad['value']['R']=>'R', 
-		$_trad['value']['F']=>'F',
-		$_trad['value']['C']=>'C'
-		),
+	'option' => array('R', 'F', 'C' ),
 	'defaut' => '',
 	'obligatoire' => true);
 
