@@ -1,15 +1,26 @@
-Espace ADMIN<br>
-Trouver une solution pour pointer directement dans me BO<br>
-le fichier bacoffice.inc.php peut exister seulement sur l'un des deux repertoires:<br>
-/inc<br>
-/BocOffice/inc<br>
 
 <?php
-// Définit les cookies
-setcookie("cookie[three]", "cookiethree");
-setcookie("cookie[two]", "cookietwo");
-setcookie("cookie[one]", "cookieone");
 
+$activite = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' : 'Activité';
+
+$dernieresOffres = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' :  'Derniéres Offres'
+?>
+    <principal class="<?php echo $nav; ?>">
+		<h1><?php echo $titre; ?></h1>
+		<hr />
+		<form name="index" action="?nav=backoffice" method="POST">
+		<div class=" col-2">
+		<input type="submit" value="modifier" name="activite">
+			<?php echo $activite; ?>
+		</div>
+		<div class=" col-2">
+		<input type="submit" value="modifier" name="dernieresOffres">
+			<?php echo $dernieresOffres; ?>
+		</div>
+		</form>
+		<hr />
+	</principal>
+<?php
 // Après le rechargemet de la page, nous les affichons
 if (isset($_COOKIE['cookie'])) {
     foreach ($_COOKIE['cookie'] as $name => $value) {

@@ -126,3 +126,8 @@ img.trombi {
 	color:blue !important;
 }
 
+.backoffice div.col-2,
+.home div.col-2 {
+    float: left;
+    height: 800PX;
+}
