@@ -7,10 +7,10 @@ require_once(INC . "header.inc.php");
 
 // insertion menu de navigation
 $_menu = '';
+echo '<div id="content">';
 require_once(INC . "nav.inc.php");
 //CONTENEUR
-echo '<div id="' . $nav . '" class="content">';
-	
+echo '<div id="' . $nav . '"  >';
 // insertion des pages dinamiques
 if(file_exists($__page) ){
 
@@ -24,11 +24,14 @@ if(file_exists($__page) ){
 	require_once($__page);
 }
 else require_once(INC . "erreur.inc.php");
-
-//FIN CONTENEUR
-echo '</div>';
-
-// affichage des debug
-if(DEBUG) include_once(INC . "debug.inc.php");
+echo '</div>'; // fin div de la page
 // insertion Pied de page
+if(DEBUG) include_once(INC . "debug.inc.php");
+
 require_once(INC . "footer.inc.php");
+
+?>
+
+	</div>
+</body>
+</html>

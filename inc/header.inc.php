@@ -20,4 +20,3 @@ foreach($_linkCss as $link)
   <title><?php echo $titre; ?></title>
   </head>
   <body>
-  <div id="content">

@@ -1,17 +1,40 @@
 <?php
 
-$activite = 'Activité';
+$sql = "SELECT * FROM salles";
+$salles = executeRequete($sql);
 
-$dernieresOffres = 'Derniéres Offres'
+$dernieresOffres = '<div>';
+while($salle = $salles->fetch_assoc()){
+	$dernieresOffres .= dernieresOffres($salle);
+}
+$dernieresOffres .= '</div>';
+
+function dernieresOffres($salle){
+
+	global $_trad;
+
+	$offre = '
+	<div class="offre">
+	<div>' . $salle['titre'] . '</div>
+  	<figure>
+	  <img class="ingOffre" src="' . LINK . 'photo/' . $salle['photo'] . '" alt="" />
+  		<figcaption>Légende associée</figcaption>
+	</figure>
+  	<div>' . $salle['capacite'] . ' / ' . $_trad['value'][$salle['categorie']] .'</div>
+  	<hr/>
+	</div>
+	';
+
+	return $offre;
+}
 ?>
     <principal class="<?php echo $nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
-		<div class=" col-2">
-			<?php echo $activite; ?>
+		<div id="homeG">
+			<?php include INC."activite.xhtml"; ?>
 		</div>
-		<div class=" col-2">
+		<div id="homeD">
 			<?php echo $dernieresOffres; ?>
 		</div>
-		<hr />
 	</principal>

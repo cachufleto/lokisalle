@@ -2,6 +2,7 @@
 /TODO
 # ignorer tous les fichiers dans le répertoire photo
 photo/
+.idea/
 # ignorer doc/notes.txt, mais pas doc/server/arch.txt
 */*/*.txt
 */*/*.bak

@@ -37,18 +37,28 @@ img.trombi {
 	padding-left: 12px;
 }
 
+
 #content {
-	border:solid 1px black;
+	/*border:solid 1px black;*/
 	width:calc(100% - 40px);
 	margin-left:20px;
 	overflow: hidden;
+	padding: 50 0px;
 }
 
+.ingOffre {
+	width: 250px;
+}
+#debug {
+	float: left;
+	width: 100%;
+	height: auto;
+}
 #content .navbar {
-    float: left;
-    width: 100%;
-    height: 50px;
-    background-color: #82949C;
+	float: left;
+	width: 100%;
+	height: 50px;
+	background-color: #82949C;
 }
 #content .navbar ul li {
     float: left;
@@ -81,11 +91,18 @@ img.trombi {
 	margin-top: -16px;
 }
 
+#content .principal {
+	z-index: 988;
+	position: fixed;
+	top: 0px;
+	width: calc(100% - 40px);
+}
+
 #content .footer {
 	z-index: 999;
 	position: fixed;
 	bottom: 0%;
-    width: calc(100% - 40px);
+	width: calc(100% - 40px);
 }
 
 .col-2{ width: 50%; }
@@ -126,8 +143,17 @@ img.trombi {
 	color:blue !important;
 }
 
-.backoffice div.col-2,
-.home div.col-2 {
+#homeG {
+	width: 70%;
+}
+#homeD {
+	width: 30%;
+}
+#homeD, #homeG {
     float: left;
-    height: 800PX;
+    height: auto;
+}
+
+#activite {
+	padding: 0px 50px;
 }
