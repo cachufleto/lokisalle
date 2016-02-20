@@ -13,7 +13,7 @@ if(!defined('RACINE_SITE')) {
 $BDD = array();
 switch($_SERVER["SERVER_NAME"]){
 
-	case 'domoquick.fr':
+	case 'lokisalle.domoquick.fr':
 		$BDD['SERVEUR_BDD'] = 'rdbms';
 		$BDD['USER'] = 'U2407285';
 		$BDD['PASS'] = '20Seajar!';

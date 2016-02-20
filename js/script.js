@@ -1,3 +1,3 @@
-:/*
+/*
 fichier JavasCript Lokisalle
 */

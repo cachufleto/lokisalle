@@ -7,6 +7,5 @@
 <!-- V 2.5.1 : Upload image dans photo, formulaire salle -->
 <!-- V 2.8.1 : liste des sales, insertion des nouvelles sales -->
 <!-- V 2.8.2 : Fiches de salles front -->
-<!-- BUG : enregistrement du fichier si formulaire en erreur -->
-<!-- BUG : fonctionnement ADMIN	 -->
-V 2.8.2
+<!-- V 2.20.1 : Page home -->
+V 2.20.1
