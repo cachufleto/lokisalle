@@ -53,20 +53,61 @@ function executeRequete($req) {
 # RETURN object
 function executeMultiRequete($req) {
 
-	
+	global $_trad;
+
 	$connexion = connectMysqli();
 
-	$resultat = $connexion->multi_query($req);
+	if ($connexion->multi_query($req)) {
 
-	if(!$resultat) {
-		die ('<span style="color:red">ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>' . $connexion->error . '<br />');
+		$i = 0;
+		do {
+			$connexion->next_result();
+
+			$i++;
+		}
+		while( $connexion->more_results() );
+
+		$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
+
+		return true;
 	}
 
-	// deconnectMysqli();
-	$connexion->close() or die ('<span style="color:red">ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>' . ${$connexion}->error . '<br />');
-	
-	return $resultat;
+	$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
+	return false;
+
 }
+
+# Fonction hashCrypt()
+# RETURN string crypt
+function hashCrypt ($chaine) {
+
+	global $options;
+	return password_hash($chaine, PASSWORD_BCRYPT, $options);
+
+}
+
+# Fonction hashCrypt()
+# RETURN string crypt
+function hashDeCrypt ($info) {
+
+	//password_verify($password, $hash)
+	return password_verify($info['valide'], $info['sql']);
+
+}
+
+function ouvrirSession($session, $control = false){
+
+	$_SESSION['user'] = array(
+		'id'=>$session['id_membre'],
+		'pseudo'=>$session['pseudo'],
+		'statut'=>$session['statut'],
+		'user'=>$session['prenom']);
+
+	$control = ($session['id_membre'] == 1)? false : $control;
+
+	setcookie( 'Lokisalle[pseudo]' , ($control)? $session['pseudo'] : '' , time()+360000 );
+}
+
 
 # Fonction isSuperAdmin()
 # Verifie SESSION ADMIN ACTIVE

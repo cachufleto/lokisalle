@@ -30,6 +30,14 @@ switch($_SERVER["SERVER_NAME"]){
 ////////////////////////////
 ///// VAR //////////////////
 ////////////////////////////
+
+// chiffrement des données
+$cost = 10;
+$options = [
+	'cost' => $cost,
+	'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+];
+
 // valeur min de characteres accepté pour les champs limitées dans les formulaires
 $minLen = 3;
 

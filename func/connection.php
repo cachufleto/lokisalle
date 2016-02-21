@@ -39,9 +39,14 @@ function formulaireValider(){
 			} else {
 
 				switch($key){
-					case 'rapel':
-						$control = ($valeur == 'ok')? true : false; 
+					case 'mdp':
+						$crypte = $key;
 					break;
+
+					case 'rapel':
+						$control = ($valeur == 'ok')? true : false;
+					break;
+
 					case 'pseudo':
 
 						if (!testAlphaNumerique($valeur)) 
@@ -63,7 +68,7 @@ function formulaireValider(){
 					break;
 					}
 				// Construction de la requettes
-				if($key != 'rapel') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
+				if($key != 'rapel' && $key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
 			}
 	}
 	
@@ -75,28 +80,25 @@ function formulaireValider(){
 	} else {
 		
 		// lançons une requete nommee membre dans la BD pour voir si un pseudo est bien saisi.
-		$membre = executeRequete ("SELECT id_membre, pseudo, statut, nom, prenom FROM membres WHERE $sql_Where "); // la variable $pseudo existe grace a l'extract fait prealablemrent.
+		$sql = "SELECT mdp, id_membre, pseudo, statut, nom, prenom FROM membres WHERE $sql_Where ";
+		$membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
 		// verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
 
-		if($membre->num_rows > 0) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
+		if($membre->num_rows === 1) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
 		{
 			$session = $membre->fetch_assoc();
+			if(isset($crypte)){
+				$_formulaire[$crypte]['sql'] = $session[$crypte];
+				if(hashDeCrypt($_formulaire[$crypte])){
+					// overture d'une session Membre
+					ouvrirSession($session, $control);
+					$msg = 'OK';
+					// on reinitialise les tentatives de connexion
+					unset($_SESSION['connexion']);
+				}
+			}
 
-			// overture d'une session Membre
-			$_SESSION['user'] = array(
-				'id'=>$session['id_membre'], 
-				'pseudo'=>$session['pseudo'], 
-				'statut'=>$session['statut'],
-				'user' => $session['prenom']. ' ' .$session['nom']);
-			
-			// on reinitialise les tentatives de connexion
-			unset($_SESSION['connexion']);
-			
-			// on charge le cookie pour le pseudo
-			setcookie( 'Lokisalle[pseudo]' , ($control)? $session['pseudo'] : '' , time()+360000 );
-			
-			$msg = 'OK';
-			
+
 		} elseif($membre->num_rows == 0) {
 			$msg .= '<br/ >'. $_trad['erreur']['erreurConnexion'];
 			$_SESSION['connexion'] -= 1;

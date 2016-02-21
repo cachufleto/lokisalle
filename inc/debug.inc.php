@@ -1,10 +1,22 @@
 
 <div  id='debug'>
-<div  style="display:block; height: 100px;">&nbsp;</div>
 <hr>
 DEBUG -----------
 <hr>
 <?php
+// test ooption de hashage pour les mot de passe
+$timeTarget = 0.05; // 50 millisecondes
+
+$cost = 8;
+do {
+    $cost++;
+    $start = microtime(true);
+    password_hash("test", PASSWORD_BCRYPT, ["cost" => $cost]);
+    $end = microtime(true);
+} while (($end - $start) < $timeTarget);
+
+echo "Valeur de 'cost' la plus appropriée : " . $cost . "\n";
+
 _debug(get_included_files(), 'FILES INCLUDES');
 //Chargement des info supplementaires
 

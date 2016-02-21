@@ -10,7 +10,7 @@ $___dossier = dirname($___script).'/';
 
 define("REPADMIN", 'BacOff/');
 define("RACINE_SERVER",str_replace($___script, '', $___appel));
-define("RACINE_SITE", str_replace(REPADMIN, '', dirname($___script).'/'));
+define("RACINE_SITE", str_replace('//', '/', str_replace(REPADMIN, '', dirname($___script).'/')));
 define("APP", RACINE_SERVER.RACINE_SITE);
 define("ADM", APP.REPADMIN);
 define("INC", APP.'inc/');
@@ -83,8 +83,16 @@ if(isset($_GET['install']) && $_GET['install'] == 'BDD')
 		echo "<br>chargement du fichier data.sql";
 		$sql .= file_get_contents(APP.'/SQL/data.sql');
 	}
-	echo "<pre>$sql</pre>";
-	executeMultiRequete($sql);
+	// echo "<pre>$sql</pre>";
+	if(executeMultiRequete($sql)){
+
+		$membres = executeRequete("SELECT id_membre, mdp FROM membres");
+		var_dump($membres);
+		while($membre = $membres->fetch_assoc()){
+			$sql = "UPDATE membres SET mdp = '". hashCrypt($membre['mdp']) ."' WHERE id_membre = ".$membre['id_membre'];
+			executeRequete($sql);
+        }
+	}
 	exit();
 	
 }

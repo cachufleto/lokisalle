@@ -30,13 +30,13 @@ DROP TABLE IF EXISTS `membres`;
 CREATE TABLE IF NOT EXISTS `membres` (
   `id_membre` int(5) NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(15) NOT NULL,
-  `mdp` varchar(32) NOT NULL,
+  `mdp` varchar(250) NOT NULL,
   `nom` varchar(20) NOT NULL,
   `prenom` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
   `sexe` enum('m','f') DEFAULT NULL,
-  `telephone` varchar(10) NOT NULL,
-  `gsm` varchar(10) NOT NULL,
+  `telephone` varchar(10) DEFAULT NULL,
+  `gsm` varchar(10) DEFAULT NULL,
   `ville` varchar(20) DEFAULT NULL,
   `cp` int(5) DEFAULT NULL,
   `adresse` varchar(30) DEFAULT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   PRIMARY KEY (`id_membre`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `membres`
@@ -68,7 +68,8 @@ CREATE TABLE IF NOT EXISTS `salles` (
   `adresse` text NOT NULL,
   `cp` varchar(5) NOT NULL,
   `titre` varchar(20) NOT NULL,
-  `telephone` varchar(10) NOT NULL,
+  `telephone` varchar(10) DEFAULT NULL,
+  `gsm` varchar(10) DEFAULT NULL,
   `description` text NOT NULL,
   `photo` varchar(200) NOT NULL,
   `capacite` int(3) UNSIGNED NOT NULL,

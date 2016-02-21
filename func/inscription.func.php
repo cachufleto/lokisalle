@@ -37,8 +37,12 @@ function formulaireValider(){
 			} else {
 
 				switch($key){
+					case 'mdp': // il est obligatoire
+						$valeur = hashCrypt($valeur);
+					break;
+
 					case 'pseudo': // il est obligatoire
-												
+
 						if (!testAlphaNumerique($valeur)) 
 						{
 							$erreur = true; 
@@ -157,7 +161,7 @@ function formulaireValider(){
 				// Construction de la requettes
 				if(!empty($valeur)){
 					$sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-					$sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
+					$sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : $valeur) ;
 				}
 			}
 	}
@@ -177,7 +181,7 @@ function formulaireValider(){
 	}else{
 		
 		// insertion en BDD
-		$sql = " INSERT INTO membres ($sql_champs) VALUES ($sql_Value) ";
+		$sql = "INSERT INTO membres ($sql_champs) VALUES ($sql_Value) ";
 		echo $sql;
 		executeRequete ($sql);
 		// ouverture d'une session
