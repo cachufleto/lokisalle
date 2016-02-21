@@ -55,10 +55,14 @@ $_pages['contact'] = array(
 $_pages['salles'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['ficheSalles'] = array(
-		'link' => LINK,
-		'affiche' => false);
+	'link' => LINK,
+	'affiche' => false);
+
+$_pages['validerIncription'] = array(
+	'link' => LINK,
+	'affiche' => false);
 
 /************   MEMBRE    **************/
 

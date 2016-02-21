@@ -185,3 +185,11 @@ $_trad['revenir'] = "Revenir";
 $_trad['select'] = "Sélectioner";
 $_trad['valide'] = "Valider";
 $_trad['vousNePouvezPasVousSupprimerVousMeme'] = "<span class='alert'>Vous ne pouvez pas vous supprimer!!</span>";
+
+/*******************************************************/
+$_trad['titre']['validerIncription'] = "Validation d'inscription";
+
+$_trad['BienvenuSurLokisalle'] = "Bienvenu Sur Lokisalle";
+$_trad['ValiderMail'] = "<h2>Bienvenu Sur le site de Lokisalle</h2>Merci de valider votre inscription en clicant sur ce liens";
+$_trad['valider'] = "VALIDER";
+

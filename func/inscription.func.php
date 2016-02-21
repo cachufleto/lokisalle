@@ -179,12 +179,22 @@ function formulaireValider(){
 		$msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
 
 	}else{
-		
 		// insertion en BDD
 		$sql = "INSERT INTO membres ($sql_champs) VALUES ($sql_Value) ";
-		echo $sql;
+		executeRequete ($sql);
+
+		$checkInscription = hashCrypt($_formulaire['email']['valide']);
+		$sql = "INSERT INTO checkInscription (id_membre, checkInscription)
+			VALUES ( (SELECT id_membre FROM membres WHERE email = '".$_formulaire['email']['valide']."'), '$checkInscription')";
 		executeRequete ($sql);
 		// ouverture d'une session
+		$message = '<div>'.$_trad['ValiderMail'].' <a href="'. LINK .'?nav=validerIncription&jeton='.
+			$checkInscription .'">' . $_trad['valider'] .'</a>
+		</div>';
+		//$_formulaire['mail']
+		// envoiMail('carlos.paz@free.fr', $_trad['BienvenuSurLokisalle'], $message);
+		// echo "$message <br> $sql";
+
 		$msg = "OK";
 		
 	}

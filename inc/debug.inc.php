@@ -20,6 +20,15 @@ echo "Valeur de 'cost' la plus appropriée : " . $cost . "\n";
 _debug(get_included_files(), 'FILES INCLUDES');
 //Chargement des info supplementaires
 
+ $to      = 'carlos.paz@free.fr';
+ $subject = 'le sujet';
+ $message = 'Bonjour !';
+ $headers = 'From: webmaster@example.com' . "\r\n" .
+     'Reply-To: webmaster@example.com' . "\r\n" .
+     'X-Mailer: PHP/' . phpversion();
+
+ // mail($to, $subject, $message, $headers);
+
 _debug($_SESSION, 'SESSION');
 _debug($_POST, 'POST');
 _debug($_GET, 'GET');

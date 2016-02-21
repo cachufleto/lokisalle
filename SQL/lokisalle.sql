@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `cp` int(5) DEFAULT NULL,
   `adresse` varchar(30) DEFAULT NULL,
   `statut` set('MEM','COL','ADM') NOT NULL DEFAULT 'MEM',
-  `active` int(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'suppression',
+  `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` int(1) UNSIGNED NOT NULL DEFAULT '2' COMMENT 'suppression',
   PRIMARY KEY (`id_membre`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `pseudo` (`pseudo`)
@@ -51,8 +52,8 @@ CREATE TABLE IF NOT EXISTS `membres` (
 -- Contenu de la table `membres`
 --
 
-INSERT INTO `membres` (`id_membre`, `pseudo`, `mdp`, `nom`, `prenom`, `email`, `sexe`, `telephone`, `gsm`, `ville`, `cp`, `adresse`, `statut`, `active`) VALUES
-(1, 'Admin', 'Admin', 'Paz', 'Carlos', 'carlos.paz.dupriez@gmail.com', 'm', '0606060606', '0662474323', 'Boulogne-Billancourt', 92100, 'Rue escuder', 'ADM', 1);
+INSERT INTO `membres` (`id_membre`, `pseudo`, `mdp`, `nom`, `prenom`, `email`, `sexe`, `telephone`, `gsm`, `ville`, `cp`, `adresse`, `statut`, `inscription`, `active`) VALUES
+(1, 'Admin', 'Admin', 'Paz', 'Carlos', 'carlos.paz.dupriez@gmail.com', 'm', '0606060606', '0662474323', 'Boulogne-Billancourt', 92100, 'Rue escuder', 'ADM', CURRENT_TIMESTAMP, 1);
 
 -- --------------------------------------------------------
 
@@ -81,6 +82,18 @@ CREATE TABLE IF NOT EXISTS `salles` (
 --
 -- Contenu de la table `salles`
 --
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `checkinscription`
+--
+
+DROP TABLE IF EXISTS `checkinscription`;
+CREATE TABLE IF NOT EXISTS `checkinscription` (
+  `id_membre` int(11) NOT NULL,
+  `checkInscription` varchar(250) NOT NULL,
+  `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
