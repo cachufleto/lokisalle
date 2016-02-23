@@ -136,16 +136,16 @@ $_trad['titre']['inscription'] = "S'inscrire";
 $_trad['titre']['mdpperdu'] = "Mot de passe Oublié";
 $_trad['titre']['mentions'] = "Mentions légales";
 $_trad['titre']['mjprofil'] = "Mettre à jour Mes Informations";
-$_trad['titre']['newsletter'] = "newsletter";
+$_trad['titre']['newsletter'] = "Newsletter";
 $_trad['titre']['out'] = "";
 $_trad['titre']['panier'] = "Mes Achats";
-$_trad['titre']['plan'] = "nos rubriques";
-$_trad['titre']['profil'] = "profil";
+$_trad['titre']['plan'] = "Nos Rubriques";
+$_trad['titre']['profil'] = "Profil";
 $_trad['titre']['recherche'] = "Resultat de votre recherche";
 $_trad['titre']['reservation'] = "Toutes nos offres";
 $_trad['titre']['salles'] = "LOKISALLE"; 
-$_trad['titre']['users'] = "membres";
-$_trad['titre']['ventes'] = "commandes";
+$_trad['titre']['users'] = "Membres";
+$_trad['titre']['ventes'] = "Commandes";
 
 /* trad pour les Valeurs des options BDD */
 $_trad['value']['ADM'] = "ADMIN.";

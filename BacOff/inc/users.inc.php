@@ -21,9 +21,6 @@ if(isset($_GET)){
 
 }
 
-// selection de tout les users sauffe le super-ADMIN
-$sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active FROM membres " . (  !isSuperAdmin()? " WHERE id_membre != 1 AND active != 0 " : "" ). " ORDER BY nom, prenom";
-$membres = executeRequete($sql);
 $table = '';
 
 $table .= "<tr><th>". $_trad['champ']['pseudo'] . "</th><th>". $_trad['champ']['nom'] . "</th><th>". $_trad['champ']['prenom'] . "</th>
@@ -32,6 +29,32 @@ $table .= "<th>".$_trad['champ']['active'];
 
 $table .= "</th></tr>";
 
+if(isSuperAdmin()) {
+
+// selection de tout les users sauffe le super-ADMIN
+  $sql = "SELECT m.id_membre, m.pseudo, m.nom, m.prenom, m.email, m.statut, m.active
+        FROM membres m, checkinscription c
+        WHERE m.active = 2 AND m.id_membre = c.id_membre
+        ORDER BY m.nom, m.prenom";
+  $membres = executeRequete($sql);
+
+  if($membres->num_rows > 0 )
+    while ($data = $membres->fetch_assoc()) {
+
+      $table .= "<tr><td>" . $data['pseudo'] . "</td><td>" . $data['nom'] . "</td><td>" . $data['prenom'] . "</td>
+              <td><a href='mailto:" . $data['email'] . "'>" . $data['email'] . "</a></td><td>" . $_trad['value'][$data['statut']] . "</td>";
+      $table .= "<td><a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>";
+      $table .= "NEW :: <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ']['active'] . "</a>";
+
+      $table .= "</td></tr>";
+      # code...
+    }
+}
+
+$sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active
+        FROM membres  WHERE " . (  !isSuperAdmin()? "id_membre != 1 AND active == 1 " : "active != 2" ). "
+        ORDER BY nom, prenom";
+$membres = executeRequete($sql);
 
 while ($data = $membres->fetch_assoc()) {
 
@@ -51,10 +74,10 @@ $table = "<table>$table</table>";
 
 
 
-    <div class="container">
+    <div class="">
 
-      <div class="starter-template">
-        <h1><span class="glyphicon glyphicon-pencil "></span><?php echo $titre; ?></h1>
+      <div class="">
+        <h1><span class=" "></span><?php echo $titre; ?></h1>
 		<hr />
       </div>
       <div class="">

@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `salles` (
 DROP TABLE IF EXISTS `checkinscription`;
 CREATE TABLE IF NOT EXISTS `checkinscription` (
   `id_membre` int(11) NOT NULL,
-  `checkInscription` varchar(250) NOT NULL,
+  `checkinscription` varchar(250) NOT NULL,
   `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

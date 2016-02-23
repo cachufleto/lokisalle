@@ -137,6 +137,6 @@ $nav = (isset ($_GET['nav']) && !empty($_GET['nav']) && isset ($_pages[ $_GET['n
 if('actif' == $nav || 'out' == $nav) $nav = 'connection';
 
 // cas spécifique
-$nav = ($nav=='users')? 'home' : $nav;
+$nav = (!utilisateurEstAdmin() && $nav=='users')? 'home' : $nav;
 // page a inclure
 $__page = INC . $nav . '.inc.php';

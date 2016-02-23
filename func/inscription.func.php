@@ -183,19 +183,20 @@ function formulaireValider(){
 		$sql = "INSERT INTO membres ($sql_champs) VALUES ($sql_Value) ";
 		executeRequete ($sql);
 
-		$checkInscription = hashCrypt($_formulaire['email']['valide']);
-		$sql = "INSERT INTO checkInscription (id_membre, checkInscription)
-			VALUES ( (SELECT id_membre FROM membres WHERE email = '".$_formulaire['email']['valide']."'), '$checkInscription')";
-		executeRequete ($sql);
-		// ouverture d'une session
-		$message = '<div>'.$_trad['ValiderMail'].' <a href="'. LINK .'?nav=validerIncription&jeton='.
-			$checkInscription .'">' . $_trad['valider'] .'</a>
-		</div>';
-		//$_formulaire['mail']
-		// envoiMail('carlos.paz@free.fr', $_trad['BienvenuSurLokisalle'], $message);
-		// echo "$message <br> $sql";
+		$email = $_formulaire['email']['valide'];
+		$checkinscription = hashCrypt($email);
 
-		$msg = "OK";
+		$sql = "INSERT INTO checkinscription (id_membre, checkinscription)
+			VALUES ( (SELECT id_membre FROM membres WHERE email = '$email'), '$checkinscription')";
+
+		if(executeRequete ($sql)){
+			// ouverture d'une session
+			$message = '<div>'.$_trad['ValiderMail'].' <a href="'. LINK .'?nav=validerIncription&jeton='.
+				$checkinscription .'">' . $_trad['valider'] .'</a>
+			</div>';
+
+			$msg = (envoiMail($email, $_trad['BienvenuSurLokisalle'], $message))? "OK" : $msg;
+		}
 		
 	}
 

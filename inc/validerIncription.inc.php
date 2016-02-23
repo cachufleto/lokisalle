@@ -8,8 +8,8 @@
 
 var_dump($_GET);
 
-$sql = "SELECT * FROM membres, checkInscription WHERE membres.id_membre = checkInscription.id_membre
-AND checkInscription.checkInscription = '".$_GET['jeton']."'";
+$sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
+AND checkinscription.checkinscription = '".$_GET['jeton']."'";
 echo "<p>$sql</p>";
 $incription = executeRequete($sql);
 if($incription->fetch_row()) {
@@ -21,13 +21,13 @@ if($incription->fetch_row()) {
 
 }
 
-$sql = "UPDATE membres SET active = 1 WHERE id_membre = ( SELECT id_membre FROM checkInscription WHERE checkInscription = '".$_GET['jeton']."')";
+$sql = "UPDATE membres SET active = 1 WHERE id_membre = ( SELECT id_membre FROM checkinscription WHERE checkinscription = '".$_GET['jeton']."')";
 
 echo "<p>$sql</p>";
 
 executeRequete($sql);
 
-$sql = "DELETE FROM `checkInscription` WHERE checkInscription = '".$_GET['jeton']."'";
+$sql = "DELETE FROM `checkinscription` WHERE checkinscription = '".$_GET['jeton']."'";
 echo "<p>$sql</p>";
 
 executeRequete($sql);
