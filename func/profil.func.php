@@ -49,11 +49,14 @@ function formulaireValider(){
 				switch($key){
 					
 					case 'pseudo': 
-					case 'mdp': 
 					case 'id_membre':
 						// je ne fait riens
 					break;
-					
+
+					case 'mdp':
+						$valeur = (!empty($valeur))? hashCrypt($valeur) : '';
+						break;
+
 					case 'email': // il est obligatoire
 
 						if (testFormatMail($valeur)) {
@@ -181,6 +184,7 @@ function formulaireValider(){
 		
 		// mise à jour de la base des données
 		$sql = 'UPDATE membres SET '.$sql_set.'  WHERE id_membre = '.$_formulaire['id_membre']['sql'];
+		echo $sql;
 
 		if (!empty($sql_set)) 
 			executeRequete ($sql);
