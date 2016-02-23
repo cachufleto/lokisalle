@@ -21,21 +21,18 @@ if(isset($_GET)){
 
 }
 
-$_trad['id_salle'] = 'Identifiant';
-$_trad['titre'] = 'Nom';
-$_trad['capacite'] = 'Capacité';
-$_trad['categorie'] = 'Categorie';
-$_trad['R'] = 'Reunions';
-$_trad['F'] = 'Fêtes';
-$_trad['C'] = 'Conferences';
-
 // selection de tout les users sauffe le super-ADMIN
-$sql = "SELECT id_salle, titre, capacite, categorie FROM salles " . (  !isSuperAdmin()? " WHERE active != 0 " : "" ). " ORDER BY cp, titre";
+$sql = "SELECT id_salle, titre, capacite, categorie
+        FROM salles " . (  !isSuperAdmin()? " WHERE active != 0 " : "" ). "
+        ORDER BY cp, titre";
 $membres = executeRequete($sql);
 $table = '';
 
-$table .= "<tr><th>". $_trad['id_salle'] . "</th><th>". $_trad['titre'] . "</th><th>". $_trad['capacite'] . "</th>
-          <th>". $_trad['categorie'] . "</th>";
+$table .= "<tr>
+    <th>". $_trad['champ']['id_salle'] . "</th>
+    <th>". $_trad['champ']['titre'] . "</th>
+    <th>". $_trad['champ']['capacite'] . "</th>
+    <th>". $_trad['champ']['categorie'] . "</th>";
 //$table .= "<th>".$_trad['activer'];
 
 $table .= "</th></tr>";
@@ -43,8 +40,11 @@ $table .= "</th></tr>";
 
 while ($data = $membres->fetch_assoc()) {
 
-  $table .= "<tr><td>". $data['id_salle'] . "</td><td>". $data['titre'] . "</td><td>". $data['capacite'] . "</td>
-            <td>". $_trad[$data['categorie']] . "</td>";
+  $table .= "<tr>
+        <td>". $data['id_salle'] . "</td>
+        <td>". $data['titre'] . "</td>
+        <td>". $data['capacite'] . "</td>
+        <td>". $_trad['value'][$data['categorie']] . "</td>";
 //  $table .= "<td><a href='". LINKADMIN.'?nav=profil&id='.$data['id_salle'] . "'>".$_trad['modifier']."</a>";
  // $table .= ($data['active'] == 1 )?" <a href='". LINKADMIN.'?nav=users&delete='.$data['id_salle'] . "'>".$_trad['delete']."</a>" :
  //           " <a href='". LINKADMIN.'?nav=users&active='.$data['id_salle'] . "'>".$_trad['activer']."</a>";

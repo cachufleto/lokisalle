@@ -1,34 +1,26 @@
 <?php
+header( "refresh:5;url=index.php?nav=actif" );
+echo $_trad['redirigeVerConnection'];
 /**
  * Created by PhpStorm.
  * User: Domoquick
  * Date: 22/02/2016
  * Time: 00:01
  */
+if(isset($_GET['jeton']) && !empty($_GET['jeton'])) {
 
-var_dump($_GET);
+    $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
+            AND checkinscription.checkinscription = '" . $_GET['jeton'] . "'";
+    $incription = executeRequete($sql);
 
-$sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
-AND checkinscription.checkinscription = '".$_GET['jeton']."'";
-echo "<p>$sql</p>";
-$incription = executeRequete($sql);
-if($incription->fetch_row()) {
-    $membre = $incription->fetch_row();
-    var_dump($membre);
-} else {
+    if ($incription->fetch_row()) {
 
-    echo "<p>PAS DE JETON</p>";
+        $membre = $incription->fetch_row();
 
+        $sql = "UPDATE membres SET active = 1 WHERE id_membre = " . $membre['id_membre'] . ";";
+        $sql .= "DELETE FROM `checkinscription` WHERE id_membre = " . $membre['id_membre'] . ";";
+        executeMultiRequete($sql);
+
+    }
 }
-
-$sql = "UPDATE membres SET active = 1 WHERE id_membre = ( SELECT id_membre FROM checkinscription WHERE checkinscription = '".$_GET['jeton']."')";
-
-echo "<p>$sql</p>";
-
-executeRequete($sql);
-
-$sql = "DELETE FROM `checkinscription` WHERE checkinscription = '".$_GET['jeton']."'";
-echo "<p>$sql</p>";
-
-executeRequete($sql);
-
+exit();

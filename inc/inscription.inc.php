@@ -6,9 +6,8 @@ $msg = postCheck('_formulaire');
 // affichage des messages d'erreur
 if('OK' == $msg){
 	// on renvoi ver connection
-	header('Location:index.php?nav=actif&qui='.$_formulaire['pseudo']['valide'].
-		'&mp='.$_formulaire['mdp']['valide'].'');
-	exit();
+	$form = '<a href="?index.php">SUITE</a>';
+
 }else{
 	// RECUPERATION du formulaire
 	$form = '

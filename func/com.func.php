@@ -146,13 +146,34 @@ function utilisateurEstConnecte() {
 }
 
 
-function envoiMail($to = 'carlos.paz@free.fr', $subject = 'Lokisalle', $message = 'Bonjour !')
+function envoiMail($key, $to = 'carlos.paz@free.fr')
 {
-	$headers = 'From: webmaster@lokisalle.domoquick.fr' . "\r\n" .
-		'Reply-To: carlos.dupriez@gmail.com' . "\r\n" .
-		'X-Mailer: PHP/' . phpversion();
+	global $_trad;
+	// message
+	$message = '
+     <html>
+      <head>
+       <title> </title>
+      </head>
+      <body>
+       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerIncription&jeton='.
+		$key . '">' . $_trad['valide'] . '</a></p>
+      </body>
+     </html>
+     ';
 
-	return mail($to, $subject, $message, $headers);
+	// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+	$headers  = 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+	// En-têtes additionnels
+	$headers .= 'To: ' . $to . "\r\n";
+	$headers .= 'From: ' . $_trad['inscriptionLokisalle'] . ' <webmaster@lokisalle.domoquick.fr>' . "\r\n";
+	$headers .= 'Reply-To: carlos.dupriez@gmail.com' . "\r\n";
+	$headers .=  'X-Mailer: PHP/' . phpversion();
+
+	// Envoi
+	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
 }
 
 # Fonction debug()
@@ -169,8 +190,7 @@ function debug($mode=0){
 	if($mode === 1)
 	{
 		echo '<pre>'; var_dump($_debug); echo '</pre>';
-	}
-	else {
+	} else {
 		echo '<pre>'; print_r($_debug); echo '</pre>';
 	}
 

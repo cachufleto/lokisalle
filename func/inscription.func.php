@@ -190,12 +190,7 @@ function formulaireValider(){
 			VALUES ( (SELECT id_membre FROM membres WHERE email = '$email'), '$checkinscription')";
 
 		if(executeRequete ($sql)){
-			// ouverture d'une session
-			$message = '<div>'.$_trad['ValiderMail'].' <a href="'. LINK .'?nav=validerIncription&jeton='.
-				$checkinscription .'">' . $_trad['valider'] .'</a>
-			</div>';
-
-			$msg = (envoiMail($email, $_trad['BienvenuSurLokisalle'], $message))? "OK" : $msg;
+			$msg = (envoiMail($checkinscription, $email))? "OK" : $msg;
 		}
 		
 	}

@@ -15,7 +15,9 @@ $form = '
 			<form action="#" method="POST">
 			' . formulaireAfficher($_formulaire) . ' 
 			</form>';
-} ?>
+}
+
+?>
 
     <principal clas="<?php echo $nav; ?>">
 		<h1><?php echo $titre; ?></h1>
@@ -26,13 +28,14 @@ $form = '
 			echo $msg;
 			echo $form;
 			?>
-		<div class="ligneForm">
+			<div class="ligneForm">
 				<label class="label"><?php echo $_trad['pasEncoreMembre']; ?></label>
 				<div class="champs"><a href="?nav=inscription"><?php echo $_trad['inscrivezVous']; ?></a></div>
-		</div>
+			</div>
+			<div class="ligneForm">
+				<label class="label"><?php echo $_trad['motPasseOublie']; ?></label>
+				<div class="champs"><a href="?nav=changermotpasse"><?php echo $_trad['demandeDeMotPasse']; ?></a></div>
+			</div>
 		<hr />
-		<span class="alert">
-		BUG // Securiser le mot passe par cryptage!!!<br>
-		</span>
 		</div>
 	</principal>
