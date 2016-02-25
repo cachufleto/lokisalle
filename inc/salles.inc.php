@@ -1,6 +1,7 @@
 <?php
-
-// 
+/**
+ * Control des variables externes
+ */
 if(isset($_GET)){
   if(!empty($_GET['reserver'])){
     $_SESSION['panier'][$_GET['reserver']] = true;
@@ -9,52 +10,36 @@ if(isset($_GET)){
   }
 }
 
-
-
-
 // selection de tout les users sauffe le super-ADMIN
 $sql = "SELECT id_salle, titre, capacite, categorie, photo, active FROM salles " . (  !isSuperAdmin()? " WHERE active != 0 " : "" ). " ORDER BY cp, titre";
 $membres = executeRequete($sql);
 $table = '';
 
-$table .= '<tr><th>'. $_trad['champ']['id_salle'] . '</th><th>'. $_trad['champ']['titre'] . '</th><th>'. $_trad['champ']['capacite'] . '</th>
-          <th>'. $_trad['champ']['categorie'] . '</th><th>'. $_trad['champ']['photo'] . '</th>';
-$table .= '<th>'.$_trad['select'];
-
-$table .= '</th></tr>';
 
 $position = 1;
+
+/**
+ * Traitement de la BDD table salles
+ */
 while ($data = $membres->fetch_assoc()) {
 
-  $table .= '
-    <tr><td>'. $data['id_salle'] . '</td><td>'. $data['titre'] . '</td><td>'. $data['capacite'] . '</td><td>'. 
-    $_trad['value'][$data['categorie']] . '</td><td><a href="'. LINK.'?nav=ficheSalles&id='.$data['id_salle'] . 
+  $table .= "\t" . '<tr>' . "\r\n";
+  $table .= "\t\t" . '<td>'. $data['id_salle'] . '</td>' . "\r\n";
+  $table .= "\t\t" . '<td>'. $data['titre'] . '</td>' . "\r\n";
+  $table .= "\t\t" . '<td>'. $data['capacite'] . '</td>' . "\r\n";
+  $table .= "\t\t" . '<td>'. $_trad['value'][$data['categorie']] . '</td>' . "\r\n";
+  $table .= "\t\t" . '<td><a href="'. LINK.'?nav=ficheSalles&id='.$data['id_salle'] .
     '&pos='.$position.'" id="P-'. $position.'" ><img class="trombi" src="'. LINK.'photo/'.$data['photo'] . 
-    '" ></a></td><td>';
+    '" ></a></td>' . "\r\n";
+  $table .= "\t\t" . '<td>' . "\r\n";
 
   $table .= (isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true)?
         '<a href="'. LINK.'?nav=salles&enlever='.$data['id_salle'] . '#P-'.$position.'" >'.$_trad['enlever'].'</a>' :
         ' <a href="'. LINK.'?nav=salles&reserver='.$data['id_salle'] . '#P-'.$position.'">'.$_trad['reserver'].'</a>';
 
-  $table .= '</td></tr>';
+  $table .= "\t\t" . '</td>' . "\r\n";
+  $table .= "\t" . '</tr>' . "\r\n";
   $position++;
 }
 
-$table = '<table>'.$table.'
-</table>';
-
-?>
-
-
-
-    <div class="container">
-
-      <div class="starter-template">
-        <h1><span class="glyphicon glyphicon-pencil "></span><?php echo $titre; ?></h1>
-	   <hr />
-      </div>
-      <div class="">
-        <?php echo $msg, $table; ?>
-		<hr />
-      </div>
-    </div><!-- /.container -->
+include (TEMPLATE . 'salles.html.php');

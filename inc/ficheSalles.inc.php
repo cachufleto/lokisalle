@@ -7,26 +7,12 @@ if( modCheck('_formulaire', $_id, 'salles') ){
 	// traitement POST du formulaire
 
 	$form = formulaireAfficherInfo($_formulaire); 
+	$form .=  "<a href=\"?nav=salles#P-$position\">" . $_trad['revenir'] . "</a>";
 
-	$form .=  '<a href="?nav=salles#P-'.$position.'">'.$_trad['revenir'].'</a>';
+	include(TEMPLATE . 'ficheSalles.html.php');
 
 } else {
 
 	header('Location:index.php');
 	exit();
-}	// RECUPERATION du formulaire
-?>
-    <principal clas="<?php echo $nav; ?>">
-		<h1><?php echo $titre; ?></h1>
-		<hr />
-		<div id="formulaire">
-			<?php  
-			// affichage
-			echo $msg, $form; 
-			?>
-		</div>
-		<hr />
-		</principal>
-		<pre>
-<?php print_r($_formulaire);	 ?>
-	</pre>
+}

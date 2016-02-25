@@ -1,11 +1,13 @@
 <?php
-
-# Fonction connectMysqli()
-# connection à SQL
-# $req => string SQL
-# BLOQUANT
-# RETURN object
-function connectMysqli(){
+/**
+ * Fonction connectMysqli()
+ * connexion à SQL
+ * @param $req => string SQL
+ * BLOQUANT
+ * RETURN object
+ */
+function connectMysqli()
+{
 
 	global $BDD;
 
@@ -24,13 +26,15 @@ function connectMysqli(){
 
 }
 
-# Fonction executeRequete()
-# Exe requette SQL
-# $req => string SQL
-# BLOQUANT
-# RETURN object
-//function executeRequete($req, $connexion = 'mysqli') {
-function executeRequete($req) {	
+/**
+ * Fonction executeRequete()
+ * Exe requette SQL
+ * $req => string SQL
+ * BLOQUANT
+ * RETURN object
+ */
+function executeRequete($req)
+{
 	
 	$connexion = connectMysqli();
 
@@ -46,12 +50,15 @@ function executeRequete($req) {
 	return $resultat;
 }
 
-# Fonction executeMultiRequete()
-# Exe requette SQL
-# $req => string SQL
-# BLOQUANT
-# RETURN object
-function executeMultiRequete($req) {
+/**
+ * Fonction executeMultiRequete()
+ * Exe requette SQL
+ * $req => string SQL
+ * BLOQUANT
+ * RETURN object
+ */
+function executeMultiRequete($req)
+{
 
 	global $_trad;
 
@@ -77,25 +84,36 @@ function executeMultiRequete($req) {
 
 }
 
-# Fonction hashCrypt()
-# RETURN string crypt
-function hashCrypt ($chaine) {
+/**
+ * Fonction hashCrypt()
+ * RETURN string crypt
+ */
+function hashCrypt ($chaine)
+{
 
 	global $options;
 	return password_hash($chaine, PASSWORD_BCRYPT, $options);
 
 }
 
-# Fonction hashCrypt()
-# RETURN string crypt
-function hashDeCrypt ($info) {
+/**
+ * Fonction hashCrypt()
+ * RETURN string crypt
+ */
+function hashDeCrypt ($info)
+{
 
-	//password_verify($password, $hash)
+	// password_verify (password, hash)
 	return password_verify($info['valide'], $info['sql']);
 
 }
 
-function ouvrirSession($session, $control = false){
+/**
+ * Fonction ouvrirSession()
+ * RETURN string crypt
+ */
+function ouvrirSession($session, $control = false)
+{
 
 	$_SESSION['user'] = array(
 		'id'=>$session['id_membre'],
@@ -108,59 +126,63 @@ function ouvrirSession($session, $control = false){
 	setcookie( 'Lokisalle[pseudo]' , ($control)? $session['pseudo'] : '' , time()+360000 );
 }
 
-
-# Fonction isSuperAdmin()
-# Verifie SESSION ADMIN ACTIVE
-# RETURN Boolean
-function isSuperAdmin() {
+/**
+ * Fonction isSuperAdmin()
+ * Verifie SESSION ADMIN ACTIVE
+ * RETURN Boolean
+ */
+function isSuperAdmin()
+{
 	
 	return(utilisateurEstAdmin() AND $_SESSION['user']['id'] == 1)? true : false;
 
 }
 
-# Fonction utilisateurEstAdmin()
-# Verifie SESSION ADMIN ACTIVE
-# RETURN Boolean
-function utilisateurEstAdmin () {
+/**
+ * Fonction utilisateurEstAdmin()
+ * Verifie SESSION ADMIN ACTIVE
+ * RETURN Boolean
+ */
+function utilisateurEstAdmin ()
+{
 	
 	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'ADM')? true : false;
 
 }
 
-# Fonction utilisateurEstAdmin()
-# Verifie SESSION ADMIN ACTIVE
-# RETURN Boolean
-function utilisateurEstCollaborateur () {
+/**
+ * Fonction utilisateurEstAdmin()
+ * Verifie SESSION ADMIN ACTIVE
+ * RETURN Boolean
+ */
+function utilisateurEstCollaborateur ()
+{
 	
 	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'COL')? true : false;
 
 }
 
-# Fonction utilisateurEstConnecte()
-# Verifie SESSION ACTIVE
-# RETURN Boolean
-function utilisateurEstConnecte() {
+/**
+ * Fonction utilisateurEstConnecte()
+ * Verifie SESSION ACTIVE
+ * RETURN Boolean
+ */
+function utilisateurEstConnecte()
+{
 
 	return (!isset($_SESSION['user']))? false : true;
 	
 }
 
 
+/**
+ * Fonction envoiMail()
+ * envoi un mail
+ * RETURN Boolean
+ */
 function envoiMail($key, $to = 'carlos.paz@free.fr')
 {
 	global $_trad;
-	// message
-	$message = '
-     <html>
-      <head>
-       <title> </title>
-      </head>
-      <body>
-       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerIncription&jeton='.
-		$key . '">' . $_trad['valide'] . '</a></p>
-      </body>
-     </html>
-     ';
 
 	// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -172,20 +194,100 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 	$headers .= 'Reply-To: carlos.dupriez@gmail.com' . "\r\n";
 	$headers .=  'X-Mailer: PHP/' . phpversion();
 
+	// chargement de la var $message
+	include(TEMPLATE . 'validationpassword.html.php');
+
 	// Envoi
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
 }
 
-# Fonction debug()
-# affiche les informations passes dans l'argument $var
-# $var => string, array, object
-# $mode => defaut = 1
-# RETURN NULL;
-function debug($mode=0){
+
+/**
+ * Fonction listeDistinc()
+ * genere une liste avec des valeurs distinc d'un champ
+ * RETURN Boolean
+ */
+function listeDistinc($champ, $table, $info)
+{
+
+	global $_trad;
+
+	$sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
+
+	$result = executeRequete($sql);
+	$balise = '';
+	if($result->num_rows > 0) {
+		$balise = "<select class=\"\" id=\"$champ\" name=\"$champ\">";
+
+		while ($data = $result->fetch_assoc()) {
+			$value = $data[$champ];
+			$libelle = (isset($_trad['value'][$value])) ? $_trad['value'][$value] : $value;
+			$check = selectCheck($info, $value);
+			$balise .= "<option value=\"$value\" $check >$libelle</option>";
+		}
+		// Balise par defaut
+		$balise .= '</select>';
+	}
+	return $balise;
+}
+
+/**
+ * function dernieresOffresTemplate()
+ * @param $salle
+ * @return string
+ */
+function dernieresOffresTemplate($salle)
+{
+
+	global $_trad;
+
+	$offre  = "<div class=\"offre\">\r\n";
+	$offre .= "\t<div>" . $salle['titre'] . "</div>\r\n";
+	$offre .= "\t<figure>\r\n";
+	$offre .= "\t\t<img class=\"ingOffre\" src=\"" . LINK . "photo/" . $salle['photo'] . "\" alt=\"\" />\r\n";
+	$offre .= "\t\t<figcaption>Légende associée</figcaption>";
+	$offre .= "\t</figure>";
+	$offre .= "\t<div>" . $salle['capacite'] . " / " . $_trad['value'][$salle['categorie']] . "</div>\r\n";
+	$offre .= "\t<hr/>\r\n";
+	$offre .= "</div>\r\n";
+
+	return $offre;
+}
+
+/**
+ * function ficheContactTemplate()
+ * @param $contact
+ * @return string
+ */
+function ficheContactTemplate($contact)
+{
+
+	global $_trad;
+
+	$offre  = "<div class=\"fiche\">\r\n";
+	$offre .= "\t<div>" . $contact['prenom'] . " " . $contact['nom'] . "</div>\r\n";
+	$offre .= "\t\t<div><a href=\"mailto:" . $contact['email'] . "\">" . $contact['email'] . "</a></div>\r\n";
+	$offre .= "\t\t<div>" . $_trad['value'][$contact['statut']] . "</div>\r\n";
+	$offre .= "\t<hr/>\r\n";
+	$offre .= "</div>\r\n";
+
+	return $offre;
+}
+
+
+/**
+ * Fonction debug()
+ * affiche les informations passes dans l'argument $var
+ * @param $var => string, array, object
+ * @param $mode => defaut = 1
+ * RETURN NULL;
+ */
+function debug($mode=0)
+{
 
 	global $_debug;
 	
-	echo '<div class="col-md-12">';
+	echo "<div class=\"col-md-12\">";
 
 	if($mode === 1)
 	{
@@ -199,7 +301,16 @@ function debug($mode=0){
 	return;
 }
 
-function _debug($var, $label){
+
+/**
+ * Fonction _debug()
+ * rengement dans un tableau les informations passes dans l'argument $var
+ * @param $var => string, array, object
+ * @param $mode => defaut = 1
+ * RETURN NULL;
+ */
+function _debug($var, $label)
+{
 	
 	global $_debug;
 	

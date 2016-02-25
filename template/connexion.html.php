@@ -1,32 +1,11 @@
-<?php
-# FORMULAIRE D'INSCRIPTION
-# FUNCTIONS formulaires
-include_once FUNC . 'form.func.php';
-
-/////////////////////////////////////
-if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
-	// affichage
-	$msg = $_trad['erreur']['acces'];
-
-} else {
-
-// RECUPERATION du formulaire
-$form = '
-			<form action="#" method="POST">
-			' . formulaireAfficher($_formulaire) . ' 
-			</form>';
-}
-
-?>
-
-    <principal clas="<?php echo $nav; ?>">
+   <principal clas="<?php echo $nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
 		<div id="formulaire">
-			<?php
-			// affichage
-			echo $msg;
-			echo $form;
+			<?php echo $msg; ?>
+			<form action="#" method="POST">
+			<?php echo $form; ?>
+			</form>
 			?>
 			<div class="ligneForm">
 				<label class="label"><?php echo $_trad['pasEncoreMembre']; ?></label>

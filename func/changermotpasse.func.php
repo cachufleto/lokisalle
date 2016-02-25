@@ -1,5 +1,4 @@
 <?php
-# FUNCTIONS Connection
 include_once FUNC . 'form.func.php';
 
 # Fonction valideForm()

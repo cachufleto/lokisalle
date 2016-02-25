@@ -1,6 +1,5 @@
 <?php
-header( "refresh:5;url=index.php?nav=actif" );
-echo $_trad['redirigeVerConnection'];
+$msg = $_trad['redirigeVerConnexion'];
 /**
  * Created by PhpStorm.
  * User: Domoquick
@@ -23,4 +22,5 @@ if(isset($_GET['jeton']) && !empty($_GET['jeton'])) {
 
     }
 }
-exit();
+
+include(TEMPLATE . 'validerinscription.html.php');

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(!defined('RACINE_SITE')) {
 	header('Location:../index.php');
 	exit();
@@ -133,8 +133,8 @@ $navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
 // page de navigation
 $nav = (isset ($_GET['nav']) && !empty($_GET['nav']) && isset ($_pages[ $_GET['nav'] ]))? $_GET['nav'] : 'home';
 
-// REGLE D'orientation des pages actif et out ver connection
-if('actif' == $nav || 'out' == $nav) $nav = 'connection';
+// REGLE D'orientation des pages actif et out ver connexion
+if('actif' == $nav || 'out' == $nav) $nav = 'connexion';
 
 // cas spécifique
 $nav = (!utilisateurEstAdmin() && $nav=='users')? 'home' : $nav;

@@ -70,7 +70,7 @@ function liste_nav($liste=''){
 	foreach ($_liste as $item){
 		$info = $_pages[$item];
 		$active = ($item == $nav)? 'active' : '';
-		$class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';		
+		$class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';
 		$menu .= '
 		<li class="' . $active .' '. $class.' col-'.$col.'">
 			<a href="'. (($ADM)? LINKADMIN : $info['link'] ) .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a>

@@ -5,8 +5,9 @@ $msg = postCheck('_formulaire');
 
 // affichage des messages d'erreur
 if('OK' == $msg){
-	// on renvoi ver connection
-	$form = '<a href="?index.php">SUITE</a>';
+	// on renvoi ver connexion
+	$msg = $_trad['validerInscription'];
+	$form = '<a href="?nav=home">SUITE</a>';
 
 }else{
 	// RECUPERATION du formulaire
@@ -14,16 +15,8 @@ if('OK' == $msg){
 			<form action="#" method="POST">
 			' . formulaireAfficher($_formulaire) . ' 
 			</form>';
-?>
-    <principal clas="<?php echo $nav; ?>">
-		<h1><?php echo $titre; ?></h1>
-		<hr />
-		<div id="formulaire">
-			<?php  
-			// affichage
-			echo $msg, $form; 
-			?>
-		</div>
-		<hr />
-		</principal>
-<?php } ?>
+
+
+ }
+
+include(TEMPLATE . 'inscription.html.php');

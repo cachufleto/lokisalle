@@ -1,1 +1,2 @@
-BONJOUR ADMIN
+<?php
+include(TEMPLATE . 'backoffice.inc.php');

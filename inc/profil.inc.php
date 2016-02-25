@@ -11,7 +11,7 @@ if( modCheck('_formulaire', $_id, 'membres') ){
 	$msg = ($_valider)? postCheck('_formulaire', TRUE) : '';
 
 	if('OK' == $msg){
-		// on renvoi ver connection
+		// on renvoi ver connexion
 		$msg = $_trad['lesModificationOntEteEffectues'];
 		// on évite d'afficher les info du mot de passe
 		unset($_formulaire['mdp']);
@@ -43,21 +43,4 @@ if( modCheck('_formulaire', $_id, 'membres') ){
 
 }
 
-?>
-    <principal clas="<?php echo $nav; ?>">
-		<h1><?php echo $titre; ?></h1>
-		<hr />
-		<div id="formulaire">
-			<?php  
-			// affichage
-			echo $msg; 
-			?>
-			<form action="#" method="POST">
-			<?php  
-			// affichage
-			echo $form; 
-			?>
-			</form>
-		</div>
-		<hr />
-	</principal>
+include(TEMPLATE . 'profil.html.php');

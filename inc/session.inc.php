@@ -1,5 +1,5 @@
 <?php
-// Déconnection de l'utilisateur par tentative d'intrusion
+// Déconnexion de l'utilisateur par tentative d'intrusion
 // comportement de déconnexion sur le site
 if(isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])){
 
@@ -32,8 +32,8 @@ if(isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])){
 	# FUNCTIONS formulaires
 	include_once FUNC . 'form.func.php';
 	// inclusion des sources requises pour executer la connexion
-	include_once(PARAM.'connection.php');
-	include_once(FUNC.'connection.php');
+	include_once(PARAM.'connexion.php');
+	include_once(FUNC.'connexion.php');
 
 	// traitement du formulaire
 	$msg = postCheck('_formulaire');

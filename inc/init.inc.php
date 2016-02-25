@@ -16,6 +16,7 @@ define("ADM", APP.REPADMIN);
 define("INC", APP.'inc/');
 define("FUNC", APP.'func/');
 define("PARAM", APP.'param/');
+define("TEMPLATE", APP.'template/');
 define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$___dossier)));
 define("LINKADMIN", LINK.REPADMIN);
 
@@ -65,7 +66,6 @@ $titre = $_trad['titre'][$nav];
 $__link = APP . 'css/' . $nav . '.css';
 if(file_exists($__link) )
 	$_linkCss[] = LINK . 'css/' . $nav . '.css';
-
 
 #########################################################
 ## retablire les tables de la base pour DEMO

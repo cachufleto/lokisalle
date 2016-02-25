@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(!defined('RACINE_SITE')) {
 	header('Location:../index.php');
 	exit();
