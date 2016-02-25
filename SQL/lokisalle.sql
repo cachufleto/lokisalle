@@ -3,12 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 07 Février 2016 à 23:48
+-- Généré le :  Mer 24 Février 2016 à 14:37
 -- Version du serveur :  5.7.9
 -- Version de PHP :  5.6.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,6 +18,20 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `lokisalle`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `checkinscription`
+--
+
+DROP TABLE IF EXISTS `checkinscription`;
+CREATE TABLE IF NOT EXISTS `checkinscription` (
+  `id_membre` int(11) NOT NULL,
+  `checkinscription` varchar(250) NOT NULL,
+  `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY `id_membre` (`id_membre`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -45,15 +58,16 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `active` int(1) UNSIGNED NOT NULL DEFAULT '2' COMMENT 'suppression',
   PRIMARY KEY (`id_membre`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `pseudo` (`pseudo`),
+  KEY `id_membre` (`id_membre`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `membres`
 --
 
 INSERT INTO `membres` (`id_membre`, `pseudo`, `mdp`, `nom`, `prenom`, `email`, `sexe`, `telephone`, `gsm`, `ville`, `cp`, `adresse`, `statut`, `inscription`, `active`) VALUES
-(1, 'Admin', 'Admin', 'Paz', 'Carlos', 'carlos.paz.dupriez@gmail.com', 'm', '0606060606', '0662474323', 'Boulogne-Billancourt', 92100, 'Rue escuder', 'ADM', CURRENT_TIMESTAMP, 1);
+(1, 'Admin', 'Admin', 'Paz', 'Carlos', 'carlos.paz.dupriez@gmail.com', 'm', '0606060606', '0662474323', 'Boulogne-Billancourt', 92100, 'Rue escuder', 'ADM', '2016-02-24 15:15:53', 1);
 
 -- --------------------------------------------------------
 
@@ -77,23 +91,17 @@ CREATE TABLE IF NOT EXISTS `salles` (
   `categorie` enum('R','C','F') NOT NULL DEFAULT 'R',
   `active` int(1) DEFAULT '0',
   PRIMARY KEY (`id_salle`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `salles`
---
--- --------------------------------------------------------
-
---
--- Structure de la table `checkinscription`
---
-
-DROP TABLE IF EXISTS `checkinscription`;
-CREATE TABLE IF NOT EXISTS `checkinscription` (
-  `id_membre` int(11) NOT NULL,
-  `checkinscription` varchar(250) NOT NULL,
-  `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `checkinscription`
+--
+ALTER TABLE `checkinscription`
+  ADD CONSTRAINT `chekMortPasse` FOREIGN KEY (`id_membre`) REFERENCES `membres` (`id_membre`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

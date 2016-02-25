@@ -1,12 +1,12 @@
 <?php
 // Intertion des parametres de fonctionement
 require_once("inc/init.inc.php");
+$_menu = '';
 
 // intertion de l'entête
 require_once(INC . "header.inc.php");
 
 // insertion menu de navigation
-$_menu = '';
 echo '<div id="content">';
 require_once(INC . "nav.inc.php");
 //CONTENEUR

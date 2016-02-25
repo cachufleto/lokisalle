@@ -1,6 +1,7 @@
 <?php
 // Intertion des parametres de fonctionement
 require_once("../inc/init.inc.php");
+$_menu = 'navAdmin';
 
 // control d'acces à l'aplication ADMIN
 if(!utilisateurEstAdmin()){
@@ -19,7 +20,6 @@ if(file_exists($__link) )
 require_once(INC . "header.inc.php");
 
 // insertion menu de navigation
-$_menu = 'navAdmin';
 echo '<div id="content">';
 require_once(INC . "nav.inc.php");
 //CONTENER

@@ -7,7 +7,7 @@ $_formulaire['pseudo'] = array(
 	'type' => 'text',
 	'maxlength' => 14,
 	'defaut' => $_trad['champ']['pseudo']);
-	
+
 $_formulaire['mdp'] = array(
 	'type' => 'password',
 	'maxlength' => 14,
