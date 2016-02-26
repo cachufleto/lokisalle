@@ -183,6 +183,7 @@ $_trad['pasDansMenu'] = " n'exisite pas dans le menu!";
 $_trad['pasDansMenuAdmin'] = " n'exisite pas dans le menu Admin!";
 $_trad['pasDansMenuFooter'] = " n'exisite pas dans le menu du pied de page!";
 $_trad['pasDansMenuMembre'] = " n'exisite pas dans le menu des membres!";
+$_trad['pasDeJeton'] = "Le Jeton n'est plus valide";
 $_trad['pasEncoreMembre'] = " Pas encore membre? ";
 $_trad['rectifier'] = "Rectifier";
 $_trad['redirigeVerConnexion'] = "<h2>Bienvenu Sur le site de Lokisalle</h2><p>Vous serait redirigé ver la page de <a href='index.php?nav=actif'>connexion!</a>.</p>";

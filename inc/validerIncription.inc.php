@@ -1,27 +1,20 @@
 <?php
-$msg = $_trad['redirigeVerConnexion'];
-/**
- * Created by PhpStorm.
- * User: Domoquick
- * Date: 22/02/2016
- * Time: 00:01
- */
+include(MODEL . 'Inscription.php');
 
+$msg = $_trad['redirigeVerConnexion'];
 
 if(isset($_GET['jeton']) && !empty($_GET['jeton'])) {
 
-    $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
-            AND checkinscription.checkinscription = '" . $_GET['jeton'] . "'";
-    $incription = executeRequete($sql);
+    $incription = inscriptionSelectMembreJeton($_GET['jeton']);
 
-    if ($incription->fetch_row()) {
+    if ($incription->num_rows == 1) {
 
         $membre = $incription->fetch_row();
 
-        $sql = "UPDATE membres SET active = 1 WHERE id_membre = " . $membre['id_membre'] . ";";
-        $sql .= "DELETE FROM `checkinscription` WHERE id_membre = " . $membre['id_membre'] . ";";
-        executeMultiRequete($sql);
+        inscriptionValideJeton($membre['id_membre']);
 
+    } else {
+        $msg = $_trad['pasDeJeton'];
     }
 }
 

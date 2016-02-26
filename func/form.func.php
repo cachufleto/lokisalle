@@ -8,7 +8,6 @@
 # RETURN string alerte
 function postCheck($nomFormulaire, $mod=FALSE){
 
-	
 	global $_trad, ${$nomFormulaire};
 
 	$fomulaire = ${$nomFormulaire};
