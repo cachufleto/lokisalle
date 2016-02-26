@@ -1,7 +1,6 @@
 <?php
 // Intertion des parametres de fonctionement
 require_once("../inc/init.inc.php");
-$_menu = 'navAdmin';
 
 // control d'acces à l'aplication ADMIN
 if(!utilisateurEstAdmin()){
@@ -9,49 +8,49 @@ if(!utilisateurEstAdmin()){
  	exit();	
 }
 
-// ajout du css admin
-$_linkCss[] = LINK . 'css/admin.css';
-// ajout du css de la page en cour
-$__link = APP . 'css/' . $nav . '.adm.css';
-if(file_exists($__link) )
-	$_linkCss[] = LINK . 'css/' . $nav . '.adm.css';
+// surcharge des parametres admin
+require_once("/inc/init.inc.php");
 
 // insertion de l'entête
 require_once(INC . "header.inc.php");
 
 // insertion menu de navigation
-echo '<div id="content">';
 require_once(INC . "nav.inc.php");
-//CONTENER
-echo '<div id="' . $nav . '"  >';
+
 // pages admin
 $__page = ADM . 'inc/' . $nav . '.inc.php';
 // insertion des pages dinamiques
 if(file_exists($__page) ){
 
-	$__paramAdm = ADM . 'param/' . $nav . '.param.php';
 	$__param = PARAM . $nav . '.param.php';
-
-	if(file_exists($__paramAdm) )
-		require_once($__paramAdm);
-	elseif(file_exists($__param) )
+	if(file_exists($__param) )
 		require_once($__param);
 
-	$__funcAdm = ADM . 'func/' . $nav . '.func.php';
 	$__func = FUNC . $nav . '.func.php';
-
-	if(file_exists($__funcAdm) )
-		require_once($__funcAdm);
-	elseif(file_exists($__func) )
+	if(file_exists($__func) )
 		require_once($__func);
 
-	require_once($__page);
-} else require_once(INC . "erreur.inc.php");
+	$__paramAdm = ADM . 'param/' . $nav . '.param.php';
+	if(file_exists($__paramAdm) )
+		require_once($__paramAdm);
 
-echo '</div>'; // fin div du content
+	$__funcAdm = ADM . 'func/' . $nav . '.func.php';
+	if(file_exists($__funcAdm) )
+		require_once($__funcAdm);
+
+
+}
+else {
+	$__page = INC . "erreur.inc.php";
+}
+
+include(INC . 'index.inc.php');
 
 // affichage des debug
 if(DEBUG) include_once(INC . "debug.inc.php");
+
+// insertion Pied de page
+require_once(INC . "navfooter.inc.php");
 
 // insertion Pied de page
 require_once(INC . "footer.inc.php");

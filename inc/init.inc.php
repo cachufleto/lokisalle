@@ -22,9 +22,9 @@ define("LINKADMIN", LINK.REPADMIN);
 
 // Constantes upload images
 define('TARGET', APP.'photo/');    // Repertoire cible
-define('MAX_SIZE', 100000000);    // Taille max en octets du fichier
-define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
-define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels
+define('MAX_SIZE', 2000);    // Taille max en octets du fichier
+define('WIDTH_MAX', 1024);    // Largeur max de l'image en pixels
+define('HEIGHT_MAX', 830);    // Hauteur max de l'image en pixels
 
 
 if(!file_exists(APP.'index.php')) exit();
@@ -63,36 +63,9 @@ require_once(PARAM . "nav.php");
 // Traduction du titre de la page
 $titre = $_trad['titre'][$nav];
 
+/** @var $menu */
+$menu = '';
+
 $__link = APP . 'css/' . $nav . '.css';
 if(file_exists($__link) )
 	$_linkCss[] = LINK . 'css/' . $nav . '.css';
-
-#########################################################
-## retablire les tables de la base pour DEMO
-#########################################################
-
-if(isset($_GET['install']) && $_GET['install'] == 'BDD')
-{
-	
-	// initialisation des tables
-		echo "chargement du fichier lokisalle.sql";
-	$sql = file_get_contents(APP.'/SQL/lokisalle.sql');
-	
-	if(	isset($_GET['data'])){
-		// remplisage des tables
-		echo "<br>chargement du fichier data.sql";
-		$sql .= file_get_contents(APP.'/SQL/data.sql');
-	}
-
-	if(executeMultiRequete($sql)){
-
-		$membres = executeRequete("SELECT id_membre, mdp FROM membres");
-		var_dump($membres);
-		while($membre = $membres->fetch_assoc()){
-			$sql = "UPDATE membres SET mdp = '". hashCrypt($membre['mdp']) ."' WHERE id_membre = ".$membre['id_membre'];
-			executeRequete($sql);
-        }
-	}
-	exit();
-	
-}
