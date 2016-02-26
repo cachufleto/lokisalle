@@ -1,6 +1,5 @@
 <?php
-$_link = '';
-foreach($_linkCss as $link)
-  $_link .= "<link href=\"$link\" rel=\"stylesheet\">";
 
-include(TEMPLATE . 'header.html.php');
+$_linkNavCss = __linkCss(__link('Css'));
+
+$_linkNavJs = __linkJs(__link('Js'));

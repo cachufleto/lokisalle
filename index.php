@@ -2,12 +2,6 @@
 // Intertion des parametres de fonctionement
 require_once("inc/init.inc.php");
 
-// insertion de l'entête
-require_once(INC . "header.inc.php");
-
-// insertion menu de navigation
-require_once(INC . "nav.inc.php");
-
 // insertion des pages dinamiques
 if(file_exists($__page) ){
 
@@ -26,11 +20,3 @@ else {
 
 include(INC . 'index.inc.php');
 
-// affichage des debug
-if(DEBUG) include_once(INC . "debug.inc.php");
-
-// insertion Pied de page
-require_once(INC . "navfooter.inc.php");
-
-// insertion Pied de page
-require_once(INC . "footer.inc.php");

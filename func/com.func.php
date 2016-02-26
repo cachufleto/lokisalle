@@ -195,6 +195,7 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 	$headers .=  'X-Mailer: PHP/' . phpversion();
 
 	// chargement de la var $message
+	$message = '';
 	include(TEMPLATE . 'validationpassword.html.php');
 
 	// Envoi
@@ -317,4 +318,64 @@ function _debug($var, $label)
 	$_debug[][$label] = $var;
 	
 	return;
+}
+
+/**
+ * Fonction __link()
+ * rengement dans un tableau les informations passes dans l'argument $var
+ * @param $files => array
+ * RETURN array;
+ */
+function __link($type){
+
+	global $_linksFiles;
+
+	$files = $_linksFiles[$type];
+	$_link = '';
+
+	if(!empty($files) AND is_array($files)){
+		foreach($files as $link){
+			if(file_exists(APP . str_replace('/', DIRECTORY_SEPARATOR, $link))){
+				$_link[] = LINK . $link;
+			}
+		}
+	}
+
+	return $_link;
+}
+
+/**
+ * Fonction __linkCss()
+ * rengement dans un tableau les informations passes dans l'argument $var
+ * @param $links => array
+ * RETURN string;
+ */
+function __linkCss($links){
+
+	$_link = '';
+
+	if(!empty($links)){
+		foreach($links as $link)
+			$_link .= "<link href=\"$link\" rel=\"stylesheet\">";
+	}
+
+	return $_link;
+}
+
+/**
+ * Fonction __linkJs()
+ * rengement dans un tableau les informations passes dans l'argument $var
+ * @param $links => array
+ * RETURN string;
+ */
+function __linkJs($links){
+
+	$_link = '';
+
+	if(!empty($links)){
+		foreach($links as $link)
+			$_link .= "<script src=\"" . LINK . $link . "\" type=\"text/javascript\"></script>";
+	}
+
+	return $_link;
 }

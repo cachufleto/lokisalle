@@ -9,17 +9,13 @@
 $_menu = 'navAdmin';
 
 // ajout du css admin
-$_linkCss[] = LINK . 'css/admin.css';
-if(file_exists($__link) )
-    $_linkCss[] = LINK . 'css/' . $nav . '.adm.css';
-
-// ajout du css de la page en cour
-$__link = APP . 'css/' . $nav . '.adm.css';
-if(file_exists($__link) )
-    $_linkCss[] = LINK . 'css/' . $nav . '.adm.css';
+$_linksFiles['Css'][] = REPADMIN . 'css/admin.css';
+$_linksFiles['Css'][] = REPADMIN . 'css/' . $nav . '.css';
+$_linksFiles['Js'][] = REPADMIN . 'js/' . $nav . '.js';
+$_linksFiles['JsFooter'][] = REPADMIN . 'js/' . $nav . '.footer.js';
 
 #########################################################
-## retablire les tables de la base pour DEMO
+## reetablire les tables de la base pour DEMO
 #########################################################
 
 if(isset($_GET['install']) && $_GET['install'] == 'BDD')
