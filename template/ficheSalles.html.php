@@ -10,5 +10,4 @@
 		<hr />
 		</principal>
 		<pre>
-<?php print_r($_formulaire);	 ?>
 	</pre>

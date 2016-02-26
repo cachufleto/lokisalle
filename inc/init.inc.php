@@ -16,19 +16,20 @@ $___appel = str_replace('/', DIRECTORY_SEPARATOR, $_SERVER['SCRIPT_FILENAME']);
 $___param = basename($___script); //'index . php';
 $___dossier = dirname($___script) . DIRECTORY_SEPARATOR;
 
-define("REPADMIN", 'BacOff');
-define("__REPADMIN", REPADMIN . DIRECTORY_SEPARATOR);
+define("__REPADMIN", 'BacOff');
+define("REPADMIN", __REPADMIN . DIRECTORY_SEPARATOR);
 define("RACINE_SERVER",str_replace($___script, '', $___appel));
-define("RACINE_SITE", str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, str_replace(__REPADMIN, '', dirname($___script) . DIRECTORY_SEPARATOR)));
+define("RACINE_SITE", str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, str_replace(REPADMIN, '', dirname($___script) . DIRECTORY_SEPARATOR)));
 define("APP", RACINE_SERVER . RACINE_SITE);
-define("ADM", APP . __REPADMIN);
+define("ADM", APP . REPADMIN);
 define("INC", APP . 'inc' . DIRECTORY_SEPARATOR);
 define("FUNC", APP . 'func' . DIRECTORY_SEPARATOR);
+define("MODEL", APP . 'model' . DIRECTORY_SEPARATOR);
 define("PARAM", APP . 'param' . DIRECTORY_SEPARATOR);
 define("TEMPLATE", APP . 'template' . DIRECTORY_SEPARATOR);
-$link = str_replace(DIRECTORY_SEPARATOR, '/', str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"] . '/' . $___dossier));
+$link = str_replace(DIRECTORY_SEPARATOR, '/', str_replace(__REPADMIN, '', $_SERVER["HTTP_HOST"] . '/' . $___dossier));
 define("LINK", 'http://' . (str_replace('//', '/', $link)));
-define("LINKADMIN", LINK . REPADMIN . '/');
+define("LINKADMIN", LINK . __REPADMIN . '/');
 
 // Constantes upload images
 define('TARGET', APP . 'photo' . DIRECTORY_SEPARATOR);    // Repertoire cible

@@ -1,2 +1,2 @@
 <?php
-include(TEMPLATE . 'mention.html.php');
+include(TEMPLATE . 'mentions.html.php');

@@ -1,6 +1,6 @@
 <?php
 // Intertion des parametres de fonctionement
-require_once("../inc/init.inc.php");
+require_once(".." . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "init.inc.php");
 
 // control d'acces à l'aplication ADMIN
 if(!utilisateurEstAdmin()){
@@ -9,16 +9,10 @@ if(!utilisateurEstAdmin()){
 }
 
 // surcharge des parametres admin
-require_once("/inc/init.inc.php");
-
-// insertion de l'entête
-require_once(INC . "header.inc.php");
-
-// insertion menu de navigation
-require_once(INC . "nav.inc.php");
+require_once(DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "init.inc.php");
 
 // pages admin
-$__page = ADM . 'inc/' . $nav . '.inc.php';
+$__page = ADM . 'inc' . DIRECTORY_SEPARATOR . $nav . '.inc.php';
 // insertion des pages dinamiques
 if(file_exists($__page) ){
 
@@ -30,11 +24,11 @@ if(file_exists($__page) ){
 	if(file_exists($__func) )
 		require_once($__func);
 
-	$__paramAdm = ADM . 'param/' . $nav . '.param.php';
+	$__paramAdm = ADM . 'param' . DIRECTORY_SEPARATOR . $nav . '.param.php';
 	if(file_exists($__paramAdm) )
 		require_once($__paramAdm);
 
-	$__funcAdm = ADM . 'func/' . $nav . '.func.php';
+	$__funcAdm = ADM . 'func' . DIRECTORY_SEPARATOR . $nav . '.func.php';
 	if(file_exists($__funcAdm) )
 		require_once($__funcAdm);
 
@@ -46,11 +40,3 @@ else {
 
 include(INC . 'index.inc.php');
 
-// affichage des debug
-if(DEBUG) include_once(INC . "debug.inc.php");
-
-// insertion Pied de page
-require_once(INC . "navfooter.inc.php");
-
-// insertion Pied de page
-require_once(INC . "footer.inc.php");

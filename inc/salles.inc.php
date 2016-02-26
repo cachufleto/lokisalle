@@ -1,4 +1,6 @@
 <?php
+include(MODEL . 'Salles.php');
+
 /**
  * Control des variables externes
  */
@@ -10,16 +12,14 @@ if(isset($_GET)){
   }
 }
 
-// selection de tout les users sauffe le super-ADMIN
-$sql = "SELECT id_salle, titre, capacite, categorie, photo, active FROM salles " . (  !isSuperAdmin()? " WHERE active != 0 " : "" ). " ORDER BY cp, titre";
-$membres = executeRequete($sql);
+// selection de tout les salles
+$membres = sallesSelectAll();
 $table = '';
-
 
 $position = 1;
 
 /**
- * Traitement de la BDD table salles
+ * Traitement de la BDD salles
  */
 while ($data = $membres->fetch_assoc()) {
 

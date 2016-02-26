@@ -1,2 +1,2 @@
 <?php
-include(TEMPLATE . 'backoffice.inc.php');
+include(TEMPLATE . 'backoffice.html.php');

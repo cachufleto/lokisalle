@@ -6,6 +6,8 @@ $msg = $_trad['redirigeVerConnexion'];
  * Date: 22/02/2016
  * Time: 00:01
  */
+
+
 if(isset($_GET['jeton']) && !empty($_GET['jeton'])) {
 
     $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
