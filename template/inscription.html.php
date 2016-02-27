@@ -2,10 +2,10 @@
 		<h1><?php echo $titre; ?></h1>
 		<hr />
 		<div id="formulaire">
-			<?php  
-			// affichage
-			echo $msg, $form;
-			?>
+			<?php echo $msg; ?>
+			<form action="#" method="POST">
+			<?php echo $form; ?>
+			</form>
 		</div>
 		<hr />
 	</principal>

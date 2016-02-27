@@ -1,4 +1,6 @@
 <?php
+
+
 // Déconnexion de l'utilisateur par tentative d'intrusion
 // comportement de déconnexion sur le site
 if(isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])){

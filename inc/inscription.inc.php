@@ -11,11 +11,7 @@ if('OK' == $msg){
 
 }else{
 	// RECUPERATION du formulaire
-	$form = '
-			<form action="#" method="POST">
-			' . formulaireAfficher($_formulaire) . ' 
-			</form>';
-
+	$form = formulaireAfficher($_formulaire);
 
  }
 

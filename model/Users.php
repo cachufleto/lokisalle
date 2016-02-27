@@ -36,10 +36,10 @@ function usersSelectAll(){
 
 }
 
-function usersSelectMembreJeton($_id){
+function usersSelectMembreJeton($jeton){
 
     $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
-            AND checkinscription.checkinscription = '" .  . "'";
+            AND checkinscription.checkinscription = '$jeton'";
     return executeRequete($sql);
 
 }
