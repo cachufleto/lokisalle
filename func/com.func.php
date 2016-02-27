@@ -35,7 +35,7 @@ function connectMysqli()
  */
 function executeRequete($req)
 {
-	
+
 	$connexion = connectMysqli();
 
 	$resultat = $connexion->query($req);
@@ -46,8 +46,33 @@ function executeRequete($req)
 
 	// deconnectMysqli();
 	$connexion->close() or die ('<span style="color:red">ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>' . ${$connexion}->error . '<br />');
-	
+
 	return $resultat;
+}
+
+/**
+ * Fonction returnExecuteRequete()
+ * Exe requette SQL
+ * $req => string SQL
+ * BLOQUANT
+ * RETURN object
+ */
+function executeRequeteAssoc($req)
+{
+	global $_trad;
+
+	$connexion = connectMysqli();
+
+	$resultat = $connexion->query($req);
+
+	if(!$resultat) {
+		die ($_trad['ATTENTIONErreurRequeteSQL'] . $connexion->error);
+	}
+
+	// deconnectMysqli();
+	$connexion->close() or die ($_trad['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
+
+	return ($resultat->num_rows === 1)? $resultat->fetch_assoc() : false;
 }
 
 /**

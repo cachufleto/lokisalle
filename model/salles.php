@@ -1,4 +1,11 @@
 <?php
+
+function sallesHomeDeniersOffres()
+{
+    $sql = "SELECT * FROM salles";
+    return executeRequeteAssoc($sql);
+}
+
 function sallesUpdateDelete($_id)
 {
     $sql = "UPDATE salles SET active = 0 WHERE id_salle = $_id";

@@ -29,9 +29,26 @@ function usersSelectCheckInscription(){
 function usersSelectAll(){
 
     $sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active
-        FROM membres  WHERE " . (  !isSuperAdmin()? "id_membre != 1 AND active == 1 " : "active != 2" ). "
-        ORDER BY nom, prenom";
+            FROM membres  WHERE " . (  !isSuperAdmin()? "id_membre != 1 AND active == 1 " : "active != 2" ). "
+            ORDER BY nom, prenom";
 
     return executeRequete($sql);
+
+}
+
+function usersSelectMembreJeton($_id){
+
+    $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
+            AND checkinscription.checkinscription = '" .  . "'";
+    return executeRequete($sql);
+
+}
+
+function usersValideJeton($_id){
+
+    $sql = "UPDATE membres SET active = 1 WHERE id_membre = $_id;";
+    $sql .= "DELETE FROM `checkinscription` WHERE id_membre = $_id;";
+
+    return executeMultiRequete($sql);
 
 }

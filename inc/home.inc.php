@@ -1,7 +1,7 @@
 <?php
+inlcude(MODEL . 'Salles.php');
 
-$sql = "SELECT * FROM salles";
-$salles = executeRequete($sql);
+$salles = sallesHomeDeniersOffres();
 
 $dernieresOffres = '';
 while($salle = $salles->fetch_assoc()){

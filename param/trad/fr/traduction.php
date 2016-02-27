@@ -163,6 +163,8 @@ $_trad['value']['on'] = "Se rappeler de moi";
 $_trad['activer'] = "Activer";
 $_trad['admin'] = "Adminitrateur";
 $_trad['annuler'] = "Annuler";
+$_trad['ATTENTIONErreurRequeteSQL'] = "<span style='color:red'>ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>";
+$_trad['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:red'>ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>";
 $_trad['delete'] = "Supprimer";
 $_trad['demandeDeMotPasse'] = 'Demande de Mot de passe';
 $_trad['enConstruccion'] =  "En cours de réalisation!";
