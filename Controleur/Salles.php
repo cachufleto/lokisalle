@@ -14,7 +14,7 @@ function sallesListe()
     }
 
 // selection de tout les salles
-    $membres = sallesSelectAll();
+    $infoBDD = sallesSelectAll();
     $table = '';
 
     $position = 1;
@@ -22,7 +22,7 @@ function sallesListe()
     /**
      * Traitement de la BDD salles
      */
-    while ($data = $membres->fetch_assoc()) {
+    while ($data = $infoBDD->fetch_assoc()) {
 
         $table .= "\t" . '<tr>' . "\r\n";
         $table .= "\t\t" . '<td>' . $data['id_salle'] . '</td>' . "\r\n";
@@ -157,12 +157,7 @@ function sallesFiche($position){
 
     if(!$erreur) {
 
-        // mise à jour de la base des données
-        $sql = 'UPDATE salles SET '.$sql_set.'  WHERE id_salle = '.$id_salle;
-        echo $sql;
-        if (!empty($sql_set))
-            executeRequete ($sql);
-        else {
+        if (!sallesUpdate($sql_set, $id_salle)){
             header('Location:?nav=gestionSalles&pos=P-'.$position.'');
             exit();
         }

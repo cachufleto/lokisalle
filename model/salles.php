@@ -3,7 +3,19 @@
 function sallesHomeDeniersOffres()
 {
     $sql = "SELECT * FROM salles";
-    return executeRequeteAssoc($sql);
+    return executeRequete   ($sql);
+}
+
+function sallesUpdate($sql_set, $id_salle){
+
+    if (!empty($sql_set)) {
+        // mise à jour de la base des données
+        $sql = "UPDATE salles SET $sql_set  WHERE id_salle = $id_salle";
+        return executeRequete($sql);
+    }
+
+    return false;
+
 }
 
 function sallesUpdateDelete($_id)

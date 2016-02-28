@@ -1,6 +1,6 @@
 <?php
 include(MODEL . 'Connexion.php');
-include(CONTROLEUR . 'Connexion.php');
+include(CONTROLEUR . 'Users.php');
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
 # $_form => tableau des items

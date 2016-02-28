@@ -51,7 +51,32 @@ function executeRequete($req)
 }
 
 /**
- * Fonction returnExecuteRequete()
+ * Fonction executeRequeteExist()
+ * Exe requette SQL
+ * $req => string SQL
+ * BLOQUANT
+ * RETURN object
+ */
+function executeRequeteExist($req)
+{
+	global $_trad;
+
+	$connexion = connectMysqli();
+
+	$resultat = $connexion->query($req);
+
+	if(!$resultat) {
+		die ($_trad['ATTENTIONErreurRequeteSQL'] . $connexion->error);
+	}
+
+	// deconnectMysqli();
+	$connexion->close() or die ($_trad['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
+
+	return ($resultat->num_rows > 0)? true : false;
+}
+
+/**
+ * Fonction returnExecuteRequeteAssoc()
  * Exe requette SQL
  * $req => string SQL
  * BLOQUANT
@@ -127,7 +152,6 @@ function hashCrypt ($chaine)
  */
 function hashDeCrypt ($info)
 {
-
 	// password_verify (password, hash)
 	return password_verify($info['valide'], $info['sql']);
 

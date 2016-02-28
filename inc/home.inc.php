@@ -1,5 +1,5 @@
 <?php
-inlcude(MODEL . 'Salles.php');
+include_once (MODEL . 'Salles.php');
 
 $salles = sallesHomeDeniersOffres();
 

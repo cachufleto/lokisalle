@@ -5,6 +5,7 @@ require_once(FUNC."nav.func.php");
 
 function nav()
 {
+	global $_menu;
 	listeMenu();
 	$_link = $_SERVER["QUERY_STRING"];
 
