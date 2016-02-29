@@ -47,6 +47,7 @@ define('DEBUG', $debug);
 
 include  PARAM . 'init.php';
 include  FUNC . 'com.func.php';
+include  FUNC . 'form.func.php';
 include  MODEL . 'Site.php';
 include  CONTROLEUR . 'Users.php';
 
@@ -76,12 +77,12 @@ $nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
 $nav = (isset ($_pages[$nav]))? $nav : 'erreur404';
 
 // REGLE D'orientation des pages actif et out ver connexion
-if ('actif' == $nav || 'out' == $nav) $nav = 'connexion';
+// if ('actif' == $nav || 'out' == $nav) $nav = 'connexion';
 
 // cas spécifique
 $nav = (!utilisateurEstAdmin() && $nav == 'users')? 'home' : $nav;
 // page a inclure
-$__page = INC . $nav . '.inc.php';
+// $__page = INC . $nav . '.inc.php';
 
 // options du menu de navigation
 // Traduction du titre de la page

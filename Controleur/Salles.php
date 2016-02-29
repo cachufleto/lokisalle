@@ -1,10 +1,13 @@
 <?php
+include MODEL . 'Salles.php';
 /**
  * @return string
  */
 function sallesListe()
 {
+    global $nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
 
     /**
      * Control des variables externes
@@ -19,7 +22,7 @@ function sallesListe()
 
 // selection de tout les salles
     $infoBDD = sallesSelectAll();
-    $table = '';
+    $msg = $table = '';
 
     $position = 1;
 
@@ -46,7 +49,7 @@ function sallesListe()
         $table .= "\t" . '</tr>' . "\r\n";
         $position++;
     }
-    return $table;
+    include TEMPLATE . 'salles.html.php';
 }
 
 /**
@@ -332,4 +335,67 @@ function sallesEditer(){
 			</form>';
 
     return ['msg'=>$msg, 'form' => $form];
+}
+
+/**
+ *
+ */
+function sallesHome()
+{
+    global $nav;
+
+    $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
+    $salles = sallesHomeDeniersOffres();
+
+    $dernieresOffres = '';
+    while ($salle = $salles->fetch_assoc()) {
+        $dernieresOffres .= dernieresOffres($salle);
+    }
+
+    include TEMPLATE . 'home.html.php';
+}
+
+/**
+ *
+ */
+function sallesPanier()
+{
+    global $nav;
+    $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
+
+    $info = '';
+    if (isset($_SESSION['panier'])){
+
+        foreach ($_SESSION["panier"] as $key => $value) {
+            $info .= '<br>Salle id ' . $key;
+        }
+
+    }
+
+    include TEMPLATE . 'reservation.html.php';
+}
+
+/**
+ *
+ */
+function sallesRecherche(){
+    // afficher un formulaire de recherche
+    // menu déroulant pour la ville
+    // date-piqquer pour la date d'entreé
+    // date-pikquer pour la date de sortie
+    // date de sortie doit étre égale ou supperieur à la date d'entrée
+    // formulaire inscrit dans la liste de sales disponibles
+    global $nav;
+    $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
+
+    $villes = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
+    $categories = listeDistinc('categorie', 'salles', array('valide'=>'R'));
+    $capacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
+
+    $resultat = 'RESULTAT';
+
+    include TEMPLATE . 'recherche.html.php';
 }

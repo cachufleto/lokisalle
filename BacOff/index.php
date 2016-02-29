@@ -34,9 +34,5 @@ if (file_exists($__page) ){
 
 
 }
-else {
-	$__page = INC . 'erreur404.inc.php';
-}
-
 include INC . 'index.inc.php';
 

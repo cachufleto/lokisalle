@@ -2,7 +2,8 @@
 
 ob_start();
 
-include $__page;
+// include $__page;
+$_route[$nav]['action']();
 
 $page = ob_get_contents();
 ob_end_clean();

@@ -1,7 +1,5 @@
 <?php
-# FUNCTIONS Formulares
-include FUNC . 'form.func.php';
- 
+
 // Variables
 // que faire avec ça?
 

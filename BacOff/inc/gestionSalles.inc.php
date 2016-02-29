@@ -1,5 +1,4 @@
 <?php
-include MODEL . 'Salles.php';
 
 if (!utilisateurEstAdmin()){
   header('Location:index.php');

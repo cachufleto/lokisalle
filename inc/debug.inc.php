@@ -17,7 +17,7 @@ do {
 
 echo "Valeur de 'cost' la plus appropriée : " . $cost . "\n";
 
-_debug($__page, '__page');
+//_debug($__page, '__page');
 _debug(get_included_files(), 'FILES INCLUDES');
 //Chargement des info supplementaires
 

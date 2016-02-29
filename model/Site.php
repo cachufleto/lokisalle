@@ -124,14 +124,20 @@ function siteNavFooter()
  * @param $nav
  * @return mixed
  */
-function siteErreur404($nav){
+function siteErreur404(){
+    global $nav;
+
     $_pages = siteSelectPages();
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
     if (array_key_exists($nav, $_pages)){
-        return $_trad['enConstruccion'];
+        $msg = $_trad['enConstruccion'];
     } else {
-        return $_trad['ERROR404'];
+        $msg = $_trad['ERROR404'];
     }
+
+    include TEMPLATE . 'erreur404.html.php';
+
 }
 
 /**

@@ -5,25 +5,32 @@ include MODEL . 'Users.php';
  * @param $jeton
  * @return mixed
  */
-function usersValiderInscription($jeton)
+function usersValiderInscription()
 {
+    global $nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
+    $msg = '';
 
-    $incription = usersSelectMembreJeton($jeton);
+    $jeton = isset($_GET['jeton'])? $_GET['jeton']  : '';
 
-    if ($incription->num_rows == 1) {
+    $incription = (!empty($jeton))? usersSelectMembreJeton($jeton) : false;
+
+    if (!empty($jeton) && $incription && $incription->num_rows == 1) {
 
         $membre = $incription->fetch_row();
 
        if (usersValideJeton($membre['id_membre'])){
-            return $_trad['redirigeVerConnexion'];
+            $msg = $_trad['redirigeVerConnexion'];
         } else {
-            return $_trad['uneErreurEstSurvenue'];
+            $msg = $_trad['uneErreurEstSurvenue'];
         }
 
     } else {
-        return $_trad['pasDeJeton'];
+        $msg = $_trad['pasDeJeton'];
     }
+
+    include TEMPLATE . 'validerinscription.html.php';
 }
 
 /**
@@ -765,8 +772,6 @@ function usersControlSession(&$_formulaire)
             $_POST['rapel'] = 'on';
         }
 
-        # FUNCTIONS formulaires
-        include FUNC . 'form.func.php';
         // inclusion des sources requises pour executer la connexion
         include PARAM . 'connexion.php';
         include FUNC . 'connexion.php';
@@ -799,7 +804,10 @@ function usersControlSession(&$_formulaire)
  */
 function usersInscription()
 {
+    global $nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
+
     include PARAM . 'inscription.param.php';
     // traitement du formulaire
     $msg = postCheck($_formulaire);
@@ -813,15 +821,18 @@ function usersInscription()
         // RECUPERATION du formulaire
         $form = formulaireAfficher($_formulaire);
     }
-    return ['msg' => $msg, 'form' => $form];
+
+    include TEMPLATE . 'inscription.html.php';
 }
 
 /**
  * @return array
  */
-function usersConnexionForm(){
-
+function usersConnexionForm()
+{
+    global $nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$nav];
     $msg = $form = '';
     if (isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
         // affichage
@@ -831,5 +842,5 @@ function usersConnexionForm(){
         include PARAM . 'connexion.php';
         $form = formulaireAfficher($_formulaire);
     }
-    return ['msg' => $msg, 'form' => $form];
+    include TEMPLATE . 'connexion.html.php';
 }

@@ -18,6 +18,4 @@ $_linksFiles['JsFooter'][] = REPADMIN . 'js/' . $nav . '.footer.js';
 ## rétablire les tables de la base pour DEMO
 #########################################################
 
-include MODEL . 'Site.php';
-
 siteInstall($_GET);
