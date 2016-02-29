@@ -4,7 +4,7 @@
 $msg = postCheck('_formulaire');
 
 // affichage des messages d'erreur
-if('OK' == $msg){
+if ('OK' == $msg){
 	// on renvoi ver connexion
 	//header('Location:index.php?nav=actif&qui='.$_formulaire['pseudo']['valide'].
 	//	'&mp='.$_formulaire['mdp']['valide'].'');

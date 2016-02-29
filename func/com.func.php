@@ -14,7 +14,7 @@ function connectMysqli()
 	$connexion = @new mysqli($BDD['SERVEUR_BDD'], $BDD['USER'], $BDD['PASS'], $BDD['BDD']);
 
 	// Jamais de ma vie je ne metterais un @ pour cacher une erreur sauf si je le gere proprement avec ifx_affected_rows
-	if($connexion->connect_error) {
+	if ($connexion->connect_error) {
 		die("Un probleme est survenu lors de la connexion a la BDD" . $connexion->connect_error);
 	}
 
@@ -40,7 +40,7 @@ function executeRequete($req)
 
 	$resultat = $connexion->query($req);
 
-	if(!$resultat) {
+	if (!$resultat) {
 		die ('<span style="color:red">ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>' . $connexion->error . '<br />');
 	}
 
@@ -65,7 +65,7 @@ function executeRequeteExist($req)
 
 	$resultat = $connexion->query($req);
 
-	if(!$resultat) {
+	if (!$resultat) {
 		die ($_trad['ATTENTIONErreurRequeteSQL'] . $connexion->error);
 	}
 
@@ -90,7 +90,7 @@ function executeRequeteAssoc($req)
 
 	$resultat = $connexion->query($req);
 
-	if(!$resultat) {
+	if (!$resultat) {
 		die ($_trad['ATTENTIONErreurRequeteSQL'] . $connexion->error);
 	}
 
@@ -245,7 +245,7 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 
 	// chargement de la var $message
 	$message = '';
-	include(TEMPLATE . 'validationpassword.html.php');
+	include TEMPLATE . 'validationpassword.html.php';
 
 	// Envoi
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
@@ -257,16 +257,23 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
  * genere une liste avec des valeurs distinc d'un champ
  * RETURN Boolean
  */
+
+function selectDistinct($champ, $table)
+{
+	$sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
+	return executeRequete($sql);
+}
+
 function listeDistinc($champ, $table, $info)
 {
 
-	global $_trad;
+	$_trad = siteSelectTrad();
 
-	$sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
+	$result = selectDistinct($champ, $table);
 
-	$result = executeRequete($sql);
 	$balise = '';
-	if($result->num_rows > 0) {
+
+	if ($result->num_rows > 0) {
 		$balise = "<select class=\"\" id=\"$champ\" name=\"$champ\">";
 
 		while ($data = $result->fetch_assoc()) {
@@ -339,7 +346,7 @@ function debug($mode=0)
 	
 	echo "<div class=\"col-md-12\">";
 
-	if($mode === 1)
+	if ($mode === 1)
 	{
 		echo '<pre>'; var_dump($_debug); echo '</pre>';
 	} else {
@@ -382,9 +389,9 @@ function __link($type){
 	$files = $_linksFiles[$type];
 	$_link = '';
 
-	if(!empty($files) AND is_array($files)){
+	if (!empty($files) AND is_array($files)){
 		foreach($files as $link){
-			if(file_exists(APP . str_replace('/', DIRECTORY_SEPARATOR, $link))){
+			if (file_exists(APP . str_replace('/', DIRECTORY_SEPARATOR, $link))){
 				$_link[] = LINK . $link;
 			}
 		}
@@ -403,7 +410,7 @@ function __linkCss($links){
 
 	$_link = '';
 
-	if(!empty($links)){
+	if (!empty($links)){
 		foreach($links as $link)
 			$_link .= "<link href=\"$link\" rel=\"stylesheet\">";
 	}
@@ -421,7 +428,7 @@ function __linkJs($links){
 
 	$_link = '';
 
-	if(!empty($links)){
+	if (!empty($links)){
 		foreach($links as $link)
 			$_link .= "<script src=\"" . LINK . $link . "\" type=\"text/javascript\"></script>";
 	}

@@ -8,21 +8,22 @@
 # RETURN string alerte
 function postCheck($nomFormulaire, $mod=FALSE){
 
-	global $_trad, ${$nomFormulaire};
+	global ${$nomFormulaire};
 
 	$fomulaire = ${$nomFormulaire};
 	$msg = '';
 	
-	if(isset($_POST['valide'])){
+	if (isset($_POST['valide'])){
 		// appel à la fonction spécifique à chaque formulaire
 		// la fonction doit ce trouver dans le fichier de traitement
-		if(postValide($nomFormulaire, $mod)) {
+		return postValide($nomFormulaire, $mod);
+		/* else ifpostValide($nomFormulaire, $mod)) {
 
 			// control particulier pour chaque formulaire
 			// on ne fait pas la suite si les information proviennent des cookies
 			$msg = ($_POST['valide'] == 'cookie')? 'cookie' : formulaireValider();
 		}
-		else $msg = $_trad['erreur']['inconueConnexion'];
+		else $msg = $_trad['erreur']['inconueConnexion']; */
 	}
 
 	return $msg;
@@ -40,7 +41,7 @@ function formulaireAfficher($_form){
 	$formulaire = '';
 	foreach($_form as $champ => $info){
 		$trad = ($champ == 'valide')? '' : $_trad['champ'][$champ];
-		if($info['type'] != 'hidden') {
+		if ($info['type'] != 'hidden') {
 			$formulaire .=  '
 			<div class="ligneForm'. ((!empty($info['rectification']))? ' rectifier' : '') .'">
 				<label class="label">' .  $trad;
@@ -48,7 +49,7 @@ function formulaireAfficher($_form){
 			$formulaire .= '</label>';
 			$formulaire .= '<div class="champs">' . typeForm($champ, $info) . '</div>';
 			
-			if(!empty($info['rectification']))
+			if (!empty($info['rectification']))
 			{
 			$formulaire .=  '
 				<label class="label rectifier">'. $_trad['rectifier'] .' '.$_trad['champ'][$champ].' </label>
@@ -148,7 +149,7 @@ function typeForm($champ, $info){
 		
 		case 'submit':
 			$boutton = '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' .  $valeur. '">';
-			if(isset($info['annuler']))
+			if (isset($info['annuler']))
 				$boutton .= '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $_trad['Out'] . '">';
 			return $boutton;
 		break;
@@ -167,23 +168,17 @@ function typeForm($champ, $info){
 function testADMunique($statut, $id_membre){
 
 
-	if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
-		{
+	if (utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
+	{
 		
 		// interdiction de modifier le statut pour le super administrateur
-		if($id_membre == 1) return true; 
+		if ($id_membre == 1){
+            return true;
+        }
 
-		// interdiccion de modifier le statut pour un admin si il est le seule;
-		// Le super administrateur peut inhabiliter tout le monde
-		$sql = "SELECT COUNT(statut) as 'ADM' FROM membres WHERE statut = 'ADM' ". (!isSuperAdmin()? " AND id_membre != 1 " : "" );
-		$ADM = executeRequete($sql);
-		$num = $ADM->fetch_assoc();
-		
-		// si la requete retourne un enregistrement, c'est qu'il est el seul admin.
-		if($num['ADM'] == 1)  return true;
+		return usersSelectUniqueADM();
 	}
 	return false;
-
 }
 
 # Fonction postValide()
@@ -196,33 +191,35 @@ function testADMunique($statut, $id_membre){
 function postValide($nom_form, $mod=FALSE){
 
 	
-	global $msg, $_trad, ${$nom_form};
+	global $msg, ${$nom_form};
 	$ok = true;
+
+    $_trad = siteSelectTrad();
 
 	// on boucle sur les valeurs des champs
 	$_form = ${$nom_form};
 	foreach($_form as $key => $info){
 		
 		// on le verifie pas les actions en modification pour ce qui sont obligatoires
-		if(isset($_POST[$key]) && $key != 'valide'){
+		if (isset($_POST[$key]) && $key != 'valide'){
 
 			// on encode en htmlentities
 			$valide = htmlentities($_POST[$key], ENT_QUOTES);
 			// si le champ fait objet d'une rectification
-			if(!empty($info['rectification'])){
+			if (!empty($info['rectification'])){
 
 				$valeur1 = $_POST[$key];
 				$valeur2 = $_POST[$key.'2'];
 				
 				// actions pour la modification
-				if(testObligatoire($info) && empty($valeur1)){
+				if (testObligatoire($info) && empty($valeur1)){
 
 					$ok = false;
 					${$nom_form}[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['champ'][$key] . $_trad['erreur']['obligatoire'];
 					$valide = '';
 
-				}elseif(empty($valeur1) XOR empty($valeur2)){
+				} else if (empty($valeur1) XOR empty($valeur2)){
 
 					// l'un des deux champs est remplie
 					$ok = false;
@@ -230,7 +227,7 @@ function postValide($nom_form, $mod=FALSE){
 					$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad[$key];
 					$valide = '';
 				
-				}elseif($valeur1 != $valeur2){
+				} else if ($valeur1 != $valeur2){
 
 					// les deux valeurs sont differents
 					$ok = false;
@@ -244,14 +241,15 @@ function postValide($nom_form, $mod=FALSE){
 			
 			${$nom_form}[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
 		
-		}elseif($info['type'] == 'file'){
-			if(isset($_FILES[$key]))
-				${$nom_form}[$key]['valide'] = $_FILES[$key]['name'];
-		}elseif($info['type'] == 'checkbox'){
+		} else if ($info['type'] == 'file'){
+			if (isset($_FILES[$key])){
+                ${$nom_form}[$key]['valide'] = $_FILES[$key]['name'];
+            }
+		} else if ($info['type'] == 'checkbox'){
 			
 			$ok = testObligatoire($info)? false : $ok;
 
-		}elseif(!$mod && $key != 'valide'){
+		} else if (!$mod && $key != 'valide'){
 
 			// si le champs n'est pas présent dans POST
 			$ok = false;
@@ -371,10 +369,10 @@ function modCheck($nomFormulaire, $_id, $table){
 	$data = executeRequete(${'sql_'.$table}) or die (${'sql_'.$table});
 	$user = $data->fetch_assoc();
 	
-	if($data->num_rows < 1) return false;
+	if ($data->num_rows < 1) return false;
 
 	foreach($formulaire as $key => $info){
-		if($key != 'valide' && key_exists ( $key , $user )){
+		if ($key != 'valide' && key_exists ( $key , $user )){
 			${$nomFormulaire}[$key]['valide'] = $user[$key];
 			${$nomFormulaire}[$key]['sql'] = $user[$key];
 		}
@@ -397,9 +395,9 @@ function formulaireAfficherInfo($_form){
 		
 		$value = isset($info['valide'])? $info['valide'] : '';
 		
-		if($info['type'] != 'hidden') 
+		if ($info['type'] != 'hidden')
 		{
-			if($champ == 'valide'){
+			if ($champ == 'valide'){
 				$formulaire .=  '
 				<div class="ligneForm" >
 					<label class="label" >&nbsp;</label>
@@ -410,7 +408,7 @@ function formulaireAfficherInfo($_form){
 				$formulaire .=  '
 				<div class="ligneForm" >
 					<label class="label" >' . $_trad['champ'][$champ] ;
-				if($info['type'] == 'file') {
+				if ($info['type'] == 'file') {
 					$formulaire .= '</label>
 						<div class="champs"><img src="' . LINK. 'photo/' .$value . '">	</div>
 					</div>';
@@ -423,7 +421,7 @@ function formulaireAfficherInfo($_form){
 					</div>';
 				}
 			}
-		} elseif(isset($info['acces'])) {
+		} else if (isset($info['acces'])) {
 			$formulaire .= typeForm($champ, $info);
 		}
 	}
@@ -445,17 +443,17 @@ function formulaireAfficherMod($_form){
 	foreach($_form as $champ => $info){
 		
 		$value = isset($info['valide'])? $info['valide'] : '';
-		if($champ == 'sexe') {
-			if(isset($_trad['value'][$value]))
+		if ($champ == 'sexe') {
+			if (isset($_trad['value'][$value]))
 				$value = $_trad['value'][$value];
 			else{
 				$info['type'] = 'select';
 			}
 		}
 		
-		if($info['type'] != 'hidden'){
+		if ($info['type'] != 'hidden'){
 
-			if(!isset($info['obligatoire']) || utilisateurEstAdmin()){
+			if (!isset($info['obligatoire']) || utilisateurEstAdmin()){
 				$label = key_exists($champ, $_trad['champ'])? $_trad['champ'][$champ] : $champ;
 				$formulaire .=  '
 				<div class="ligneForm" >
@@ -465,7 +463,7 @@ function formulaireAfficherMod($_form){
 				$formulaire .= '</div>
 				</div>';
 				
-				if(!empty($info['rectification']))
+				if (!empty($info['rectification']))
 				{
 				$formulaire .=  '
 				<div class="ligneForm" >
@@ -476,7 +474,7 @@ function formulaireAfficherMod($_form){
 				
 				$formulaire .= ((isset($info['message']))? '<div class="erreur">' .$info['message']. '</div>': '');
 			
-			} elseif($champ != 'statut'){ 				
+			} else if ($champ != 'statut'){
 				$formulaire .=  '
 				<div class="ligneForm" >
 					<label class="label" >' . $_trad['champ'][$champ] ;
@@ -505,34 +503,34 @@ function controlImageUpload($key, &$info) {
 	$infosImg = array();
 	$info['valide'] = '';
 
-	if( !empty($_FILES[$key]['name']) )
+	if (!empty($_FILES[$key]['name']) )
 	{
 		// Recuperation de l'extension du fichier
 		$extension  = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
 
 		// On verifie l'extension du fichier
-		if(in_array(strtolower($extension),$tabExt))
+		if (in_array(strtolower($extension),$tabExt))
 		{
 			// On recupere les dimensions du fichier
 			$infosImg = getimagesize($_FILES[$key]['tmp_name']);
 
 			// On verifie le type de l'image
-			if($infosImg[2] >= 1 && $infosImg[2] <= 14)
-			{
+			if ($infosImg[2] >= 1 && $infosImg[2] <= 14)
+            {
 				// On verifie les dimensions et taille de l'image;
 				// echo $infosImg[0]." <= " . WIDTH_MAX. ") && (" . $infosImg[1]." <= ".HEIGHT_MAX.") && ("; 
 				// echo filesize($_FILES[$key]['tmp_name'])." <= ".MAX_SIZE."))";
 				
-				if(($infosImg[0] <= WIDTH_MAX) && ($infosImg[1] <= HEIGHT_MAX) && (filesize($_FILES[$key]['tmp_name']) <= MAX_SIZE))
-				{
+				if (($infosImg[0] <= WIDTH_MAX) && ($infosImg[1] <= HEIGHT_MAX) && (filesize($_FILES[$key]['tmp_name']) <= MAX_SIZE))
+                {
 					// Parcours du tableau d'erreurs
-					if(isset($_FILES[$key]['error']) && UPLOAD_ERR_OK === $_FILES[$key]['error'])
+					if (isset($_FILES[$key]['error']) && UPLOAD_ERR_OK === $_FILES[$key]['error'])
 					{
 						// On renomme le fichier
 						$nomImage = md5(uniqid()) .'.'. $extension;
 
 						// Si c'est OK, on teste l'upload
-						if(move_uploaded_file($_FILES[$key]['tmp_name'], TARGET.$nomImage))
+						if (move_uploaded_file($_FILES[$key]['tmp_name'], TARGET.$nomImage))
 						{
 
 							$info['valide'] = $nomImage;

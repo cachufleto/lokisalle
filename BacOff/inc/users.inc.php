@@ -1,21 +1,21 @@
 <?php
 
-if(!utilisateurEstAdmin()){
+if (!utilisateurEstAdmin()){
   header('Location:index.php');
   exit();
 }
 
-include(MODEL . 'Users.php');
+include MODEL . 'Users.php';
 
-if(isset($_GET)){
-  if(!empty($_GET['delete']) && $_GET['delete'] != 1){
+if (isset($_GET)){
+ if (!empty($_GET['delete']) && $_GET['delete'] != 1){
 
-    if($_GET['delete'] != $_SESSION['user']['id']) {
+   if ($_GET['delete'] != $_SESSION['user']['id']) {
       usersUpdateDelete($_GET['delete']);
     }
-    else $msg = $_trad['vousNePouvezPasVousSupprimerVousMeme'];
+   else $msg = $_trad['vousNePouvezPasVousSupprimerVousMeme'];
 
-  } elseif(!empty($_GET['active'])){
+  } else if (!empty($_GET['active'])){
     usersUpdateActive($_GET['active']);
   }
 
@@ -24,13 +24,13 @@ if(isset($_GET)){
 $table = '';
 
 
-if(isSuperAdmin()) {
+if (isSuperAdmin()) {
 
 // selection de tout les users sauffe le super-ADMIN
 
   $membres = usersSelectCheckInscription();
 
-  if($membres->num_rows > 0 )
+ if ($membres->num_rows > 0 )
     while ($data = $membres->fetch_assoc()) {
 
       $table .= "<tr>\r\n";
@@ -64,4 +64,4 @@ while ($data = $membres->fetch_assoc()) {
       $table .= "</tr>\r\n";
 }
 
-include(TEMPLATE . 'users.html.php');
+include TEMPLATE . 'users.html.php';

@@ -1,11 +1,14 @@
 <?php 
 
 // Fonctions navigation
-require_once(FUNC."nav.func.php");
+include FUNC . 'nav.func.php';
 
 function nav()
 {
 	global $_menu;
+
+	$_trad = siteSelectTrad();
+
 	listeMenu();
 	$_link = $_SERVER["QUERY_STRING"];
 

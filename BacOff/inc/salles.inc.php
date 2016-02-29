@@ -1,6 +1,6 @@
 <?php
 
-if(!utilisateurEstAdmin()){
+if (!utilisateurEstAdmin()){
   header('Location:index.php');
   exit();
 }
@@ -12,7 +12,7 @@ if (isset($_GET)){
     if ($_GET['delete'] != $_SESSION['user']['id']){
       sallesUpdateDelete($_GET['delete']);
     }
-    else $msg = $_trad['vousNePouvezPasVousSupprimerVousMeme'];
+   else $msg = $_trad['vousNePouvezPasVousSupprimerVousMeme'];
 
   } else if (!empty($_GET['active'])){
     sallesUpdateActive($_GET['active']);
@@ -39,4 +39,4 @@ while ($data = $membres->fetch_assoc()) {
   $table .= "</tr>\r\n";
 }
 
-include(TEMPLATE . 'salles.html.php');
+include TEMPLATE . 'salles.html.php';

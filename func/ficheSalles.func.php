@@ -1,14 +1,16 @@
 <?php
 # fonctions formulaires
-include_once FUNC . 'form.func.php';
+include FUNC . 'form.func.php';
 
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
+$position = ($_GET['pos'])? $_GET['pos'] : 1;
+
 function formulaireValider(){
 
-	$position = ($_GET['pos'])? $_GET['pos'] : 1;
-	return sallesFiche($position);
+	global $position;
+	return sallesFiche();
 
 }

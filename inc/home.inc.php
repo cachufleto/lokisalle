@@ -1,5 +1,5 @@
 <?php
-include_once (MODEL . 'Salles.php');
+include MODEL . 'Salles.php';
 
 $salles = sallesHomeDeniersOffres();
 
@@ -8,4 +8,4 @@ while($salle = $salles->fetch_assoc()){
 	$dernieresOffres .= dernieresOffres($salle);
 }
 
-include(TEMPLATE . 'home.html.php');
+include TEMPLATE . 'home.html.php';

@@ -1,5 +1,4 @@
 <?php
 //array('menu'=>$menu, 'class'=>$class . ' col-'.$col);
-$menu = liste_nav('navFooter');
+$menu = liste_nav('siteNavFooter');
 $liFooter = $menu['menu'];
-//include(TEMPLATE . 'navfooter.html.php');

@@ -1,6 +1,6 @@
 <?php
 # fonctions formulaires
-include_once FUNC . 'form.func.php';
+include FUNC . 'form.func.php';
 
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
@@ -11,4 +11,6 @@ function formulaireValider(){
 	return usersProfilModifier();
 
 }
+
+
 

@@ -4,7 +4,7 @@
 $msg = postCheck('_formulaire');
 
 // affichage des messages d'erreur
-if('OK' == $msg){
+if ('OK' == $msg){
 	// on renvoi ver connexion
 	$msg = $_trad['validerInscription'];
 	$form = '<a href="?nav=home">SUITE</a>';
@@ -15,4 +15,4 @@ if('OK' == $msg){
 
  }
 
-include(TEMPLATE . 'inscription.html.php');
+include TEMPLATE . 'inscription.html.php';

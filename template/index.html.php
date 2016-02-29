@@ -22,14 +22,18 @@
         </ul>
     </nav>
     <div id="<?php echo $nav?>">
-    <?php require_once($__page); ?>
+    <?php
+    // ***************************************************** //
+    echo $page;
+    // ***************************************************** //
+    ?>
     </div>
-    <?php if(DEBUG) include_once(INC . "debug.inc.php"); ?>
+    <?php echo $debug; ?>
     <nav class="navbar footer">
         <ul class="">
             <?php echo $liFooter; ?>
             <li>
-                <?php include(PARAM.'version.txt'); ?>
+                <?php echo $version ?>
             </li>
         </ul>
     </nav>

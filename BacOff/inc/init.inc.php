@@ -6,7 +6,7 @@
  * Time: 16:45
  */
 
-$_menu = 'navAdmin';
+$_menu = 'siteNavAdmin';
 
 // ajout du css admin
 $_linksFiles['Css'][] = REPADMIN . 'css/admin.css';
@@ -15,9 +15,9 @@ $_linksFiles['Js'][] = REPADMIN . 'js/' . $nav . '.js';
 $_linksFiles['JsFooter'][] = REPADMIN . 'js/' . $nav . '.footer.js';
 
 #########################################################
-## reetablire les tables de la base pour DEMO
+## rétablire les tables de la base pour DEMO
 #########################################################
 
-include (MODEL . 'Install.php');
+include MODEL . 'Site.php';
 
-install();
+siteInstall($_GET);

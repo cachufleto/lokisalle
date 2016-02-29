@@ -1,12 +1,12 @@
 <?php
-include(MODEL . 'Connexion.php');
-include(CONTROLEUR . 'Users.php');
+include MODEL . 'Users.php';
+
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
 # $_form => tableau des items
 # RETURN string msg1
 // creation du control d'acces par répetition
-if(!isset($_SESSION['connexion'])) $_SESSION['connexion'] = 3;
+if (!isset($_SESSION['connexion'])) $_SESSION['connexion'] = 3;
 
 function formulaireValider(){
 

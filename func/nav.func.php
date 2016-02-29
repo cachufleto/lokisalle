@@ -6,32 +6,39 @@
 # RETURN Boolean
 function listeMenu(){
 
-	if(!utilisateurEstAdmin()) return;
+	if (!utilisateurEstAdmin()) return;
 
-	global $_trad, $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin, $navAdmin, $navFooter;
+	global $_trad;
+
+
+	$_pages = siteSelectPages();
 
 	// control du menu principal
-
+	$_reglesAdmin = siteNavReglesAdmin();
 	foreach($_reglesAdmin as $key)
-		if(!isset($_pages[$key]))
+		if (!isset($_pages[$key]))
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuAdmin']);
 
+	$_reglesMembre = siteNavReglesMembre();
 	foreach($_reglesMembre as $key)
-		if(!isset($_pages[$key]))
+		if (!isset($_pages[$key]))
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuMembre']);
 
+	$_reglesAll = siteNavReglesAdmin();
 	foreach($_reglesAll as $key)
-		if(!isset($_pages[$key]))
+		if (!isset($_pages[$key]))
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenu']);
 
 	// control du footer
+	$navFooter = siteNavFooter();
 	foreach($navFooter as $key)
-		if(!isset($_pages[$key])) 
+		if (!isset($_pages[$key]))
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuFooter']);
 
 	// control du menu administrateur
+	$navAdmin = siteNavAdmin();
 	foreach($navAdmin as $key)
-		if(!isset($_pages[$key]))
+		if (!isset($_pages[$key]))
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuAdmin']);
 
 	return;
@@ -46,19 +53,21 @@ function listeMenu(){
 # RETURN string liste <li>...</li>
 function liste_nav($liste=''){
 	
-	global $_trad, $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
-	
-	if(empty($liste)){
+	global $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
+
+	$_trad = siteSelectTrad();
+
+	if (empty($liste)){
 
 		$_liste = (utilisateurEstAdmin())?
-			$_reglesAdmin :
+			siteNavReglesAdmin() :
 			((utilisateurEstConnecte())?
-				$_reglesMembre :
-				$_reglesAll);
+				siteNavReglesMembre() :
+				siteNavReglesAll());
 
 	} else {
 		// generation de la liste de nav
-		$_liste = ${$liste};
+		$_liste = $liste();
 	}
 	
 	// Pour affichage ou edition!

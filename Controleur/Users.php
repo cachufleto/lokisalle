@@ -10,7 +10,7 @@ function usersValiderInscription($jeton)
 
         $membre = $incription->fetch_row();
 
-        if(usersValideJeton($membre['id_membre'])){
+       if (usersValideJeton($membre['id_membre'])){
             return $_trad['redirigeVerConnexion'];
         } else {
             return $_trad['uneErreurEstSurvenue'];
@@ -36,7 +36,9 @@ function usersValiderJeton($jeton)
 
 function usersProfil($_id, $_valider, $_modifier)
 {
-    global $_trad, $_formulaire;
+    global $_formulaire;
+
+    $_trad = siteSelectTrad();
 
     // extraction des données SQL
     if (modCheck('_formulaire', $_id, 'membres')) {
@@ -59,7 +61,7 @@ function usersProfil($_id, $_valider, $_modifier)
 
                 return formulaireAfficherMod($_formulaire);
 
-            } elseif (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
+            } else if (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
                 header('Location:?nav=users');
                 exit();
             } else {
@@ -81,7 +83,10 @@ function usersProfil($_id, $_valider, $_modifier)
 
 function connexion(){
 
-    global $_trad,  $_formulaire, $minLen;
+    global $_formulaire, $minLen;
+
+    $_trad = siteSelectTrad();
+
     $msg = '';
     $erreur = false;
     $sql_Where = '';
@@ -93,7 +98,7 @@ function connexion(){
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
         $obligatoire = (!empty($info['obligatoire']))? true : false ;
 
-        if('valide' != $key)
+       if ('valide' != $key)
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']))
             {
 
@@ -102,7 +107,7 @@ function connexion(){
                     ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
                     ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
 
-            } elseif (testObligatoire($info) && empty($valeur)){
+            } else if (testObligatoire($info) && empty($valeur)){
 
                 $erreur = true;
                 $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
@@ -130,7 +135,7 @@ function connexion(){
                         break;
 
                     default:
-                        if($obligatoire && !testLongeurChaine($valeur) )
+                       if ($obligatoire && !testLongeurChaine($valeur) )
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -139,11 +144,11 @@ function connexion(){
                         break;
                 }
                 // Construction de la requettes
-                if($key != 'rapel' && $key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
+               if ($key != 'rapel' && $key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
             }
     }
 
-    if($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+   if ($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
     {  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
 
         $msg .= '<br />'.$_trad['erreur']['uneErreurEstSurvenue'];
@@ -152,11 +157,11 @@ function connexion(){
 
         // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
         // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
-        if($session = usersSelectConnexion($sql_Where))
+       if ($session = usersSelectConnexion($sql_Where))
         {
-            if(isset($crypte)){
+           if (isset($crypte)){
                 $_formulaire[$crypte]['sql'] = $session[$crypte];
-                if(hashDeCrypt($_formulaire[$crypte])){
+               if (hashDeCrypt($_formulaire[$crypte])){
                     // overture d'une session Membre
                     ouvrirSession($session, $control);
                     $msg = 'OK';
@@ -185,7 +190,10 @@ function connexion(){
 
 function usersChangerMotPasse(){
 
-    global $_trad, $_formulaire, $minLen;
+    global $_formulaire, $minLen;
+
+    $_trad = siteSelectTrad();
+
     $message = '';
     $sql_Where = '';
 
@@ -194,7 +202,7 @@ function usersChangerMotPasse(){
         $label = $_trad[$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
-        if('valide' != $key)
+       if ('valide' != $key)
             if (isset($info['maxlength']) && (strlen($valeur) < $minLen  || strlen($valeur) > $info['maxlength']))
             {
 
@@ -202,7 +210,8 @@ function usersChangerMotPasse(){
                     ': doit avoir un nombre de caracter compris entre ' . $minLen .
                     ' et ' . $info['maxlength'] . ' </p></div>';
 
-            }else{
+            } else {
+
                 switch($key){
                     case 'mdp':
                         $crypte = $key;
@@ -210,7 +219,7 @@ function usersChangerMotPasse(){
 
                     case 'pseudo':
                         $verif_caractere = preg_match('#^[a-zA-Z0-9._-]+$#', $valeur );
-                        if (!$verif_caractere  && !empty($valeur)) // $verif_caractere si c vrai sa donne un TRUE
+                        if (!$verif_caractere  && !empty($valeur))
                         {
                             $message.= '<div class="bg-danger message"> <p> Erreur sur le ' .$label.
                                 ', Caractere acceptés: A à Z et 0 à 9 </p></div>';
@@ -221,29 +230,25 @@ function usersChangerMotPasse(){
 
                 }
                 // Construction de la requettes
-                if($key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
+               if ($key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
             }
     }
 
-    if(empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+   if (empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
     {
-        // lançons une requete nommée membre dans la BD pour voir si un pseudo est bien saisi.
-        if ($membre = usersSelectChangerMotPasse($sql_Where)) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
+        if (usersSelectChangerMotPasse($sql_Where))
         {
-            if(isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
+           if (isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
                 $_formulaire[$crypte]['sql'] = $membre[$crypte];
-                if(hashDeCrypt($_formulaire[$crypte])){
+               if (hashDeCrypt($_formulaire[$crypte])){
                     // overture d'une session Membre
                     ouvrirSession($membre);
                     $message = 'OK';
                 }
             }
-        } else {  // le pseudo n'existe pas en BD
-
+        } else {
             $message .= '<div class="bg-danger message"> <p>Une erreur est survenue ! </p>';
-
         }
-
     }
 
     return $message;
@@ -252,7 +257,10 @@ function usersChangerMotPasse(){
 function usersConnexion()
 {
 
-    global $_trad, $_formulaire, $minLen;
+    global $_formulaire, $minLen;
+
+    $_trad = siteSelectTrad();
+
     $message = '';
     $sql_Where = '';
 
@@ -261,7 +269,7 @@ function usersConnexion()
         $label = $_trad[$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
-        if('valide' != $key)
+       if ('valide' != $key)
             if (isset($info['maxlength']) && (strlen($valeur) < $minLen  || strlen($valeur) > $info['maxlength'])) // $msg.= doit etre declarer vide avant
             {
 
@@ -288,25 +296,21 @@ function usersConnexion()
 
                 }
                 // Construction de la requettes
-                if($key != 'mdp') {
+               if ($key != 'mdp') {
                     $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
                 }
             }
     }
 
-    if(empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+   if (empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
     {
-        // lançons une requete nommée membre dans la BD pour voir si un pseudo est bien saisi.
-        $sql = "SELECT * FROM membre WHERE $sql_Where ";
-        $membre = executeRequete($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
 
-        // verifions si dans la requete lancee, si le pseudo existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne cree donc un pseudo existe
-        if($membre->num_rows == 1) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
+       // verifions si dans la requete lancee, si le pseudo existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne cree donc un pseudo existe
+       if ($session = usersSelectUser($sql_Where)) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
         {
-            $session = $membre->fetch_assoc();
-            if(isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
+           if (isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
                 $_formulaire[$crypte]['sql'] = $session[$crypte];
-                if(hashDeCrypt($_formulaire[$crypte])){
+               if (hashDeCrypt($_formulaire[$crypte])){
                     // overture d'une session Membre
                     ouvrirSession($session);
                     $message = 'OK';
@@ -325,10 +329,12 @@ function usersConnexion()
 
 function usersProfilModifier(){
 
-    global $_trad, $_formulaire, $minLen;
+    global $_formulaire, $minLen;
+
+    $_trad = siteSelectTrad();
 
     // control d'intrusion du membre
-    if($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){
+   if ($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){
         //_debug($_formulaire, 'SQL');
         return '<div class="alert">'.$_trad['erreur']['NULL'].'!!!!!</div>';
     }
@@ -344,7 +350,7 @@ function usersProfilModifier(){
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
-        if('valide' != $key && 'id_membre' != $key){
+       if ('valide' != $key && 'id_membre' != $key){
 
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']) && !empty($valeur))
             {
@@ -379,7 +385,7 @@ function usersProfilModifier(){
                         if (testFormatMail($valeur)) {
 
                             // si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
-                            if(usersTestMail($_formulaire['id_membre']['sql'], $valeur))
+                           if (usersTestMail($_formulaire['id_membre']['sql'], $valeur))
                             {
                                 $erreur = true;
                                 $msg .= '<br/>' . $_trad['erreur']['emailexistant'];
@@ -397,7 +403,7 @@ function usersProfilModifier(){
 
                     case 'sexe':
 
-                        if(empty($valeur))
+                       if (empty($valeur))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -408,13 +414,13 @@ function usersProfilModifier(){
 
                     case 'nom': // est obligatoire
                     case 'prenom': // il est obligatoire
-                        if(!testLongeurChaine($valeur) )
+                       if (!testLongeurChaine($valeur) )
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
                                 ': '.$_trad['erreur']['nonVide'];
 
-                        } elseif (!testAlphaNumerique($valeur)){
+                        } else if (!testAlphaNumerique($valeur)){
 
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label. ' "' .$valeur.
@@ -428,7 +434,7 @@ function usersProfilModifier(){
                     case 'telephone':
                     case 'gsm':
 
-                        if(!empty($valeur)){
+                       if (!empty($valeur)){
 
                             // un des deux doit être renseigné
                             $controlTelephone = false;
@@ -442,7 +448,7 @@ function usersProfilModifier(){
                                     ': ' . $_trad['erreur']['doitContenir'] . $info['length'] . $_trad['erreur']['caracteres'];
                             }
 
-                            if(testNumerique($valeur))
+                           if (testNumerique($valeur))
                             {
                                 $erreur = true;
                                 $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -455,7 +461,7 @@ function usersProfilModifier(){
 
                     case 'statut':
 
-                        if(testADMunique($valeur, $id_membre)){
+                       if (testADMunique($valeur, $id_membre)){
                             $erreur = true;
                             $msg .= '<br/>' . $_trad['numAdmInsufisant'];
                             $_formulaire['statut']['valide'] = 'ADM';
@@ -464,7 +470,7 @@ function usersProfilModifier(){
                         break;
 
                     default:
-                        if(!empty($valeur) && !testLongeurChaine($valeur))
+                       if (!empty($valeur) && !testLongeurChaine($valeur))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -484,25 +490,23 @@ function usersProfilModifier(){
 
     // control sur les numero de telephones
     // au moins un doit être sonseigné
-    if($controlTelephone) {
+   if ($controlTelephone) {
         $erreur = true;
         $_formulaire['telephone']['message'] =  $_trad['erreur']['controlTelephone'] ;
     }
 
     // si une erreur c'est produite
-    if($erreur)
+   if ($erreur)
     {
         $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
 
     }else{
 
-        // mise à jour de la base des données
-        $sql = 'UPDATE membres SET '.$sql_set.'  WHERE id_membre = '.$_formulaire['id_membre']['sql'];
-        echo $sql;
-
-        if (!empty($sql_set))
-            executeRequete ($sql);
-        else echo 'ATTENTION';
+        if (!empty($sql_set)){
+            usersUpdateProfil($sql_set, $_formulaire['id_membre']['sql']);
+        } else {
+            echo 'ATTENTION';
+        }
         // ouverture d'une session
         $msg = "OK";
 
@@ -513,7 +517,9 @@ function usersProfilModifier(){
 
 function userInscritionFormulaire(){
 
-    global $_trad, $_formulaire, $minLen;
+    global $_formulaire, $minLen;
+
+    $_trad = siteSelectTrad();
 
     $msg = 	$erreur = false;
     $sql_champs = $sql_Value = '';
@@ -525,7 +531,7 @@ function userInscritionFormulaire(){
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
-        if('valide' != $key)
+       if ('valide' != $key)
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength'])  && !empty($valeur))
             {
 
@@ -534,7 +540,7 @@ function userInscritionFormulaire(){
                     ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
                     ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
 
-            } elseif (testObligatoire($info) && empty($valeur)){
+            } else if (testObligatoire($info) && empty($valeur)){
 
                 $erreur = true;
                 $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
@@ -557,7 +563,7 @@ function userInscritionFormulaire(){
                         } else {
 
                             // si la requete tourne un enregistreme, c'est que 'pseudo' est déjà utilisé en BDD.
-                            if(usersTestPseudo($valeur))
+                           if (usersTestPseudo($valeur))
                             {
                                 $erreur = true;
                                 $msg .= '<br/>' . $_trad['erreur']['pseudoIndisponble'];
@@ -570,11 +576,8 @@ function userInscritionFormulaire(){
 
                         if (testFormatMail($valeur)) {
 
-                            $sql = "SELECT email FROM membres WHERE email='$valeur'";
-                            $membre = executeRequete($sql);
-
                             // si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
-                            if($membre->num_rows > 0)
+                           if (userExistMail($valeur))
                             {
                                 $erreur = true;
                                 $msg .= '<br/>' . $_trad['erreur']['emailexistant'];
@@ -592,7 +595,7 @@ function userInscritionFormulaire(){
 
                     case 'sexe':
 
-                        if(empty($valeur))
+                       if (empty($valeur))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -603,13 +606,13 @@ function userInscritionFormulaire(){
 
                     case 'nom': // est obligatoire
                     case 'prenom': // il est obligatoire
-                        if(!testLongeurChaine($valeur) )
+                       if (!testLongeurChaine($valeur) )
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
                                 ': '.$_trad['erreur']['nonVide'];
 
-                        } elseif (!testAlphaNumerique($valeur)){
+                        } else if (!testAlphaNumerique($valeur)){
 
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label. ' "' .$valeur.
@@ -623,7 +626,7 @@ function userInscritionFormulaire(){
                     case 'telephone':
                     case 'gsm':
 
-                        if(!empty($valeur)){
+                       if (!empty($valeur)){
 
                             // un des deux doit être renseigné
                             $controlTelephone = false;
@@ -637,7 +640,7 @@ function userInscritionFormulaire(){
                                     ': ' . $_trad['erreur']['doitContenir'] . $info['length'] . $_trad['erreur']['caracteres'];
                             }
 
-                            if(testNumerique($valeur))
+                           if (testNumerique($valeur))
                             {
                                 $erreur = true;
                                 $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -650,7 +653,7 @@ function userInscritionFormulaire(){
                         break;
 
                     default:
-                        if(!empty($valeur) && !testLongeurChaine($valeur))
+                       if (!empty($valeur) && !testLongeurChaine($valeur))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -661,7 +664,7 @@ function userInscritionFormulaire(){
                 }
 
                 // Construction de la requettes
-                if(!empty($valeur)){
+               if (!empty($valeur)){
                     $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
                     $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : $valeur) ;
                 }
@@ -670,13 +673,13 @@ function userInscritionFormulaire(){
 
     // control sur les numero de telephones
     // au moins un doit être sonseigné
-    if($controlTelephone) {
+   if ($controlTelephone) {
         $erreur = true;
         $_formulaire['telephone']['message'] =  $_trad['erreur']['controlTelephone'] ;
     }
 
     // si une erreur c'est produite
-    if($erreur)
+   if ($erreur)
     {
         $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
 
@@ -694,4 +697,77 @@ function userInscritionFormulaire(){
     }
 
     return $msg;
+}
+
+function usersControlSession(){
+
+    $_trad = siteSelectTrad();
+
+    // valeur par default
+    $_SESSION['lang'] = (isset($_SESSION['lang']))? $_SESSION['lang'] : 'fr';
+    // recuperation du cookis lang
+    $_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
+    // changement de lang par le user
+    $_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
+
+    // définition des cookis
+    setcookie( 'Lokisalle[lang]' , $_SESSION['lang'], time()+360000 );
+    // Déconnexion de l'utilisateur par tentative d'intrusion
+    // comportement de déconnexion sur le site
+    if (isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])){
+
+        // destruction de la navigation
+        $lng = $_SESSION['lang'];
+        unset($_GET['nav']);
+        // destruction de la session
+        unset($_SESSION['user']);
+
+        session_destroy();
+        // on relance la session avec le choix de la langue
+        session_start();
+        $_SESSION['lang'] = $lng;
+
+    } else if (isset($_GET['nav']) && $_GET['nav'] == 'out' && !isset($_SESSION['user'])){
+
+        // destruction de la navigation
+        unset($_GET['nav']);
+
+    } else if (isset($_GET['nav']) && $_GET['nav'] == 'actif' && !isset($_SESSION['user'])){
+        // recuperation du pseudo
+        if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
+
+            $_POST['valide'] = 'cookie';
+            $_POST['mdp'] = '';
+            $_POST['pseudo'] = $_COOKIE['Lokisalle']['pseudo'];
+            $_POST['rapel'] = 'on';
+        }
+
+        # FUNCTIONS formulaires
+        include FUNC . 'form.func.php';
+        // inclusion des sources requises pour executer la connexion
+        include PARAM . 'connexion.php';
+        include FUNC . 'connexion.php';
+
+        // traitement du formulaire
+        $msg = postCheck('_formulaire');
+        $form = '';
+
+        // affichage des messages d'erreur
+        if ('OK' == $msg){
+
+            // l'utilisateur est automatiquement connécté
+            // et re-dirigé ver l'accueil
+            if (utilisateurEstAdmin()) $_GET['nav'] = 'backoffice';
+            else unset($_GET['nav']);
+
+        }
+
+    } else if (isset($_GET['nav']) && $_GET['nav'] == 'actif' && isset($_SESSION['user'])){
+
+        // control pour eviter d'afficher le formulaire de connexion
+        // si l'utilisateur tente de le faire
+        unset($_GET['nav']);
+
+    }
+
 }

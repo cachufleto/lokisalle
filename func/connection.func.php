@@ -1,6 +1,6 @@
 <?php
-include_once FUNC . 'form.func.php';
-include_once CONTROLEUR . 'Users.php';
+include FUNC . 'form.func.php';
+include CONTROLEUR . 'Users.php';
 
 # Fonction valideForm()
 # Verifications des informations en provenance du formulaire

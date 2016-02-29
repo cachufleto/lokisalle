@@ -48,8 +48,8 @@ _debug(LINK, 'LINK');
 // _debug($__page, '__page');
 // _debug($__func, '__func');
 // _debug($_pages, '_pages');
-_debug($_trad, '_trad');
+_debug(siteSelectTrad(), '_trad');
 
 debug();
 echo '</div>';
-if(isset($_GET['info']) && $_GET['info'] == 'PHP') phpinfo();
+if (isset($_GET['info']) && $_GET['info'] == 'PHP') phpinfo();

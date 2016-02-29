@@ -8,5 +8,5 @@ function envoiMail($to = 'carlos.paz@free.fr', $subject = 'Lokisalle', $message 
 	return mail($to, $subject, $message, $headers);
 }
 
-if(envoiMail()) echo 'OK';
+if (envoiMail()) echo 'OK';
 else echo '-------------------';

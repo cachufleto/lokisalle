@@ -1,5 +1,5 @@
 <?php
-include_once(FUNC.'form.func.php');
+include FUNC . 'form.func.php';
 // afficher un formulaire de recherche
 // menu déroulant pour la ville
 // date-piqquer pour la date d'entreé
@@ -13,4 +13,4 @@ $capacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
 
 $resultat = 'RESULTAT';
 
-include (TEMPLATE . 'recherche.html.php');
+include TEMPLATE . 'recherche.html.php';

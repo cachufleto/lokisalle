@@ -1,23 +1,23 @@
 <?php
-include(MODEL . 'Salles.php');
+include MODEL . 'Salles.php';
 
-if(!utilisateurEstAdmin()){
+if (!utilisateurEstAdmin()){
   header('Location:index.php');
   exit();
 }
 
 
-if(isset($_GET)){
-  if(!empty($_GET['delete'])){
+if (isset($_GET)){
+ if (!empty($_GET['delete'])){
     sallesUpdateDelete($_GET['delete']);
-  } elseif(!empty($_GET['active'])){
+  } else if (!empty($_GET['active'])){
     sallesUpdateActive($_GET['active']);
   }
 }
 
 
 // selection de tout les salles
-$salles = sallesSelectAll()
+$salles = sallesSelectAll();
 $table = '';
 
 $position = 1;
@@ -38,4 +38,4 @@ while ($data = $salles->fetch_assoc()) {
   $table .= "</tr>\r\n";
 }
 
-include(TEMPLATE . 'gestionsalles.html.php');
+include TEMPLATE . 'gestionsalles.html.php';

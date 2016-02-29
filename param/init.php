@@ -1,5 +1,5 @@
 <?php
-if(!defined('RACINE_SITE')) {
+if (!defined('RACINE_SITE')) {
 	header('Location:../index.php');
 	exit();
 }
@@ -27,11 +27,11 @@ switch($_SERVER["SERVER_NAME"]){
 		$BDD['BDD'] = 'lokisalle';
 }
 
-////////////////////////////
-///// VAR //////////////////
-////////////////////////////
+/**
+ * VAR
+ */
 
-// chiffrement des données
+/* chiffrement des données */
 $cost = 10;
 $options = [
 	'cost' => $cost,
@@ -46,13 +46,3 @@ $msg = "";
 
 // déclaration d'une variable qui nous servira à afficher des messages de debug
 $_debug = array();
-
-// valeur par default
-$_SESSION['lang'] = (isset($_SESSION['lang']))? $_SESSION['lang'] : 'fr';
-// recuperation du cookis lang
-$_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
-// changement de lang par le user
-$_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
-
-// définition des cookis
-setcookie( 'Lokisalle[lang]' , $_SESSION['lang'], time()+360000 );

@@ -4,7 +4,7 @@
  */
 
 $info = '';
-if(isset($_SESSION['panier'])){
+if (isset($_SESSION['panier'])){
 
 	foreach ($_SESSION["panier"] as $key => $value) {
 		$info .= '<br>Salle id ' . $key;
@@ -12,4 +12,4 @@ if(isset($_SESSION['panier'])){
 
 }
 
-include(TEMPLATE . 'reservation.html.php');
+include TEMPLATE . 'reservation.html.php';

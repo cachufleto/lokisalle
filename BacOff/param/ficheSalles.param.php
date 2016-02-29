@@ -1,7 +1,7 @@
 <?php
 
 // on inclus les parametres du formulaire d'inscription
-include_once(PARAM."editerSalles.param.php");
+include PARAM . 'editerSalles.param.php';
 
 
 // recuparation de l'id par GET ou POST
@@ -34,7 +34,7 @@ $_formulaire['statut'] = array(
 	'obligatoire' => true,
 	'defaut' => '');
 
-if(isSuperAdmin() && $_id != 1) // interdir une balise pour modification
+if (isSuperAdmin() && $_id != 1) // interdir une balise pour modification
 	$_formulaire['statut']['type'] = 'select';
 
 

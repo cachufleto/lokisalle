@@ -36,39 +36,53 @@ define('MAX_SIZE', 2000);    // Taille max en octets du fichier
 define('WIDTH_MAX', 1024);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 830);    // Hauteur max de l'image en pixels
 
-if(!file_exists(APP . 'index.php')) exit();
+if (!file_exists(APP . 'index.php')) exit();
+
+## Ouverture des sessions
+session_start();
 
 // activation du debug en fonction de l'environnement
 $debug = ('localhost' == $_SERVER['HTTP_HOST'])? true : false;
 define('DEBUG', $debug);
 
+include  PARAM . 'init.php';
+include  FUNC . 'com.func.php';
+include  MODEL . 'Site.php';
+include  CONTROLEUR . 'Users.php';
 
-## Ouverture des sessions
-session_start();
+// gestion de session
+usersControlSession();
 
-$_linkCss[] = LINK . 'css/style . css';
-$_linkJs[] = LINK . 'js/script . js';
-
-require_once(PARAM . 'init.php');
-require_once(FUNC . 'com.func.php');
 // chargement de la langue
-require_once(PARAM . 'trad' . DIRECTORY_SEPARATOR . 'fr' . DIRECTORY_SEPARATOR . 'traduction.php');
-include_once(PARAM . 'trad' . DIRECTORY_SEPARATOR . $_SESSION['lang'] . DIRECTORY_SEPARATOR . 'traduction.php');
+$_trad = siteSelectTrad();
 
 /************************************************************
  * Creation du repertoire cible si inexistant
  *************************************************************/
-if( !is_dir(TARGET) ) {
-  if( !mkdir(TARGET, 0755) ) {
+if (!is_dir(TARGET) ) {
+  if (!mkdir(TARGET, 0755) ) {
   	exit($_trad['erreur']['leRepertoireNePeutEtreCree']);
   }
 }
 
-// gestion de session
-include_once(INC . 'session.inc.php');
+
+////////////////////////////
+///// NAV //////////////////
+///////////////////////	/////
+// page de navigation
+$_pages = siteSelectPages();
+
+$nav = (isset ($_GET['nav']) && !empty($_GET['nav']) && isset ($_pages[ $_GET['nav'] ]))? $_GET['nav'] : 'erreur404';
+
+// REGLE D'orientation des pages actif et out ver connexion
+if ('actif' == $nav || 'out' == $nav) $nav = 'connexion';
+
+// cas spécifique
+$nav = (!utilisateurEstAdmin() && $nav == 'users')? 'home' : $nav;
+// page a inclure
+$__page = INC . $nav . '.inc.php';
 
 // options du menu de navigation
-require_once(PARAM . 'nav.php');
 // Traduction du titre de la page
 $titre = $_trad['titre'][$nav];
 
@@ -79,6 +93,7 @@ $_menu = '';
  * @var $_fileJs
  * @var $_fileJsFooter
  */
+
 $_linksFiles = array();
 $_linksFiles['Css'][] = 'css/style.css';
 $_linksFiles['Css'][] = 'css/' . $nav . '.css';

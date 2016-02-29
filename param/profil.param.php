@@ -1,7 +1,7 @@
 <?php
 
 // on inclus les parametres du formulaire d'inscription
-include_once(PARAM . "inscription.param.php");
+include PARAM . 'inscription.param.php';
 
 
 // recuparation de l'id par GET ou POST
