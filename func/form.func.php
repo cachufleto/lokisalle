@@ -1,22 +1,17 @@
 <?php
 # FUNCTIONS FORMULAIRES
-
-# Fonction postCheck() 
-# Control des informations Postées
-# convertion avec htmlentities
-# $nomFormulaire => string nom du tableau
-# RETURN string alerte
-function postCheck($nomFormulaire, $mod=FALSE){
-
-	global ${$nomFormulaire};
-
-	$fomulaire = ${$nomFormulaire};
-	$msg = '';
-	
+/**
+ * @param $_formulaire
+ * @param bool $mod
+ * @return string
+ */
+function postCheck(&$_formulaire, $mod=FALSE)
+{
 	if (isset($_POST['valide'])){
 		// appel à la fonction spécifique à chaque formulaire
 		// la fonction doit ce trouver dans le fichier de traitement
-		return postValide($nomFormulaire, $mod);
+		// CHANGEMENT DE COMPORTEMENT DE postValide
+		return postValide($_formulaire, $mod);
 		/* else ifpostValide($nomFormulaire, $mod)) {
 
 			// control particulier pour chaque formulaire
@@ -26,7 +21,7 @@ function postCheck($nomFormulaire, $mod=FALSE){
 		else $msg = $_trad['erreur']['inconueConnexion']; */
 	}
 
-	return $msg;
+	return '';
 }
 
 # Fonction formulaireAfficher()
@@ -34,9 +29,9 @@ function postCheck($nomFormulaire, $mod=FALSE){
 #$_form => tableau des items
 # RETURN string du formulaire
 function formulaireAfficher($_form){
-	
 
-	global $_trad;
+
+	$_trad = siteSelectTrad();
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
@@ -69,9 +64,9 @@ function formulaireAfficher($_form){
 # $info => tableau des informations relatives a l'item
 # RETURN [balises] texte
 function typeForm($champ, $info){
-	
 
-	global $_trad;
+
+	$_trad = siteSelectTrad();
 
 	$valeur = (!empty($info['valide']))? $info['valide'] : $info['defaut'];
 	$check = (!empty($info['valide']))? 'checked' : '' ;
@@ -188,16 +183,13 @@ function testADMunique($statut, $id_membre){
 # [@$nom_form] tableau des items validées du formulaire
 # $mod => condition pour une action de mise à jour en BDD
 # RETURN string message d'alerte
-function postValide($nom_form, $mod=FALSE){
-
-	
-	global $msg, ${$nom_form};
+function postValide(&$_formulaire, $mod=FALSE)
+{
 	$ok = true;
-
+	$msg = '';
     $_trad = siteSelectTrad();
-
 	// on boucle sur les valeurs des champs
-	$_form = ${$nom_form};
+	$_form = $_formulaire;
 	foreach($_form as $key => $info){
 		
 		// on le verifie pas les actions en modification pour ce qui sont obligatoires
@@ -215,7 +207,7 @@ function postValide($nom_form, $mod=FALSE){
 				if (testObligatoire($info) && empty($valeur1)){
 
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['champ'][$key] . $_trad['erreur']['obligatoire'];
 					$valide = '';
 
@@ -223,7 +215,7 @@ function postValide($nom_form, $mod=FALSE){
 
 					// l'un des deux champs est remplie
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad[$key];
 					$valide = '';
 				
@@ -231,19 +223,19 @@ function postValide($nom_form, $mod=FALSE){
 
 					// les deux valeurs sont differents
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezUneErreurDans'] . $_trad['champ'][$key];
 					$valide = '';
 				
 				}
 					
 			}
-			
-			${$nom_form}[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
+
+			$_formulaire[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
 		
 		} else if ($info['type'] == 'file'){
 			if (isset($_FILES[$key])){
-                ${$nom_form}[$key]['valide'] = $_FILES[$key]['name'];
+				$_formulaire[$key]['valide'] = $_FILES[$key]['name'];
             }
 		} else if ($info['type'] == 'checkbox'){
 			
@@ -253,14 +245,14 @@ function postValide($nom_form, $mod=FALSE){
 
 			// si le champs n'est pas présent dans POST
 			$ok = false;
-			${$nom_form}[$key]['valide'] = '';
-			${$nom_form}[$key]['message'] = $_trad['erreur']['ATTENTIONfaitQuoiAvec']. $_trad['champ'][$key] . '?';
+			$_formulaire[$key]['valide'] = '';
+			$_formulaire[$key]['message'] = $_trad['erreur']['ATTENTIONfaitQuoiAvec']. $_trad['champ'][$key] . '?';
 			$msg .= $_trad['erreur']['corrigerErreurDans'];
 		
 		}
 	}
 	
-	return $ok;
+	return $msg; //$ok;
 }
 
 # Fonction radioCheck()
@@ -388,7 +380,7 @@ function modCheck($nomFormulaire, $_id, $table){
 # RETURN string du formulaire
 function formulaireAfficherInfo($_form){
 
-	global $_trad;
+	$_trad = siteSelectTrad();
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
@@ -435,8 +427,8 @@ function formulaireAfficherInfo($_form){
 # RETURN string du formulaire
 function formulaireAfficherMod($_form){
 
-	
-	global $_trad;
+
+	$_trad = siteSelectTrad();
 	//global $_formIncription;
 	$formulaire = '';
 
@@ -494,10 +486,11 @@ function formulaireAfficherMod($_form){
 #$key => champ
 #$info => donées relatives au champ
 # RETURN boolean
-function controlImageUpload($key, &$info) {
+function controlImageUpload($key, &$info)
+{
 
 
-	global $_trad;
+	$_trad = siteSelectTrad();
 	// Tableaux de donnees
 	$tabExt = array('jpg','gif','png','jpeg');    // Extensions autorisees
 	$infosImg = array();

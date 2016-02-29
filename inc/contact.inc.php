@@ -5,7 +5,6 @@
  * Date: 25/02/2016
  * Time: 15:19
  */
-include MODEL . 'Users.php';
 
 $listConctact = array();
 

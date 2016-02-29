@@ -51,7 +51,7 @@ include  MODEL . 'Site.php';
 include  CONTROLEUR . 'Users.php';
 
 // gestion de session
-usersControlSession();
+usersControlSession($_formulaire);
 
 // chargement de la langue
 $_trad = siteSelectTrad();
@@ -72,7 +72,8 @@ if (!is_dir(TARGET) ) {
 // page de navigation
 $_pages = siteSelectPages();
 
-$nav = (isset ($_GET['nav']) && !empty($_GET['nav']) && isset ($_pages[ $_GET['nav'] ]))? $_GET['nav'] : 'erreur404';
+$nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
+$nav = (isset ($_pages[$nav]))? $nav : 'erreur404';
 
 // REGLE D'orientation des pages actif et out ver connexion
 if ('actif' == $nav || 'out' == $nav) $nav = 'connexion';

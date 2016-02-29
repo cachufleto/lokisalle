@@ -5,8 +5,6 @@ if (!utilisateurEstAdmin()){
   exit();
 }
 
-include MODEL . 'Users.php';
-
 if (isset($_GET)){
  if (!empty($_GET['delete']) && $_GET['delete'] != 1){
 

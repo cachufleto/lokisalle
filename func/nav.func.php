@@ -4,42 +4,50 @@
 # Valide le menu de navigation
 # [@_pages] => array de navigation
 # RETURN Boolean
-function listeMenu(){
-
+function listeMenu()
+{
 	if (!utilisateurEstAdmin()) return;
 
-	global $_trad;
-
-
+	$_trad = siteSelectTrad();
 	$_pages = siteSelectPages();
 
 	// control du menu principal
 	$_reglesAdmin = siteNavReglesAdmin();
-	foreach($_reglesAdmin as $key)
-		if (!isset($_pages[$key]))
+	foreach($_reglesAdmin as $key){
+		if (!isset($_pages[$key])){
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuAdmin']);
+		}
+	}
 
 	$_reglesMembre = siteNavReglesMembre();
-	foreach($_reglesMembre as $key)
-		if (!isset($_pages[$key]))
+	foreach($_reglesMembre as $key){
+		if (!isset($_pages[$key])){
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuMembre']);
+		}
+	}
 
 	$_reglesAll = siteNavReglesAdmin();
-	foreach($_reglesAll as $key)
-		if (!isset($_pages[$key]))
+	foreach($_reglesAll as $key){
+		if (!isset($_pages[$key])){
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenu']);
+		}
+	}
 
 	// control du footer
 	$navFooter = siteNavFooter();
-	foreach($navFooter as $key)
-		if (!isset($_pages[$key]))
+	foreach($navFooter as $key){
+		if (!isset($_pages[$key])){
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuFooter']);
+		}
+	}
 
 	// control du menu administrateur
 	$navAdmin = siteNavAdmin();
-	foreach($navAdmin as $key)
-		if (!isset($_pages[$key]))
+	foreach($navAdmin as $key){
+		if (!isset($_pages[$key])){
 			exit($_trad['laRubrique'] . $key . $_trad['pasDansMenuAdmin']);
+		}
+	}
 
 	return;
 }
@@ -51,10 +59,11 @@ function listeMenu(){
 # [@_pages] => array('nav'...)
 # [@titre] => string titre de la page
 # RETURN string liste <li>...</li>
-function liste_nav($liste=''){
-	
-	global $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
+function liste_nav($liste='')
+{
+	global $nav;
 
+	$_pages = siteSelectPages();
 	$_trad = siteSelectTrad();
 
 	if (empty($liste)){

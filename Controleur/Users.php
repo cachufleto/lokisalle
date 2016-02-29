@@ -1,8 +1,13 @@
 <?php
+include MODEL . 'Users.php';
 
+/**
+ * @param $jeton
+ * @return mixed
+ */
 function usersValiderInscription($jeton)
 {
-    global $_trad;
+    $_trad = siteSelectTrad();
 
     $incription = usersSelectMembreJeton($jeton);
 
@@ -21,9 +26,13 @@ function usersValiderInscription($jeton)
     }
 }
 
+/**
+ * @param $jeton
+ * @return mixed
+ */
 function usersValiderJeton($jeton)
 {
-    global $_trad;
+    $_trad = siteSelectTrad();
 
     if (isset($jeton['jeton']) && !empty($jeton['jeton'])) {
 
@@ -34,53 +43,53 @@ function usersValiderJeton($jeton)
     }
 }
 
+/**
+ * @param $_id
+ * @param $_valider
+ * @param $_modifier
+ * @return string
+ */
 function usersProfil($_id, $_valider, $_modifier)
 {
-    global $_formulaire;
-
     $_trad = siteSelectTrad();
-
+    if(isSuperAdmin()){
+        include PARAM . REPADMIN . 'profil.param.php';
+    } else {
+        include PARAM . 'profil.param.php';
+    }
     // extraction des données SQL
-    if (modCheck('_formulaire', $_id, 'membres')) {
-
+    if (modCheck($_formulaire, $_id, 'membres')) {
         // traitement POST du formulaire
-        $msg = ($_valider) ? postCheck('_formulaire', TRUE) : '';
-
+        $msg = ($_valider) ? postCheck($_formulaire, TRUE) : '';
         if ('OK' == $msg) {
             // on renvoi ver connexion
             $msg = $_trad['lesModificationOntEteEffectues'];
             // on évite d'afficher les info du mot de passe
             unset($_formulaire['mdp']);
-            return formulaireAfficherInfo($_formulaire);
-
+            return ['msg' => $msg, 'form' => formulaireAfficherInfo($_formulaire)];
         } else {
-
             if (!empty($msg) || $_modifier) {
-
                 $_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
-
-                return formulaireAfficherMod($_formulaire);
-
+                return ['msg' => $msg, 'form' => formulaireAfficherMod($_formulaire)];
             } else if (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
                 header('Location:?nav=users');
                 exit();
             } else {
 
                 unset($_formulaire['mdp']);
-                return formulaireAfficherInfo($_formulaire);
-
+                return ['msg' => $msg, 'form' => formulaireAfficherInfo($_formulaire)];
             }
-
         }
-
     } else {
-
-        return 'Erreur 500: ' . $_trad['erreur']['NULL'];
-
+        $msg = 'Erreur 500: ' . $_trad['erreur']['NULL'];
+        return ['msg' => $msg, 'form' => ''];
     }
-
+    return ['msg' => $msg, 'form' => ''];
 }
 
+/**
+ * @return string
+ */
 function connexion(){
 
     global $_formulaire, $minLen;
@@ -188,18 +197,21 @@ function connexion(){
     return $msg;
 }
 
+/**
+ * @return string
+ */
 function usersChangerMotPasse(){
 
-    global $_formulaire, $minLen;
+    global $minLen;
 
     $_trad = siteSelectTrad();
-
+    include PARAM . 'changermotpasse.param.php';
     $message = '';
     $sql_Where = '';
 
     foreach ($_formulaire as $key => $info){
 
-        $label = $_trad[$key];
+        $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
        if ('valide' != $key)
@@ -225,9 +237,7 @@ function usersChangerMotPasse(){
                                 ', Caractere acceptés: A à Z et 0 à 9 </p></div>';
                             // un message sans ecresser les messages existant avant. On place dans $msg des chaines de caracteres
                         }
-
                         break;
-
                 }
                 // Construction de la requettes
                if ($key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
@@ -236,7 +246,7 @@ function usersChangerMotPasse(){
 
    if (empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
     {
-        if (usersSelectChangerMotPasse($sql_Where))
+        if ($membre = usersSelectChangerMotPasse($sql_Where))
         {
            if (isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
                 $_formulaire[$crypte]['sql'] = $membre[$crypte];
@@ -254,6 +264,9 @@ function usersChangerMotPasse(){
     return $message;
 }
 
+/**
+ * @return string
+ */
 function usersConnexion()
 {
 
@@ -327,6 +340,9 @@ function usersConnexion()
     return $message;
 }
 
+/**
+ * @return bool|string
+ */
 function usersProfilModifier(){
 
     global $_formulaire, $minLen;
@@ -515,6 +531,9 @@ function usersProfilModifier(){
     return $msg;
 }
 
+/**
+ * @return bool|string
+ */
 function userInscritionFormulaire(){
 
     global $_formulaire, $minLen;
@@ -699,7 +718,11 @@ function userInscritionFormulaire(){
     return $msg;
 }
 
-function usersControlSession(){
+/**
+ * @return NULL
+ */
+function usersControlSession(&$_formulaire)
+{
 
     $_trad = siteSelectTrad();
 
@@ -749,8 +772,7 @@ function usersControlSession(){
         include FUNC . 'connexion.php';
 
         // traitement du formulaire
-        $msg = postCheck('_formulaire');
-        $form = '';
+        $msg = postCheck($_formulaire);
 
         // affichage des messages d'erreur
         if ('OK' == $msg){
@@ -769,5 +791,45 @@ function usersControlSession(){
         unset($_GET['nav']);
 
     }
+}
 
+/**
+ * @param $_formulaire
+ * @return array
+ */
+function usersInscription()
+{
+    $_trad = siteSelectTrad();
+    include PARAM . 'inscription.param.php';
+    // traitement du formulaire
+    $msg = postCheck($_formulaire);
+
+    // affichage des messages d'erreur
+    if ('OK' == $msg){
+        // on renvoi ver connexion
+        $msg = $_trad['validerInscription'];
+        $form = '<a href="?nav=home">SUITE</a>';
+    }else {
+        // RECUPERATION du formulaire
+        $form = formulaireAfficher($_formulaire);
+    }
+    return ['msg' => $msg, 'form' => $form];
+}
+
+/**
+ * @return array
+ */
+function usersConnexionForm(){
+
+    $_trad = siteSelectTrad();
+    $msg = $form = '';
+    if (isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
+        // affichage
+        $msg = $_trad['erreur']['acces'];
+    } else {
+        // RECUPERATION du formulaire
+        include PARAM . 'connexion.php';
+        $form = formulaireAfficher($_formulaire);
+    }
+    return ['msg' => $msg, 'form' => $form];
 }

@@ -59,10 +59,8 @@ function executeRequete($req)
  */
 function executeRequeteExist($req)
 {
-	global $_trad;
-
+	$_trad = siteSelectTrad();
 	$connexion = connectMysqli();
-
 	$resultat = $connexion->query($req);
 
 	if (!$resultat) {
@@ -84,7 +82,7 @@ function executeRequeteExist($req)
  */
 function executeRequeteAssoc($req)
 {
-	global $_trad;
+	$_trad = siteSelectTrad();
 
 	$connexion = connectMysqli();
 
@@ -109,29 +107,21 @@ function executeRequeteAssoc($req)
  */
 function executeMultiRequete($req)
 {
-
-	global $_trad;
-
+	$_trad = siteSelectTrad();
 	$connexion = connectMysqli();
-
 	if ($connexion->multi_query($req)) {
-
 		$i = 0;
 		do {
 			$connexion->next_result();
-
 			$i++;
 		}
 		while( $connexion->more_results() );
-
 		$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
-
 		return true;
 	}
 
 	$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
 	return false;
-
 }
 
 /**
@@ -140,10 +130,8 @@ function executeMultiRequete($req)
  */
 function hashCrypt ($chaine)
 {
-
 	global $options;
 	return password_hash($chaine, PASSWORD_BCRYPT, $options);
-
 }
 
 /**
@@ -200,9 +188,7 @@ function utilisateurEstAdmin ()
 }
 
 /**
- * Fonction utilisateurEstAdmin()
- * Verifie SESSION ADMIN ACTIVE
- * RETURN Boolean
+ * @return bool
  */
 function utilisateurEstCollaborateur ()
 {
@@ -212,26 +198,21 @@ function utilisateurEstCollaborateur ()
 }
 
 /**
- * Fonction utilisateurEstConnecte()
- * Verifie SESSION ACTIVE
- * RETURN Boolean
+ * @return bool
  */
 function utilisateurEstConnecte()
 {
-
 	return (!isset($_SESSION['user']))? false : true;
-	
 }
 
-
 /**
- * Fonction envoiMail()
- * envoi un mail
- * RETURN Boolean
+ * @param $key
+ * @param string $to
+ * @return bool
  */
 function envoiMail($key, $to = 'carlos.paz@free.fr')
 {
-	global $_trad;
+	$_trad = siteSelectTrad();
 
 	// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -251,19 +232,23 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
 }
 
-
 /**
- * Fonction listeDistinc()
- * genere une liste avec des valeurs distinc d'un champ
- * RETURN Boolean
+ * @param $champ
+ * @param $table
+ * @return bool|mysqli_result
  */
-
 function selectDistinct($champ, $table)
 {
 	$sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
 	return executeRequete($sql);
 }
 
+/**
+ * @param $champ
+ * @param $table
+ * @param $info
+ * @return string
+ */
 function listeDistinc($champ, $table, $info)
 {
 
@@ -296,7 +281,7 @@ function listeDistinc($champ, $table, $info)
 function dernieresOffresTemplate($salle)
 {
 
-	global $_trad;
+	$_trad = siteSelectTrad();
 
 	$offre  = "<div class=\"offre\">\r\n";
 	$offre .= "\t<div>" . $salle['titre'] . "</div>\r\n";
@@ -319,7 +304,7 @@ function dernieresOffresTemplate($salle)
 function ficheContactTemplate($contact)
 {
 
-	global $_trad;
+	$_trad = siteSelectTrad();
 
 	$offre  = "<div class=\"fiche\">\r\n";
 	$offre .= "\t<div>" . $contact['prenom'] . " " . $contact['nom'] . "</div>\r\n";

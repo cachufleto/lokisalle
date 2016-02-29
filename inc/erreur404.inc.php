@@ -1,8 +1,3 @@
 <?php
-if (array_key_exists($nav, $_pages)){
-	$msg = $_trad['enConstruccion'];
-} else {
-	$msg = $_trad['ERROR404'];
-}
-
-include TEMPLATE . 'erreur.html.php';
+$msg = siteErreur404($nav);
+include TEMPLATE . 'erreur404.html.php';

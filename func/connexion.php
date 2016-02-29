@@ -1,6 +1,4 @@
 <?php
-include MODEL . 'Users.php';
-
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
 # $_form => tableau des items

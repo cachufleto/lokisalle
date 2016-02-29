@@ -5,7 +5,4 @@ include FUNC . 'form.func.php';
 # Verifications des informations en provenance du formulaire
 # $_form => tableau des items
 # RETURN string msg
-function valideForm()
-{
-    return usersChangerMotPasse();
-}
+$msg = usersChangerMotPasse();

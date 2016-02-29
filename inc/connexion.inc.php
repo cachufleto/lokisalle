@@ -4,13 +4,6 @@
 // include FUNC . 'form.func.php';
 
 /////////////////////////////////////
-if (isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
-	// affichage
-	$msg = $_trad['erreur']['acces'];
-} else {
-	// RECUPERATION du formulaire
-	include PARAM . 'connexion.php';
-	$form = formulaireAfficher($_formulaire);
-}
 
+extract(usersConnexionForm());
 include TEMPLATE . 'connexion.html.php';

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @return string
+ */
 function sallesListe()
 {
     $_trad = siteSelectTrad();
@@ -47,8 +49,11 @@ function sallesListe()
     return $table;
 }
 
-
-function sallesFiche(){
+/**
+ * @return bool|string
+ */
+function sallesFiche()
+{
 
     global $_formulaire, $minLen, $position;
 
@@ -162,9 +167,15 @@ function sallesFiche(){
     return $msg;
 }
 
-function sallesEditer(){
+/**
+ * @return bool|string
+ */
+function sallesFicheInsert()
+{
 
-    global $_formulaire, $minLen;
+    global $minLen;
+
+    include PARAM . REPADMIN . 'editerSalles.param.php';
 
     $_trad = siteSelectTrad();
 
@@ -172,7 +183,6 @@ function sallesEditer(){
     $msg = 	$erreur = false;
     $sql_champs = $sql_Value = '';
     // active le controle pour les champs telephone et gsm
-    $controlTelephone = true;
 
     foreach ($_formulaire as $key => $info){
 
@@ -199,11 +209,6 @@ function sallesEditer(){
 
                     case 'capacite':
                         break;
-                    /*
-                                        case 'photo':
-
-                                        break;
-                    */
                     case 'categorie':
 
                        if (empty($valeur))
@@ -253,4 +258,78 @@ function sallesEditer(){
    }
 
     return $msg;
+}
+
+/**
+ * @param $_formulaire
+ * @return array
+ */
+function sallesFicheModifier($_formulaire)
+{
+    $_trad = siteSelectTrad();
+    include PARAM . REPADMIN . 'ficheSalles.param.php';
+    // extraction des données SQL
+    if (modCheck($_formulaire, $_id, 'salles') ){
+
+        // traitement POST du formulaire
+        $msg = ($_valider)? postCheck($_formulaire, TRUE) : '';
+
+        if ('OK' == $msg){
+            // on renvoi ver connexion
+            $msg = $_trad['lesModificationOntEteEffectues'];
+            // on évite d'afficher les info du mot de passe
+            unset($_formulaire['mdp']);
+            $form = formulaireAfficherInfo($_formulaire);
+
+        } else {
+
+            if (!empty($msg) || $_modifier) {
+
+                $_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
+
+                $form = formulaireAfficherMod($_formulaire);
+
+            } if (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler'){
+                header('Location:?nav=gestionSalles&pos=P-'.$position.'');
+                exit();
+            } else {
+
+                unset($_formulaire['mdp']);
+                $form = formulaireAfficherInfo($_formulaire);
+
+            }
+
+        }
+
+    } else {
+
+        $form = 'Erreur 500: '.$_trad['erreur']['NULL'];
+
+    }
+    return ['msg' => $msg, 'form' => $form];
+}
+
+/**
+ * @return array
+ */
+function sallesEditer(){
+
+    include PARAM . 'editSalles.param.php';
+    // traitement du formulaire
+    $msg = postCheck($_formulaire);
+
+    // affichage des messages d'erreur
+    if ('OK' == $msg){
+        // on renvoi ver connexion
+        //header('Location:index.php?nav=actif&qui='.$_formulaire['pseudo']['valide'].
+        //	'&mp='.$_formulaire['mdp']['valide'].'');
+        return ['msg'=>'', 'form' => ''];
+    }
+    // RECUPERATION du formulaire
+    $form = '
+			<form action="#" method="POST" enctype="multipart/form-data">
+			' . formulaireAfficher($_formulaire) . '
+			</form>';
+
+    return ['msg'=>$msg, 'form' => $form];
 }

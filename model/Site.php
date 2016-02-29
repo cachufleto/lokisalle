@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @return array
+ */
 function siteSelectTrad()
 {
     $_trad = array();
@@ -10,6 +12,9 @@ function siteSelectTrad()
     return $_trad;
 }
 
+/**
+ * @param $install
+ */
 function siteInstall($install)
 {
    if (isset($install['install']) && $install['install'] == 'BDD')
@@ -30,6 +35,9 @@ function siteInstall($install)
     }
 }
 
+/**
+ * @return bool
+ */
 function siteInstallBDD()
 {
     // initialisation des tables
@@ -37,6 +45,9 @@ function siteInstallBDD()
     return executeMultiRequete($sql);
 }
 
+/**
+ * @return bool
+ */
 function siteInstallData()
 {
     // remplisage des tables
@@ -44,18 +55,28 @@ function siteInstallData()
     return executeMultiRequete($sql);
 }
 
+/**
+ * @param $_id
+ * @param $_mdp
+ */
 function siteInstallUpdateMotPasseCrypte($_id, $_mdp)
 {
-    $sql = "UPDATE membres SET mdp = '". hashCrypt($_mdp) ."' WHERE id_membre = $_id";
+    $sql = "UPDATE membres SET mdp = '". hashCrypt($_mdp) ."' WHERE id_membre = $_id;";
     executeRequete($sql);
 }
 
+/**
+ * @return mixed
+ */
 function siteSelectPages()
 {
     include PARAM . 'nav.php';
     return $_pages;
 }
 
+/**
+ * @return mixed
+ */
 function siteNavReglesAll()
 {
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
@@ -63,26 +84,83 @@ function siteNavReglesAll()
     return $_reglesAll;
 }
 
+/**
+ * @return mixed
+ */
 function siteNavReglesMembre()
 {
     include PARAM . 'nav.php';
     return $_reglesMembre;
 }
 
+/**
+ * @return mixed
+ */
 function siteNavReglesAdmin()
 {
     include PARAM . 'nav.php';
     return $_reglesAdmin;
 }
 
+/**
+ * @return mixed
+ */
 function siteNavAdmin()
 {
     include PARAM . 'nav.php';
     return $navAdmin;
 }
 
+/**
+ * @return mixed
+ */
 function siteNavFooter()
 {
     include PARAM . 'nav.php';
     return $navFooter;
+}
+
+/**
+ * @param $nav
+ * @return mixed
+ */
+function siteErreur404($nav){
+    $_pages = siteSelectPages();
+    $_trad = siteSelectTrad();
+    if (array_key_exists($nav, $_pages)){
+        return $_trad['enConstruccion'];
+    } else {
+        return $_trad['ERROR404'];
+    }
+}
+
+/**
+ * @return string
+ */
+function siteNav()
+{
+    global $_menu;
+
+    $_trad = siteSelectTrad();
+
+    listeMenu();
+    $_link = $_SERVER["QUERY_STRING"];
+
+    $menu = liste_nav($_menu);
+    $class = $menu['class'];
+
+    $liNav = $menu['menu'];
+
+    if (isset($_SESSION['user'])) {
+        $liNav .= "<li class=\"$class\"><a class='admin'>[";
+        $liNav .= ($_SESSION['user']['statut'] != 'MEM') ? $_trad['value'][$_SESSION['user']['statut']] . "::" : "";
+        $liNav .= $_SESSION['user']['user'] . ']</a></li>';
+    }
+
+    $liNav .= "<li class=\"$class\">";
+    $liNav .= ($_SESSION['lang'] == 'es') ? "<a href=\"?$_link&lang=fr\">FR</a>" : "FR";
+    $liNav .= " : " . (($_SESSION['lang'] == 'fr') ? "<a href='?$_link&lang=es'>ES</a>" : "ES") . "</li>";
+
+    return $liNav;
+
 }
