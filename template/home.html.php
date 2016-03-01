@@ -1,4 +1,4 @@
-    <principal class="<?php echo $nav; ?>">
+    <principal class="<?php echo $__nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
 		<div id="homeG">

@@ -10,9 +10,9 @@ $_menu = 'siteNavAdmin';
 
 // ajout du css admin
 $_linksFiles['Css'][] = REPADMIN . 'css/admin.css';
-$_linksFiles['Css'][] = REPADMIN . 'css/' . $nav . '.css';
-$_linksFiles['Js'][] = REPADMIN . 'js/' . $nav . '.js';
-$_linksFiles['JsFooter'][] = REPADMIN . 'js/' . $nav . '.footer.js';
+$_linksFiles['Css'][] = REPADMIN . 'css/' . $__nav . '.css';
+$_linksFiles['Js'][] = REPADMIN . 'js/' . $__nav . '.js';
+$_linksFiles['JsFooter'][] = REPADMIN . 'js/' . $__nav . '.footer.js';
 
 #########################################################
 ## rétablire les tables de la base pour DEMO

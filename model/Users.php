@@ -184,3 +184,9 @@ function userSelectContactAll()
     $sql = "SELECT * FROM membres WHERE statut != 'MEM';";
     return executeRequete($sql);
 }
+
+function usersSelectModCheck($_id){
+    $sql = "SELECT * FROM membres WHERE id_membre = $_id " . ( !isSuperAdmin()? " AND active != 0" : "" );
+    return executeRequeteAssoc($sql);
+
+}

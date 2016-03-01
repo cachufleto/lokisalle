@@ -351,13 +351,10 @@ function debug($mode=0)
  * @param $mode => defaut = 1
  * RETURN NULL;
  */
-function _debug($var, $label)
+function _debug($var, $label, $origin = '-----')
 {
-	
 	global $_debug;
-	
-	$_debug[][$label] = $var;
-	
+	$_debug[][$label] = ['origin' => basename($origin), 'Valeur' => $var];
 	return;
 }
 

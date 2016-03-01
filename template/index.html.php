@@ -21,7 +21,7 @@
 
         </ul>
     </nav>
-    <div id="<?php echo $nav?>">
+    <div id="<?php echo $__nav?>">
     <?php
     // ***************************************************** //
     echo $page;

@@ -41,3 +41,9 @@ function sallesInsert($sql_champs, $sql_Value)
     $sql = "INSERT INTO salles ($sql_champs) VALUES ($sql_Value);";
     return executeRequete ($sql);
 }
+
+function sallesSelectModCheck($_id){
+    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
+    return executeRequeteAssoc($sql);
+
+}

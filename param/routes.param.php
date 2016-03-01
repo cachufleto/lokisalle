@@ -54,7 +54,11 @@ $_route['salles']['controleur'] = CONTROLEUR . 'Salles.php';
 $_route['salles']['action'] = 'sallesListe';
 
 $_route['ficheSalles']['controleur'] = CONTROLEUR . 'Salles.php';
-$_route['ficheSalles']['action'] = '';
+$_route['ficheSalles']['action'] = 'sallesFicheEditer';
+
+$_route['ficheSallesMod']['controleur'] = CONTROLEUR . 'Salles.php';
+$_route['ficheSallesMod']['action'] = 'sallesFicheModifier';
+
 
 $_route['validerIncription']['controleur'] = CONTROLEUR . 'Users.php';
 $_route['validerIncription']['action'] = 'usersValiderInscription';
@@ -62,7 +66,8 @@ $_route['validerIncription']['action'] = 'usersValiderInscription';
 /************   MEMBRE    **************/
 
 $_route['actif']['controleur'] = CONTROLEUR . 'Users.php';
-$_route['actif']['action'] = 'usersConnexionForm';
+$_route['actif']['action']['afficher'] = 'usersConnexionForm';
+$_route['actif']['action']['valider'] = 'connexion';
 
 $_route['out']['controleur'] = CONTROLEUR . 'Users.php';
 $_route['out']['action'] = 'usersConnexionForm';
@@ -74,7 +79,7 @@ $_route['mjprofil']['controleur'] = CONTROLEUR . 'Users.php';
 $_route['mjprofil']['action'] = '';
 
 $_route['profil']['controleur'] = CONTROLEUR . 'Users.php';
-$_route['profil']['action'] = '';
+$_route['profil']['action'] = 'usersProfil';
 
 $_route['ficheMembre']['controleur'] = CONTROLEUR . 'Users.php';
 $_route['ficheMembre']['action'] = '';
@@ -82,7 +87,7 @@ $_route['ficheMembre']['action'] = '';
 /************   ADMIN    **************/
 
 $_route['backoffice']['controleur'] = CONTROLEUR . 'Site.php';
-$_route['backoffice']['action'] = '';
+$_route['backoffice']['action'] = 'siteBackoffice';
 
 $_route['boutique']['controleur'] = CONTROLEUR . 'Salles.php';
 $_route['boutique']['action'] = '';
@@ -97,5 +102,5 @@ $_route['gestionSalles']['controleur'] = CONTROLEUR . 'Salles.php';
 $_route['gestionSalles']['action'] = '';
 
 $_route['editerSalles']['controleur'] = CONTROLEUR . 'Salles.php';
-$_route['editerSalles']['action'] = '';
+$_route['editerSalles']['action'] = 'sallesFicheInsert';
 

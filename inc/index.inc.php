@@ -2,8 +2,16 @@
 
 ob_start();
 
-// include $__page;
-$_route[$nav]['action']();
+if($__nav == 'actif'){
+    if(isset($_POST['valide'])){
+        $_route['actif']['action']['valider']();
+    } else {
+        $_route['actif']['action']['afficher']();
+    }
+
+} else {
+    $_route[$__nav]['action']();
+}
 
 $page = ob_get_contents();
 ob_end_clean();

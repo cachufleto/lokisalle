@@ -3,12 +3,11 @@
 // on inclus les parametres du formulaire d'inscription
 include PARAM . 'inscription.param.php';
 
+// traitement selon le profil
+$_id = $_SESSION['user']['id'];
 
 // recuparation de l'id par GET ou POST
 $_id = (int)(isset($_POST['id_membre'])? $_POST['id_membre'] : (isset($_GET['id'])? $_GET['id'] : false) );
-
-// traitement selon le profil
-$_id = $_SESSION['user']['id'];
 
 // affichage du boutton de validation
 $_formulaire['valide']['defaut'] = $_trad['defaut']['modifier'];

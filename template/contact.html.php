@@ -1,4 +1,4 @@
-<principal id='<?php echo $nav; ?>'>
+<principal id='<?php echo $__nav; ?>'>
     <h1><?php echo $titre; ?></h1>
     <hr />
     <div class="contact">

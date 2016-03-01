@@ -4,6 +4,7 @@
 DEBUG -----------
 <hr>
 <?php
+/*
 // test ooption de hashage pour les mot de passe
 $timeTarget = 0.05; // 50 millisecondes
 
@@ -49,7 +50,7 @@ _debug(LINK, 'LINK');
 // _debug($__func, '__func');
 // _debug($_pages, '_pages');
 _debug(siteSelectTrad(), '_trad');
-
+*/
 debug();
 echo '</div>';
 if (isset($_GET['info']) && $_GET['info'] == 'PHP') phpinfo();

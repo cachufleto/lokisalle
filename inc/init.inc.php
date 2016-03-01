@@ -41,6 +41,13 @@ if (!file_exists(APP . 'index.php')) exit();
 ## Ouverture des sessions
 session_start();
 
+// valeur par default
+$_SESSION['lang'] = (isset($_SESSION['lang']))? $_SESSION['lang'] : 'fr';
+// recuperation du cookis lang
+$_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
+// changement de lang par le user
+$_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
+
 // activation du debug en fonction de l'environnement
 $debug = ('localhost' == $_SERVER['HTTP_HOST'])? true : false;
 define('DEBUG', $debug);
@@ -72,33 +79,18 @@ if (!is_dir(TARGET) ) {
 ///////////////////////	/////
 // page de navigation
 $_pages = siteSelectPages();
-
-$nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
-$nav = (isset ($_pages[$nav]))? $nav : 'erreur404';
-
-// REGLE D'orientation des pages actif et out ver connexion
-// if ('actif' == $nav || 'out' == $nav) $nav = 'connexion';
-
-// cas spécifique
-$nav = (!utilisateurEstAdmin() && $nav == 'users')? 'home' : $nav;
-// page a inclure
-// $__page = INC . $nav . '.inc.php';
-
-// options du menu de navigation
-// Traduction du titre de la page
-$titre = $_trad['titre'][$nav];
+/** @var  $__nav */
+$__nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
+$__nav = (isset ($_pages[$__nav]))? $__nav : 'erreur404';
+$__nav = (!utilisateurEstAdmin() && $__nav == 'users')? 'home' : $__nav;
+_debug($__nav, '__nav', __FILE__);
 
 /** @var $menu */
 $_menu = '';
-/**
- * @var $_fileCss
- * @var $_fileJs
- * @var $_fileJsFooter
- */
-
+/** @var  $_linksFiles */
 $_linksFiles = array();
 $_linksFiles['Css'][] = 'css/style.css';
-$_linksFiles['Css'][] = 'css/' . $nav . '.css';
-$_linksFiles['Js'][] = 'js/' . $nav . '.js';
-$_linksFiles['JsFooter'][] = 'js/' . $nav . '.footer.js';
+$_linksFiles['Css'][] = 'css/' . $__nav . '.css';
+$_linksFiles['Js'][] = 'js/' . $__nav . '.js';
+$_linksFiles['JsFooter'][] = 'js/' . $__nav . '.footer.js';
 

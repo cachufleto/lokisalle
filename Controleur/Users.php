@@ -7,9 +7,9 @@ include MODEL . 'Users.php';
  */
 function usersValiderInscription()
 {
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
+    $titre = $_trad['titre'][$__nav];
     $msg = '';
 
     $jeton = isset($_GET['jeton'])? $_GET['jeton']  : '';
@@ -56,42 +56,44 @@ function usersValiderJeton($jeton)
  * @param $_modifier
  * @return string
  */
-function usersProfil($_id, $_valider, $_modifier)
+function usersProfil()
 {
+    global $__nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$__nav];
     if(isSuperAdmin()){
-        include PARAM . REPADMIN . 'profil.param.php';
+        include ADM . 'param' . DIRECTORY_SEPARATOR . 'profil.param.php';
     } else {
         include PARAM . 'profil.param.php';
     }
+    $msg = $form = '';
     // extraction des données SQL
-    if (modCheck($_formulaire, $_id, 'membres')) {
+    if (usersModCheck($_formulaire, $_id)) {
         // traitement POST du formulaire
+        _debug($_valider, '$_valider', __FUNCTION__);
         $msg = ($_valider) ? postCheck($_formulaire, TRUE) : '';
         if ('OK' == $msg) {
             // on renvoi ver connexion
             $msg = $_trad['lesModificationOntEteEffectues'];
             // on évite d'afficher les info du mot de passe
             unset($_formulaire['mdp']);
-            return ['msg' => $msg, 'form' => formulaireAfficherInfo($_formulaire)];
+            $form = formulaireAfficherInfo($_formulaire);
         } else {
             if (!empty($msg) || $_modifier) {
                 $_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
-                return ['msg' => $msg, 'form' => formulaireAfficherMod($_formulaire)];
+                $form = formulaireAfficherInfo($_formulaire);
             } else if (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
                 header('Location:?nav=users');
                 exit();
             } else {
-
                 unset($_formulaire['mdp']);
-                return ['msg' => $msg, 'form' => formulaireAfficherInfo($_formulaire)];
+                $form = formulaireAfficherInfo($_formulaire);
             }
         }
     } else {
         $msg = 'Erreur 500: ' . $_trad['erreur']['NULL'];
-        return ['msg' => $msg, 'form' => ''];
     }
-    return ['msg' => $msg, 'form' => ''];
+    include TEMPLATE . 'profil.html.php';
 }
 
 /**
@@ -99,57 +101,49 @@ function usersProfil($_id, $_valider, $_modifier)
  */
 function connexion(){
 
-    global $_formulaire, $minLen;
 
+    global $__nav, $minLen;
     $_trad = siteSelectTrad();
-
-    $msg = '';
+    $titre = $_trad['titre'][$__nav];
+    include PARAM . 'connexion.php';
     $erreur = false;
     $sql_Where = '';
     $control = true;
-
+    $msg = usersConnexionValider($_formulaire);
+    _debug($_formulaire, '$_formulaire', __FUNCTION__);
     foreach ($_formulaire as $key => $info){
-
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
         $obligatoire = (!empty($info['obligatoire']))? true : false ;
-
        if ('valide' != $key)
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']))
             {
-
                 $erreur = true;
                 $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] .$label.
                     ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
                     ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
-
+                _debug($info, '$info 1 '.$key, __FUNCTION__);
             } else if (testObligatoire($info) && empty($valeur)){
-
                 $erreur = true;
                 $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
-
+                _debug($info, '$info 2 '.$key, __FUNCTION__);
             } else {
-
+                _debug($info, '$info 3 '.$key, __FUNCTION__);
                 switch($key){
                     case 'mdp':
                         $crypte = $key;
                         break;
-
                     case 'rapel':
                         $control = ($valeur == 'ok')? true : false;
                         break;
-
                     case 'pseudo':
-
                         if (!testAlphaNumerique($valeur))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label. ' "' .$valeur.
                                 '", ' . $_trad['erreur']['aphanumeriqueSansSpace'];
                         }
-
                         break;
-
                     default:
                        if ($obligatoire && !testLongeurChaine($valeur) )
                         {
@@ -163,45 +157,35 @@ function connexion(){
                if ($key != 'rapel' && $key != 'mdp') $sql_Where .= ((!empty($sql_Where))? " AND " : "") . $key.'="' . $valeur . '" ';
             }
     }
-
-   if ($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
-    {  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
-
+   if ($erreur){  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
         $msg .= '<br />'.$_trad['erreur']['uneErreurEstSurvenue'];
-
     } else {
-
         // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
         // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
        if ($session = usersSelectConnexion($sql_Where))
         {
+            _debug($session, '$session', __FUNCTION__);
            if (isset($crypte)){
-                $_formulaire[$crypte]['sql'] = $session[$crypte];
+               $_formulaire[$crypte]['sql'] = $session[$crypte];
+               _debug($_formulaire[$crypte], '$_formulaire[$crypte]', __FUNCTION__);
                if (hashDeCrypt($_formulaire[$crypte])){
-                    // overture d'une session Membre
-                    ouvrirSession($session, $control);
-                    $msg = 'OK';
-                    // on reinitialise les tentatives de connexion
-                    unset($_SESSION['connexion']);
-
+                   // overture d'une session Membre
+                   ouvrirSession($session, $control);
+                   $msg = 'OK';
+                   // on reinitialise les tentatives de connexion
+                   unset($_SESSION['connexion']);
+                   header('Location:index.php');
+                   exit();
                 } else {
-
                     $_SESSION['connexion'] -= 1;
-
                 }
             }
-
-
         } else {
-
             $msg .= '<br/ >'. $_trad['erreur']['erreurConnexion'];
             $_SESSION['connexion'] -= 1;
-
         }
-
-
     }
-    return $msg;
+    usersConnexionForm($msg);
 }
 
 /**
@@ -730,72 +714,55 @@ function userInscritionFormulaire(){
  */
 function usersControlSession(&$_formulaire)
 {
-
     $_trad = siteSelectTrad();
-
-    // valeur par default
-    $_SESSION['lang'] = (isset($_SESSION['lang']))? $_SESSION['lang'] : 'fr';
-    // recuperation du cookis lang
-    $_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
-    // changement de lang par le user
-    $_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
-
     // définition des cookis
-    setcookie( 'Lokisalle[lang]' , $_SESSION['lang'], time()+360000 );
+    setcookie('Lokisalle[lang]', $_SESSION['lang'], time() + 360000);
     // Déconnexion de l'utilisateur par tentative d'intrusion
     // comportement de déconnexion sur le site
-    if (isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])){
-
+    if (isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])) {
         // destruction de la navigation
         $lng = $_SESSION['lang'];
         unset($_GET['nav']);
         // destruction de la session
         unset($_SESSION['user']);
-
         session_destroy();
         // on relance la session avec le choix de la langue
         session_start();
         $_SESSION['lang'] = $lng;
+    } else {
+        if (isset($_GET['nav']) && $_GET['nav'] == 'actif' && isset($_SESSION['user'])) {
+            // control pour eviter d'afficher le formulaire de connexion
+            // si l'utilisateur tente de le faire
+            header('Location:index.php?nav=backoffice');
+            exit();
+        }
+    }
 
-    } else if (isset($_GET['nav']) && $_GET['nav'] == 'out' && !isset($_SESSION['user'])){
+}
 
-        // destruction de la navigation
-        unset($_GET['nav']);
-
-    } else if (isset($_GET['nav']) && $_GET['nav'] == 'actif' && !isset($_SESSION['user'])){
+/**
+ *
+ */
+function usersConnexionValider(&$_formulaire)
+{
+    $_trad = siteSelectTrad();
+    $msg = '';
+    if (!isset($_SESSION['user'])){
         // recuperation du pseudo
         if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
-
             $_POST['valide'] = 'cookie';
             $_POST['mdp'] = '';
             $_POST['pseudo'] = $_COOKIE['Lokisalle']['pseudo'];
             $_POST['rapel'] = 'on';
         }
-
         // inclusion des sources requises pour executer la connexion
         include PARAM . 'connexion.php';
-        include FUNC . 'connexion.php';
-
         // traitement du formulaire
-        $msg = postCheck($_formulaire);
-
-        // affichage des messages d'erreur
-        if ('OK' == $msg){
-
-            // l'utilisateur est automatiquement connécté
-            // et re-dirigé ver l'accueil
-            if (utilisateurEstAdmin()) $_GET['nav'] = 'backoffice';
-            else unset($_GET['nav']);
-
+        if (isset($_POST['valide'])){
+            $msg = postValide($_formulaire, true);
         }
-
-    } else if (isset($_GET['nav']) && $_GET['nav'] == 'actif' && isset($_SESSION['user'])){
-
-        // control pour eviter d'afficher le formulaire de connexion
-        // si l'utilisateur tente de le faire
-        unset($_GET['nav']);
-
     }
+    return $msg;
 }
 
 /**
@@ -804,9 +771,9 @@ function usersControlSession(&$_formulaire)
  */
 function usersInscription()
 {
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
+    $titre = $_trad['titre'][$__nav];
 
     include PARAM . 'inscription.param.php';
     // traitement du formulaire
@@ -828,12 +795,12 @@ function usersInscription()
 /**
  * @return array
  */
-function usersConnexionForm()
+function usersConnexionForm($msg = '')
 {
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
-    $msg = $form = '';
+    $titre = $_trad['titre'][$__nav];
+    $form = '';
     if (isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
         // affichage
         $msg = $_trad['erreur']['acces'];
@@ -843,4 +810,27 @@ function usersConnexionForm()
         $form = formulaireAfficher($_formulaire);
     }
     include TEMPLATE . 'connexion.html.php';
+}
+
+
+/**
+ * @param $nomFormulaire
+ * @param $_id
+ * @param $table
+ * @return bool
+ */
+
+function usersModCheck(&$_formulaire, $_id)
+{
+    $form = $_formulaire;
+     if (!($user = usersSelectModCheck($_id))){
+        return false;
+    }
+    foreach($form as $key => $info){
+        if ($key != 'valide' && key_exists ( $key , $user )){
+            $_formulaire[$key]['valide'] = $user[$key];
+            $_formulaire[$key]['sql'] = $user[$key];
+        }
+    }
+    return true;
 }

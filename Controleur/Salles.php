@@ -5,9 +5,9 @@ include MODEL . 'Salles.php';
  */
 function sallesListe()
 {
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
+    $titre = $_trad['titre'][$__nav];
 
     /**
      * Control des variables externes
@@ -175,78 +175,58 @@ function sallesFiche()
  */
 function sallesFicheInsert()
 {
-
     global $minLen;
-
-    include PARAM . REPADMIN . 'editerSalles.param.php';
-
+    global $__nav;
     $_trad = siteSelectTrad();
-
-
+    $titre = $_trad['titre'][$__nav];
+    include PARAM . REPADMIN . 'editerSalles.param.php';
     $msg = 	$erreur = false;
     $sql_champs = $sql_Value = '';
     // active le controle pour les champs telephone et gsm
-
     foreach ($_formulaire as $key => $info){
-
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
-
-       if ('valide' != $key && 'photo' != $key)
-            if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength'])  && !empty($valeur))
-            {
-
-                $erreur = true;
-                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label.
-                    ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
-                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
-
-            } else if (testObligatoire($info) && empty($valeur)){
-
-                $erreur = true;
-                $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
-
-            } else {
-
-                switch($key){
-
-                    case 'capacite':
-                        break;
-                    case 'categorie':
-
+       if ('valide' != $key && 'photo' != $key){
+           if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength'])  && !empty($valeur)){
+               $erreur = true;
+               $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label.
+                   ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
+                   ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
+           } else if (testObligatoire($info) && empty($valeur)){
+               $erreur = true;
+               $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
+           } else {
+               switch($key){
+                   case 'capacite':
+                       break;
+                   case 'categorie':
                        if (empty($valeur))
-                        {
-                            $erreur = true;
-                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
-                                ': '.$_trad['erreur']['vousDevezChoisireUneOption'];
-                        }
-
-                        break;
-
-                    default:
+                       {
+                           $erreur = true;
+                           $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                               ': '.$_trad['erreur']['vousDevezChoisireUneOption'];
+                       }
+                       break;
+                   default:
                        if (!empty($valeur) && !testLongeurChaine($valeur))
-                        {
-                            $erreur = true;
-                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
-                                ': '.$_trad['erreur']['minimumAphaNumerique'].' ' . $minLen . ' '.$_trad['erreur']['caracteres'];
-
-                        }
-
-                }
-
-                // Construction de la requettes
+                       {
+                           $erreur = true;
+                           $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                               ': '.$_trad['erreur']['minimumAphaNumerique'].' ' . $minLen . ' '.$_trad['erreur']['caracteres'];
+                       }
+               }
+               // Construction de la requettes
                if (!empty($valeur)){
-                    $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
-                }
-            }
+                   $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
+                   $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
+               }
+           }
+       }
     }
-
     // si une erreur c'est produite
    if ($erreur)
     {
         $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
-
     }else{
         $erreur = (controlImageUpload('photo', $_formulaire['photo']))? true : $erreur;
         $valeur = $_formulaire['photo']['valide'];
@@ -255,12 +235,10 @@ function sallesFicheInsert()
             $sql_Value .= ",'$valeur'";
         }
    }
-
     if (!$erreur) {
         $msg = (sallesInsert($sql_champs, $sql_Value))? "" : 'ERROR';
    }
-
-    return $msg;
+    include TEMPLATE . 'editersalles.html.php';
 }
 
 /**
@@ -269,58 +247,50 @@ function sallesFicheInsert()
  */
 function sallesFicheModifier($_formulaire)
 {
+    if (!isset($_SESSION['user'])){
+        header('Location:index.php');
+        exit();
+    }
+    global $__nav;
     $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$__nav];
     include PARAM . REPADMIN . 'ficheSalles.param.php';
     // extraction des données SQL
-    if (modCheck($_formulaire, $_id, 'salles') ){
-
+    if (sallesModCheck($_formulaire, $_id) ){
         // traitement POST du formulaire
         $msg = ($_valider)? postCheck($_formulaire, TRUE) : '';
-
         if ('OK' == $msg){
             // on renvoi ver connexion
             $msg = $_trad['lesModificationOntEteEffectues'];
             // on évite d'afficher les info du mot de passe
             unset($_formulaire['mdp']);
             $form = formulaireAfficherInfo($_formulaire);
-
         } else {
-
             if (!empty($msg) || $_modifier) {
-
                 $_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
-
                 $form = formulaireAfficherMod($_formulaire);
-
             } if (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler'){
                 header('Location:?nav=gestionSalles&pos=P-'.$position.'');
                 exit();
             } else {
-
                 unset($_formulaire['mdp']);
                 $form = formulaireAfficherInfo($_formulaire);
-
             }
-
         }
-
     } else {
-
         $form = 'Erreur 500: '.$_trad['erreur']['NULL'];
-
     }
-    return ['msg' => $msg, 'form' => $form];
+    include TEMPLATE . 'formulaire.html.php';
 }
 
 /**
  * @return array
  */
-function sallesEditer(){
-
+function sallesEditer()
+{
     include PARAM . 'editSalles.param.php';
     // traitement du formulaire
     $msg = postCheck($_formulaire);
-
     // affichage des messages d'erreur
     if ('OK' == $msg){
         // on renvoi ver connexion
@@ -333,7 +303,6 @@ function sallesEditer(){
 			<form action="#" method="POST" enctype="multipart/form-data">
 			' . formulaireAfficher($_formulaire) . '
 			</form>';
-
     return ['msg'=>$msg, 'form' => $form];
 }
 
@@ -342,17 +311,14 @@ function sallesEditer(){
  */
 function sallesHome()
 {
-    global $nav;
-
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
+    $titre = $_trad['titre'][$__nav];
     $salles = sallesHomeDeniersOffres();
-
     $dernieresOffres = '';
     while ($salle = $salles->fetch_assoc()) {
         $dernieresOffres .= dernieresOffres($salle);
     }
-
     include TEMPLATE . 'home.html.php';
 }
 
@@ -361,19 +327,15 @@ function sallesHome()
  */
 function sallesPanier()
 {
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
-
+    $titre = $_trad['titre'][$__nav];
     $info = '';
     if (isset($_SESSION['panier'])){
-
         foreach ($_SESSION["panier"] as $key => $value) {
             $info .= '<br>Salle id ' . $key;
         }
-
     }
-
     include TEMPLATE . 'reservation.html.php';
 }
 
@@ -387,15 +349,56 @@ function sallesRecherche(){
     // date-pikquer pour la date de sortie
     // date de sortie doit étre égale ou supperieur à la date d'entrée
     // formulaire inscrit dans la liste de sales disponibles
-    global $nav;
+    global $__nav;
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
-
+    $titre = $_trad['titre'][$__nav];
     $villes = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
     $categories = listeDistinc('categorie', 'salles', array('valide'=>'R'));
     $capacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
-
     $resultat = 'RESULTAT';
-
     include TEMPLATE . 'recherche.html.php';
+}
+
+/**
+ * @param $nomFormulaire
+ * @param $_id
+ * @param $table
+ * @return bool
+ */
+function sallesModCheck(&$_formulaire, $_id)
+{
+    $formulaire = $_formulaire;
+    $message = '';
+    if (!($salle = sallesSelectModCheck($_id))){
+        return false;
+    }
+    foreach($formulaire as $key => $info){
+        if ($key != 'valide' && key_exists ( $key , $salle )){
+            $_formulaire[$key]['valide'] = $salle[$key];
+            $_formulaire[$key]['sql'] = $salle[$key];
+        }
+    }
+    return true;
+}
+
+/**
+ *
+ */
+function sallesFicheEditer(){
+    // on cherche la fiche dans la BDD
+    // extraction des données SQL
+    global $__nav;
+    $_trad = siteSelectTrad();
+    $titre = $_trad['titre'][$__nav];
+    include PARAM . 'ficheSalles.param.php';
+    if (sallesModCheck($_formulaire, $_id) ){
+        $position = (isset($_GET['pos']))? $_GET['pos'] : 1;
+        // traitement POST du formulaire
+        $form = formulaireAfficherInfo($_formulaire);
+        $form .=  "<a href=\"?nav=salles#P-$position\">" . $_trad['revenir'] . "</a>";
+        include TEMPLATE . 'ficheSalles.html.php';
+    } else {
+        header('Location:index.php');
+        exit();
+    }
 }

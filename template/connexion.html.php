@@ -1,4 +1,4 @@
-   <principal clas="<?php echo $nav; ?>">
+   <principal clas="<?php echo $__nav; ?>">
 		<h1><?php echo $titre; ?></h1>
 		<hr />
 		<div id="formulaire">
@@ -6,7 +6,6 @@
 			<form action="#" method="POST">
 			<?php echo $form; ?>
 			</form>
-			?>
 			<div class="ligneForm">
 				<label class="label"><?php echo $_trad['pasEncoreMembre']; ?></label>
 				<div class="champs"><a href="?nav=inscription"><?php echo $_trad['inscrivezVous']; ?></a></div>

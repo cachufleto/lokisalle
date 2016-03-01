@@ -108,7 +108,7 @@ function siteNavReglesAdmin()
 function siteNavAdmin()
 {
     include PARAM . 'nav.php';
-    return $navAdmin;
+    return $_navAdmin;
 }
 
 /**
@@ -117,27 +117,25 @@ function siteNavAdmin()
 function siteNavFooter()
 {
     include PARAM . 'nav.php';
-    return $navFooter;
+    return $_navFooter;
 }
 
 /**
- * @param $nav
+ * @param $__nav
  * @return mixed
  */
-function siteErreur404(){
-    global $nav;
-
+function siteErreur404()
+{
+    global $__nav;
     $_pages = siteSelectPages();
     $_trad = siteSelectTrad();
-    $titre = $_trad['titre'][$nav];
-    if (array_key_exists($nav, $_pages)){
+    $titre = $_trad['titre'][$__nav];
+    if (array_key_exists($__nav, $_pages)){
         $msg = $_trad['enConstruccion'];
     } else {
         $msg = $_trad['ERROR404'];
     }
-
     include TEMPLATE . 'erreur404.html.php';
-
 }
 
 /**
@@ -146,27 +144,19 @@ function siteErreur404(){
 function siteNav()
 {
     global $_menu;
-
     $_trad = siteSelectTrad();
-
     listeMenu();
     $_link = $_SERVER["QUERY_STRING"];
-
     $menu = liste_nav($_menu);
     $class = $menu['class'];
-
     $liNav = $menu['menu'];
-
     if (isset($_SESSION['user'])) {
         $liNav .= "<li class=\"$class\"><a class='admin'>[";
         $liNav .= ($_SESSION['user']['statut'] != 'MEM') ? $_trad['value'][$_SESSION['user']['statut']] . "::" : "";
         $liNav .= $_SESSION['user']['user'] . ']</a></li>';
     }
-
     $liNav .= "<li class=\"$class\">";
     $liNav .= ($_SESSION['lang'] == 'es') ? "<a href=\"?$_link&lang=fr\">FR</a>" : "FR";
     $liNav .= " : " . (($_SESSION['lang'] == 'fr') ? "<a href='?$_link&lang=es'>ES</a>" : "ES") . "</li>";
-
     return $liNav;
-
 }
