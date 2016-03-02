@@ -1,0 +1,4 @@
+découpage
+
+separation du PHP et l'affichage
+

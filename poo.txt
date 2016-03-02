@@ -1,0 +1,121 @@
+﻿POO
+
+compilation de php reguliére
+analyse lexical
+
+un sorte de compilation OpCode
+suivi d'un fase d'interpretation
+la machine lance une vm pour lexecution
+
+redefinition du moteur en PHP
+
+autre serveur
+https://fr.wikipedia.org/wiki/Nginx
+
+apc: sistheme de cache
+OpCache ... cahe OpCode 
+error On Expective ... error page blanche... erreur de compilation
+
+preparation des constantes __DIR__, __FUNCTION__, __FILE__, __CLASS__
+
+phpstorm
+php.ini de CLI dans le dossier de la version proprement dit
+
+[xdebug]
+zend_extension ="C:/wamp64/bin/php/php5.6.16/zend_ext/php_xdebug-2.4.0rc2-5.6-vc11-x86_64.dll"
+xdebug.remote_enable = off
+xdebug.profiler_enable = off
+xdebug.profiler_enable_trigger = off
+xdebug.profiler_output_name = cachegrind.out.%t.%p
+xdebug.profiler_output_dir ="C:/wamp64/tmp"
+xdebug.show_local_vars=0
+
+https://www.jetbrains.com/phpstorm/download/download-thanks.html?platform=windows
+
+set from...
+standard des bonnes pratiques de codage
+
+POO ... generalisation --- specialisation
+
+reflexion de la modelisation d'une aplication
+creer une interactivite forte obligean la comunication
+
+OMG
+UML
+definir un comportement:
+/ attributs
+/ propietides
+	CONSTANTES
+	ATTRIBUT DE CLASS
+	ATTRIBUT DE OBJET
+
+/ methodes
+	METHODE CLASS
+	METHODE OBJET
+
+VISIBILITE
+	- publique 
+	# protégé
+	+ privé
+
+test unitaires suporte uniquement uniquement ce qui est necessaire
+formulaition des besoins, realisation d'un plpan d'action , ecriture du code par la suite selon besoins
+
+8 primitves
+string
+int
+float
+Boolean
+
+array
+objet
+
+ressurces
+NULL
+
+une classe existe dans un emplacement définie
+il est necessaire de appeler ce fichier
+si un spacename est définie, la classe doit être appeller depuis son spacename.
+
+une classe db dans src/service/Db/db.php
+avec un spacename src\service\Db
+on l'appel :: new src\service\Db\db;
+
+******************************************************
+
+namespace
+
+évolution de la formulation des ARRAY
+
+$a = array(1,2);
+$a = new array(1,2);
+$a = [1 , 2];
+
+[ 1, 2 ]
+
+yml
+écriture sur diferent niveaux qui represente un tableau
+
+niveau0
+ niveau1
+ niveau1
+  niveau2
+niveau0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
