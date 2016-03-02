@@ -1,41 +1,56 @@
 <?php
-# FORMULAIRE D'INSCRIPTION
-# FUNCTIONS formulaires
 include_once FUNC . 'form.func.php';
+actifUser();
+connection($_formulaire, $_trad, $titre, $nav, $msg);
 
-/////////////////////////////////////
-if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
-	// affichage
-	$msg = $_trad['erreur']['acces'];
+function actifUser(){
+	// recuperation du pseudo
+	if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
 
-} else {
+		$_POST['valide'] = 'cookie';
+		$_POST['mdp'] = '';
+		$_POST['pseudo'] = $_COOKIE['Lokisalle']['pseudo'];
+		$_POST['rapel'] = 'on';
+	}
 
-// RECUPERATION du formulaire
-$form = '
-			<form action="#" method="POST">
-			' . formulaireAfficher($_formulaire) . ' 
-			</form>';
+	# FUNCTIONS formulaires
+	// include_once FUNC . 'form.func.php';
+	// inclusion des sources requises pour executer la connexion
+	// include_once(PARAM . 'connection.php');
+	// include_once(FUNC . 'connection.php');
+
+	// traitement du formulaire
+	$msg = postCheck($_formulaire);
+	$form = '';
+	// affichage des messages d'erreur
+	if ('OK' == $msg) {
+		// l'utilisateur est automatiquement connécté
+		// et re-dirigé ver l'accueil
+		$_nav = '';
+		if (utilisateurEstAdmin()){
+			$_nav = 'backoffice';
+		}
+		header('Location:index.php?nav='.$_nav);
+		exit();
+	}
+
 }
 
-?>
+function connection($_formulaire, $_trad, $titre, $nav, $msg)
+{
+	/////////////////////////////////////
+	if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
+		// affichage
+		$msg = $_trad['erreur']['acces'];
 
-    <principal clas="<?php echo $nav; ?>">
-		<h1><?php echo $titre; ?></h1>
-		<hr />
-		<div id="formulaire">
-			<?php
-			// affichage
-			echo $msg;
-			echo $form;
-			?>
-			<div class="ligneForm">
-				<label class="label"><?php echo $_trad['pasEncoreMembre']; ?></label>
-				<div class="champs"><a href="?nav=inscription"><?php echo $_trad['inscrivezVous']; ?></a></div>
-			</div>
-			<div class="ligneForm">
-				<label class="label"><?php echo $_trad['motPasseOublie']; ?></label>
-				<div class="champs"><a href="?nav=changermotpasse"><?php echo $_trad['demandeDeMotPasse']; ?></a></div>
-			</div>
-		<hr />
-		</div>
-	</principal>
+	} else {
+
+		// RECUPERATION du formulaire
+		$form = '
+				<form action="#" method="POST">
+				' . formulaireAfficher($_formulaire) . '
+				</form>';
+	}
+
+	include TEMPLATE . 'connection.php';
+}

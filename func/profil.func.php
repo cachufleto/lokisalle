@@ -6,9 +6,9 @@ include_once FUNC . 'form.func.php';
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function formulaireValider(){
-	echo __FUNCTION__;
-	global $_trad, $_formulaire, $minLen;
+function formulaireValider($_formulaire)
+{
+	global $_trad, $minLen;
 	
 	// control d'intrusion du membre
 	if($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){

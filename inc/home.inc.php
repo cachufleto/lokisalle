@@ -1,13 +1,16 @@
 <?php
+function home($titre, $nav){
+	$sql = "SELECT * FROM salles";
+	$salles = executeRequete($sql);
 
-$sql = "SELECT * FROM salles";
-$salles = executeRequete($sql);
+	$dernieresOffres = '<div>';
+	while($salle = $salles->fetch_assoc()){
+		$dernieresOffres .= dernieresOffres($salle);
+	}
+	$dernieresOffres .= '</div>';
 
-$dernieresOffres = '<div>';
-while($salle = $salles->fetch_assoc()){
-	$dernieresOffres .= dernieresOffres($salle);
+	include TEMPLATE . 'home.php';
 }
-$dernieresOffres .= '</div>';
 
 function dernieresOffres($salle){
 
@@ -27,14 +30,5 @@ function dernieresOffres($salle){
 
 	return $offre;
 }
-?>
-    <principal class="<?php echo $nav; ?>">
-		<h1><?php echo $titre; ?></h1>
-		<hr />
-		<div id="homeG">
-			<?php include INC."activite.xhtml"; ?>
-		</div>
-		<div id="homeD">
-			<?php echo $dernieresOffres; ?>
-		</div>
-	</principal>
+
+home($titre, $nav);

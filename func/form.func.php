@@ -6,22 +6,19 @@
 # convertion avec htmlentities
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
-function postCheck($nomFormulaire, $mod=FALSE){
-
-	
-	global $_trad, ${$nomFormulaire};
-
-	$fomulaire = ${$nomFormulaire};
+function postCheck(&$_formulaire, $mod=FALSE)
+{
+	global $_trad;
 	$msg = '';
 	
 	if(isset($_POST['valide'])){
 		// appel à la fonction spécifique à chaque formulaire
 		// la fonction doit ce trouver dans le fichier de traitement
-		if(postValide($nomFormulaire, $mod)) {
+		if(postValide($_formulaire, $mod)) {
 
 			// control particulier pour chaque formulaire
 			// on ne fait pas la suite si les information proviennent des cookies
-			$msg = ($_POST['valide'] == 'cookie')? 'cookie' : formulaireValider();
+			$msg = ($_POST['valide'] == 'cookie')? 'cookie' : formulaireValider($_formulaire);
 		}
 		else $msg = $_trad['erreur']['inconueConnexion'];
 	}
@@ -194,14 +191,14 @@ function testADMunique($statut, $id_membre){
 # [@$nom_form] tableau des items validées du formulaire
 # $mod => condition pour une action de mise à jour en BDD
 # RETURN string message d'alerte
-function postValide($nom_form, $mod=FALSE){
+function postValide(&$_formulaire, $mod=FALSE){
 
 	
-	global $msg, $_trad, ${$nom_form};
+	global $msg, $_trad;
 	$ok = true;
 
 	// on boucle sur les valeurs des champs
-	$_form = ${$nom_form};
+	$_form = $_formulaire;
 	foreach($_form as $key => $info){
 		
 		// on le verifie pas les actions en modification pour ce qui sont obligatoires
@@ -219,7 +216,7 @@ function postValide($nom_form, $mod=FALSE){
 				if(testObligatoire($info) && empty($valeur1)){
 
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['champ'][$key] . $_trad['erreur']['obligatoire'];
 					$valide = '';
 
@@ -227,7 +224,7 @@ function postValide($nom_form, $mod=FALSE){
 
 					// l'un des deux champs est remplie
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad[$key];
 					$valide = '';
 				
@@ -235,7 +232,7 @@ function postValide($nom_form, $mod=FALSE){
 
 					// les deux valeurs sont differents
 					$ok = false;
-					${$nom_form}[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
+					$_formulaire[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezUneErreurDans'] . $_trad['champ'][$key];
 					$valide = '';
 				
@@ -243,11 +240,11 @@ function postValide($nom_form, $mod=FALSE){
 					
 			}
 			
-			${$nom_form}[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
+			$_formulaire[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
 		
 		}elseif($info['type'] == 'file'){
 			if(isset($_FILES[$key]))
-				${$nom_form}[$key]['valide'] = $_FILES[$key]['name'];
+				$_formulaire[$key]['valide'] = $_FILES[$key]['name'];
 		}elseif($info['type'] == 'checkbox'){
 			
 			$ok = testObligatoire($info)? false : $ok;
@@ -256,8 +253,8 @@ function postValide($nom_form, $mod=FALSE){
 
 			// si le champs n'est pas présent dans POST
 			$ok = false;
-			${$nom_form}[$key]['valide'] = '';
-			${$nom_form}[$key]['message'] = $_trad['erreur']['ATTENTIONfaitQuoiAvec']. $_trad['champ'][$key] . '?';
+			$_formulaire[$key]['valide'] = '';
+			$_formulaire[$key]['message'] = $_trad['erreur']['ATTENTIONfaitQuoiAvec']. $_trad['champ'][$key] . '?';
 			$msg .= $_trad['erreur']['corrigerErreurDans'];
 		
 		}
@@ -358,12 +355,9 @@ function testLongeurChaine($valeur, $maxLen=250){
 # convertion avec htmlentities
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
-function modCheck($nomFormulaire, $_id, $table){
-
-	
-	global ${$nomFormulaire};
-	
-	$formulaire = ${$nomFormulaire};
+function modCheck(&$_formulaire, $_id, $table)
+{
+	$form = $_formulaire;
 	$message = '';
 	
 	$sql_membres = "SELECT * FROM membres WHERE id_membre = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
@@ -374,10 +368,10 @@ function modCheck($nomFormulaire, $_id, $table){
 	
 	if($data->num_rows < 1) return false;
 
-	foreach($formulaire as $key => $info){
+	foreach($form as $key => $info){
 		if($key != 'valide' && key_exists ( $key , $user )){
-			${$nomFormulaire}[$key]['valide'] = $user[$key];
-			${$nomFormulaire}[$key]['sql'] = $user[$key];
+			$_formulaire[$key]['valide'] = $user[$key];
+			$_formulaire[$key]['sql'] = $user[$key];
 		}
 	}
 
@@ -418,9 +412,10 @@ function formulaireAfficherInfo($_form){
 				}
 				else {
 					$formulaire .= '</label>
-						<div class="champs">' . (isset($info['option'])? 
-							$_trad['value'][$value] : 
-							$value ) . '</div>
+						<div class="champs">' .
+							(isset($info['option'])
+								? $_trad['value'][$value]
+								: $value ) . '</div>
 					</div>';
 				}
 			}

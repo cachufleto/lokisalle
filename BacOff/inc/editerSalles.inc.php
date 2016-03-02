@@ -1,7 +1,7 @@
 <?php
 
 // traitement du formulaire
-$msg = postCheck('_formulaire');
+$msg = postCheck($_formulaire);
 
 // affichage des messages d'erreur
 if('OK' == $msg){

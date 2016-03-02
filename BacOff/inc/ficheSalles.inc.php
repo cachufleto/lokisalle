@@ -5,10 +5,10 @@ if(!isset($_SESSION['user'])){
 }
 
 // extraction des données SQL
-if( modCheck('_formulaire', $_id, 'salles') ){
+if( modCheck($_formulaire, $_id, 'salles') ){
 
 	// traitement POST du formulaire
-	$msg = ($_valider)? postCheck('_formulaire', TRUE) : '';
+	$msg = ($_valider)? postCheck($_formulaire, TRUE) : '';
 
 	if('OK' == $msg){
 		// on renvoi ver connection

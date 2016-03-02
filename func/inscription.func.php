@@ -6,9 +6,9 @@ include_once FUNC . 'form.func.php';
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function formulaireValider(){
+function formulaireValider($_formulaire){
 	
-	global $_trad, $_formulaire, $minLen;
+	global $_trad, $minLen;
 
 	$msg = 	$erreur = false;
 	$sql_champs = $sql_Value = '';

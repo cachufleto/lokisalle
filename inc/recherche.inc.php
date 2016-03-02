@@ -7,8 +7,6 @@ include_once(FUNC.'form.func.php');
 // date de sortie doit étre égale ou supperieur à la date d'entrée
 // formulaire inscrit dans la liste de sales disponibles
 
-if($_POST) var_dump($_POST);
-
 function listeDistinc($champ, $table, $info){
 
 	global $_trad;
@@ -28,15 +26,16 @@ function listeDistinc($champ, $table, $info){
 	$balise .= '</select>';
 	
 	return $balise;
+}
 
-} 
+function recherche(){
 
+	$echoville = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
+	$echocategorie = listeDistinc('categorie', 'salles', array('valide'=>'R'));
+	$echocapacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
+
+	include TEMPLATE . 'recherche.php';
+}
+
+recherche();
 ?>
-<form action="" method="POST">
-<?php
-echo listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
-echo listeDistinc('categorie', 'salles', array('valide'=>'R'));
-echo listeDistinc('capacite', 'salles', array('valide'=>'56'));
-?>
-<input type="submit" value="chercher">
-</form>

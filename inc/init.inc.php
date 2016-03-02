@@ -16,6 +16,7 @@ define("ADM", APP.REPADMIN);
 define("INC", APP.'inc/');
 define("FUNC", APP.'func/');
 define("PARAM", APP.'param/');
+define("TEMPLATE", APP.'template/');
 define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$___dossier)));
 define("LINKADMIN", LINK.REPADMIN);
 
@@ -63,40 +64,43 @@ require_once(PARAM . "nav.php");
 $titre = $_trad['titre'][$nav];
 
 $__link = APP . 'css/' . $nav . '.css';
-if(file_exists($__link) )
+if(file_exists($__link) ) {
 	$_linkCss[] = LINK . 'css/' . $nav . '.css';
-
+}
 
 #########################################################
 ## retablire les tables de la base pour DEMO
 #########################################################
 //if(utilisateurEstAdmin() && isset($_GET['install']) && $_GET['install'] == 'BDD')
-if(isset($_GET['install']) && $_GET['install'] == 'BDD')
+function install()
 {
-	
-	// initialisation des tables
-		echo "chargement du fichier lokisalle.sql";
-	$sql = file_get_contents(APP.'/SQL/lokisalle.sql');
-	
-	if(	isset($_GET['data'])){
-		// remplisage des tables
-		echo "<br>chargement du fichier data.sql";
-		$sql .= file_get_contents(APP.'/SQL/data.sql');
-	}
-	// echo "<pre>$sql</pre>";
-	if(executeMultiRequete($sql)){
+	if (isset($_GET['install']) && $_GET['install'] == 'BDD') {
 
-		$membres = executeRequete("SELECT id_membre, mdp FROM membres");
-		var_dump($membres);
-		while($membre = $membres->fetch_assoc()){
-			$sql = "UPDATE membres SET mdp = '". hashCrypt($membre['mdp']) ."' WHERE id_membre = ".$membre['id_membre'];
-			executeRequete($sql);
-        }
+		// initialisation des tables
+		echo "chargement du fichier lokisalle.sql";
+		$sql = file_get_contents(APP . '/SQL/lokisalle.sql');
+
+		if (isset($_GET['data'])) {
+			// remplisage des tables
+			echo "<br>chargement du fichier data.sql";
+			$sql .= file_get_contents(APP . '/SQL/data.sql');
+		}
+		// echo "<pre>$sql</pre>";
+		if (executeMultiRequete($sql)) {
+
+			$membres = executeRequete("SELECT id_membre, mdp FROM membres");
+			var_dump($membres);
+			while ($membre = $membres->fetch_assoc()) {
+				$sql = "UPDATE membres SET mdp = '" . hashCrypt($membre['mdp']) . "' WHERE id_membre = " . $membre['id_membre'];
+				executeRequete($sql);
+			}
+		}
+		exit();
+
 	}
-	exit();
-	
 }
 
+install();
 #########################################################
 ## SUITE
 #########################################################

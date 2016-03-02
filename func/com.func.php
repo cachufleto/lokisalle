@@ -181,11 +181,16 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 # $var => string, array, object
 # $mode => defaut = 1
 # RETURN NULL;
-function debug($mode=0){
+function debug($_debug, $mode=0){
 
-	global $_debug;
-	
-	echo '<div class="col-md-12">';
+	//global $_debug;
+
+	echo '
+	<div  id=\'debug\'>
+	<hr>
+	DEBUG -----------
+	<hr>
+	<div class="col-md-12">';
 
 	if($mode === 1)
 	{
@@ -195,8 +200,8 @@ function debug($mode=0){
 	}
 
 	echo '</div>';
+	echo '</div>';
 
-	return;
 }
 
 function _debug($var, $label){
