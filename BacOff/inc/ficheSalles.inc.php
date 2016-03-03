@@ -1,4 +1,6 @@
 <?php
+include PARAMADM . "ficheSalles.param.php";
+
 if(!isset($_SESSION['user'])){
 	header('Location:index.php');
 	exit();	

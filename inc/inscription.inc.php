@@ -1,4 +1,8 @@
 <?php
+
+include PARAM . 'inscription.param.php';
+inscription($_formulaire, $titre, $nav);
+
 function inscription($_formulaire, $titre, $nav){
 	// traitement du formulaire
 	$msg = postCheck($_formulaire);
@@ -17,5 +21,3 @@ function inscription($_formulaire, $titre, $nav){
 	}
 	include TEMPLATE . 'inscription.php';
 }
-
-inscription($_formulaire, $titre, $nav);

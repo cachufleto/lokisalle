@@ -1,6 +1,6 @@
 <?php
 // Intertion des parametres de fonctionement
-require_once("inc/init.inc.php");
+require_once(__DIR__ . "/../inc/init.inc.php");
 
 // intertion de l'entête
 require_once(INC . "header.inc.php");
@@ -17,7 +17,7 @@ if(file_exists($__page) ){
 
 	$__param = PARAM . $nav . '.param.php';
 
-	if(file_exists($__param) )
+	if(file_exists($__param) && false )
 		require_once($__param);
 
 	$__func = FUNC . $nav . '.func.php';

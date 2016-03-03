@@ -1,4 +1,7 @@
 <?php
+include PARAM . "profil.param.php";
+profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider);
+
 function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 {
 	if (!isset($_SESSION['user'])) {
@@ -17,7 +20,6 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 			$msg = $_trad['lesModificationOntEteEffectues'];
 			// on évite d'afficher les info du mot de passe
 			unset($_formulaire['mdp']);
-			var_dump($_formulaire);
 			$form = formulaireAfficherInfo($_formulaire);
 
 		} else {
@@ -25,8 +27,6 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 			if (!empty($msg) || $_modifier) {
 
 				$_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
-
-				var_dump($_formulaire);
 				$form = formulaireAfficherMod($_formulaire);
 
 			} elseif (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
@@ -35,7 +35,6 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 			} else {
 
 				unset($_formulaire['mdp']);
-				var_dump($_formulaire);
 				$form = formulaireAfficherInfo($_formulaire);
 
 			}
@@ -49,5 +48,3 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 	}
 	include TEMPLATE . 'profil.php';
 }
-
-profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider);

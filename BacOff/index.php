@@ -32,9 +32,9 @@ if(file_exists($__page) ){
 	$__paramAdm = ADM . 'param/' . $nav . '.param.php';
 	$__param = PARAM . $nav . '.param.php';
 
-	if(file_exists($__paramAdm) )
+	if(file_exists($__paramAdm) and false )
 		require_once($__paramAdm);
-	elseif(file_exists($__param) )
+	elseif(file_exists($__param) and false )
 		require_once($__param);
 
 	$__funcAdm = ADM . 'func/' . $nav . '.func.php';

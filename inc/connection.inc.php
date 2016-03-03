@@ -1,9 +1,9 @@
 <?php
 include_once FUNC . 'form.func.php';
-actifUser();
+include PARAM . 'connection.param.php';
 connection($_formulaire, $_trad, $titre, $nav, $msg);
 
-function actifUser(){
+function actifUser($_formulaire){
 	// recuperation du pseudo
 	if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
 
@@ -38,6 +38,7 @@ function actifUser(){
 
 function connection($_formulaire, $_trad, $titre, $nav, $msg)
 {
+	actifUser($_formulaire);
 	/////////////////////////////////////
 	if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
 		// affichage

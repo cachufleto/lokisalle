@@ -1,6 +1,8 @@
 <?php
+include PARAM . 'ficheSalles.param.php';
+ficheSalles($_formulaire, $_id, $position, $_trad, $titre, $nav, $msg);
 
-function ficheSalles($_formulaire, $_id, $position, $_trad, $titre, $nav)
+function ficheSalles($_formulaire, $_id, $position, $_trad, $titre, $nav, $msg)
 {
 	// on cherche la fiche dans la BDD
 	// extraction des données SQL
@@ -20,5 +22,3 @@ function ficheSalles($_formulaire, $_id, $position, $_trad, $titre, $nav)
 
 	include TEMPLATE . 'fichesalles.php';
 }
-
-ficheSalles($_formulaire, $_id, $position, $_trad, $titre, $nav);

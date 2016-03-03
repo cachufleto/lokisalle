@@ -6,19 +6,21 @@ $___script = str_replace('\\', '/', '/'.$_SERVER['PHP_SELF']);
 $___script = str_replace('//', '', $___script);
 $___appel = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
 $___param = basename($___script); //'index.php';
-$___dossier = dirname($___script).'/';
+$___dossier = dirname(str_replace('App/', '', $___script)).'/';
 
 define("REPADMIN", 'BacOff/');
 define("RACINE_SERVER",str_replace($___script, '', $___appel));
-define("RACINE_SITE", str_replace('//', '/', str_replace(REPADMIN, '', dirname($___script).'/')));
+$RACINE_SITE = str_replace('//', '/', str_replace('App/', '', dirname($___script).'/'));
+define("RACINE_SITE", str_replace('//', '/', str_replace(REPADMIN.'/', '', $RACINE_SITE.'/')));
 define("APP", RACINE_SERVER.RACINE_SITE);
 define("ADM", APP.REPADMIN);
 define("INC", APP.'inc/');
 define("FUNC", APP.'func/');
 define("PARAM", APP.'param/');
+define("PARAMADM", ADM.'param/');
 define("TEMPLATE", APP.'template/');
-define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$___dossier)));
-define("LINKADMIN", LINK.REPADMIN);
+define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$___dossier . 'App/')));
+define("LINKADMIN", str_replace('App/', '' , LINK.REPADMIN));
 
 // Constantes upload images
 define('TARGET', APP.'photo/');    // Repertoire cible
@@ -26,8 +28,7 @@ define('MAX_SIZE', 100000000);    // Taille max en octets du fichier
 define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels
 
-
-if(!file_exists(APP.'index.php')) exit();
+if(!file_exists(APP.'App/index.php')) exit();
 
 // activation du debug en fonction de l'environnement
 $debug = ('localhost' == $_SERVER["HTTP_HOST"])? true : false;
@@ -89,7 +90,6 @@ function install()
 		if (executeMultiRequete($sql)) {
 
 			$membres = executeRequete("SELECT id_membre, mdp FROM membres");
-			var_dump($membres);
 			while ($membre = $membres->fetch_assoc()) {
 				$sql = "UPDATE membres SET mdp = '" . hashCrypt($membre['mdp']) . "' WHERE id_membre = " . $membre['id_membre'];
 				executeRequete($sql);
