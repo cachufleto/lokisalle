@@ -1,8 +1,8 @@
 <?php
 function footer()
 {
-	$menu = liste_nav('navFooter');
-	include TEMPLATE . 'footer.php';
+	$info = liste_nav('navFooter');
+	$info['version'] = file_get_contents(PARAM . 'version.txt');
+	return $info;
 }
 
-footer();

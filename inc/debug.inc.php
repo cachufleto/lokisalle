@@ -1,21 +1,25 @@
 <?php
 //Chargement des info supplementaires
-if(isset($_GET['info']) && $_GET['info'] == 'PHP'){
-    phpinfo();
+function debugPhpInfo()
+{
+    if (isset($_GET['info']) && $_GET['info'] == 'PHP') {
+        phpinfo();
+    }
 }
 
-if(isset($_GET['info']) && $_GET['info'] == 'mail'){
-    testmail();
+function debugTestMail()
+{
+    if (isset($_GET['info']) && $_GET['info'] == 'mail') {
+        testmail();
+    }
 }
 
-if(isset($_GET['info']) && $_GET['info'] == 'crypter'){
-    cost();
+function debugCost()
+{
+    if (isset($_GET['info']) && $_GET['info'] == 'crypter') {
+        cost();
+    }
 }
-
-debugParam($_trad);
-debug($_debug);
-
-/**************************************************************/
 
 function cost()
 {

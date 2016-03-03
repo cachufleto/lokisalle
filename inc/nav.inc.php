@@ -21,7 +21,6 @@ function nav($_trad, $_menu)
 	$li .= "<li class='$class'>" . (($_SESSION['lang'] == 'es') ? "<a href='?$_link&lang=fr'>FR</a>" : "FR");
 	$li .= " : " . (($_SESSION['lang'] == 'fr') ? "<a href='?$_link&lang=es'>ES</a>" : "ES") . "</li>";
 
-	include TEMPLATE . 'nav.php';
+	return $li;
 }
 
-nav($_trad, $_menu);

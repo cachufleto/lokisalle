@@ -5,8 +5,6 @@ function siteHeader($_linkCss)
   foreach($_linkCss as $link)
     $_link .= '
     <link href="'. $link .'" rel="stylesheet">';
-
-  include TEMPLATE . 'header.php';
+  return $_link;
 }
 
-siteHeader($_linkCss);

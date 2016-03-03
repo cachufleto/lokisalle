@@ -2,18 +2,21 @@
 // Intertion des parametres de fonctionement
 require __DIR__ . '/../inc/init.inc.php';
 
-// intertion de l'entête
 require INC . 'header.inc.php';
-
-// insertion menu de navigation
-$_menu = '';
-echo '<div id="content">';
 require INC . 'nav.inc.php';
-//CONTENEUR
-echo '<div id="' . $nav . '"  >';
+include INC . 'debug.inc.php';
+require INC . 'footer.inc.php';
 
+/*************************************************************/
+$_link = siteHeader($_linkCss);
+$_menu = '';
+$navPp = nav($_trad, $_menu);
+
+ob_start();
 // insertion des pages dinamiques
-if(file_exists($__page) ){
+if(!file_exists($__page) ){
+	require INC . 'erreur.inc.php';
+} else {
 
 	$__param = PARAM . $nav . '.param.php';
 
@@ -26,16 +29,22 @@ if(file_exists($__page) ){
 		require $__func;
 
 	require $__page;
-} else {
-	require INC . 'erreur.inc.php';
 }
+$contentPage = ob_get_contents();
+ob_end_clean();
 
-echo '</div>'; // fin div de la page
-
-// affichage des debug
+ob_start();
 if(DEBUG) {
-	include INC . 'debug.inc.php';
+	// affichage des debug
+	debugParam($_trad);
+	debugPhpInfo();
+	debugTestMail();
+	debugCost();
+	debug($_debug);
 }
+$debug = ob_get_contents();
+ob_end_clean();
 
-// insertion Pied de page
-require INC . 'footer.inc.php';
+$footer = footer();
+
+include TEMPLATE . 'template.html.php';
