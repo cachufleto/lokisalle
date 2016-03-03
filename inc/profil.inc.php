@@ -8,16 +8,24 @@ profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider);
 
 function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 {
+	include FUNC . 'form.func.php';
+
 	if (!isset($_SESSION['user'])) {
 		header('Location:index.php');
 		exit();
 	}
 
 // extraction des données SQL
+	$msg = '';
 	if (modCheck($_formulaire, $_id, 'membres')) {
 
 		// traitement POST du formulaire
-		$msg = ($_valider) ? postCheck($_formulaire, TRUE) : '';
+		if ($_valider){
+			$msg = $_trad['erreur']['inconueConnexion'];
+			if(postCheck($_formulaire, TRUE)) {
+				$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
+			}
+		}
 
 		if ('OK' == $msg) {
 			// on renvoi ver connection
@@ -27,7 +35,6 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 			$form = formulaireAfficherInfo($_formulaire);
 
 		} else {
-
 			if (!empty($msg) || $_modifier) {
 
 				$_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
@@ -35,7 +42,7 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 
 			} elseif (
 				!empty($_POST['valide']) &&
-				$_POST['valide'] == 'Annuler' &&
+				$_POST['valide'] == $_trad['Out'] &&
 				$_POST['origin'] != $_trad['defaut']['MiseAJ']
 			){
 					header('Location:?nav=home');

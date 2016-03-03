@@ -5,8 +5,13 @@ inscription($_formulaire, $titre, $nav);
 
 function inscription($_formulaire, $titre, $nav)
 {
-	// traitement du formulaire
-	$msg = postCheck($_formulaire);
+	include FUNC . 'form.func.php';
+
+	// traitement POST du formulaire
+	$msg = $_trad['erreur']['inconueConnexion'];
+	if (postCheck($_formulaire, true)) {
+		$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
+	}
 
 	// affichage des messages d'erreur
 	if('OK' == $msg){

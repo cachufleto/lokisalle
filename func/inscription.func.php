@@ -1,6 +1,6 @@
 <?php
 # FUNCTIONS Formulares
-include FUNC . 'form.func.php';
+//include FUNC . 'form.func.php';
 
 # Fonction formulaireValider()
 # Verifications des informations en provenance du formulaire
@@ -8,7 +8,7 @@ include FUNC . 'form.func.php';
 # RETURN string msg
 function formulaireValider($_formulaire)
 {
-	
+
 	global $_trad, $minLen;
 
 	$msg = 	$erreur = false;

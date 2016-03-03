@@ -1,5 +1,5 @@
 <?php
-include FUNC . 'form.func.php';
+//include FUNC . 'form.func.php';
 // afficher un formulaire de recherche
 // menu déroulant pour la ville
 // date-piqquer pour la date d'entreé
@@ -31,7 +31,7 @@ function listeDistinc($champ, $table, $info)
 
 function recherche()
 {
-
+	include FUNC . 'form.func.php';
 	$echoville = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
 	$echocategorie = listeDistinc('categorie', 'salles', array('valide'=>'R'));
 	$echocapacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));

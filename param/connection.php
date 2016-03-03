@@ -1,26 +1,21 @@
 <?php
 
-// Items du formulaire
-$_formulaire = array();
+////////////////////////////
+///// BDD //////////////////
+////////////////////////////
+$BDD = array();
+switch($_SERVER["SERVER_NAME"]){
 
-$_formulaire['pseudo'] = array(
-	'type' => 'text',
-	'maxlength' => 14,
-	'defaut' => $_trad['champ']['pseudo']);
-	
-$_formulaire['mdp'] = array(
-	'type' => 'password',
-	'maxlength' => 14,
-	'defaut' => $_trad['defaut']['MotPasse']);
+	case 'lokisalle.domoquick.fr':
+		$BDD['SERVEUR_BDD'] = 'rdbms';
+		$BDD['USER'] = 'U2407285';
+		$BDD['PASS'] = '20Seajar!';
+		$BDD['BDD'] = 'DB2407285';
+		break;
 
-// ############## SUBMIT ############
-$_formulaire['valide'] = array(
-	'type' => 'submit',
-	'defaut' => $_trad['defaut']['SeConnecter']);
-
-$_formulaire['rapel'] = array(
-	'type' => 'checkbox',
-	'option' => array('deMoi'=>'on'),
-	'defaut' => $_trad['defaut']['MotPasse']);
-
-
+	default:
+		$BDD['SERVEUR_BDD'] = 'localhost';
+		$BDD['USER'] = 'root';
+		$BDD['PASS'] = '';
+		$BDD['BDD'] = 'lokisalle';
+}

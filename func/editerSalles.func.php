@@ -1,6 +1,6 @@
 <?php
 # FUNCTIONS Formulares
-include FUNC . 'form.func.php';
+//include FUNC . 'form.func.php';
  
 // Variables
 $extension = '';

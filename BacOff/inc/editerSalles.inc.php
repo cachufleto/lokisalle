@@ -4,8 +4,12 @@ editerSalles($_trad, $_formulaire, $titre, $nav);
 
 function editerSalles($_trad, $_formulaire, $titre, $nav)
 {
-// traitement du formulaire
-	$msg = postCheck($_formulaire);
+	// traitement du formulaire
+	$msg = $_trad['erreur']['inconueConnexion'];
+
+	if (postCheck($_formulaire)) {
+		$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
+	}
 
 // affichage des messages d'erreur
 	if ('OK' == $msg) {

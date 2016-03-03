@@ -164,7 +164,6 @@ $_trad['value']['on'] = "Se rappeler de moi";
 /* trad pour les autres textes */
 $_trad['activer'] = "Activer";
 $_trad['admin'] = "Adminitrateur";
-$_trad['annuler'] = "Annuler";
 $_trad['delete'] = "Supprimer";
 $_trad['demandeDeMotPasse'] = 'Demande de Mot de passe';
 $_trad['enConstruccion'] =  "En cours de réalisation!";

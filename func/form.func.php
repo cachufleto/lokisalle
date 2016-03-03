@@ -8,12 +8,13 @@
 # RETURN string alerte
 function postCheck(&$_formulaire, $mod=FALSE)
 {
-	global $_trad;
-	$msg = '';
-	
 	if(isset($_POST['valide'])){
-		// appel à la fonction spécifique à chaque formulaire
-		// la fonction doit ce trouver dans le fichier de traitement
+		return postValide($_formulaire, $mod);
+	}
+	return true;
+}
+
+/*
 		if(postValide($_formulaire, $mod)) {
 
 			// control particulier pour chaque formulaire
@@ -21,10 +22,7 @@ function postCheck(&$_formulaire, $mod=FALSE)
 			$msg = ($_POST['valide'] == 'cookie')? 'cookie' : formulaireValider($_formulaire);
 		}
 		else $msg = $_trad['erreur']['inconueConnexion'];
-	}
-
-	return $msg;
-}
+*/
 
 # Fonction formulaireAfficher()
 # Mise en forme des differents items du formulaire
@@ -149,9 +147,9 @@ function typeForm($champ, $info)
 		case 'submit':
 			$boutton = '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $valeur. '">';
 			if(isset($info['annuler']))
-				$boutton .= '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $_trad['Out'] . '">';
+				$boutton .= '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $info['annuler'] . '">';
 			if(isset($info['origin']))
-				$boutton .= '<input type="text" class="' . $class . '"   name="origin" value="' . $valeur . '">';
+				$boutton .= '<input type="hidden" class="' . $class . '"   name="origin" value="' . $valeur . '">';
 			return $boutton;
 		break;
 		

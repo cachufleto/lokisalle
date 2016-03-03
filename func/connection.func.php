@@ -1,6 +1,6 @@
 <?php
 # FUNCTIONS Connection
-include FUNC . 'form.func.php';
+//include FUNC . 'form.func.php';
 
 # Fonction valideForm()
 # Verifications des informations en provenance du formulaire

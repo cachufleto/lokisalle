@@ -1,8 +1,11 @@
 <?php
 function session()
 {
-// Déconnection de l'utilisateur par tentative d'intrusion
-// comportement de déconnexion sur le site
+	## Ouverture des sessions
+	session_start();
+
+	// Déconnection de l'utilisateur par tentative d'intrusion
+	// comportement de déconnexion sur le site
 	if (isset($_GET['nav']) && $_GET['nav'] == 'out' && isset($_SESSION['user'])) {
 
 		// destruction de la navigation

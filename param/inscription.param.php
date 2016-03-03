@@ -65,4 +65,3 @@ $_formulaire['adresse'] = array(
 $_formulaire['valide'] = array(
 	'type' => 'submit',
 	'defaut' => $_trad['defaut']["Inscription"]);
-	

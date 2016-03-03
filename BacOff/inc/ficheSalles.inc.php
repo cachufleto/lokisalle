@@ -4,17 +4,23 @@ ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre
 
 function ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre, $nav, $msg)
 {
+	include FUNC . 'form.func.php';
 	if (!isset($_SESSION['user'])) {
 		header('Location:index.php');
 		exit();
 	}
 
 	// extraction des données SQL
-	$form = '';
+	$form = $msg = '';
 	if (modCheck($_formulaire, $_id, 'salles')) {
 
 		// traitement POST du formulaire
-		$msg = ($_valider) ? postCheck($_formulaire, true) : '';
+		if ($_valider){
+			$msg = $_trad['erreur']['inconueConnexion'];
+			if(postCheck($_formulaire, TRUE)) {
+				$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
+			}
+		}
 
 		if ('OK' == $msg) {
 			// on renvoi ver connection
@@ -31,9 +37,14 @@ function ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_tra
 
 				$form = formulaireAfficherMod($_formulaire);
 
-			} elseif (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
+			} elseif (
+				!empty($_POST['valide']) &&
+				$_POST['valide'] == $_trad['Out'] &&
+				$_POST['origin'] != $_trad['defaut']['MiseAJ']
+			){
 				header('Location:?nav=gestionSalles&pos=P-' . $position . '');
 				exit();
+
 			} else {
 
 				unset($_formulaire['mdp']);

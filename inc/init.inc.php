@@ -1,8 +1,6 @@
 <?php
 include __DIR__ . '/../param/constantes.php';
-
-## Ouverture des sessions
-session_start();
+include PARAM . 'connection.php';
 
 // activation du debug en fonction de l'environnement
 $debug = ('localhost' == $_SERVER["HTTP_HOST"])? true : false;

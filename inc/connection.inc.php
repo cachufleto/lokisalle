@@ -1,10 +1,11 @@
 <?php
-include FUNC . 'form.func.php';
+//include FUNC . 'form.func.php';
 include PARAM . 'connection.param.php';
 connection($_formulaire, $_trad, $titre, $nav, $msg);
 
 function actifUser($_formulaire)
 {
+	include FUNC . 'form.func.php';
 	// recuperation du pseudo
 	if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
 
@@ -15,7 +16,11 @@ function actifUser($_formulaire)
 	}
 
 	// traitement du formulaire
-	$msg = postCheck($_formulaire);
+	$msg = $_trad['erreur']['inconueConnexion'];
+	if (postCheck($_formulaire)) {
+		$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
+	}
+
 	$form = '';
 	// affichage des messages d'erreur
 	if ('OK' == $msg) {
@@ -42,10 +47,7 @@ function connection($_formulaire, $_trad, $titre, $nav, $msg)
 	} else {
 
 		// RECUPERATION du formulaire
-		$form = '
-				<form action="#" method="POST">
-				' . formulaireAfficher($_formulaire) . '
-				</form>';
+		$form = formulaireAfficher($_formulaire);
 	}
 
 	include TEMPLATE . 'connection.php';
