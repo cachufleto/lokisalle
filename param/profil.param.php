@@ -14,6 +14,7 @@ $_id = $_SESSION['user']['id'];
 $_formulaire['valide']['defaut'] = $_trad['defaut']['modifier'];
 // ajout du boutton annuler
 $_formulaire['valide']['annuler']  = true;
+$_formulaire['valide']['origin']  = (isset($_POST['valide']) && $_POST['valide'] == $_trad['defaut']['modifier'])? $_trad['defaut']['MiseAJ'] : '';
 
 // état de présentation
 // edition pour modification

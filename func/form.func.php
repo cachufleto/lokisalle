@@ -145,9 +145,11 @@ function typeForm($champ, $info){
 		break;
 		
 		case 'submit':
-			$boutton = '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' .  $valeur. '">';
+			$boutton = '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $valeur. '">';
 			if(isset($info['annuler']))
 				$boutton .= '<input type="submit" class="' . $class . '"   name="' . $champ . '" value="' . $_trad['Out'] . '">';
+			if(isset($info['origin']))
+				$boutton .= '<input type="text" class="' . $class . '"   name="origin" value="' . $valeur . '">';
 			return $boutton;
 		break;
 		

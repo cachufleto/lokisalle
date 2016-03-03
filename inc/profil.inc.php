@@ -1,5 +1,9 @@
 <?php
-include PARAM . "profil.param.php";
+if(!isset($_formulaire)) {
+	// évite de surcharger en mod BACK OFFICE
+	include PARAM . "profil.param.php";
+}
+
 profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider);
 
 function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
@@ -29,14 +33,17 @@ function profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider)
 				$_formulaire['valide']['defaut'] = $_trad['defaut']['MiseAJ'];
 				$form = formulaireAfficherMod($_formulaire);
 
-			} elseif (!empty($_POST['valide']) && $_POST['valide'] == 'Annuler') {
-				header('Location:?nav=users');
-				exit();
-			} else {
+			} elseif (
+				!empty($_POST['valide']) &&
+				$_POST['valide'] == 'Annuler' &&
+				$_POST['origin'] != $_trad['defaut']['MiseAJ']
+			){
+					header('Location:?nav=home');
+					exit();
 
+			} else {
 				unset($_formulaire['mdp']);
 				$form = formulaireAfficherInfo($_formulaire);
-
 			}
 
 		}

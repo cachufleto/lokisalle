@@ -43,9 +43,6 @@ function salles($_trad, $titre, $msg)
       $position++;
     }
 
-    $table = '<table>' . $table . '
-  </table>';
-
   include TEMPLATE . 'salles.php';
 }
 

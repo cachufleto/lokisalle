@@ -23,7 +23,7 @@ define("LINK", 'http://'. (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"].'/'.$
 define("LINKADMIN", str_replace('App/', '' , LINK.REPADMIN));
 
 // Constantes upload images
-define('TARGET', APP.'photo/');    // Repertoire cible
+define('TARGET', APP.'App/photo/');    // Repertoire cible
 define('MAX_SIZE', 100000000);    // Taille max en octets du fichier
 define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels

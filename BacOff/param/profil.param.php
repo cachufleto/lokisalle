@@ -49,3 +49,4 @@ $_formulaire['valide'] = $_autre;
 $_formulaire['valide']['defaut'] = $_trad['defaut']['modifier'];
 // ajout du boutton annuler
 $_formulaire['valide']['annuler']  = true;
+
