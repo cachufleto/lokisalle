@@ -5,7 +5,8 @@
 # $req => string SQL
 # BLOQUANT
 # RETURN object
-function connectMysqli(){
+function connectMysqli()
+{
 
 	global $BDD;
 
@@ -29,8 +30,8 @@ function connectMysqli(){
 # $req => string SQL
 # BLOQUANT
 # RETURN object
-//function executeRequete($req, $connexion = 'mysqli') {
-function executeRequete($req) {	
+function executeRequete($req)
+{
 	
 	$connexion = connectMysqli();
 
@@ -51,7 +52,8 @@ function executeRequete($req) {
 # $req => string SQL
 # BLOQUANT
 # RETURN object
-function executeMultiRequete($req) {
+function executeMultiRequete($req)
+{
 
 	global $_trad;
 
@@ -79,7 +81,8 @@ function executeMultiRequete($req) {
 
 # Fonction hashCrypt()
 # RETURN string crypt
-function hashCrypt ($chaine) {
+function hashCrypt ($chaine)
+{
 
 	global $options;
 	return password_hash($chaine, PASSWORD_BCRYPT, $options);
@@ -88,14 +91,16 @@ function hashCrypt ($chaine) {
 
 # Fonction hashCrypt()
 # RETURN string crypt
-function hashDeCrypt ($info) {
+function hashDeCrypt ($info)
+{
 
 	//password_verify($password, $hash)
 	return password_verify($info['valide'], $info['sql']);
 
 }
 
-function ouvrirSession($session, $control = false){
+function ouvrirSession($session, $control = false)
+{
 
 	$_SESSION['user'] = array(
 		'id'=>$session['id_membre'],
@@ -112,7 +117,8 @@ function ouvrirSession($session, $control = false){
 # Fonction isSuperAdmin()
 # Verifie SESSION ADMIN ACTIVE
 # RETURN Boolean
-function isSuperAdmin() {
+function isSuperAdmin()
+{
 	
 	return(utilisateurEstAdmin() AND $_SESSION['user']['id'] == 1)? true : false;
 
@@ -121,7 +127,8 @@ function isSuperAdmin() {
 # Fonction utilisateurEstAdmin()
 # Verifie SESSION ADMIN ACTIVE
 # RETURN Boolean
-function utilisateurEstAdmin () {
+function utilisateurEstAdmin ()
+{
 	
 	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'ADM')? true : false;
 
@@ -130,7 +137,8 @@ function utilisateurEstAdmin () {
 # Fonction utilisateurEstAdmin()
 # Verifie SESSION ADMIN ACTIVE
 # RETURN Boolean
-function utilisateurEstCollaborateur () {
+function utilisateurEstCollaborateur ()
+{
 	
 	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'COL')? true : false;
 
@@ -139,7 +147,8 @@ function utilisateurEstCollaborateur () {
 # Fonction utilisateurEstConnecte()
 # Verifie SESSION ACTIVE
 # RETURN Boolean
-function utilisateurEstConnecte() {
+function utilisateurEstConnecte()
+{
 
 	return (!isset($_SESSION['user']))? false : true;
 	
@@ -181,7 +190,8 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 # $var => string, array, object
 # $mode => defaut = 1
 # RETURN NULL;
-function debug($_debug, $mode=0){
+function debug($_debug, $mode=0)
+{
 
 	//global $_debug;
 
@@ -204,7 +214,8 @@ function debug($_debug, $mode=0){
 
 }
 
-function _debug($var, $label){
+function _debug($var, $label)
+{
 	
 	global $_debug;
 	

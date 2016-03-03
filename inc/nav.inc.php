@@ -1,7 +1,7 @@
 <?php 
 
 // Fonctions navigation
-require_once(FUNC."nav.func.php");
+require FUNC . 'nav.func.php';
 
 function nav($_trad, $_menu)
 {

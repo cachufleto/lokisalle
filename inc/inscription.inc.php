@@ -3,7 +3,8 @@
 include PARAM . 'inscription.param.php';
 inscription($_formulaire, $titre, $nav);
 
-function inscription($_formulaire, $titre, $nav){
+function inscription($_formulaire, $titre, $nav)
+{
 	// traitement du formulaire
 	$msg = postCheck($_formulaire);
 

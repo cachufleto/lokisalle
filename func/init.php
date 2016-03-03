@@ -5,10 +5,11 @@
 # $var => string nom de l'indice
 # $type => type de champ 'input', 'textarea'
 # RETURN string
-function ___inputValue($name, $type = 'input') {
+function ___inputValue($name, $type = 'input')
+{
 
 	/**********textarea***************/
-	if ($type == 'textarea' && isset($_POST[$name])) {
+	if ($type == 'textarea' && isset($_POST[$name])){
 		return $_POST[$name];
 	}
 	/**************input******************/

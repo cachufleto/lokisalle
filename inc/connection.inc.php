@@ -1,9 +1,10 @@
 <?php
-include_once FUNC . 'form.func.php';
+include FUNC . 'form.func.php';
 include PARAM . 'connection.param.php';
 connection($_formulaire, $_trad, $titre, $nav, $msg);
 
-function actifUser($_formulaire){
+function actifUser($_formulaire)
+{
 	// recuperation du pseudo
 	if (empty($_POST) && isset($_COOKIE['Lokisalle']['pseudo'])) {
 
@@ -12,12 +13,6 @@ function actifUser($_formulaire){
 		$_POST['pseudo'] = $_COOKIE['Lokisalle']['pseudo'];
 		$_POST['rapel'] = 'on';
 	}
-
-	# FUNCTIONS formulaires
-	// include_once FUNC . 'form.func.php';
-	// inclusion des sources requises pour executer la connexion
-	// include_once(PARAM . 'connection.php');
-	// include_once(FUNC . 'connection.php');
 
 	// traitement du formulaire
 	$msg = postCheck($_formulaire);

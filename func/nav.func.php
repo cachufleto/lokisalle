@@ -4,7 +4,8 @@
 # Valide le menu de navigation
 # [@_pages] => array de navigation
 # RETURN Boolean
-function listeMenu(){
+function listeMenu()
+{
 
 	if(!utilisateurEstAdmin()) return;
 
@@ -44,7 +45,8 @@ function listeMenu(){
 # [@_pages] => array('nav'...)
 # [@titre] => string titre de la page
 # RETURN string liste <li>...</li>
-function liste_nav($liste=''){
+function liste_nav($liste='')
+{
 	
 	global $_trad, $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
 	

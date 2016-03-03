@@ -1,5 +1,6 @@
 <?php
-function reservation(){
+function reservation()
+{
 	if(isset($_SESSION['panier'])){
 
 		foreach ($_SESSION["panier"] as $key => $value) {

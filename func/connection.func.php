@@ -1,12 +1,13 @@
 <?php
 # FUNCTIONS Connection
-include_once FUNC . 'form.func.php';
+include FUNC . 'form.func.php';
 
 # Fonction valideForm()
 # Verifications des informations en provenance du formulaire
 # $_form => tableau des items
 # RETURN string msg
-function valideForm(){
+function valideForm()
+{
 	
 	global $_trad, $_formulaire, $minLen;
 	$message = '';
@@ -77,7 +78,8 @@ function valideForm(){
 	return $message;
 }
 
-function formulaireValider($_formulaire){
+function formulaireValider($_formulaire)
+{
 
 	global $_trad, $minLen;
 	$msg = '';

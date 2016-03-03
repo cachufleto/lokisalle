@@ -1,5 +1,5 @@
 <?php
-include PARAMADM . "ficheSalles.param.php";
+include PARAMADM . 'ficheSalles.param.php';
 ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre, $nav, $msg);
 
 function ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre, $nav, $msg)

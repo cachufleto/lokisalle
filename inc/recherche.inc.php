@@ -1,5 +1,5 @@
 <?php
-include_once(FUNC.'form.func.php');
+include FUNC . 'form.func.php';
 // afficher un formulaire de recherche
 // menu déroulant pour la ville
 // date-piqquer pour la date d'entreé
@@ -7,7 +7,8 @@ include_once(FUNC.'form.func.php');
 // date de sortie doit étre égale ou supperieur à la date d'entrée
 // formulaire inscrit dans la liste de sales disponibles
 
-function listeDistinc($champ, $table, $info){
+function listeDistinc($champ, $table, $info)
+{
 
 	global $_trad;
 
@@ -28,7 +29,8 @@ function listeDistinc($champ, $table, $info){
 	return $balise;
 }
 
-function recherche(){
+function recherche()
+{
 
 	$echoville = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
 	$echocategorie = listeDistinc('categorie', 'salles', array('valide'=>'R'));

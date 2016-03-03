@@ -1,5 +1,6 @@
 <?php
-function home($titre, $nav){
+function home($titre, $nav)
+{
 	$sql = "SELECT * FROM salles";
 	$salles = executeRequete($sql);
 
@@ -12,8 +13,8 @@ function home($titre, $nav){
 	include TEMPLATE . 'home.php';
 }
 
-function dernieresOffres($salle){
-
+function dernieresOffres($salle)
+{
 	global $_trad;
 
 	$offre = '

@@ -1,5 +1,6 @@
 <?php
-function mentions(){
+function mentions()
+{
     include TEMPLATE . 'mentions.php';
 }
 

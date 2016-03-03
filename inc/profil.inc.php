@@ -1,7 +1,7 @@
 <?php
 if(!isset($_formulaire)) {
 	// évite de surcharger en mod BACK OFFICE
-	include PARAM . "profil.param.php";
+	include PARAM . 'profil.param.php';
 }
 
 profil($_modifier, $_trad, $_formulaire, $nav, $titre, $_id, $_valider);

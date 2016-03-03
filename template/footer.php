@@ -5,7 +5,7 @@
         ?>
         <li>
             <?php
-            include(PARAM.'version.txt');
+            include PARAM . 'version.txt';
             ?>
         </li>
     </ul>

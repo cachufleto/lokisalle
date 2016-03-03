@@ -30,7 +30,8 @@ function postCheck(&$_formulaire, $mod=FALSE)
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
 # RETURN string du formulaire
-function formulaireAfficher($_form){
+function formulaireAfficher($_form)
+{
 	
 
 	global $_trad;
@@ -65,7 +66,8 @@ function formulaireAfficher($_form){
 # $champ => nom de l'item
 # $info => tableau des informations relatives a l'item
 # RETURN [balises] texte
-function typeForm($champ, $info){
+function typeForm($champ, $info)
+{
 	
 
 	global $_trad;
@@ -164,7 +166,8 @@ function typeForm($champ, $info){
 # $info tableau des items validées du formulaire
 # RETURN boolean
 
-function testADMunique($statut, $id_membre){
+function testADMunique($statut, $id_membre)
+{
 
 
 	if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
@@ -193,7 +196,8 @@ function testADMunique($statut, $id_membre){
 # [@$nom_form] tableau des items validées du formulaire
 # $mod => condition pour une action de mise à jour en BDD
 # RETURN string message d'alerte
-function postValide(&$_formulaire, $mod=FALSE){
+function postValide(&$_formulaire, $mod=FALSE)
+{
 
 	
 	global $msg, $_trad;
@@ -270,7 +274,8 @@ function postValide(&$_formulaire, $mod=FALSE){
 # $info => array(...'valide'), valeurs du champs
 # $value => valeur à comparer
 # RETURN string
-function radioCheck($info, $value) {
+function radioCheck($info, $value)
+{
 
 
 	// info['valide'] => valeur du formulaire
@@ -283,7 +288,8 @@ function radioCheck($info, $value) {
 # $info => array(...'valide'), valeurs du champs
 # $value => valeur à comparer
 # RETURN string
-function selectCheck($info, $value) {
+function selectCheck($info, $value)
+{
 
 
 	// info['valide'] => valeur du formulaire
@@ -295,7 +301,8 @@ function selectCheck($info, $value) {
 # Vérifie la valeur alphanumerique d'une chaine de caracteres 
 # $value => valeur à tester
 # RETURN Boolean
-function testNumerique($valeur){	
+function testNumerique($valeur)
+{
 
 
 	return preg_match('#[a-zA-Z.\s.-]#', $valeur);
@@ -306,7 +313,8 @@ function testNumerique($valeur){
 # Vérifie la valeur alphanumerique d'une chaine de caracteres 
 # $value => valeur à tester
 # RETURN Boolean
-function testAlphaNumerique($valeur){	
+function testAlphaNumerique($valeur)
+{
 
 		
 	return preg_match('#^[a-zA-Z0-9._-]+$#', $valeur );
@@ -317,7 +325,8 @@ function testAlphaNumerique($valeur){
 # Vérifie la valeur alphanumerique d'une chaine de caracteres 
 # $value => valeur à tester
 # RETURN Boolean
-function testFormatMail($valeur){	
+function testFormatMail($valeur)
+{
 
 		
 	return filter_var($valeur, FILTER_VALIDATE_EMAIL);
@@ -328,7 +337,8 @@ function testFormatMail($valeur){
 # Vérifie la valeur alphanumerique d'une chaine de caracteres 
 # $value => valeur à tester
 # RETURN Boolean
-function testObligatoire($info){	
+function testObligatoire($info)
+{
 
 	
 	return isset($info['obligatoire'])? $info['obligatoire'] : false;			
@@ -341,7 +351,8 @@ function testObligatoire($info){
 # $maxLen => limite maximal 250 par default
 # @minLen => limite minimal établi par default
 # RETURN Boolean true si authorizé
-function testLongeurChaine($valeur, $maxLen=250){
+function testLongeurChaine($valeur, $maxLen=250)
+{
 
 	
 	global $minLen;
@@ -385,7 +396,8 @@ function modCheck(&$_formulaire, $_id, $table)
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
 # RETURN string du formulaire
-function formulaireAfficherInfo($_form){
+function formulaireAfficherInfo($_form)
+{
 
 	global $_trad;
 	//global $_formIncription;
@@ -433,9 +445,8 @@ function formulaireAfficherInfo($_form){
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
 # RETURN string du formulaire
-function formulaireAfficherMod($_form){
-
-	
+function formulaireAfficherMod($_form)
+{
 	global $_trad;
 	//global $_formIncription;
 	$formulaire = '';
@@ -494,9 +505,8 @@ function formulaireAfficherMod($_form){
 #$key => champ
 #$info => donées relatives au champ
 # RETURN boolean
-function controlImageUpload($key, &$info) {
-
-
+function controlImageUpload($key, &$info)
+{
 	global $_trad;
 	// Tableaux de donnees
 	$tabExt = array('jpg','gif','png','jpeg');    // Extensions autorisees
