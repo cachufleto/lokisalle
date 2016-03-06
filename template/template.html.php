@@ -8,7 +8,7 @@
     <link rel="icon" href="<?php echo LINK;  ?>img/lokisalle.png">
     <?php echo $_link; ?>
     <script src="<?php echo LINK;  ?>js/script.js" type="text/javascript"></script>
-    <title><?php echo $titre; ?></title>
+    <title><?php echo $_trad['titre'][$nav]; ?></title>
 </head>
 <body>
 <div id="content">

@@ -14,7 +14,9 @@ $nomImage = '';
 function formulaireValider($_formulaire)
 {
 	
-	global $_trad, $minLen;
+	global $minLen;
+	$_trad = setTrad();
+
 
 	$msg = 	$erreur = false;
 	$sql_champs = $sql_Value = '';

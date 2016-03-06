@@ -1,10 +1,14 @@
 <?php
-include PARAMADM . 'editerSalles.param.php';
-editerSalles($_trad, $_formulaire, $titre, $nav);
+editerSalles();
 
-function editerSalles($_trad, $_formulaire, $titre, $nav)
+function editerSalles()
 {
+	$nav = 'editerSalles';
+	$_trad = setTrad();
+
 	// traitement du formulaire
+	include PARAMADM . 'editerSalles.par1am.php';
+
 	$msg = $_trad['erreur']['inconueConnexion'];
 
 	if (postCheck($_formulaire)) {

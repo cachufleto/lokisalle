@@ -1,9 +1,14 @@
 <?php
 
-salles($titre, $_formulaire, $nav, $msg);
+salles();
 
-function salles($titre, $_formulaire, $nav, $msg)
+function salles()
 {
+  $nav = 'salles';
+  $msg = '';
+  $_trad = setTrad();
+
+
   if (!utilisateurEstAdmin()) {
     header('Location:index.php');
     exit();

@@ -1,10 +1,15 @@
 <?php
 
 
-gestionSalles($_trad, $titre, $nav, $msg);
+gestionSalles();
 
-function gestionSalles($_trad, $titre, $nav, $msg)
+function gestionSalles()
 {
+    $nav = 'gestionSalles';
+    $msg = '';
+    $_trad = setTrad();
+
+
     if(!utilisateurEstAdmin()){
         header('Location:index.php');
         exit();

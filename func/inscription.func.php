@@ -9,7 +9,9 @@
 function formulaireValider($_formulaire)
 {
 
-	global $_trad, $minLen;
+	global $minLen;
+
+	$_trad = setTrad();
 
 	$msg = 	$erreur = false;
 	$sql_champs = $sql_Value = '';
@@ -190,7 +192,7 @@ function formulaireValider($_formulaire)
 		$sql = "INSERT INTO checkinscription (id_membre, checkinscription)
 			VALUES ( (SELECT id_membre FROM membres WHERE email = '$email'), '$checkinscription')";
 
-		if(executeRequete ($sql)){
+		if(executeRequete($sql)){
 			$msg = (envoiMail($checkinscription, $email))? "OK" : $msg;
 		}
 		

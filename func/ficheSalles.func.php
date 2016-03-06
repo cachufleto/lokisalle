@@ -9,8 +9,8 @@
 function formulaireValider($_formulaire)
 {
 	
-	global $_trad, $minLen;
-
+	global $minLen;
+	$_trad = setTrad();
 
 	$msg = 	$erreur = false;
 	$sql_set = '';
@@ -102,7 +102,12 @@ function formulaireValider($_formulaire)
 
 	}elseif(!empty($_FILES['photo'])){
 
-	  $erreur = (controlImageUpload('photo', $_formulaire['photo']))? true : $erreur;
+		$nomImage  = $_formulaire['pays']['value'];
+		$nomImage .= '_' . $_formulaire['ville']['value'];
+		$nomImage .= '_' . $_formulaire['titre']['value'];
+		$nomImage .= str_replace(' ', '_', $nomImage);
+
+		$erreur = (controlImageUpload('photo', $_formulaire['photo'] , $nomImage))? true : $erreur;
 //	  $_formulaire['photo']['message'] = isset($info['message'])? $info['message'] : '' ; 
 	  $valeur = $_formulaire['photo']['valide'];
 

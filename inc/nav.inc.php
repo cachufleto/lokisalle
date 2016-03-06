@@ -3,8 +3,9 @@
 // Fonctions navigation
 require FUNC . 'nav.func.php';
 
-function nav($_trad, $_menu)
+function nav($_menu)
 {
+	$_trad = setTrad();
 	listeMenu();
 	$_link = $_SERVER["QUERY_STRING"];
 

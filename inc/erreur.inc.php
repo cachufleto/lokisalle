@@ -1,10 +1,14 @@
 <?php
 
-function erreur($_trad, $titre, $nav)
+function erreur($nav)
 {
+	$_trad = setTrad();
 
-	$msg = ($nav=='erreur404')? $_trad['erreur']['erreur404'] : $_trad['enConstruccion'];
+	$msg = ($nav=='erreur404')?
+			$_trad['erreur']['erreur404'] :
+			$_trad['enConstruccion'];
+
 	include TEMPLATE . 'erreur404.php';
 }
 
-erreur($_trad, $titre, $nav);
+erreur($nav);

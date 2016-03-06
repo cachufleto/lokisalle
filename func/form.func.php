@@ -32,7 +32,7 @@ function formulaireAfficher($_form)
 {
 	
 
-	global $_trad;
+	$_trad = setTrad();
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
@@ -68,7 +68,7 @@ function typeForm($champ, $info)
 {
 	
 
-	global $_trad;
+	$_trad = setTrad();
 
 	$valeur = (!empty($info['valide']))? $info['valide'] : $info['defaut'];
 	$check = (!empty($info['valide']))? 'checked' : '' ;
@@ -198,7 +198,9 @@ function postValide(&$_formulaire, $mod=FALSE)
 {
 
 	
-	global $msg, $_trad;
+	global $msg;
+	$_trad = setTrad();
+
 	$ok = true;
 
 	// on boucle sur les valeurs des champs
@@ -397,7 +399,7 @@ function modCheck(&$_formulaire, $_id, $table)
 function formulaireAfficherInfo($_form)
 {
 
-	global $_trad;
+	$_trad = setTrad();
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
@@ -445,7 +447,7 @@ function formulaireAfficherInfo($_form)
 # RETURN string du formulaire
 function formulaireAfficherMod($_form)
 {
-	global $_trad;
+	$_trad = setTrad();
 	//global $_formIncription;
 	$formulaire = '';
 
@@ -503,9 +505,9 @@ function formulaireAfficherMod($_form)
 #$key => champ
 #$info => donées relatives au champ
 # RETURN boolean
-function controlImageUpload($key, &$info)
+function controlImageUpload($key, &$info, $nomImage)
 {
-	global $_trad;
+	$_trad = setTrad();
 	// Tableaux de donnees
 	$tabExt = array('jpg','gif','png','jpeg');    // Extensions autorisees
 	$infosImg = array();
@@ -535,7 +537,7 @@ function controlImageUpload($key, &$info)
 					if(isset($_FILES[$key]['error']) && UPLOAD_ERR_OK === $_FILES[$key]['error'])
 					{
 						// On renomme le fichier
-						$nomImage = md5(uniqid()) .'.'. $extension;
+						$nomImage = $nomImage . '_' . uniqid() . '.' . $extension;
 
 						// Si c'est OK, on teste l'upload
 						if(move_uploaded_file($_FILES[$key]['tmp_name'], TARGET.$nomImage))

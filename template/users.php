@@ -1,6 +1,6 @@
 <div class="">
     <div class="">
-        <h1><span class=" "></span><?php echo $titre; ?></h1>
+        <h1><span class=" "></span><?php echo $_trad['titre']['users']; ?></h1>
         <hr />
     </div>
     <div class="">

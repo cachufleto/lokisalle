@@ -9,8 +9,9 @@ function listeMenu()
 
 	if(!utilisateurEstAdmin()) return;
 
-	global $_trad, $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin, $navAdmin, $navFooter;
+	global $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin, $navAdmin, $navFooter;
 
+	$_trad = setTrad();
 	// control du menu principal
 
 	foreach($_reglesAdmin as $key)
@@ -48,8 +49,11 @@ function listeMenu()
 function liste_nav($liste='')
 {
 	
-	global $_trad, $nav, $_pages, $titre, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
-	
+	global $nav, $_pages, $navFooter, $navAdmin, $_reglesAdmin, $_reglesMembre, $_reglesAll;
+
+	$_trad = setTrad();
+
+
 	if(empty($liste)){
 
 		$_liste = (utilisateurEstAdmin())?

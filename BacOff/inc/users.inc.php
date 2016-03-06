@@ -1,9 +1,16 @@
 <?php
 
-users($_trad, $titre, $msg);
+users();
 
-function users($_trad, $titre, $msg)
+function users()
 {
+  $msg = '';
+  $nav = 'users';
+  $_trad = setTrad();
+  include PARAM . 'profil.param.php';
+
+
+
   if (!utilisateurEstAdmin()) {
     header('Location:index.php');
     exit();

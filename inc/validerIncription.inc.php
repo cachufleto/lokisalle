@@ -3,6 +3,7 @@ function validerInscription()
 {
     header("refresh:5;url=index.php?nav=actif");
 
+    $_trad = setTrad();
     echo $_trad['redirigeVerConnection'];
     /**
      * Created by PhpStorm.
@@ -29,4 +30,4 @@ function validerInscription()
     exit();
 }
 
-validerInscription($_trad);
+validerInscription();

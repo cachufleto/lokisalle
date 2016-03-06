@@ -9,7 +9,10 @@
 function valideForm()
 {
 	
-	global $_trad, $_formulaire, $minLen;
+	global $_formulaire, $minLen;
+
+	$_trad = setTrad();
+
 	$message = '';
 	$sql_Where = '';
 	
@@ -81,7 +84,9 @@ function valideForm()
 function formulaireValider($_formulaire)
 {
 
-	global $_trad, $minLen;
+	global $minLen;
+	$_trad = setTrad();
+
 	$msg = '';
 	$erreur = false;
 	$sql_Where = '';

@@ -1,5 +1,5 @@
-<principal class="<?php echo $nav; ?>">
-    <h1><?php echo $titre; ?></h1>
+<principal class="home">
+    <h1><?php echo $_trad['titre']['home']; ?></h1>
     <hr />
     <div id="homeG">
         <?php include INC . 'activite.xhtml'; ?>

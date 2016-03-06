@@ -28,5 +28,7 @@ $_formulaire['mdp']['acces'] = 'private';
 // affichage du boutton de validation
 $_formulaire['valide']['defaut'] = $_trad['defaut']['modifier'];
 $_formulaire['valide']['annuler']  = $_trad['Out'];
-$_formulaire['valide']['origin']  = (isset($_POST['valide']) && $_POST['valide'] == $_trad['defaut']['modifier'])?
-	$_trad['defaut']['MiseAJ'] : '';
+$_formulaire['valide']['origin']  = (
+	isset($_POST['valide']) &&
+	$_POST['valide'] == $_trad['defaut']['modifier']
+	)? $_trad['defaut']['MiseAJ'] : '';

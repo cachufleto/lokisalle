@@ -1,7 +1,9 @@
 <?php
-function salles($_trad, $titre, $msg)
+function salles($msg)
 {
-  //
+    $nav = 'salles';
+    $_trad = setTrad();
+
     if (isset($_GET)) {
       if (!empty($_GET['reserver'])) {
         $_SESSION['panier'][$_GET['reserver']] = true;
@@ -46,4 +48,4 @@ function salles($_trad, $titre, $msg)
   include TEMPLATE . 'salles.php';
 }
 
-salles($_trad, $titre, $msg);
+salles($msg);

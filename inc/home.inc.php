@@ -1,6 +1,11 @@
 <?php
-function home($titre, $nav)
+function home()
 {
+
+	$nav = 'home';
+	$_trad = setTrad();
+
+
 	$sql = "SELECT * FROM salles";
 	$salles = executeRequete($sql);
 
@@ -15,7 +20,7 @@ function home($titre, $nav)
 
 function dernieresOffres($salle)
 {
-	global $_trad;
+	$_trad = setTrad();
 
 	$offre = '
 	<div class="offre">
@@ -32,4 +37,4 @@ function dernieresOffres($salle)
 	return $offre;
 }
 
-home($titre, $nav);
+home();

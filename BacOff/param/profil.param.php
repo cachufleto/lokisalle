@@ -1,10 +1,5 @@
 <?php
 
-// on inclus les parametres du formulaire d'inscription
-include PARAM . 'inscription.param.php';
-include PARAM . 'profil.param.php';
-
-
 // recuparation de l'id par GET ou POST
 $_id = (int)(isset($_POST['id_membre'])? $_POST['id_membre'] : (isset($_GET['id'])? $_GET['id'] : $_id) );
 $_id = utilisateurEstAdmin()? (!empty($_id)? $_id : $_SESSION['user']['id']) : $_SESSION['user']['id'];

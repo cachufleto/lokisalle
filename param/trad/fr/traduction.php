@@ -125,6 +125,7 @@ $_trad['titre']['actif'] = "";
 $_trad['titre']['backoffice'] = "administration";
 $_trad['titre']['boutique'] = "boutique";
 $_trad['titre']['cgv'] = "Conditions Générales de Vente";
+$_trad['titre']['changermotpasse'] = "Changer le mot de passe";
 $_trad['titre']['connection'] = "se connecter";
 $_trad['titre']['contact'] = "contact";
 $_trad['titre']['detail'] = "Detail du produit";

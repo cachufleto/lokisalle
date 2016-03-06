@@ -55,7 +55,7 @@ function executeRequete($req)
 function executeMultiRequete($req)
 {
 
-	global $_trad;
+	$_trad = setTrad();
 
 	$connexion = connectMysqli();
 
@@ -157,7 +157,7 @@ function utilisateurEstConnecte()
 
 function envoiMail($key, $to = 'carlos.paz@free.fr')
 {
-	global $_trad;
+	$_trad = setTrad();
 	// message
 	$message = '
      <html>
@@ -183,6 +183,35 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 
 	// Envoi
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
+}
+
+function setTrad(){
+
+	require PARAM . 'trad/fr/traduction.php';
+	include PARAM . 'trad/' . $_SESSION['lang'] . '/traduction.php';
+
+	return $_trad;
+
+}
+
+/**
+ * function ficheContactTemplate()
+ * @param $contact
+ * @return string
+ */
+function ficheContactTemplate($contact)
+{
+
+	$_trad = setTrad();
+
+	$offre  = "<div class=\"fiche\">\r\n";
+	$offre .= "\t<div>" . $contact['prenom'] . " " . $contact['nom'] . "</div>\r\n";
+	$offre .= "\t\t<div><a href=\"mailto:" . $contact['email'] . "\">" . $contact['email'] . "</a></div>\r\n";
+	$offre .= "\t\t<div>" . $_trad['value'][$contact['statut']] . "</div>\r\n";
+	$offre .= "\t<hr/>\r\n";
+	$offre .= "</div>\r\n";
+
+	return $offre;
 }
 
 # Fonction debug()

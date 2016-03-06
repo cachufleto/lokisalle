@@ -1,5 +1,5 @@
-<principal class="<?php echo $nav; ?>">
-    <h1><?php echo $titre; ?></h1>
+<principal class="backoffice">
+    <h1><?php echo $_trad['titre']['backoffice']; ?></h1>
     <hr />
     <form name="index" action="?nav=backoffice" method="POST">
         <div class=" col-2">

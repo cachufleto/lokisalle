@@ -9,8 +9,6 @@ define("DEBUG", $debug);
 require PARAM . 'init.php';
 require FUNC . 'com.func.php';
 // chargement de la langue
-require PARAM . 'trad/fr/traduction.php';
-include PARAM . 'trad/' . $_SESSION['lang'] . '/traduction.php';
 
 /************************************************************
  * Creation du repertoire cible si inexistant
@@ -28,7 +26,6 @@ include INC . 'install.inc.php';
 // options du menu de navigation
 require PARAM . 'nav.php';
 // Traduction du titre de la page
-$titre = $_trad['titre'][$nav];
 
 $_linkCss[] = LINK . 'css/style.css';
 $_linkJs[] = LINK . 'js/script.js';

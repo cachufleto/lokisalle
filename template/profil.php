@@ -1,5 +1,5 @@
 <principal clas="<?php echo $nav; ?>">
-    <h1><?php echo $titre; ?></h1>
+    <h1><?php echo $_trad['titre']['profil']; ?></h1>
     <hr />
     <div id="formulaire">
         <?php

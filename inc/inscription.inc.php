@@ -1,15 +1,19 @@
 <?php
 
-include PARAM . 'inscription.param.php';
-inscription($_formulaire, $titre, $nav);
+inscription();
 
-function inscription($_formulaire, $titre, $nav)
+function inscription()
 {
+	$nav = 'inscription';
+	$_trad = setTrad();
+
+
+	include PARAM . 'inscription.param.php';
 	include FUNC . 'form.func.php';
 
 	// traitement POST du formulaire
 	$msg = $_trad['erreur']['inconueConnexion'];
-	if (postCheck($_formulaire, true)) {
+	if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
 		$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : formulaireValider($_formulaire);
 	}
 

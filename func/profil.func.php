@@ -8,8 +8,10 @@
 # RETURN string msg
 function formulaireValider($_formulaire)
 {
-	global $_trad, $minLen;
-	
+	global $minLen;
+
+	$_trad = setTrad();
+
 	// control d'intrusion du membre
 	if($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){
 		//_debug($_formulaire, 'SQL');

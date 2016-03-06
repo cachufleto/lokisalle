@@ -112,10 +112,16 @@ $_pages['ventes'] = array(
 $_pages['gestionSalles'] = array(
 		'link' => LINKADMIN,
 		'affiche' => false);
-			
+
 $_pages['editerSalles'] = array(
-		'link' => LINKADMIN,
-		'affiche' => false);
+	'link' => LINKADMIN,
+	'affiche' => false);
+
+$_pages['changermotpasse'] = array(
+	'link' => LINK,
+	'affiche' => false);
+
+
 
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
 $_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');

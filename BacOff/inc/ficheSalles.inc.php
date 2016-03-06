@@ -1,9 +1,14 @@
 <?php
-include PARAMADM . 'ficheSalles.param.php';
-ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre, $nav, $msg);
+ficheSalles();
 
-function ficheSalles($_valider, $_modifier, $_formulaire, $_id, $position, $_trad, $titre, $nav, $msg)
+function ficheSalles()
 {
+	$nav = 'ficheSalles';
+	$msg = '';
+	$_trad = setTrad();
+
+	include PARAMADM . 'ficheSalles.param.php';
+
 	include FUNC . 'form.func.php';
 	if (!isset($_SESSION['user'])) {
 		header('Location:index.php');

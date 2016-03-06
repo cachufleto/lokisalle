@@ -28,4 +28,4 @@ define('MAX_SIZE', 100000000);    // Taille max en octets du fichier
 define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels
 
-if(!file_exists(APP . 'Public/index.php')) exit();
+if(!file_exists(APP . 'Public/index.php')) exit("<br>" . APP . ' ---> Public/index.php');

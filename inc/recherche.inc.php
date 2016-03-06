@@ -10,7 +10,7 @@
 function listeDistinc($champ, $table, $info)
 {
 
-	global $_trad;
+	$_trad = setTrad();
 
 	$sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
 	$result = executeRequete($sql);

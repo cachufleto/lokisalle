@@ -1,11 +1,11 @@
 <div class="container">
-    <div class="starter-template">
-        <h1><span class="glyphicon glyphicon-pencil "></span><?php echo $titre; ?></h1>
+    <div class="">
+        <h1><?php echo $_trad['titre']['gestionSalles']; ?></h1>
         <hr />
         Ajouter une salle <a href="<?php echo LINKADMIN; ?>?nav=editerSalles">AJOUTER</a>
         <hr />
     </div>
-    <div class="<?php echo $nav; ?>">
+    <div class="gestionSalles">
         <?php echo $msg; ?>
         <table>
             <?php echo $table; ?>
