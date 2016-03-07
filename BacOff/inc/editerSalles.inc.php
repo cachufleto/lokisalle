@@ -14,12 +14,15 @@ function editerSalles()
 	$_trad = setTrad();
 
 	// traitement du formulaire
-	include PARAMADM . 'editerSalles.par1am.php';
+	include PARAMADM . 'editerSalles.param.php';
+	include FUNC . 'form.func.php';
 
-	$msg = $_trad['erreur']['inconueConnexion'];
+	$msg = '';
 
 	if (postCheck($_formulaire)) {
-		$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : editerSallesValider($_formulaire);
+		if(isset($_POST['valide'])){
+			$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : editerSallesValider($_formulaire);
+		}
 	}
 
 // affichage des messages d'erreur
