@@ -18,11 +18,11 @@ ob_start();
 if(!file_exists($__page) ){
 	require INC . 'erreur.inc.php';
 } else {
-
+/*
 	$__func = FUNC . $nav . '.func.php';
 	if(file_exists($__func) )
 		require $__func;
-
+*/
 	require $__page;
 }
 

@@ -34,14 +34,6 @@ if(!file_exists($__page) ){
 	require INC . 'erreur.inc.php';
 } else {
 /*
-	$__paramAdm = ADM . 'param/' . $nav . '.param.php';
-	$__param = PARAM . $nav . '.param.php';
-
-	if(file_exists($__paramAdm) and false )
-		require $__paramAdm;
-	elseif(file_exists($__param) and false )
-		require $__param;
-*/
 	$__funcAdm = ADM . 'func/' . $nav . '.func.php';
 	$__func = FUNC . $nav . '.func.php';
 
@@ -49,7 +41,7 @@ if(!file_exists($__page) ){
 		require $__funcAdm;
 	elseif(file_exists($__func) )
 		require $__func;
-
+*/
 	require $__page;
 }
 

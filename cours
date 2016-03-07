@@ -1,0 +1,26 @@
+Different FrameWork
+
+Laravel
+CakePHP
+Ruby -> Cake (origin du MVC en PHP)
+Zend Framework
+Yii
+phalcon -> plus rapide, code en c pour apache
+
+CMD
+symfony
+php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"
+
+on cree un project
+php symfony nom_project [denier version, ltd, 2.5]
+
+composer json
+
+fichier md .... documentation mark down utilisé pour la documentation dans GitHub
+
+php app\console
+
+pour supprimer un bundle
+supprimer le dossier dans l
+app\Appkernel.php
+

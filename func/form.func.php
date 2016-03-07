@@ -14,16 +14,6 @@ function postCheck(&$_formulaire, $mod=FALSE)
 	return true;
 }
 
-/*
-		if(postValide($_formulaire, $mod)) {
-
-			// control particulier pour chaque formulaire
-			// on ne fait pas la suite si les information proviennent des cookies
-			$msg = ($_POST['valide'] == 'cookie')? 'cookie' : formulaireValider($_formulaire);
-		}
-		else $msg = $_trad['erreur']['inconueConnexion'];
-*/
-
 # Fonction formulaireAfficher()
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
