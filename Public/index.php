@@ -1,16 +1,11 @@
 <?php
-// Intertion des parametres de fonctionement
+// Insertion des parametres de fonctionement
 require __DIR__ . '/../inc/init.inc.php';
-
-require INC . 'header.inc.php';
-require INC . 'nav.inc.php';
-include INC . 'debug.inc.php';
-require INC . 'footer.inc.php';
+require __DIR__ . '/route.php';
 
 /*************************************************************/
 $_link = siteHeader($_linkCss);
-$_menu = '';
-$navPp = nav($_menu);
+$navPp = nav();
 
 ob_start();
 // insertion des pages dinamiques
@@ -18,11 +13,6 @@ ob_start();
 if(!file_exists($__page) ){
 	require INC . 'erreur.inc.php';
 } else {
-/*
-	$__func = FUNC . $nav . '.func.php';
-	if(file_exists($__func) )
-		require $__func;
-*/
 	require $__page;
 }
 

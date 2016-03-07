@@ -16,16 +16,9 @@ if(file_exists($__link)){
 	$_linkCss[] = LINK . 'css/' . $nav . '.adm.css';
 }
 
-// insertion de l'entête
-require INC . 'header.inc.php';
-require INC . 'nav.inc.php';
-include INC . 'debug.inc.php';
-require INC . 'footer.inc.php';
-
 /*************************************************************/
 $_link = siteHeader($_linkCss);
-$_menu = 'navAdmin';
-$navPp = nav($_menu);
+$navPp = nav('navAdmin');
 
 ob_start();
 $__page = ADM . 'inc/' . $nav . '.inc.php';
@@ -33,15 +26,6 @@ $__page = ADM . 'inc/' . $nav . '.inc.php';
 if(!file_exists($__page) ){
 	require INC . 'erreur.inc.php';
 } else {
-/*
-	$__funcAdm = ADM . 'func/' . $nav . '.func.php';
-	$__func = FUNC . $nav . '.func.php';
-
-	if(file_exists($__funcAdm) )
-		require $__funcAdm;
-	elseif(file_exists($__func) )
-		require $__func;
-*/
 	require $__page;
 }
 

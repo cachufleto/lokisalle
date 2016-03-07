@@ -8,6 +8,7 @@ define("DEBUG", $debug);
 
 require PARAM . 'init.php';
 require FUNC . 'com.func.php';
+require FUNC . 'site.func.php';
 // chargement de la langue
 
 /************************************************************

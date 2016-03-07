@@ -36,3 +36,61 @@
  * ob_emptide
  * echo $_V
  */
+$route = array();
+
+$route['backoffice']['controleur'] = 'backoffice.inc.php';
+$route['backoffice']['action'] = 'backoffice';
+
+$route['cgv']['controleur'] = 'cgv.inc.php';
+$route['cgv']['action'] = 'cvg';
+
+$route['changermotpasse']['controleur'] = 'changermotpasse.inc.php';
+$route['changermotpasse']['action'] = 'changermotpasse';
+
+$route['connection']['controleur'] = 'connection.inc.php';
+$route['connection']['action'] = 'connection';
+
+$route['contact']['controleur'] = 'contact.inc.php';
+$route['contact']['action'] = 'contact';
+
+$route['erreur404']['controleur'] = 'erreur404.inc.php';
+$route['erreur404']['action'] = 'erreur404';
+
+$route['fichesalles']['controleur'] = 'fichesalles.inc.php';
+$route['fichesalles']['action'] = 'fichesalles';
+
+$route['home']['controleur'] = 'home.inc.php';
+$route['home']['action'] = 'home';
+
+$route['inscription']['controleur'] = 'inscription.inc.php';
+$route['inscription']['action'] = 'inscription';
+
+$route['install']['controleur'] = 'install.inc.php';
+$route['install']['action'] = 'install';
+
+$route['mentions']['controleur'] = 'mentions.inc.php';
+$route['mentions']['action'] = 'mentions';
+
+$route['newsletter']['controleur'] = 'newsletter.inc.php';
+$route['newsletter']['action'] = 'newsletter';
+
+$route['plan']['controleur'] = 'plan.inc.php';
+$route['plan']['action'] = 'plan';
+
+$route['profil']['controleur'] = 'profil.inc.php';
+$route['profil']['action'] = 'profil';
+
+$route['recherche']['controleur'] = 'recherche.inc.php';
+$route['recherche']['action'] = 'recherche';
+
+$route['reservation']['controleur'] = 'reservation.inc.php';
+$route['reservation']['action'] = 'reservation';
+
+$route['salles']['controleur'] = 'salles.inc.php';
+$route['salles']['action'] = 'salles';
+
+$route['session']['controleur'] = 'session.inc.php';
+$route['session']['action'] = 'session';
+
+$route['validerInscription']['controleur'] = 'validerInscription.inc.php';
+$route['validerInscription']['action'] = 'validerInscription';
