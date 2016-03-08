@@ -1,0 +1,20 @@
+{% extends 'SamiBlogBundle::choucroute.html.twig' %}
+
+{% block title %}
+   {{info }}
+{% endblock %}
+
+{% block intermediaire %}
+<h3>Salut les DIWOO !</h3>
+
+<p>L'information est : {{info | upper}}</p>
+
+<p>L'autre information est : {{autreinfo | capitalize}}</p>
+
+<p>La date du jour est : {{ dateDuJour | date("Y-m-d H:i:s") }}</p>
+
+<ul>
+    <li><a href="{{ path('sami_blog_homepage') }}">index</a></li>
+    <li><a href="{{ path('sami_blog_default_jaifaim', {information:'abcdefghijklmno', autre_information:'genial'}) }}">les crocs !</a></li>
+</ul>
+{% endblock %}

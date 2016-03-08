@@ -1,0 +1,47 @@
+sami_blog_homepage:
+    path:     /
+    defaults: { _controller: SamiBlogBundle:Default:index }
+
+sami_blog_default_create:
+    path:     /create
+    defaults: { _controller: SamiBlogBundle:Default:create }
+
+sami_blog_default_update:
+    path:     /update/{id}
+    defaults: { _controller: SamiBlogBundle:Default:update }
+    requirements:
+        id: ^[1-9]{1}[0-9]*$
+
+sami_blog_default_delete:
+    path:     /delete/{id}
+    defaults: { _controller: SamiBlogBundle:Default:delete }
+    requirements:
+        id: ^[1-9]{1}[0-9]*$
+
+sami_blog_default_jaifaim:
+    path:     /lescrocs/{information}/{autre_information}
+    defaults: { _controller: SamiBlogBundle:Default:jaifaim, autre_information:null }
+    methods: [GET]
+    requirements:
+        information: ^[a-zA-Z]*$
+        autre_information: super|genial
+
+sami_blog_exercice_action1:
+    path:     /exercice/action1/{nombre1}/{nombre2}
+    defaults: { _controller: SamiBlogBundle:Exercice:action1 }
+    requirements:
+        nombre1: ^[0-9]+$
+        nombre2: ^[0-9]+$
+
+sami_blog_exercice_action2:
+    path:     /exercice/action2/{arg1}/{arg2}/{arg3}
+    defaults: { _controller: SamiBlogBundle:Exercice:action2, arg3:null }
+    requirements:
+        arg1: bleu|blanc|rouge
+        arg2: violet|rose|jaune
+
+sami_blog_exercice_action3:
+    path:     /exercice/action3/{unedate}
+    defaults: { _controller: SamiBlogBundle:Exercice:action3 }
+    requirements:
+        unedate: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$

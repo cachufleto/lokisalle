@@ -1,0 +1,11 @@
+sami_blog_homepage:
+    path:     /
+    defaults: { _controller: SamiBlogBundle:Default:index }
+
+sami_blog_default_jaifaim:
+    path:     /lescrocs/{information}/{autre_information}
+    defaults: { _controller: SamiBlogBundle:Default:jaifaim, autre_information:null }
+    methods: [GET]
+    requirements:
+        information: ^[a-zA-Z]*$
+        autre_information: super|genial
