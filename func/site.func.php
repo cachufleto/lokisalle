@@ -121,7 +121,7 @@ function liste_nav($liste='')
 function footer()
 {
     $info = liste_nav('navFooter');
-    $info['version'] = file_get_contents(PARAM . 'version.txt');
+    $info['version'] = file_get_contents(CONF . 'version.txt');
     return $info;
 }
 

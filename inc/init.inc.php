@@ -1,12 +1,12 @@
 <?php
-include __DIR__ . '/../param/constantes.php';
-include PARAM . 'connection.php';
+include __DIR__ . '/../conf/constantes.php';
+include CONF . 'connection.php';
 
 // activation du debug en fonction de l'environnement
 $debug = ('localhost' == $_SERVER["HTTP_HOST"])? true : false;
 define("DEBUG", $debug);
 
-require PARAM . 'init.php';
+require CONF . 'init.php';
 require FUNC . 'com.func.php';
 require FUNC . 'site.func.php';
 session();
@@ -25,7 +25,7 @@ if( !is_dir(TARGET) ) {
 include INC . 'install.inc.php';
 
 // options du menu de navigation
-require PARAM . 'nav.php';
+require CONF . 'nav.php';
 // Traduction du titre de la page
 
 $_linkCss[] = LINK . 'css/style.css';
@@ -36,4 +36,5 @@ if(file_exists($__link) ) {
 	$_linkCss[] = LINK . 'css/' . $nav . '.css';
 }
 
+require CONF . 'route.php';
 

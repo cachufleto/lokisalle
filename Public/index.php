@@ -1,7 +1,6 @@
 <?php
 // Insertion des parametres de fonctionement
 require __DIR__ . '/../inc/init.inc.php';
-require __DIR__ . '/route.php';
 
 /*************************************************************/
 ob_start();

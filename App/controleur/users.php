@@ -576,7 +576,7 @@ function profil()
     $_trad = setTrad();
     include PARAM . 'profil.param.php';
     if(utilisateurEstAdmin()) {
-        include PARAMADM . 'profil.param.php';
+        include PARAM . 'backOff_profil.param.php';
     }
     include FUNC . 'form.func.php';
     if (!isset($_SESSION['user'])) {

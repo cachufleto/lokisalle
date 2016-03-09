@@ -5,13 +5,13 @@ function install()
     if (isset($_GET['install']) && $_GET['install'] == 'BDD') {
 
         // initialisation des tables
-        echo "chargement du fichier lokisalle.sql";
-        $sql = file_get_contents(APP . '/SQL/lokisalle.sql');
+        echo "chargement du fichier shema.sql";
+        $sql = file_get_contents(INC . '/SQL/shema.sql');
 
         if (isset($_GET['data'])) {
             // remplisage des tables
             echo "<br>chargement du fichier data.sql";
-            $sql .= file_get_contents(APP . '/SQL/data.sql');
+            $sql .= file_get_contents(INC . '/SQL/data.sql');
         }
         // echo "<pre>$sql</pre>";
         if (executeMultiRequete($sql)) {

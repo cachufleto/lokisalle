@@ -1,12 +1,12 @@
 <?php
 // Insertion des parametres de fonctionement
 require __DIR__ . '/../inc/init.inc.php';
-require __DIR__ . '/../Public/route.php';
 // control d'acces à l'aplication ADMIN
 if(!utilisateurEstAdmin()){
  	header('Location:'.LINK);
  	exit();	
 }
+require __DIR__ . '/../conf/route.php';
 
 // ajout du css admin
 $_linkCss[] = LINK . 'css/admin.css';

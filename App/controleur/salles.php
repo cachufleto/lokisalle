@@ -185,7 +185,7 @@ function backOff_editerSalles()
     $_trad = setTrad();
 
     // traitement du formulaire
-    include PARAMADM . 'editerSalles.param.php';
+    include PARAM . 'backOff_editerSalles.param.php';
     include FUNC . 'form.func.php';
 
     $msg = '';
@@ -329,7 +329,7 @@ function backOff_ficheSalles()
     $msg = '';
     $_trad = setTrad();
 
-    include PARAMADM . 'ficheSalles.param.php';
+    include PARAM . 'backOff_ficheSalles.param.php';
 
     include FUNC . 'form.func.php';
     if (!isset($_SESSION['user'])) {
