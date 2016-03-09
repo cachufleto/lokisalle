@@ -1,7 +1,7 @@
 <?php
-// Intertion des parametres de fonctionement
+// Insertion des parametres de fonctionement
 require __DIR__ . '/../inc/init.inc.php';
-
+require __DIR__ . '/../Public/route.php';
 // control d'acces à l'aplication ADMIN
 if(!utilisateurEstAdmin()){
  	header('Location:'.LINK);
@@ -17,16 +17,21 @@ if(file_exists($__link)){
 }
 
 /*************************************************************/
-$_link = siteHeader($_linkCss);
-$navPp = nav('navAdmin');
-
 ob_start();
-$__page = ADM . 'inc/' . $nav . '.inc.php';
+$nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 // insertion des pages dinamiques
-if(!file_exists($__page) ){
-	require INC . 'erreur.inc.php';
+if ($nav != 'erreur404'){
+	include_once CONTROLEUR . $route[$nav]['Controleur'];
+	$function = $route[$nav]['action'];
+	if (function_exists($function)){
+		$function();
+	} else {
+		include_once CONTROLEUR . $route['erreur404']['Controleur'];
+		$route['erreur404']['action']($nav);
+	}
 } else {
-	require $__page;
+	include_once CONTROLEUR . $route['erreur404']['Controleur'];
+	$route['erreur404']['action']('erreur404');
 }
 
 $contentPage = ob_get_contents();
@@ -45,6 +50,10 @@ if(DEBUG) {
 $debug = ob_get_contents();
 ob_end_clean();
 
+$_link = siteHeader($_linkCss);
+$navPp = nav('navAdmin');
+$nav = array_key_exists($nav, $route)? $nav : 'erreur404';
+
 $footer = footer();
 
-include TEMPLATE . 'template.html.php';
+include VUE . 'site/template.html.php';

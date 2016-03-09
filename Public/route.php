@@ -6,18 +6,18 @@
  * Time: 10:06
  *
  * la spécialisation des logiques
- * controleur.1 <- model.1
- * controleur.1 <- view.1
- * controleur.2 <- model.2 <- model.1
- * controleur.2 <- view.2 <- view.1
- * controleur.3 <- view.3
- * controleur.3 <- controleur.2 [<- model.2 <- model.1]
+ * Controleur.1 <- Model.1
+ * Controleur.1 <- view.1
+ * Controleur.2 <- Model.2 <- Model.1
+ * Controleur.2 <- view.2 <- view.1
+ * Controleur.3 <- view.3
+ * Controleur.3 <- Controleur.2 [<- Model.2 <- Model.1]
  *
  * ------- ROUTER ----------------
  *
  * Le routeur
  * utilise les information de la rute -> http
- * pour déterminer le controleur
+ * pour déterminer le Controleur
  * pour déterminer l'action
  *
  * -------- SUPER MODEL ----------
@@ -38,59 +38,72 @@
  */
 $route = array();
 
-$route['backoffice']['controleur'] = 'backoffice.inc.php';
+$route['backoffice']['Controleur'] = 'site.php';
 $route['backoffice']['action'] = 'backoffice';
 
-$route['cgv']['controleur'] = 'cgv.inc.php';
-$route['cgv']['action'] = 'cvg';
+$route['cgv']['Controleur'] = 'site.php';
+$route['cgv']['action'] = 'cgv';
 
-$route['changermotpasse']['controleur'] = 'changermotpasse.inc.php';
+$route['changermotpasse']['Controleur'] = 'users.php';
 $route['changermotpasse']['action'] = 'changermotpasse';
 
-$route['connection']['controleur'] = 'connection.inc.php';
+$route['connection']['Controleur'] = 'users.php';
 $route['connection']['action'] = 'connection';
 
-$route['contact']['controleur'] = 'contact.inc.php';
+$route['contact']['Controleur'] = 'site.php';
 $route['contact']['action'] = 'contact';
 
-$route['erreur404']['controleur'] = 'erreur404.inc.php';
+$route['erreur404']['Controleur'] = 'site.php';
 $route['erreur404']['action'] = 'erreur404';
 
-$route['fichesalles']['controleur'] = 'fichesalles.inc.php';
-$route['fichesalles']['action'] = 'fichesalles';
-
-$route['home']['controleur'] = 'home.inc.php';
+$route['ficheSalles']['Controleur'] = 'salles.php';
+$route['ficheSalles']['action'] = 'ficheSalles';
+if (utilisateurEstAdmin()){
+    $route['ficheSalles']['action'] = 'backOff_ficheSalles';
+}
+$route['home']['Controleur'] = 'site.php';
 $route['home']['action'] = 'home';
 
-$route['inscription']['controleur'] = 'inscription.inc.php';
+$route['inscription']['Controleur'] = 'users.php';
 $route['inscription']['action'] = 'inscription';
 
-$route['install']['controleur'] = 'install.inc.php';
+$route['install']['Controleur'] = 'site.php';
 $route['install']['action'] = 'install';
 
-$route['mentions']['controleur'] = 'mentions.inc.php';
+$route['mentions']['Controleur'] = 'site.php';
 $route['mentions']['action'] = 'mentions';
 
-$route['newsletter']['controleur'] = 'newsletter.inc.php';
+$route['newsletter']['Controleur'] = 'site.php';
 $route['newsletter']['action'] = 'newsletter';
 
-$route['plan']['controleur'] = 'plan.inc.php';
+$route['plan']['Controleur'] = 'site.php';
 $route['plan']['action'] = 'plan';
 
-$route['profil']['controleur'] = 'profil.inc.php';
+$route['profil']['Controleur'] = 'users.php';
 $route['profil']['action'] = 'profil';
 
-$route['recherche']['controleur'] = 'recherche.inc.php';
+$route['recherche']['Controleur'] = 'salles.php';
 $route['recherche']['action'] = 'recherche';
 
-$route['reservation']['controleur'] = 'reservation.inc.php';
+$route['reservation']['Controleur'] = 'salles.php';
 $route['reservation']['action'] = 'reservation';
 
-$route['salles']['controleur'] = 'salles.inc.php';
-$route['salles']['action'] = 'salles';
-
-$route['session']['controleur'] = 'session.inc.php';
+$route['session']['Controleur'] = 'site.php';
 $route['session']['action'] = 'session';
 
-$route['validerInscription']['controleur'] = 'validerInscription.inc.php';
+$route['validerInscription']['Controleur'] = 'users.php';
 $route['validerInscription']['action'] = 'validerInscription';
+
+$route['salles']['Controleur'] = 'salles.php';
+$route['salles']['action'] = 'salles';
+
+if (utilisateurEstAdmin()) {
+    $route['gestionSalles']['Controleur'] = 'salles.php';
+    $route['gestionSalles']['action'] = 'backOff_gestionSalles';
+
+    $route['editerSalles']['Controleur'] = 'salles.php';
+    $route['editerSalles']['action'] = 'backOff_editerSalles';
+
+    $route['users']['Controleur'] = 'users.php';
+    $route['users']['action'] = 'backOff_users';
+}

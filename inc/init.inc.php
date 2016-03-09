@@ -9,6 +9,7 @@ define("DEBUG", $debug);
 require PARAM . 'init.php';
 require FUNC . 'com.func.php';
 require FUNC . 'site.func.php';
+session();
 // chargement de la langue
 
 /************************************************************
@@ -21,7 +22,6 @@ if( !is_dir(TARGET) ) {
 }
 
 // gestion de session
-include INC . 'session.inc.php';
 include INC . 'install.inc.php';
 
 // options du menu de navigation

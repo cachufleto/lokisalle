@@ -18,7 +18,9 @@ define("INC", APP . 'inc/');
 define("FUNC", APP . 'func/');
 define("PARAM", APP . 'param/');
 define("PARAMADM", ADM . 'param/');
-define("TEMPLATE", APP . 'App/Vue/');
+define("CONTROLEUR", APP . 'App/Controleur/');
+define("MODEL", APP . 'App/Model/');
+define("VUE", APP . 'App/Vue/');
 define("LINK", 'http://' . (str_replace(REPADMIN, '', $_SERVER["HTTP_HOST"] . '/' . $___dossier . 'Public/')));
 define("LINKADMIN", str_replace('Public/', '' , LINK . REPADMIN));
 
