@@ -38,9 +38,6 @@
  */
 $route = array();
 
-$route['backoffice']['Controleur'] = 'site.php';
-$route['backoffice']['action'] = 'backoffice';
-
 $route['cgv']['Controleur'] = 'site.php';
 $route['cgv']['action'] = 'cgv';
 
@@ -58,9 +55,7 @@ $route['erreur404']['action'] = 'erreur404';
 
 $route['ficheSalles']['Controleur'] = 'salles.php';
 $route['ficheSalles']['action'] = 'ficheSalles';
-if (utilisateurEstAdmin()){
-    $route['ficheSalles']['action'] = 'backOff_ficheSalles';
-}
+
 $route['home']['Controleur'] = 'site.php';
 $route['home']['action'] = 'home';
 
@@ -98,6 +93,11 @@ $route['salles']['Controleur'] = 'salles.php';
 $route['salles']['action'] = 'salles';
 
 if (utilisateurEstAdmin()) {
+    $route['backoffice']['Controleur'] = 'site.php';
+    $route['backoffice']['action'] = 'backoffice';
+
+    $route['ficheSalles']['action'] = 'backOff_ficheSalles';
+
     $route['gestionSalles']['Controleur'] = 'salles.php';
     $route['gestionSalles']['action'] = 'backOff_gestionSalles';
 

@@ -184,14 +184,28 @@ function debugParam()
     _debug($_FILES, '_FILES');
     _debug($_COOKIE, '_COOKIE');
     _debug($_SERVER['CONTEXT_PREFIX'], 'CONTEXT_PREFIX');
-    _debug(RACINE_SERVER, 'RACINE_SERVER');
-    _debug(RACINE_SITE, 'RACINE_SITE');
-    _debug(APP, 'APP');
-    _debug(ADM, 'ADM');
-    _debug(INC, 'INC');
-    _debug(FUNC, 'FUNC');
-    _debug(RACINE_SERVER, 'RACINE_SERVER');
-    _debug(LINK, 'LINK');
+    _debug(
+        array(
+            'REPADMIN' => REPADMIN,
+            'RACINE_SERVER' => RACINE_SERVER,
+            'RACINE_SITE' => RACINE_SITE,
+            'APP' => APP,
+            'ADM' => ADM,
+            'INC' => INC,
+            'FUNC' => FUNC,
+            'CONF' => CONF,
+            'CONTROLEUR' => CONTROLEUR,
+            'PARAM' => PARAM,
+            'MODEL' => MODEL,
+            'VUE' => VUE,
+            'LINK' => LINK,
+            'LINKADMIN' => LINKADMIN,
+            'TARGET' => TARGET,
+            'MAX_SIZE' => MAX_SIZE,
+            'WIDTH_MAX' => WIDTH_MAX,
+            'HEIGHT_MAX' => HEIGHT_MAX,
+            'DEBUG' => DEBUG),
+        'CONSTANTES');
 }
 
 # Fonction debug()
@@ -243,6 +257,14 @@ function session()
     $_SESSION['lang'] = (isset($_COOKIE['Lokisalle']))? $_COOKIE['Lokisalle']['lang'] : $_SESSION['lang'];
     // changement de lang par le user
     $_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
+
+    if (utilisateurEstAdmin ()){
+        if (isset($_GET['nav']) && $_GET['nav'] == 'backoffice') {
+            $_SESSION['BO'] = TRUE;
+        } else if (isset($_GET['nav']) && $_GET['nav'] == 'home') {
+            $_SESSION['BO'] = FALSE;
+        }
+    }
 
     // définition des cookis
     setcookie( 'Lokisalle[lang]' , $_SESSION['lang'], time()+360000 );

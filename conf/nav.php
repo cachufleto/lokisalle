@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if(!defined('RACINE_SITE')) {
 	header('Location:../index.php');
 	exit();
@@ -15,43 +15,43 @@ $_pages['home'] = array(
 $_pages['detail'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['reservation'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['recherche'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['mdpperdu'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['inscription'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['mentions'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['cgv'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['plan'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['newsletter'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['contact'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['salles'] = array(
 		'link' => LINK,
 		'affiche' => false);
@@ -69,7 +69,7 @@ $_pages['validerIncription'] = array(
 $_pages['actif'] = array(
 		'link' => LINK,
 		'affiche' => false);
-		
+
 $_pages['out'] = array(
 		'link' => LINK,
 		'affiche' => false);
@@ -77,38 +77,38 @@ $_pages['out'] = array(
 $_pages['panier'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['mjprofil'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['profil'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 $_pages['ficheMembre'] = array(
 		'link' => LINK,
 		'affiche' => false);
-			
+
 /************   ADMIN    **************/
 
 $_pages['backoffice'] = array(
 		'link' => LINKADMIN,
 		'class' => 'admin',
 		'affiche' => false);
-			
+
 $_pages['boutique'] = array(
 		'link' => LINKADMIN,
 		'affiche' => false);
-			
+
 $_pages['users'] = array(
 		'link' => LINKADMIN,
 		'affiche' => false);
-			
+
 $_pages['ventes'] = array(
 		'link' => LINKADMIN,
 		'affiche' => false);
-			
+
 $_pages['gestionSalles'] = array(
 		'link' => LINKADMIN,
 		'affiche' => false);
@@ -133,17 +133,3 @@ $navAdmin = array('home', 'gestionSalles','users','ventes','out' );
 $navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
 
 
-////////////////////////////
-///// NAV //////////////////
-///////////////////////	/////
-// page de navigation
-$nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
-$nav = (array_key_exists($nav, $_pages))? $nav : 'erreur404';
-
-// REGLE D'orientation des pages actif et out ver connection
-if('actif' == $nav || 'out' == $nav) $nav = 'connection';
-
-// cas spécifique
-$nav = (!utilisateurEstAdmin() && $nav=='users')? 'home' : $nav;
-// page a inclure
-$__page = INC . $nav . '.inc.php';

@@ -10,11 +10,6 @@ require __DIR__ . '/../conf/route.php';
 
 // ajout du css admin
 $_linkCss[] = LINK . 'css/admin.css';
-// ajout du css de la page en cour
-$__link = APP . 'css/' . $nav . '.adm.css';
-if(file_exists($__link)){
-	$_linkCss[] = LINK . 'css/' . $nav . '.adm.css';
-}
 
 /*************************************************************/
 ob_start();

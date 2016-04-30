@@ -162,7 +162,7 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 	$message = '
      <html>
       <head>
-       <title> </title>
+       <title>Lokisalle::Inscription</title>
       </head>
       <body>
        <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerIncription&jeton='.

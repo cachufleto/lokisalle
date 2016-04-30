@@ -9,7 +9,7 @@ function inscription()
     include FUNC . 'form.func.php';
 
     // traitement POST du formulaire
-    $msg = $_trad['erreur']['inconueConnexion'];
+    $msg = '';
     if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
         $msg = ($_POST['valide'] == 'cookie') ? 'cookie' : inscriptionValider($_formulaire);
     }
@@ -254,7 +254,7 @@ function actifUser($_formulaire)
         // et re-dirigé ver l'accueil
         $_nav = 'index.php';
         if (utilisateurEstAdmin()){
-            $_nav = '../BacOff/index.php?nav=backoffice';
+            $_nav = 'index.php?nav=backoffice';
         }
         header('Location:'.$_nav);
         exit();

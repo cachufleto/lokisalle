@@ -1,6 +1,8 @@
 <?php
 // Insertion des parametres de fonctionement
-require __DIR__ . '/../inc/init.inc.php';
+include __DIR__ . '/../conf/constantes.php';
+
+require_once INC . 'init.inc.php';
 
 /*************************************************************/
 ob_start();
