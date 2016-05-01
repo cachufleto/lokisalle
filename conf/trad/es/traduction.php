@@ -64,7 +64,7 @@ $_trad['erreur']['extensionFichierEstIncorrecte'] = "La extencion del fichero no
 $_trad['erreur']['fichierUploaderNestPasUneImage'] = "El fichero no es una imagen !";
 $_trad['erreur']['inconueConnexion'] = "<span class='alert'>Un error se ha producido </span>";
 $_trad['erreur']['installData'] = "<span style='color:red'>ERROR FATAL!</span>";
-$_trad['erreur']['leRepertoireNePeutEtreCree'] = "ERROR : la carpeta de imagenes no puede ser creada !<br> Verifique si tiene los derechos suficientes para crearla manualmente !";
+$_trad['erreur']['leRepertoireNePeutEtreCree'] = "ERROR : la carpeta de imagenes no pudo ser creada !<br> Verifique si tiene los derechos suficientes para crearla manualmente !";
 $_trad['erreur']['minimumAphaNumerique'] = " Debe haber un minimo de ";
 $_trad['erreur']['nonVide'] = " Ne debe estar vacio ";
 $_trad['erreur']['NULL'] = $_trad['erreur']['inconueConnexion'] . "<br/>La informacion que solicita no existe!";
@@ -72,6 +72,7 @@ $_trad['erreur']['obligatoire'] = " es obligatorio ";
 $_trad['erreur']['problemeLorsUpload'] = "Problema en la subida del fichero !";
 $_trad['erreur']['pseudoIndisponble'] = " <span class='alert'>! Usuario indisponible !</span> ";
 $_trad['erreur']['queDesChiffres'] = " Solo se aceptan numeros";
+$_trad['erreur']['redirigeVerConnection'] = "<h2>Bienvenido al sito de Lokisalle</h2><p style='color:red'>" . $_trad['erreur']['NULL'] . "</p><p>Sera usted dirigido a la pagina de <a href='index.php?nav=actif'>conexion!</a>.</p>";
 $_trad['erreur']['surLe'] = " Error con ";
 $_trad['erreur']['uneErreurEstSurvenue'] = " A ocurrido un error en su coneccion!";
 $_trad['erreur']['veuillezDeRectifier'] = " Por favor rectifique ";

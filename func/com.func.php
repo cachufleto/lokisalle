@@ -187,8 +187,12 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 
 function setTrad(){
 
+	// on charge la langue de base
 	require CONF . 'trad/fr/traduction.php';
-	include CONF . 'trad/' . $_SESSION['lang'] . '/traduction.php';
+	// on surcharge la langue de l'utilisateur si different à celle de base
+	if ($_SESSION['lang'] != 'fr') {
+		include CONF . 'trad/' . $_SESSION['lang'] . '/traduction.php';
+	}
 
 	return $_trad;
 

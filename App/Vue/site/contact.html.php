@@ -7,16 +7,6 @@
             echo $fiche;
         }
         ?>
-        <?php
-        foreach($listConctact as $fiche){
-            echo $fiche;
-        }
-        ?>
-        <?php
-        foreach($listConctact as $fiche){
-            echo $fiche;
-        }
-        ?>
     </div>
     <hr />
 </principal>

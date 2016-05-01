@@ -72,6 +72,7 @@ $_trad['erreur']['obligatoire'] = " est obligatoire ";
 $_trad['erreur']['problemeLorsUpload'] = "Problème lors de l'upload !";
 $_trad['erreur']['pseudoIndisponble'] = " <span class='alert'>Pseudo indisponible !</span> ";
 $_trad['erreur']['queDesChiffres'] = " Il doit comptenir que des chiffres ";
+$_trad['erreur']['redirigeVerConnection'] = "<h2>Bienvenu Sur le site de Lokisalle</h2><p style='color:red'>" . $_trad['erreur']['NULL'] . "</p><p>Vous serait redirigé ver la page de <a href='index.php?nav=actif'>connexion!</a>.</p>";
 $_trad['erreur']['surLe'] = " Erreur sur ";
 $_trad['erreur']['uneErreurEstSurvenue'] = " Une erreur est survenue lors de votre connexion!";
 $_trad['erreur']['veuillezDeRectifier'] = " Merci de rectifier le ";
