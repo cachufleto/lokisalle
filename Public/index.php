@@ -39,7 +39,7 @@ $debug = ob_get_contents();
 ob_end_clean();
 
 $_link = siteHeader($_linkCss);
-$navPp = nav();
+$navPp = nav((utilisateurEstAdmin() && $_SESSION['BO'])? 'navAdmin' : '');
 $nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 
 $footer = footer();

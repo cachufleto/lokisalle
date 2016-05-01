@@ -165,7 +165,7 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
        <title>Lokisalle::Inscription</title>
       </head>
       <body>
-       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerIncription&jeton='.
+       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerInscription&jeton='.
 		$key . '">' . $_trad['valide'] . '</a></p>
       </body>
      </html>

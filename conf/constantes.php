@@ -27,7 +27,7 @@ define("MODEL", APP . 'App/Model/');
 //echo  $a, "MODEL ", MODEL;
 define("VUE", APP . 'App/Vue/');
 //echo  $a, "VUE ", VUE;
-define("LINK", 'http://' . $_SERVER['HTTP_HOST'] . '/');
+define("LINK", 'http://' . $_SERVER['SERVER_NAME'] . str_replace('\\', '', dirname($_SERVER['REQUEST_URI'].'#')) .'/');
 //echo  $a, "LINK ", LINK;
 define("LINKADMIN", LINK);
 //echo  $a, "LINKADMIN ", LINKADMIN;

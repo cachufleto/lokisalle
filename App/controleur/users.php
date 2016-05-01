@@ -33,7 +33,7 @@ function inscription()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function inscriptionValider($_formulaire)
+function inscriptionValider(&$_formulaire)
 {
 
     global $minLen;
@@ -608,7 +608,7 @@ function profil()
                 $_POST['valide'] == $_trad['Out'] &&
                 $_POST['origin'] != $_trad['defaut']['MiseAJ']
             ){
-                header('Location:?nav=home');
+                header('Location:?nav=users');
                 exit();
             } else {
                 unset($_formulaire['mdp']);
@@ -625,7 +625,7 @@ function profil()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function profilValider($_formulaire)
+function profilValider(&$_formulaire)
 {
     global $minLen;
 

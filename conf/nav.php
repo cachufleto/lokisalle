@@ -60,7 +60,7 @@ $_pages['ficheSalles'] = array(
 	'link' => LINK,
 	'affiche' => false);
 
-$_pages['validerIncription'] = array(
+$_pages['validerInscription'] = array(
 	'link' => LINK,
 	'affiche' => false);
 

@@ -8,4 +8,5 @@
 <!-- V 2.8.1 : liste des sales, insertion des nouvelles sales -->
 <!-- V 2.8.2 : Fiches de salles front -->
 <!-- V 2.20.1 : Page home -->
-V 2.20.1
+<!-- V 2.30.4 : Backoffice -->
+V 2.30.4

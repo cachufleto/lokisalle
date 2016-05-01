@@ -148,7 +148,7 @@ $_trad['titre']['recherche'] = "Resultado de la busqueda";
 $_trad['titre']['reservation'] = "Todas nuestras ofertas";
 $_trad['titre']['salles'] = "LOKISALLE"; 
 $_trad['titre']['users'] = "miembros";
-$_trad['titre']['validerIncription'] = "Validacion de inscripcion";
+$_trad['titre']['validerInscription'] = "Validacion de inscripcion";
 $_trad['titre']['ventes'] = "pedidos";
 
 /* trad pour les Valeurs des options BDD */

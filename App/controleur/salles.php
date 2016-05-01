@@ -212,7 +212,7 @@ function backOff_editerSalles()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function editerSallesValider($_formulaire)
+function editerSallesValider(&$_formulaire)
 {
 
     global $minLen;
@@ -394,7 +394,7 @@ function backOff_ficheSalles()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
-function ficheSallesValider($_formulaire)
+function ficheSallesValider(&$_formulaire)
 {
 
     global $minLen;

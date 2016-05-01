@@ -177,6 +177,7 @@ function testmail()
 
 function debugParam()
 {
+    global $route;
     _debug(get_included_files(), 'FILES INCLUDES');
     _debug($_SESSION, 'SESSION');
     _debug($_POST, 'POST');
@@ -206,6 +207,9 @@ function debugParam()
             'HEIGHT_MAX' => HEIGHT_MAX,
             'DEBUG' => DEBUG),
         'CONSTANTES');
+    _debug($_SERVER, 'SERVEUR');
+    _debug($route, 'Route');
+
 }
 
 # Fonction debug()
