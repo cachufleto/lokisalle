@@ -2,7 +2,7 @@
 		<h1><?php echo $_trad['titre']['connection']; ?></h1>
 <hr />
 <div id="formulaire">
-    <?php echo $msg; ?>
+    <p><?php echo $msg; ?></p>
     <form action="#" method="POST">
 	<?php echo $form; ?>
     </form>

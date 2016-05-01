@@ -75,6 +75,7 @@ $_trad['erreur']['queDesChiffres'] = " Solo se aceptan numeros";
 $_trad['erreur']['redirigeVerConnection'] = "<h2>Bienvenido al sito de Lokisalle</h2><p style='color:red'>" . $_trad['erreur']['NULL'] . "</p><p>Sera usted dirigido a la pagina de <a href='index.php?nav=actif'>conexion!</a>.</p>";
 $_trad['erreur']['surLe'] = " Error con ";
 $_trad['erreur']['uneErreurEstSurvenue'] = " A ocurrido un error en su coneccion!";
+$_trad['erreur']['validerMail'] = "Debe validar su inscripcion con le mail que se le ha enviado a la direccion ";
 $_trad['erreur']['veuillezDeRectifier'] = " Por favor rectifique ";
 $_trad['erreur']['veuillezRemplirFormulaire'] = "Por favor llene el formulario !";
 $_trad['erreur']['vousAvezOublieDeRectifier'] = " Ha olvidado rectificar ";

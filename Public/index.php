@@ -22,6 +22,8 @@ if ($nav != 'erreur404'){
 	$route['erreur404']['action']('erreur404');
 }
 
+_debug($route[$nav], 'Route pour: ' . $nav);
+
 $contentPage = ob_get_contents();
 ob_end_clean();
 
