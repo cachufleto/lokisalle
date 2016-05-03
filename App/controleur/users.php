@@ -1,10 +1,6 @@
 <?php
 function inscription()
 {
-    $nav = 'inscription';
-    $_trad = setTrad();
-
-
     include PARAM . 'inscription.param.php';
     include FUNC . 'form.func.php';
 
@@ -17,7 +13,7 @@ function inscription()
     // affichage des messages d'erreur
     if('OK' == $msg){
         // on renvoi ver connection
-        $form = '<a href="?index.php">SUITE</a>';
+        $form = '<a href="?index.php"> SUITE </a>';
 
     }else{
         // RECUPERATION du formulaire
@@ -105,7 +101,7 @@ function inscriptionValider(&$_formulaire)
                             if($membre->num_rows > 0)
                             {
                                 $erreur = true;
-                                $msg .= '<br/>' . $_trad['erreur']['emailexistant'];
+                                $_formulaire[$key]['message'] = '<br/>' . $_trad['erreur']['emailexistant'];
                             }
 
                         } else {
@@ -202,7 +198,7 @@ function inscriptionValider(&$_formulaire)
         $erreur = true;
         $_formulaire['telephone']['message'] =  $_trad['erreur']['controlTelephone'] ;
     }
-
+    _debug($_formulaire, __FUNCTION__);
     // si une erreur c'est produite
     if($erreur)
     {
@@ -242,7 +238,7 @@ function actifUser($_formulaire)
     }
 
     // traitement du formulaire
-    $msg = $_trad['erreur']['inconueConnexion'];
+    $msg = '';
     if (isset($_POST['valide']) && postCheck($_formulaire)) {
         $msg = ($_POST['valide'] == 'cookie') ? 'cookie' : connectionValider($_formulaire);
     }
@@ -259,17 +255,17 @@ function actifUser($_formulaire)
         header('Location:'.$_nav);
         exit();
     }
+    return $msg;
 }
 
 function connection()
 {
     $nav = 'connection';
-    $msg = '';
     $_trad = setTrad();
 
     include PARAM . 'connection.param.php';
 
-    actifUser($_formulaire);
+    $msg = actifUser($_formulaire);
 
     /////////////////////////////////////
     if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
@@ -443,7 +439,7 @@ function connectionValider($_formulaire)
     } else {
 
         // lançons une requete nommee membre dans la BD pour voir si un pseudo est bien saisi.
-        $sql = "SELECT mdp, id_membre, pseudo, statut, nom, prenom FROM membres WHERE $sql_Where ";
+        $sql = "SELECT mdp, id_membre, email, pseudo, statut, nom, prenom, active FROM membres WHERE $sql_Where ";
         $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
         // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
 
@@ -454,8 +450,12 @@ function connectionValider($_formulaire)
                 $_formulaire[$crypte]['sql'] = $session[$crypte];
                 if(hashDeCrypt($_formulaire[$crypte])){
                     // overture d'une session Membre
-                    ouvrirSession($session, $control);
-                    $msg = 'OK';
+                    if ($session['active'] == 1) {
+                        ouvrirSession($session, $control);
+                        $msg = 'OK';
+                    } else if ($session['active'] == 2){
+                        $msg .= $_trad['erreur']['validerMail'] . $session['email'];
+                    }
                     // on reinitialise les tentatives de connexion
                     unset($_SESSION['connexion']);
                 }
@@ -479,7 +479,6 @@ function connectionValider($_formulaire)
 
 function changermotpasse()
 {
-    $_trad = setTrad();
     include PARAM . 'changermotpasse.param.php';
 
     include FUNC . 'form.func.php';
@@ -817,34 +816,20 @@ function profilValider(&$_formulaire)
     return $msg;
 }
 
+
 function validerInscription(){
+
     header("refresh:5;url=index.php?nav=actif");
 
-    $_trad = setTrad();
-    echo $_trad['redirigeVerConnection'];
-    /**
-     * Created by PhpStorm.
-     * User: Domoquick
-     * Date: 22/02/2016
-     * Time: 00:01
-     */
+    $_jeton = false;
     if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
-
-        $sql = "SELECT * FROM membres, checkinscription WHERE membres.id_membre = checkinscription.id_membre
-            AND checkinscription.checkinscription = '" . $_GET['jeton'] . "'";
-        $incription = executeRequete($sql);
-
-        if ($incription->fetch_row()) {
-
-            $membre = $incription->fetch_row();
-
-            $sql = "UPDATE membres SET active = 1 WHERE id_membre = " . $membre['id_membre'] . ";";
-            $sql .= "DELETE FROM `checkinscription` WHERE id_membre = " . $membre['id_membre'] . ";";
-            executeMultiRequete($sql);
-
+        if ($membre = selecMembreJeton($_GET['jeton'])) {
+            $_jeton = updateMembreJeton($membre);
         }
     }
-    exit();
+
+    include VUE . 'users/validerInscription.tpl.php';
+
 }
 
 function backOff_users()

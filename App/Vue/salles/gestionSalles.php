@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <div class="container">
     <div class="">
         <h1><?php echo $_trad['titre']['gestionSalles']; ?></h1>

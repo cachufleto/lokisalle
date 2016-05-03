@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal id="erreur404">
 	<h1><?php echo $_trad['titre']['erreur404']; ?></h1>
 	<hr />

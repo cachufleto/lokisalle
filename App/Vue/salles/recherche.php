@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <form action="" method="POST">
     <?php
     echo $echoville;

@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal clas="validerInscription">
     <h1><?php echo $_trad['titre']['validerInscription']; ?></h1>
     <hr />

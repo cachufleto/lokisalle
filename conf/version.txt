@@ -9,4 +9,5 @@
 <!-- V 2.8.2 : Fiches de salles front -->
 <!-- V 2.20.1 : Page home -->
 <!-- V 2.30.4 : Backoffice -->
-V 2.30.4
+<!-- V 2:01/04 : Token -->
+V 2:01/04

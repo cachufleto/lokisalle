@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal clas="editerSalles">
     <h1><?php echo $_trad['titre']['editerSalles']; ?></h1>
     <hr />

@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal class="home">
     <h1><?php echo $_trad['titre']['home']; ?></h1>
     <hr />

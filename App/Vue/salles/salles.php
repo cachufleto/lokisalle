@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <div class="container">
 
     <div class="starter-template">

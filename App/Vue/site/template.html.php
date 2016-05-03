@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo $_SESSION['lang']; ?>">
 <head>

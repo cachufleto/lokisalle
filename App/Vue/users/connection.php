@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal clas="connection">
 		<h1><?php echo $_trad['titre']['connection']; ?></h1>
 <hr />

@@ -1,3 +1,4 @@
+<?php $_trad = setTrad(); ?>
 <principal class="backoffice">
     <h1><?php echo $_trad['titre']['backoffice']; ?></h1>
     <hr />
