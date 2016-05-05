@@ -125,7 +125,9 @@ function footer()
     return $info;
 }
 
-//Chargement des info supplementaires
+/**
+ * Chargement des info supplementaires
+ */
 function debugPhpInfo()
 {
     if (isset($_GET['info']) && $_GET['info'] == 'PHP') {
@@ -133,6 +135,9 @@ function debugPhpInfo()
     }
 }
 
+/**
+ *
+ */
 function debugTestMail()
 {
     if (isset($_GET['info']) && $_GET['info'] == 'mail') {
@@ -140,6 +145,9 @@ function debugTestMail()
     }
 }
 
+/**
+ *
+ */
 function debugCost()
 {
     if (isset($_GET['info']) && $_GET['info'] == 'crypter') {
@@ -147,6 +155,9 @@ function debugCost()
     }
 }
 
+/**
+ * Function pour l'option de hashage
+ */
 function cost()
 {
 // test ooption de hashage pour les mot de passe

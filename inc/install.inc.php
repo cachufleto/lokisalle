@@ -5,12 +5,13 @@ function install()
     if (isset($_GET['install']) && $_GET['install'] == 'BDD') {
 
         // initialisation des tables
-        echo "chargement du fichier shema.sql";
+        header("refresh:2;url=index.php");
+        echo "<p>chargement du fichier shema.sql.....</p>";
         $sql = file_get_contents(INC . '/SQL/shema.sql');
 
         if (isset($_GET['data'])) {
             // remplisage des tables
-            echo "<br>chargement du fichier data.sql";
+            echo "<p>Chargement du fichier data.sql....</p>";
             $sql .= file_get_contents(INC . '/SQL/data.sql');
         }
         // echo "<pre>$sql</pre>";

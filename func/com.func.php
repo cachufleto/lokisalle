@@ -40,7 +40,7 @@ function executeRequete($req)
 	if(!$resultat) {
 		die ('<span style="color:red">ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>' . $connexion->error . '<br />');
 	}
-
+	_debug($req, 'SQL REQUETTE');
 	// deconnectMysqli();
 	$connexion->close() or die ('<span style="color:red">ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>' . ${$connexion}->error . '<br />');
 	
@@ -58,6 +58,7 @@ function executeMultiRequete($req)
 	$_trad = setTrad();
 
 	$connexion = connectMysqli();
+	_debug($req, 'SQL Multi - REQUETTE');
 
 	if ($connexion->multi_query($req)) {
 

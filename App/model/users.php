@@ -12,13 +12,12 @@ function selecMembreJeton($jeton)
           WHERE membres.id_membre = checkinscription.id_membre
               AND checkinscription.checkinscription = '$jeton'";
 
-    $incription = executeRequete($sql);
+    $inscription = executeRequete($sql);
+    if ($inscription->field_count == 1) {
 
-    if ($incription->fetch_row()) {
+        $membre = $inscription->fetch_row();
 
-        $membre = $incription->fetch_row();
-
-        return $membre['id_membre'];
+        return $membre[0];
     }
 
     return false;

@@ -35,6 +35,7 @@ if(DEBUG) {
 	debugPhpInfo();
 	debugTestMail();
 	debugCost();
+	_debug($BDD, 'BASE');
 	debug($_debug);
 }
 $debug = ob_get_contents();

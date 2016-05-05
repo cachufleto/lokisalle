@@ -1,6 +1,9 @@
 <?php
+include_once MODEL . 'users.php';
+
 function inscription()
 {
+    $_trad = setTrad();
     include PARAM . 'inscription.param.php';
     include FUNC . 'form.func.php';
 
@@ -479,6 +482,7 @@ function connectionValider($_formulaire)
 
 function changermotpasse()
 {
+    $_trad = setTrad();
     include PARAM . 'changermotpasse.param.php';
 
     include FUNC . 'form.func.php';
@@ -849,7 +853,7 @@ function backOff_users()
     if (isset($_GET)) {
         if (!empty($_GET['delete']) && $_GET['delete'] != 1) {
 
-            $sql = "UPDATE membres SET active = 0 WHERE id_membre = " . $_GET['delete'];
+            $sql = "UPDATE membres SET active = 0, WHERE id_membre = " . $_GET['delete'];
             if ($_GET['delete'] != $_SESSION['user']['id']) {
                 executeRequete($sql);
             } else {
