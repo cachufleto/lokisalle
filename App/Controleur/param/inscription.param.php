@@ -10,12 +10,14 @@ $_formulaire['pseudo'] = array(
 	'defaut' => $_trad['champ']['pseudo'],
 	'obligatoire' => true);
 	
+/*
 $_formulaire['mdp'] = array(
 	'type' => 'password',
 	'maxlength' => 14,
 	'defaut' => $_trad['defaut']['MotPasse'],
 	'obligatoire' => true,
 	'rectification' => true);
+*/
 
 $_formulaire['nom'] = array(
 	'type' => 'text',

@@ -207,45 +207,46 @@ function postValide(&$_formulaire, $mod=FALSE)
 
 				$valeur1 = $_POST[$key];
 				$valeur2 = $_POST[$key.'2'];
-				
+
 				// actions pour la modification
-				if(testObligatoire($info) && empty($valeur1)){
+				if (testObligatoire($info) && empty($valeur1)){
 
 					$ok = false;
 					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['champ'][$key] . $_trad['erreur']['obligatoire'];
 					$valide = '';
 
-				}elseif(empty($valeur1) XOR empty($valeur2)){
+				} else if (empty($valeur1) XOR empty($valeur2)){
 
 					// l'un des deux champs est remplie
 					$ok = false;
 					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad[$key];
 					$valide = '';
-				
-				}elseif($valeur1 != $valeur2){
+
+				} else if ($valeur1 != $valeur2){
 
 					// les deux valeurs sont differents
 					$ok = false;
 					$_formulaire[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
 					$msg .= $_trad['erreur']['vousAvezUneErreurDans'] . $_trad['champ'][$key];
 					$valide = '';
-				
+
 				}
-					
+
 			}
-			
+
 			$_formulaire[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
-		
-		}elseif($info['type'] == 'file'){
-			if(isset($_FILES[$key]))
+
+		} else if ($info['type'] == 'file'){
+			if (isset($_FILES[$key])){
 				$_formulaire[$key]['valide'] = $_FILES[$key]['name'];
-		}elseif($info['type'] == 'checkbox'){
+			}
+		} else if ($info['type'] == 'checkbox'){
 			
 			$ok = testObligatoire($info)? false : $ok;
 
-		}elseif(!$mod && $key != 'valide'){
+		} else if (!$mod && $key != 'valide'){
 
 			// si le champs n'est pas présent dans POST
 			$ok = false;

@@ -89,6 +89,9 @@ $route['session']['action'] = 'session';
 $route['validerInscription']['Controleur'] = 'users.php';
 $route['validerInscription']['action'] = 'validerInscription';
 
+$route['identifians']['Controleur'] = 'users.php';
+$route['identifians']['action'] = 'identifians';
+
 $route['salles']['Controleur'] = 'salles.php';
 $route['salles']['action'] = 'salles';
 

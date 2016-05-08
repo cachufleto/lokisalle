@@ -64,6 +64,10 @@ $_pages['validerInscription'] = array(
 	'link' => LINK,
 	'affiche' => false);
 
+$_pages['identifians'] = array(
+	'link' => LINK,
+	'affiche' => false);
+
 /************   MEMBRE    **************/
 
 $_pages['actif'] = array(

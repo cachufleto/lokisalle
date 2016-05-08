@@ -12,7 +12,7 @@ $_modifier = (isset($_POST['valide']) && $_POST['valide'] == $_trad['defaut']['m
 // validation du formaulare
 $_valider = (isset($_POST['valide']) && $_POST['valide'] == $_trad['defaut']['MiseAJ'])? true : false;
 
-unset($_formulaire['mdp']['rectification']);
+//unset($_formulaire['mdp']['rectification']);
 unset($_formulaire['email']['rectification']);
 
 // interdir une balise pour modification
@@ -23,7 +23,7 @@ $_formulaire['id_membre'] = array(
 	'acces' => 'private',
 	'defaut' => $_id);
 
-$_formulaire['mdp']['acces'] = 'private';
+//$_formulaire['mdp']['acces'] = 'private';
 
 // affichage du boutton de validation
 $_formulaire['valide']['defaut'] = $_trad['defaut']['modifier'];
