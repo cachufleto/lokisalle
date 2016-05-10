@@ -14,7 +14,7 @@ function home()
     }
     $dernieresOffres .= '</div>';
 
-    include VUE . 'site/home.php';
+    include VUE . 'site/home.tpl.php';
 }
 
 function dernieresOffres($salle)
@@ -45,7 +45,7 @@ function backoffice()
     $activite = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' : 'Activité';
     $dernieresOffres = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' :  'Derniéres Offres';
 
-    include VUE . 'site/backoffice.php';
+    include VUE . 'site/backoffice.tpl.php';
 
 }
 
@@ -75,7 +75,7 @@ function userSelectContactAll()
 
 function mentions()
 {
-    include VUE . 'site/mentions.php';
+    include VUE . 'site/mentions.tpl.php';
 }
 
 function cgv()
@@ -91,7 +91,7 @@ function erreur404($nav)
         $_trad['erreur']['erreur404'] :
         $_trad['enConstruccion'];
 
-    include VUE . 'site/erreur404.php';
+    include VUE . 'site/erreur404.tpl.php';
 }
 
 

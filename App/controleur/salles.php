@@ -46,7 +46,7 @@ function salles()
         $position++;
     }
 
-    include VUE . 'salles/salles.php';
+    include VUE . 'salles/salles.tpl.php';
 }
 
 function reservation()
@@ -89,7 +89,7 @@ function recherche()
     $echocategorie = listeDistinc('categorie', 'salles', array('valide'=>'R'));
     $echocapacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
 
-    include VUE . 'salles/recherche.php';
+    include VUE . 'salles/recherche.tpl.php';
 }
 
 function ficheSalles()
@@ -111,7 +111,7 @@ function ficheSalles()
         exit();
     }
 
-    include VUE . 'salles/ficheSalles.php';
+    include VUE . 'salles/ficheSalles.tpl.php';
 }
 
 function backOff_gestionSalles()
@@ -171,7 +171,7 @@ function backOff_gestionSalles()
         # code...
     }
 
-    include VUE . 'salles/gestionSalles.php';
+    include VUE . 'salles/gestionSalles.tpl.php';
 }
 
 function backOff_editerSalles()
@@ -204,7 +204,7 @@ function backOff_editerSalles()
     } else {
         // RECUPERATION du formulaire
         $form = formulaireAfficher($_formulaire);
-        include VUE . 'salles/editerSalles.php';
+        include VUE . 'salles/editerSalles.tpl.php';
     }
 }
 
@@ -387,7 +387,7 @@ function backOff_ficheSalles()
 
     }
 
-    include VUE . 'salles/ficheSalles.php';
+    include VUE . 'salles/ficheSalles.tpl.php';
 }
 
 # Fonction ficheSallesValider()
