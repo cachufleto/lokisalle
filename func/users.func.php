@@ -4,6 +4,96 @@
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
+
+function mdpValider(&$_formulaire)
+{
+
+    global $minLen;
+    $_trad = setTrad();
+
+    $msg = '';
+    $erreur = false;
+    $sql_Where = '';
+    $control = true;
+    $message ='';
+
+    foreach ($_formulaire as $key => $info){
+
+        $label = $_trad['champ'][$key];
+        $valeur = (isset($info['valide']))? $info['valide'] : NULL;
+        $obligatoire = (!empty($info['obligatoire']))? true : false ;
+
+        if('valide' != $key)
+            if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']))
+            {
+
+                $erreur = true;
+                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] .$label.
+                    ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
+                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
+
+            } elseif (testObligatoire($info) && empty($valeur)){
+
+                $erreur = true;
+                $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
+
+            } else {
+
+                switch($key){
+                    case 'mdp':
+                        $crypte = $key;
+                        break;
+                }
+                // Construction de la requettes
+            }
+    }
+
+    if($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+    {  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
+
+        $msg .= '<br />'.$_trad['erreur']['uneErreurEstSurvenue'];
+
+    } else {
+
+        // lançons une requete nommee membre dans la BD pour voir si un pseudo est bien saisi.
+        $sql = "SELECT id_membre FROM membres WHERE jeton = '" . $_formulaire['jeton']['valde'] . "'";
+        $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
+        // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
+        var_dump($membre);
+        /*if($membre->num_rows === 1) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
+        {
+            $session = $membre->fetch_assoc();
+            if(isset($crypte)){
+                $_formulaire[$crypte]['sql'] = $session[$crypte];
+                if(hashDeCrypt($_formulaire[$crypte])){
+                    // overture d'une session Membre
+                    if ($session['active'] == 1) {
+                        ouvrirSession($session, $control);
+                        $msg = 'OK';
+                    } else if ($session['active'] == 2){
+                        $msg .= $_trad['erreur']['validerMail'] . $session['email'];
+                    }
+                    // on reinitialise les tentatives de connexion
+                    unset($_SESSION['connexion']);
+                }
+            }
+
+
+        } elseif($membre->num_rows == 0) {
+            $msg .= '<br/ >'. $_trad['erreur']['erreurConnexion'];
+            $_SESSION['connexion'] -= 1;
+
+        } else {
+
+            $msg .= '<br />'. $_trad['erreur']['inconueConnexion'];
+
+        } */
+
+
+    }
+    return $msg;
+}
+
 function inscriptionValider(&$_formulaire)
 {
 
@@ -193,7 +283,7 @@ function inscriptionValider(&$_formulaire)
 			VALUES ( (SELECT id_membre FROM membres WHERE email = '$email'), '$checkinscription')";
 
         if(executeRequete($sql)){
-            $msg = (envoiMail($checkinscription, $email))? "OK" : $msg;
+            $msg = (envoiMailInscrition($checkinscription, $email))? "OK" : $msg;
         }
 
     }
@@ -380,8 +470,8 @@ function usersChangerMotPasse()
             if (isset($info['maxlength']) && (strlen($valeur) < $minLen  || strlen($valeur) > $info['maxlength']))
             {
 
-                $message.= '<div class="bg-danger message"> <p> Erreur sur le ' .$label.
-                    ': doit avoir un nombre de caracter compris entre ' . $minLen .
+                $message.= '<div class="bg-danger message"> <p> Erreur ' .$label.
+                    ': ' . $_trad['erreur']['doitAvoirNombreCaracterComprisEntre'] . ' ' . $minLen .
                     ' et ' . $info['maxlength'] . ' </p></div>';
 
             } else {
@@ -395,8 +485,8 @@ function usersChangerMotPasse()
                         $verif_caractere = preg_match('#^[a-zA-Z0-9._-]+$#', $valeur );
                         if (!$verif_caractere  && !empty($valeur))
                         {
-                            $message.= '<div class="bg-danger message"> <p> Erreur sur le ' .$label.
-                                ', Caractere acceptés: A à Z et 0 à 9 </p></div>';
+                            $message.= '<div class="bg-danger message"> <p>' . $_trad['erreur']['surLe'] . ' ' .$label.
+                                ', ' . $_trad['erreur']['aphanumeriqueSansSpace'] . ' </p></div>';
                             // un message sans ecresser les messages existant avant. On place dans $msg des chaines de caracteres
                         }
                         break;
@@ -408,7 +498,7 @@ function usersChangerMotPasse()
 
     if (empty($message)) // si la variable $msg est vide alors il n'y a pas d'erreurr !
     {
-        if ($membre = usersSelectChangerMotPasse($sql_Where))
+        if ($membre = usersSelectWhere($sql_Where))
         {
             if (isset($crypte) && hashDeCrypt($_formulaire[$crypte])){
                 $_formulaire[$crypte]['sql'] = $membre[$crypte];
@@ -419,20 +509,68 @@ function usersChangerMotPasse()
                 }
             }
         } else {
-            $message .= '<div class="bg-danger message"> <p>Une erreur est survenue ! </p>';
+            $message .= '<div class="bg-danger message"> <p>' . $_trad['erreur']['inconueConnexion'] . '! </p>';
         }
     }
 
     return $message;
 }
 
-/**
- * @param $sql_Where
- * @return bool
- */
-function usersSelectChangerMotPasse($sql_Where)
+function envoiMailInscrition($key)
 {
-    $sql = "SELECT id_membre FROM membres WHERE $sql_Where;";
-    return executeRequete($sql);
+    $_trad = setTrad();
+    // message
+    $message = '
+     <html>
+      <head>
+       <title>Lokisalle::Inscription</title>
+      </head>
+      <body>
+       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerInscription&jeton='.
+        $key . '">' . $_trad['valide'] . '</a></p>
+      </body>
+     </html>
+     ';
+
+    envoiMail($message);
 }
 
+function userMDP()
+{
+    $_trad = setTrad();
+    include PARAM . 'validerInscription.param.php';
+    include FUNC . 'form.func.php';
+
+    $msg = '';
+    $_jeton = false;
+    if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
+        if ($id_membre = selecMembreJeton($_GET['jeton'])) {
+
+                $_formulaire['membre']['defaut'] = $id_membre;
+                $_formulaire['jeton']['defaut'] = $_GET['jeton'];
+
+                if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
+                    $msg = mdpValider($_formulaire);
+                }
+
+                // affichage des messages d'erreur
+                if ('OK' == $msg) {
+
+                    header("refresh:5;url=index.php?nav=actif");
+                    $_jeton = updateMembreJeton($id_membre);
+
+                } else {
+                    // RECUPERATION du formulaire
+                    $form = '
+                    <form action="#" method="POST">
+                    ' . formulaireAfficher($_formulaire) . '
+                    </form>';
+                }
+
+
+        }
+    }
+
+    include VUE . 'users/userMDP.tpl.php';
+
+}

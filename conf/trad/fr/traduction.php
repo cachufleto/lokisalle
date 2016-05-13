@@ -45,6 +45,7 @@ $_trad['defaut']['telephone'] = "01 89 76 43 21";
 $_trad['defaut']['ville'] = "Mont...";
 
 /* trad des messages d'erreurs dans les formulaires */
+$_trad['erreur']['erreur'] = " Erreur ";
 $_trad['erreur']['acces'] = " <span class='alert'>Désoles Vous avez épuisée vos tentatives de connexion authorises<br>Veuillez quiter votre navigateur et venir plus tard !</span>";
 $_trad['erreur']['aphanumeriqueSansSpace'] = " Caractere acceptés: A à Z et 0 à 9 sans espaces ";
 $_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>";
@@ -53,6 +54,7 @@ $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:
 $_trad['erreur']['caracteres'] = " caracteres ";
 $_trad['erreur']['controlTelephone'] = " Au moins un N° de téléphone doit être renseigné ";
 $_trad['erreur']['corrigerErreurDans'] = " Merci de rectifier ";
+$_trad['erreur']['doitAvoirNombreCaracterComprisEntre'] = " doit avoir un nombre de caracter compris entre ";
 $_trad['erreur']['doitContenir'] = " doit contenir ";
 $_trad['erreur']['doitContenirEntre'] = " doit contenir entre ";
 $_trad['erreur']['emailexistant'] = " <span class='alert'>Ce mail existe déjàs !</span>";

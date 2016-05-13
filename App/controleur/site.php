@@ -1,12 +1,13 @@
 <?php
+include_once MODEL . 'site.php';
+include_once FUNC . 'site.func.php';
 function home()
 {
 
     $nav = 'home';
     $_trad = setTrad();
 
-    $sql = "SELECT * FROM salles";
-    $salles = executeRequete($sql);
+    $salles = selectSallesActive();
 
     $dernieresOffres = '<div>';
     while($salle = $salles->fetch_assoc()){
@@ -63,14 +64,6 @@ function contact()
     }
 
     include VUE . 'site/contact.html.php';
-}
-/**
- * @return bool|mysqli_result
- */
-function userSelectContactAll()
-{
-    $sql = "SELECT * FROM membres WHERE statut != 'MEM';";
-    return executeRequete($sql);
 }
 
 function mentions()

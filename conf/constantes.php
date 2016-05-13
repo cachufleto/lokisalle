@@ -1,7 +1,6 @@
 <?php
 /* résoudre le problême des alias */
 //déclaration de constante pour la racine serveur
-$a = '<br>';
 
 define("REPADMIN", 'BacOff/');
 //echo  $a, "REPADMIN ", REPADMIN;

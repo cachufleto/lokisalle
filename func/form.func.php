@@ -20,7 +20,6 @@ function postCheck(&$_formulaire, $mod=FALSE)
 # RETURN string du formulaire
 function formulaireAfficher($_form)
 {
-	
 
 	$_trad = setTrad();
 	//global $_formIncription;
@@ -149,34 +148,6 @@ function typeForm($champ, $info)
 	}
 }
 
-# Fonction testADMunique()
-# Control des informations Postées
-# $info tableau des items validées du formulaire
-# RETURN boolean
-
-function testADMunique($statut, $id_membre)
-{
-
-
-	if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
-		{
-		
-		// interdiction de modifier le statut pour le super administrateur
-		if($id_membre == 1) return true; 
-
-		// interdiccion de modifier le statut pour un admin si il est le seule;
-		// Le super administrateur peut inhabiliter tout le monde
-		$sql = "SELECT COUNT(statut) as 'ADM' FROM membres WHERE statut = 'ADM' ". (!isSuperAdmin()? " AND id_membre != 1 " : "" );
-		$ADM = executeRequete($sql);
-		$num = $ADM->fetch_assoc();
-		
-		// si la requete retourne un enregistrement, c'est qu'il est el seul admin.
-		if($num['ADM'] == 1)  return true;
-	}
-	return false;
-
-}
-
 # Fonction postValide()
 # Control des informations Postées
 # convertion avec htmlentities
@@ -186,8 +157,6 @@ function testADMunique($statut, $id_membre)
 # RETURN string message d'alerte
 function postValide(&$_formulaire, $mod=FALSE)
 {
-
-	
 	global $msg;
 	$_trad = setTrad();
 
@@ -267,8 +236,6 @@ function postValide(&$_formulaire, $mod=FALSE)
 # RETURN string
 function radioCheck($info, $value)
 {
-
-
 	// info['valide'] => valeur du formulaire
 	return (!empty($info['valide']) && $info['valide'] == $value)? true : false;
 
@@ -281,8 +248,6 @@ function radioCheck($info, $value)
 # RETURN string
 function selectCheck($info, $value)
 {
-
-
 	// info['valide'] => valeur du formulaire
 	return (!empty($info['valide']) && $info['valide'] == $value)? 'selected="selected"' : '';
 
@@ -294,8 +259,6 @@ function selectCheck($info, $value)
 # RETURN Boolean
 function testNumerique($valeur)
 {
-
-
 	return preg_match('#[a-zA-Z.\s.-]#', $valeur);
 
 }
@@ -306,8 +269,6 @@ function testNumerique($valeur)
 # RETURN Boolean
 function testAlphaNumerique($valeur)
 {
-
-		
 	return preg_match('#^[a-zA-Z0-9._-]+$#', $valeur );
 
 }
@@ -318,8 +279,6 @@ function testAlphaNumerique($valeur)
 # RETURN Boolean
 function testFormatMail($valeur)
 {
-
-		
 	return filter_var($valeur, FILTER_VALIDATE_EMAIL);
 
 }
@@ -330,8 +289,6 @@ function testFormatMail($valeur)
 # RETURN Boolean
 function testObligatoire($info)
 {
-
-	
 	return isset($info['obligatoire'])? $info['obligatoire'] : false;			
 
 }
@@ -344,8 +301,6 @@ function testObligatoire($info)
 # RETURN Boolean true si authorizé
 function testLongeurChaine($valeur, $maxLen=250)
 {
-
-	
 	global $minLen;
 	
 	$taille = strlen($valeur);
@@ -354,42 +309,12 @@ function testLongeurChaine($valeur, $maxLen=250)
 
 }
 
-# Fonction modCheck() 
-# Control des informations Postées
-# convertion avec htmlentities
-# $nomFormulaire => string nom du tableau
-# RETURN string alerte
-function modCheck(&$_formulaire, $_id, $table)
-{
-	$form = $_formulaire;
-	$message = '';
-	
-	$sql_membres = "SELECT * FROM membres WHERE id_membre = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
-	$sql_salles = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
-
-	$data = executeRequete(${'sql_'.$table}) or die (${'sql_'.$table});
-	$user = $data->fetch_assoc();
-	
-	if($data->num_rows < 1) return false;
-
-	foreach($form as $key => $info){
-		if($key != 'valide' && key_exists ( $key , $user )){
-			$_formulaire[$key]['valide'] = $user[$key];
-			$_formulaire[$key]['sql'] = $user[$key];
-		}
-	}
-
-	return true;
-}
-
-
 # Fonction formulaireAfficherInfo()
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
 # RETURN string du formulaire
 function formulaireAfficherInfo($_form)
 {
-
 	$_trad = setTrad();
 	//global $_formIncription;
 	$formulaire = '';

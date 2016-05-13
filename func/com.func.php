@@ -156,21 +156,9 @@ function utilisateurEstConnecte()
 }
 
 
-function envoiMail($key, $to = 'carlos.paz@free.fr')
+function envoiMail($message, $to = WEBMAIL)
 {
 	$_trad = setTrad();
-	// message
-	$message = '
-     <html>
-      <head>
-       <title>Lokisalle::Inscription</title>
-      </head>
-      <body>
-       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerInscription&jeton='.
-		$key . '">' . $_trad['valide'] . '</a></p>
-      </body>
-     </html>
-     ';
 
 	// Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -178,7 +166,7 @@ function envoiMail($key, $to = 'carlos.paz@free.fr')
 
 	// En-têtes additionnels
 	$headers .= 'To: ' . $to . "\r\n";
-	$headers .= 'From: ' . $_trad['inscriptionLokisalle'] . ' <webmaster@lokisalle.domoquick.fr>' . "\r\n";
+	$headers .= 'From: ' . $_trad['inscriptionLokisalle'] . ' <' . SITEMAIL . '>' . "\r\n";
 	$headers .= 'Reply-To: carlos.dupriez@gmail.com' . "\r\n";
 	$headers .=  'X-Mailer: PHP/' . phpversion();
 

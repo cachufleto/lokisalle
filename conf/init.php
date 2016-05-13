@@ -7,6 +7,8 @@ if(!defined('RACINE_SITE')) {
 //	error_reporting(E_ALL);
 //	ini_set("display_errors", 1);
 
+define("WEBMAIL", 'carlos.paz@free.fr');
+define("SITEMAIL", 'webmaster@lokisalle.domoquick.fr');
 
 ////////////////////////////
 ///// VAR //////////////////

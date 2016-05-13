@@ -1,5 +1,6 @@
 <?php
 include_once FUNC . 'users.func.php';
+include_once MODEL . 'users.php';
 
 function inscription()
 {
@@ -51,7 +52,6 @@ function connection()
     include VUE . 'users/connection.tpl.php';
 }
 
-
 function backOff_users()
 {
     $msg = '';
@@ -97,12 +97,7 @@ function backOff_users()
 
     if (isSuperAdmin()) {
 
-// selection de tout les users sauffe le super-ADMIN
-        $sql = "SELECT m.id_membre, m.pseudo, m.nom, m.prenom, m.email, m.statut, m.active
-        FROM membres m, checkinscription c
-        WHERE m.active = 2 AND m.id_membre = c.id_membre
-        ORDER BY m.nom, m.prenom";
-        $membres = executeRequete($sql);
+        $membres = usersMoinsAdmin();
 
         if ($membres->num_rows > 0) {
             while ($data = $membres->fetch_assoc()) {
@@ -118,10 +113,7 @@ function backOff_users()
         }
     }
 
-    $sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active
-        FROM membres  WHERE " . (!isSuperAdmin() ? "id_membre != 1 AND active == 1 " : "active != 2") . "
-        ORDER BY nom, prenom";
-    $membres = executeRequete($sql);
+    $membres = slectUsersActive();
 
     while ($data = $membres->fetch_assoc()) {
 
@@ -138,7 +130,6 @@ function backOff_users()
     include VUE . 'users/users.tpl.php';
 }
 
-
 function profil()
 {
     $nav = 'profil';
@@ -154,7 +145,7 @@ function profil()
     }
     // extraction des données SQL
     $msg = '';
-    if (modCheck($_formulaire, $_id, 'membres')) {
+    if (modCheckMembres($_formulaire, $_id, 'membres')) {
         // traitement POST du formulaire
         if ($_valider){
             $msg = $_trad['erreur']['inconueConnexion'];
@@ -251,8 +242,7 @@ function profilValider(&$_formulaire)
 
                         if (testFormatMail($valeur)) {
 
-                            $sql = "SELECT email FROM membres WHERE id_membre != ". $_formulaire['id_membre']['sql'] ." and email='$valeur'";
-                            $membre = executeRequete($sql);
+                            $membre = selectMailUser($_formulaire['id_membre']['sql'], $valeur);
 
                             // si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
                             if($membre->num_rows > 0)
@@ -404,7 +394,6 @@ function changermotpasse()
 {
     $_trad = setTrad();
     include PARAM . 'changermotpasse.param.php';
-
     include FUNC . 'form.func.php';
 
     $msg = usersChangerMotPasse();
@@ -416,16 +405,15 @@ function changermotpasse()
 
 function validerInscription()
 {
-
-    header("refresh:5;url=index.php?nav=actif");
-
-    $_jeton = false;
     if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
-        if ($membre = selecMembreJeton($_GET['jeton'])) {
-            $_jeton = updateMembreJeton($membre);
-        }
+        userMDP();
     }
-
-    include VUE . 'users/validerInscription.tpl.php';
-
 }
+
+function newMDP()
+{
+    if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
+        userMDP();
+    }
+}
+

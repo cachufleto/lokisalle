@@ -21,8 +21,8 @@
  * pour déterminer l'action
  *
  * -------- SUPER MODEL ----------
- * partage des des information configuration, paramettres, environnement
- * partage des des methodes acces BDD, valeurs des configuration ...
+ * partage des information configuration, paramettres, environnement
+ * partage des methodes acces BDD, valeurs des configuration ...
  *
  * SUPER CONTROLER <- SUPER MODEL
  * SUPER CONTROLER <- SUPER MODEL <- fichier conf

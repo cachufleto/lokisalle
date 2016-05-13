@@ -1,4 +1,7 @@
 <?php
+include_once MODEL . 'salles.php';
+include_once FUNC . 'salles.func.php';
+
 function salles()
 {
     $nav = 'salles';
@@ -13,11 +16,6 @@ function salles()
         }
     }
 
-    // selection de tout les users sauffe le super-ADMIN
-    $sql = "SELECT id_salle, titre, capacite, categorie, photo, active
-            FROM salles " . (!isSuperAdmin()? " WHERE active != 0 " : "") . "
-            ORDER BY cp, titre";
-    $membres = executeRequete($sql);
     $table = '';
 
     $table .= '<tr><th>' . $_trad['champ']['id_salle'] . '</th>
@@ -30,6 +28,7 @@ function salles()
     $table .= '</th></tr>';
 
     $position = 1;
+    $membres = selectSalles();
     while ($data = $membres->fetch_assoc()) {
 
         $table .= '
@@ -60,34 +59,12 @@ function reservation()
     }
 }
 
-function listeDistinc($champ, $table, $info)
-{
-
-    $_trad = setTrad();
-
-    $sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
-    $result = executeRequete($sql);
-
-    $balise = '<select class=" " id="' . $champ . '" name="' . $champ . '">';
-
-    while($data = $result->fetch_assoc()){
-        $value = $data[$champ];
-        $libelle = (isset($_trad['value'][$value]))? $_trad['value'][$value] : $value;
-        $check = selectCheck($info, $value);
-        $balise .= '<option value="' .  $value . '" ' . $check . ' >'.$libelle.'</option>';
-    }
-    // Balise par defaut
-    $balise .= '</select>';
-
-    return $balise;
-}
-
 function recherche()
 {
     include FUNC . 'form.func.php';
-    $echoville = listeDistinc('ville', 'salles', array('valide'=>'tokyo'));
-    $echocategorie = listeDistinc('categorie', 'salles', array('valide'=>'R'));
-    $echocapacite = listeDistinc('capacite', 'salles', array('valide'=>'56'));
+    $echoville = ListeDistinc('ville', 'salles', array('valide'=>'tokyo'));
+    $echocategorie = ListeDistinc('categorie', 'salles', array('valide'=>'R'));
+    $echocapacite = ListeDistinc('capacite', 'salles', array('valide'=>'56'));
 
     include VUE . 'salles/recherche.tpl.php';
 }
@@ -97,12 +74,14 @@ function ficheSalles()
     $nav = 'ficheSalles';
     $_trad = setTrad();
     $msg = '';
+    $_id = (int)(isset($_GET['id'])? $_GET['id'] : false);
+    $position = (int)(isset($_GET['pos'])? $_GET['pos'] : 1);
 
     include PARAM . 'ficheSalles.param.php';
     // on cherche la fiche dans la BDD
     // extraction des données SQL
     include FUNC . 'form.func.php';
-    if (modCheck($_formulaire, $_id, 'salles')) {
+    if (modCheckSalles($_formulaire, $_id, 'salles')) {
         // traitement POST du formulaire
         $form = formulaireAfficherInfo($_formulaire);
         $form .= '<a href="?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
@@ -143,9 +122,6 @@ function backOff_gestionSalles()
 
     }
 
-// selection de tout les users sauffe le super-ADMIN
-    $sql = "SELECT id_salle, titre, capacite, categorie, photo, active FROM salles " . (!isSuperAdmin() ? " WHERE active != 0 " : "") . " ORDER BY cp, titre";
-    $membres = executeRequete($sql);
     $table = '';
 
     $table .= "<tr><th>" . $_trad['champ']['id_salle'] . "</th><th>" . $_trad['champ']['titre'] . "</th><th>" . $_trad['champ']['capacite'] . "</th>
@@ -155,6 +131,7 @@ function backOff_gestionSalles()
     $table .= "</th></tr>";
 
     $position = 1;
+    $membres = selectSallesUsers();
     while ($data = $membres->fetch_assoc()) {
 
         $table .= '
@@ -339,7 +316,7 @@ function backOff_ficheSalles()
 
     // extraction des données SQL
     $form = $msg = '';
-    if (modCheck($_formulaire, $_id, 'salles')) {
+    if (modCheckSalles($_formulaire, $_id, 'salles')) {
 
         // traitement POST du formulaire
         if ($_valider){
@@ -526,3 +503,4 @@ function ficheSallesValider(&$_formulaire)
 
     return $msg;
 }
+

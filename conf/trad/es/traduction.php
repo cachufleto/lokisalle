@@ -45,6 +45,7 @@ $_trad['defaut']['telephone'] = "03 89 76 43 21";
 $_trad['defaut']['ville'] = "Santiago...";
 
 /* trad des messages d'erreurs dans les formulaires */
+$_trad['erreur']['erreur'] = " Error ";
 $_trad['erreur']['acces'] = " <span class='alert'>Ha hecho demaciadas tentativas de conneccion<br>Por favor cierre su navegador y vuelva mas tarde !</span>";
 $_trad['erreur']['aphanumeriqueSansSpace'] = " Valores aceptados: A à Z et 0 à 9 sans espaces ";
 $_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENCION! Error SQL</span><br /><b>Mensage : </b>";
@@ -53,6 +54,7 @@ $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:
 $_trad['erreur']['caracteres'] = " letras y numeros ";
 $_trad['erreur']['controlTelephone'] = " Por lo menos un N° de telefono debe ser indicado ";
 $_trad['erreur']['corrigerErreurDans'] = " Por favor rectifique ";
+$_trad['erreur']['doitAvoirNombreCaracterComprisEntre'] = " debe posser caracteres entre ";
 $_trad['erreur']['doitContenir'] = " debe contener ";
 $_trad['erreur']['doitContenirEntre'] = " debe contener entre ";
 $_trad['erreur']['emailexistant'] = " <span class='alert'>! El correo electronico ya ha sido utilisado !</span>";
