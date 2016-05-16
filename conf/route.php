@@ -62,6 +62,9 @@ $route['home']['action'] = 'home';
 $route['inscription']['Controleur'] = 'users.php';
 $route['inscription']['action'] = 'inscription';
 
+$route['expiration']['Controleur'] = 'users.php';
+$route['expiration']['action'] = 'expiration';
+
 $route['install']['Controleur'] = 'site.php';
 $route['install']['action'] = 'install';
 

@@ -7,7 +7,6 @@
 
 function mdpValider(&$_formulaire)
 {
-
     global $minLen;
     $_trad = setTrad();
 
@@ -21,30 +20,21 @@ function mdpValider(&$_formulaire)
 
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
-        $obligatoire = (!empty($info['obligatoire']))? true : false ;
+        if(testObligatoire($info) && empty($valeur)) {
+            $erreur = true;
+            $_formulaire[$key]['message'] = inputMessage(
+                $_formulaire[$key], $label . $_trad['erreur']['obligatoire']);
+        }
 
         if('valide' != $key)
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']))
             {
-
                 $erreur = true;
-                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] .$label.
+                $_formulaire[$key]['message'] = inputMessage(
+                    $_formulaire[$key], $_trad['erreur']['surLe'] .$label.
                     ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
-                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
+                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres']);
 
-            } elseif (testObligatoire($info) && empty($valeur)){
-
-                $erreur = true;
-                $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
-
-            } else {
-
-                switch($key){
-                    case 'mdp':
-                        $crypte = $key;
-                        break;
-                }
-                // Construction de la requettes
             }
     }
 
@@ -55,41 +45,14 @@ function mdpValider(&$_formulaire)
 
     } else {
 
-        // lançons une requete nommee membre dans la BD pour voir si un pseudo est bien saisi.
-        $sql = "SELECT id_membre FROM membres WHERE jeton = '" . $_formulaire['jeton']['valde'] . "'";
-        $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
-        // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
-        var_dump($membre);
-        /*if($membre->num_rows === 1) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
-        {
-            $session = $membre->fetch_assoc();
-            if(isset($crypte)){
-                $_formulaire[$crypte]['sql'] = $session[$crypte];
-                if(hashDeCrypt($_formulaire[$crypte])){
-                    // overture d'une session Membre
-                    if ($session['active'] == 1) {
-                        ouvrirSession($session, $control);
-                        $msg = 'OK';
-                    } else if ($session['active'] == 2){
-                        $msg .= $_trad['erreur']['validerMail'] . $session['email'];
-                    }
-                    // on reinitialise les tentatives de connexion
-                    unset($_SESSION['connexion']);
-                }
-            }
-
-
-        } elseif($membre->num_rows == 0) {
-            $msg .= '<br/ >'. $_trad['erreur']['erreurConnexion'];
-            $_SESSION['connexion'] -= 1;
-
+        // la variable $pseudo existe grace a l'extract fait prealablemrent.
+        if($membre = selecMembreJeton($_formulaire['jeton']['defaut'])){
+            userUpdateMDP($_formulaire['mdp']['valide'], $membre);
+            updateMembreJeton($membre);
+            header('location:index.php?nav=actif');
         } else {
-
-            $msg .= '<br />'. $_trad['erreur']['inconueConnexion'];
-
-        } */
-
-
+            header('location:index.php?nav=expiration');
+        }
     }
     return $msg;
 }
@@ -535,41 +498,44 @@ function envoiMailInscrition($key)
     envoiMail($message);
 }
 
-function userMDP()
+function userMDP($jeton)
 {
     $_trad = setTrad();
-    include PARAM . 'validerInscription.param.php';
+    include PARAM . 'userMDP.param.php';
     include FUNC . 'form.func.php';
 
-    $msg = '';
+    $msg = $form = '';
+    $id_membre = selecMembreJeton($jeton);
     $_jeton = false;
-    if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
-        if ($id_membre = selecMembreJeton($_GET['jeton'])) {
+    if($_POST){
 
-                $_formulaire['membre']['defaut'] = $id_membre;
-                $_formulaire['jeton']['defaut'] = $_GET['jeton'];
+        if($jeton != $_POST['jeton']){
+            //tentative de détournement
+            header('location:index.php?nav=expiration');
+        }
 
-                if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
-                    $msg = mdpValider($_formulaire);
-                }
+        $_formulaire['jeton']['defaut'] = $_POST['jeton'];
+        if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
+            $msg = mdpValider($_formulaire);
+        }
+        // affichage des messages d'erreur
+        if ('OK' == $msg) {
+            updateMembreJeton($id_membre);
+            header("refresh:5;url=index.php?nav=actif");
+            exit();
+        } else {
+            $form = formulaireAfficher($_formulaire);
+        }
 
-                // affichage des messages d'erreur
-                if ('OK' == $msg) {
-
-                    header("refresh:5;url=index.php?nav=actif");
-                    $_jeton = updateMembreJeton($id_membre);
-
-                } else {
-                    // RECUPERATION du formulaire
-                    $form = '
-                    <form action="#" method="POST">
-                    ' . formulaireAfficher($_formulaire) . '
-                    </form>';
-                }
-
-
+    } else {
+        if ($id_membre) {
+            $_formulaire['jeton']['defaut'] = $jeton;
+            $form = formulaireAfficher($_formulaire);
+        } else {
+            header("refresh:5;url=index.php?nav=expiration");
         }
     }
+
 
     include VUE . 'users/userMDP.tpl.php';
 

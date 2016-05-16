@@ -148,6 +148,14 @@ function typeForm($champ, $info)
 	}
 }
 
+function inputMessage($form, $message)
+{
+	if(empty($form['message'])){
+		return $message;
+	} else {
+		return $form['message'] . '<br>' . $message;
+	}
+}
 # Fonction postValide()
 # Control des informations Postées
 # convertion avec htmlentities
@@ -178,30 +186,37 @@ function postValide(&$_formulaire, $mod=FALSE)
 				$valeur2 = $_POST[$key.'2'];
 
 				// actions pour la modification
-				if (testObligatoire($info) && empty($valeur1)){
+				if(!empty($valeur1) OR !empty($valeur2)){
 
-					$ok = false;
-					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
-					$msg .= $_trad['champ'][$key] . $_trad['erreur']['obligatoire'];
-					$valide = '';
+					if (empty($valeur1)){
 
-				} else if (empty($valeur1) XOR empty($valeur2)){
+						$ok = false;
+						$_formulaire[$key]['message'] = inputMessage($_formulaire[$key], $_trad['champ'][$key] . $_trad['erreur']['obligatoire']);
+						$valide = '';
 
-					// l'un des deux champs est remplie
-					$ok = false;
-					$_formulaire[$key]['message'] = $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key];
-					$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad[$key];
-					$valide = '';
+					}
 
-				} else if ($valeur1 != $valeur2){
+					if (empty($valeur2)){
 
-					// les deux valeurs sont differents
-					$ok = false;
-					$_formulaire[$key]['message'] = $_trad['erreur']['corrigerErreurDans'] . $_trad['champ'][$key];
-					$msg .= $_trad['erreur']['vousAvezUneErreurDans'] . $_trad['champ'][$key];
-					$valide = '';
+						// l'un des deux champs est remplie
+						$ok = false;
+						$_formulaire[$key]['message'] = inputMessage( $_formulaire[$key], $_trad['erreur']['veuillezDeRectifier'] . $_trad['champ'][$key]);
+						$msg .= $_trad['erreur']['vousAvezOublieDeRectifier'] . $_trad['champ'][$key];
+						$valide = '';
 
+					}
+
+					if ( !empty($valeur1) && !empty($valeur2) && $valeur1 != $valeur2){
+
+						// les deux valeurs sont differents
+						$ok = false;
+						$_formulaire[$key]['message'] = inputMessage( $_formulaire[$key], $_trad['erreur']['deuxValeursDifferents'] . $_trad['champ'][$key]);
+						$msg .= $_trad['erreur']['vousAvezUneErreurDans'] . $_trad['champ'][$key];
+						$valide = '';
+
+					}
 				}
+
 
 			}
 

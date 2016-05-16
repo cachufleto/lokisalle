@@ -406,7 +406,7 @@ function changermotpasse()
 function validerInscription()
 {
     if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
-        userMDP();
+        userMDP($_GET['jeton']);
     }
 }
 
@@ -415,5 +415,10 @@ function newMDP()
     if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
         userMDP();
     }
+}
+
+function expiration()
+{
+    include VUE . 'users/expiration.html.php';
 }
 

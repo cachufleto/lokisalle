@@ -32,7 +32,7 @@ include_once CONF . 'nav.php';
 ///////////////////////	/////
 // page de navigation
 $nav = (isset ($_GET['nav']) && !empty($_GET['nav']))? $_GET['nav'] : 'home';
-$nav = (array_key_exists($nav, $_pages))? $nav : 'erreur404';
+//$nav = (array_key_exists($nav, $_pages))? $nav : 'erreur404';
 
 // REGLE D'orientation des pages actif et out ver connection
 if('actif' == $nav || 'out' == $nav) {

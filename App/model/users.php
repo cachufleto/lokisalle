@@ -123,3 +123,9 @@ function modCheckMembres(&$_formulaire, $_id)
     return true;
 }
 
+function userUpdateMDP($mdp, $id)
+{
+    $sql = "UPDATE membres SET mdp = '" . hashCrypt($mdp) . "' WHERE id_membre = $id";
+    executeRequete($sql);
+}
+

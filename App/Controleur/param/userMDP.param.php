@@ -10,15 +10,10 @@ $_formulaire['mdp'] = array(
     'obligatoire' => true,
     'rectification' => true);
 
-$_formulaire['id_membre'] = array(
-    'type' => 'hidden',
-    'acces' => 'private',
-    'defaut' => '');
-
 $_formulaire['jeton'] = array(
     'type' => 'hidden',
     'acces' => 'private',
-    'defaut' => '');
+    'defaut' => 'validation');
 
 $_formulaire['valide'] = array(
     'type' => 'submit',

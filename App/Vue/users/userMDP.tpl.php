@@ -5,9 +5,13 @@
         <?php
         // affichage
         if ($_jeton) {
-            echo $_trad['redirigeVerConnection'];
+            echo '1 ' . $_trad['redirigeVerConnection'];
         } else {
-            echo $_trad['erreur']['redirigeVerConnection'];
+            //echo '2  ' . $_trad['erreur']['redirigeVerConnection'];
+            echo $msg, '
+                    <form action="#" method="POST">
+                    ' . $form . '
+                    </form>';
         }
         ?>
     <hr />
