@@ -334,9 +334,7 @@ function formulaireAfficherInfo($_form)
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
-		
 		$value = isset($info['valide'])? $info['valide'] : '';
-		
 		if($info['type'] != 'hidden') 
 		{
 			if($champ == 'valide'){
@@ -359,7 +357,8 @@ function formulaireAfficherInfo($_form)
 					$formulaire .= '</label>
 						<div class="champs">' .
 							(isset($info['option'])
-								? $_trad['value'][$value]
+								? ((array_key_exists($value, $_trad['value']))?
+									$_trad['value'][$value] : $_trad['value']['indefini'])
 								: $value ) . '</div>
 					</div>';
 				}
@@ -436,7 +435,7 @@ function formulaireAfficherMod($_form)
 #$key => champ
 #$info => donées relatives au champ
 # RETURN boolean
-function controlImageUpload($key, &$info, $nomImage)
+function controlImageUpload($key, &$info, $nomImage = 'salle')
 {
 	$_trad = setTrad();
 	// Tableaux de donnees
@@ -468,7 +467,9 @@ function controlImageUpload($key, &$info, $nomImage)
 					if(isset($_FILES[$key]['error']) && UPLOAD_ERR_OK === $_FILES[$key]['error'])
 					{
 						// On renomme le fichier
-						$nomImage = $nomImage . '_' . uniqid() . '.' . $extension;
+						$nomImage =
+							$nomImage . '_' . uniqid() . '.' .
+							$extension;
 
 						// Si c'est OK, on teste l'upload
 						if(move_uploaded_file($_FILES[$key]['tmp_name'], TARGET.$nomImage))

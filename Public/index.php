@@ -33,11 +33,11 @@ if(DEBUG) {
 	$_trad = setTrad();
 	debugParam($_trad);
 	debugPhpInfo();
-	debugTestMail();
 	debugCost();
 	_debug($BDD, 'BASE');
 	debug($_debug);
 }
+debugTestMail();
 $debug = ob_get_contents();
 ob_end_clean();
 

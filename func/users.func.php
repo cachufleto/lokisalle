@@ -5,6 +5,57 @@
 # @_formulaire => tableau des items
 # RETURN string msg
 
+function changerMotPasseValider(&$_formulaire)
+{
+    global $minLen;
+    $_trad = setTrad();
+
+    $msg = '';
+    $erreur = false;
+    $sql_Where = '';
+    $control = true;
+    $message ='';
+
+    foreach ($_formulaire as $key => $info){
+
+        $label = $_trad['champ'][$key];
+        $valeur = (isset($info['valide']))? $info['valide'] : NULL;
+        if(testObligatoire($info) && empty($valeur)) {
+            $erreur = true;
+            $_formulaire[$key]['message'] = inputMessage(
+                $_formulaire[$key], $label . $_trad['erreur']['obligatoire']);
+        }
+
+        if('valide' != $key)
+            if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']))
+            {
+                $erreur = true;
+                $_formulaire[$key]['message'] = inputMessage(
+                    $_formulaire[$key], $_trad['erreur']['surLe'] .$label.
+                    ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
+                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres']);
+
+            }
+        switch ($key){
+            case 'email':
+                if(!userMailExist($valeur)){
+                    $erreur = true;
+                    $msg = $_trad['erreur']['mailInexistant'];
+                }
+                break;
+        }
+    }
+
+    if($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+    {  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
+
+        $msg .= '<br />'.$_trad['erreur']['uneErreurEstSurvenue'];
+
+    }
+
+    return $msg;
+}
+
 function mdpValider(&$_formulaire)
 {
     global $minLen;
@@ -106,15 +157,13 @@ function inscriptionValider(&$_formulaire)
 
                         } else {
 
-                            $sql = "SELECT pseudo FROM membres WHERE pseudo='$valeur'";
-                            $membre = executeRequete ($sql);
-
                             // si la requete tourne un enregistreme, c'est que 'pseudo' est déjà utilisé en BDD.
-                            if($membre->num_rows > 0)
+                            if(userPseudoExist($valeur))
                             {
                                 $erreur = true;
                                 $msg .= '<br/>' . $_trad['erreur']['pseudoIndisponble'];
                             }
+
                         }
 
                         break;
@@ -122,12 +171,8 @@ function inscriptionValider(&$_formulaire)
                     case 'email': // il est obligatoire
 
                         if (testFormatMail($valeur)) {
-
-                            $sql = "SELECT email FROM membres WHERE email='$valeur'";
-                            $membre = executeRequete($sql);
-
                             // si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
-                            if($membre->num_rows > 0)
+                            if(userMailExist($valeur))
                             {
                                 $erreur = true;
                                 $_formulaire[$key]['message'] = '<br/>' . $_trad['erreur']['emailexistant'];
@@ -222,33 +267,23 @@ function inscriptionValider(&$_formulaire)
     }
 
     // control sur les numero de telephones
-    // au moins un doit être sonseigné
+    // au moins un doit être renseigné
     if($controlTelephone) {
         $erreur = true;
         $_formulaire['telephone']['message'] =  $_trad['erreur']['controlTelephone'] ;
     }
-    _debug($_formulaire, __FUNCTION__);
     // si une erreur c'est produite
     if($erreur)
     {
         $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
 
-    }else{
-        // insertion en BDD
+    } else {
         $checkinscription = hashCrypt($sql_Value);
-        $sql = "INSERT INTO membres ($sql_champs, mdp) VALUES ($sql_Value, '$checkinscription') ";
-
-        executeRequete ($sql);
-
-        $email = $_formulaire['email']['valide'];
-
-        $sql = "INSERT INTO checkinscription (id_membre, checkinscription)
-			VALUES ( (SELECT id_membre FROM membres WHERE email = '$email'), '$checkinscription')";
-
-        if(executeRequete($sql)){
-            $msg = (envoiMailInscrition($checkinscription, $email))? "OK" : $msg;
+        if(userInscriptionInsert($sql_champs, $sql_Value, $checkinscription, $_formulaire)){
+            $msg = envoiMailInscrition($checkinscription, $_formulaire);
+        } else {
+            $msg = $_trad['erreur']['inconueConnexion'];
         }
-
     }
 
     return $msg;
@@ -366,13 +401,10 @@ function connectionValider($_formulaire)
     } else {
 
         // lançons une requete nommee membre dans la BD pour voir si un pseudo est bien saisi.
-        $sql = "SELECT mdp, id_membre, email, pseudo, statut, nom, prenom, active FROM membres WHERE $sql_Where ";
-        $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
         // verifions si dans la requete lancee, si le pseudo s'il existe un nbre de ligne superieur à 0. si c >0 c kil ya une ligne creee donc un pseudo existe
 
-        if($membre->num_rows === 1) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
+        if($session = getUserConnexion($sql_Where)) // si la requete tourne un enregisterme,cest cest que le pseudo est deja utilisé en BD.
         {
-            $session = $membre->fetch_assoc();
             if(isset($crypte)){
                 $_formulaire[$crypte]['sql'] = $session[$crypte];
                 if(hashDeCrypt($_formulaire[$crypte])){
@@ -381,7 +413,7 @@ function connectionValider($_formulaire)
                         ouvrirSession($session, $control);
                         $msg = 'OK';
                     } else if ($session['active'] == 2){
-                        $msg .= $_trad['erreur']['validerMail'] . $session['email'];
+                        $msg .= $_trad['erreur']['validerInscriptionMail'] . $session['email'];
                     }
                     // on reinitialise les tentatives de connexion
                     unset($_SESSION['connexion']);
@@ -412,13 +444,12 @@ function usersIdentifians()
 /**
  * @return string
  */
-function usersChangerMotPasse()
+function usersChangerMotPasse(&$_formulaire)
 {
 
     global $minLen;
 
     $_trad = setTrad();
-    include PARAM . 'changermotpasse.param.php';
     $message = '';
     $sql_Where = '';
 
@@ -479,7 +510,27 @@ function usersChangerMotPasse()
     return $message;
 }
 
-function envoiMailInscrition($key)
+function envoiMailChangeMDP($checkinscription, $membre)
+{
+    $_trad = setTrad();
+    // message
+    $message = '
+     <html>
+      <head>
+       <title>Lokisalle::Modification</title>
+      </head>
+      <body>
+       <p>' . $_trad['Bonjour'] . ' ' . $membre['prenom'] . $membre['nom'] . '</p>
+       <p>' . $_trad['validerChangementMotPasse'] . ' <a href="' . LINK . '?nav=validerChangementMDP&jeton='.
+        $checkinscription . '">' . $_trad['valide'] . '</a></p>
+      </body>
+     </html>
+     ';
+
+    return (envoiMail($message, $membre['email']))? "OK" : "ERREUR SEND MAIL";
+}
+
+function envoiMailInscrition($checkinscription, $info)
 {
     $_trad = setTrad();
     // message
@@ -489,13 +540,35 @@ function envoiMailInscrition($key)
        <title>Lokisalle::Inscription</title>
       </head>
       <body>
-       <p>' . $_trad['validerMail'] . ' <a href="' . LINK . '?nav=validerInscription&jeton='.
-        $key . '">' . $_trad['valide'] . '</a></p>
+       <p>' . $_trad['Bonjour'] . ' ' . $info['prenom']['valide'] . $info['nom']['valide'] . '</p>
+       <p>' . $_trad['validerInscriptionMail'] . ' <a href="' . LINK . '?nav=validerInscription&jeton='.
+        $checkinscription . '">' . $_trad['valide'] . '</a></p>
       </body>
      </html>
      ';
 
-    envoiMail($message);
+    return (envoiMail($message, $info['email']['valide']))? "OK" : "ERREUR SEND MAIL";
+}
+
+# Fonction modCheck()
+# Control des informations Postées
+# convertion avec htmlentities
+# $nomFormulaire => string nom du tableau
+# RETURN string alerte
+function modCheckMembres(&$_formulaire, $_id)
+{
+    $form = $_formulaire;
+
+    if($user = getUser($_id)) {
+        foreach($form as $key => $info){
+            if($key != 'valide' && key_exists ( $key , $user )){
+                $_formulaire[$key]['valide'] = $user[$key];
+                $_formulaire[$key]['sql'] = $user[$key];
+            }
+        }
+    }
+
+    return true;
 }
 
 function userMDP($jeton)

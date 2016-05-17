@@ -11,21 +11,12 @@ function inscription()
     // traitement POST du formulaire
     $msg = '';
     if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
-        $msg = ($_POST['valide'] == 'cookie') ? 'cookie' : inscriptionValider($_formulaire);
+        //$msg = ($_POST['valide'] == 'cookie') ? 'cookie' : inscriptionValider($_formulaire);
+        $msg = inscriptionValider($_formulaire);
     }
 
+    $form = ('OK' != $msg)? formulaireAfficher($_formulaire) : '';
     // affichage des messages d'erreur
-    if('OK' == $msg){
-        // on renvoi ver connection
-        $form = '<a href="?index.php"> SUITE </a>';
-
-    }else{
-        // RECUPERATION du formulaire
-        $form = '
-				<form action="#" method="POST">
-				' . formulaireAfficher($_formulaire) . '
-				</form>';
-    }
     include VUE . 'users/inscription.tpl.php';
 }
 
@@ -57,9 +48,7 @@ function backOff_users()
     $msg = '';
     $nav = 'users';
     $_trad = setTrad();
-    include PARAM . 'profil.param.php';
-
-
+    //include PARAM . 'profil.param.php';
 
     if (!utilisateurEstAdmin()) {
         header('Location:index.php');
@@ -70,61 +59,70 @@ function backOff_users()
         if (!empty($_GET['delete']) && $_GET['delete'] != 1) {
 
             if ($_GET['delete'] != $_SESSION['user']['id']) {
-                $sql = "UPDATE membres SET active = 0 WHERE id_membre = " . $_GET['delete'];
-                executeRequete($sql);
+                setUserActive($_GET['delete'], 0);
             } else {
                 $msg = $_trad['vousNePouvezPasVousSupprimerVousMeme'];
             }
 
         } elseif (!empty($_GET['active'])) {
 
-            $sql = "UPDATE membres SET active = 1 WHERE id_membre = " . $_GET['active'];
-            executeRequete($sql);
+            setUserActive($_GET['active']);
 
         } else if(!empty($_GET['delete']) && $_GET['delete'] == 1) {
+
             $msg = $_trad['numAdmInsufisant'];
+
         }
 
     }
 
-    $table = '';
+    $table = array();
+    $table['champs'] = array();
+    $table['champs']['pseudo'] = $_trad['champ']['pseudo'];
+    $table['champs']['nom'] = $_trad['champ']['nom'];
+    $table['champs']['prenom'] = $_trad['champ']['prenom'];
+    $table['champs']['email'] = $_trad['champ']['email'];
+    $table['champs']['statut'] = $_trad['champ']['statut'];
+    $table['champs']['active'] = $_trad['champ']['active'];
 
-    $table .= "<tr><th>" . $_trad['champ']['pseudo'] . "</th><th>" . $_trad['champ']['nom'] . "</th><th>" . $_trad['champ']['prenom'] . "</th>
-          <th>" . $_trad['champ']['email'] . "</th><th>" . $_trad['champ']['statut'] . "</th>";
-    $table .= "<th>" . $_trad['champ']['active'];
-
-    $table .= "</th></tr>";
-
+    $table['info'] = array();
     if (isSuperAdmin()) {
 
         $membres = usersMoinsAdmin();
 
         if ($membres->num_rows > 0) {
             while ($data = $membres->fetch_assoc()) {
+                $table['info'][] = array(
+                    $data['pseudo'],
+                    $data['nom'],
+                    $data['prenom'],
+                    '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
+                    $_trad['value'][$data['statut']],
+                    "<a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>" . (($info == 2) ? "NEW" : ""),
+                    (($data['active'] == 1) ?
+                        " <a href='" . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . "'>" . $_trad['delete'] . "</a>" :
+                        " <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ'][$data['active']] . "</a>")
 
-                $table .= "<tr><td>" . $data['pseudo'] . "</td><td>" . $data['nom'] . "</td><td>" . $data['prenom'] . "</td>
-              <td><a href='mailto:" . $data['email'] . "'>" . $data['email'] . "</a></td><td>" . $_trad['value'][$data['statut']] . "</td>";
-                $table .= "<td><a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>";
-                $table .= "NEW :: <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ']['active'] . "</a>";
-
-                $table .= "</td></tr>";
-                # code...
+                );
             }
         }
     }
 
-    $membres = slectUsersActive();
+    $membres = selectUsersActive();
 
     while ($data = $membres->fetch_assoc()) {
+        $table['info'][] = array(
+            $data['pseudo'],
+            $data['nom'],
+            $data['prenom'],
+            '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
+            $_trad['value'][$data['statut']],
+            "<a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>",
+            (($data['active'] == 1) ?
+                " <a href='" . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . "'>" . $_trad['delete'] . "</a>" :
+                " <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ']['active'] . "</a>")
 
-        $table .= "<tr><td>" . $data['pseudo'] . "</td><td>" . $data['nom'] . "</td><td>" . $data['prenom'] . "</td>
-            <td><a href='mailto:" . $data['email'] . "'>" . $data['email'] . "</a></td><td>" . $_trad['value'][$data['statut']] . "</td>";
-        $table .= "<td><a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>";
-        $table .= ($data['active'] == 1) ? " <a href='" . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . "'>" . $_trad['delete'] . "</a>" :
-            " <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ']['active'] . "</a>";
-
-        $table .= "</td></tr>";
-        # code...
+        );
     }
 
     include VUE . 'users/users.tpl.php';
@@ -335,9 +333,7 @@ function profilValider(&$_formulaire)
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
                                 ': '.$_trad['erreur']['minimumAphaNumerique'].' ' . $minLen . ' '.$_trad['erreur']['caracteres'];
-
                         }
-
                 }
             }
             // Construction de la requettes
@@ -362,15 +358,14 @@ function profilValider(&$_formulaire)
 
     }else{
 
-        // mise à jour de la base des données
-        $sql = 'UPDATE membres SET '.$sql_set.'  WHERE id_membre = '.$_formulaire['id_membre']['sql'];
-
-        if (!empty($sql_set))
-            executeRequete ($sql);
-        else echo 'ATTENTION';
+        if (!empty($sql_set)){
+            userUpdate($sql_set, $_formulaire['id_membre']['sql']);
+        }
+        else {
+            $msg = $_trad['erreur']['inconueConnexion'];
+        }
         // ouverture d'une session
         $msg = "OK";
-
     }
 
     return $msg;
@@ -392,13 +387,37 @@ function identifians()
 
 function changermotpasse()
 {
+
     $_trad = setTrad();
-    include PARAM . 'changermotpasse.param.php';
     include FUNC . 'form.func.php';
+    include PARAM . 'changermotpasse.param.php';
 
-    $msg = usersChangerMotPasse();
+    $msg = '';
+    if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
 
-    $form = formulaireAfficher($_formulaire);
+    if(!($msg = changerMotPasseValider($_formulaire))) {
+
+            $membre = getUserMail($_formulaire);
+            $checkinscription = hashCrypt("CHANGE" . date('m:D:d:s:Y:M'));
+            if(userChangerMDPInsert($checkinscription, $_formulaire)){
+                $msg = envoiMailChangeMDP($checkinscription, $membre);
+            } else {
+                $msg = $_trad['erreur']['inconueConnexion'];
+            }
+
+        }
+    }
+
+    /////////////////////////////////////
+    if(isset($_SESSION['connexion']) && $_SESSION['connexion'] < 0) {
+        // affichage
+        $msg = $_trad['erreur']['acces'];
+
+    } else {
+
+        // RECUPERATION du formulaire
+        $form = formulaireAfficher($_formulaire);
+    }
 
     include VUE . 'users/changermotpasse.html.php';
 }
@@ -410,10 +429,17 @@ function validerInscription()
     }
 }
 
+function validerChangementMDP()
+{
+    if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
+        userMDP($_GET['jeton']);
+    }
+}
+
 function newMDP()
 {
     if (isset($_GET['jeton']) && !empty($_GET['jeton'])) {
-        userMDP();
+        userMDP($_GET['jeton']);
     }
 }
 

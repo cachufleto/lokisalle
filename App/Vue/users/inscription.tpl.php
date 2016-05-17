@@ -3,9 +3,14 @@
     <hr />
     <div id="formulaire">
         <?php
-        // affichage
-        echo $msg, $form;
-        ?>
+        if('OK' == $msg){ ?>
+            <a href="?index.php"> <?php echo $_trad['validerInscription'] ?> </a>;
+        <?php } else{
+            echo $msg; ?>
+            <form action="#" method="POST">
+        <?php echo $form; ?>
+            </form>
+        <?php } ?>
     </div>
     <hr />
 </principal>

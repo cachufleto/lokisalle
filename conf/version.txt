@@ -1,14 +1,18 @@
-<!-- V 2.3 : site de base -->
-<!-- V 2.4.1 : mise ne place du liens d'inscription dans la page de connexion -->
-<!-- V 2.4.2 : Correction du maintiens de la langue de navigation -->
-<!-- V 2.4.3 : Mise en cookie le pseudo -->
-<!-- V 2.4.4 : Changement de la table membre par membres -->
-<!-- V 2.4.5 : ajout des onglets menu pour la gestion des sales -->
-<!-- V 2.5.1 : Upload image dans photo, formulaire salle -->
-<!-- V 2.8.1 : liste des sales, insertion des nouvelles sales -->
-<!-- V 2.8.2 : Fiches de salles front -->
-<!-- V 2.20.1 : Page home -->
-<!-- V 2.30.4 : Backoffice -->
-<!-- V 2:01/04 : Token -->
-<!-- V 2:15/05 : Validation Inscription -->
 V 2:15/05
+<!--
+V 2:15/05 : Parcours Users
+V 2:15/05 : Validation Inscription
+V 2:04/05 : Token
+V 2.30/04 : Backoffice
+V 2.20/05 : Page home
+V 2.09/05 : Fiches de salles front
+V 2.08/05 : liste des sales, insertion des nouvelles sales
+V 2.01/05 : Upload image dans photo, formulaire salle
+V 2.05/04 : ajout des onglets menu pour la gestion des sales
+V 2.04/04 : Changement de la table membre par membres
+V 2.03/04 : Mise en cookie le pseudo
+V 2.02/04 : Correction du maintiens de la langue de navigation
+V 2.01/04 : mise ne place du liens d'inscription dans la page de connexion
+V 2.15/03 : site de base
+-->
+

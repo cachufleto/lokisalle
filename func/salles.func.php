@@ -22,3 +22,30 @@ function ListeDistinc($champ, $table, $info)
     return $balise;
 }
 
+# Fonction modCheck()
+# Control des informations Postées
+# convertion avec htmlentities
+# $nomFormulaire => string nom du tableau
+# RETURN string alerte
+function modCheckSalles(&$_formulaire, $_id)
+{
+    $form = $_formulaire;
+
+    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
+
+    $data = executeRequete($sql) or die ($sql);
+    $user = $data->fetch_assoc();
+
+    if($data->num_rows < 1) return false;
+
+    foreach($form as $key => $info){
+        if($key != 'valide' && key_exists ( $key , $user )){
+            $_formulaire[$key]['valide'] = $user[$key];
+            $_formulaire[$key]['sql'] = $user[$key];
+        }
+    }
+
+    return true;
+}
+
+

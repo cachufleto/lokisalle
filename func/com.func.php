@@ -170,7 +170,11 @@ function envoiMail($message, $to = WEBMAIL)
 	$headers .= 'Reply-To: carlos.dupriez@gmail.com' . "\r\n";
 	$headers .=  'X-Mailer: PHP/' . phpversion();
 
-	// Envoi
+	// Test d'envoi mode debug
+	if (DEBUG) {
+		echo "<div style='border: solid green'>TEST ENVOI MAIL: <br> $message</div>";
+	}
+
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
 }
 

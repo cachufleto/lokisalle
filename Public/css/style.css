@@ -8,11 +8,24 @@ h1 {
 }
 
 table {
-	width: 90%;
+	width: 100%;
 }
 
 table td {
 	border: 1px solid black;
+}
+
+table th {
+	background-color: darkslategrey;
+	color: white;
+}
+
+table tr.lng1{
+	background-color: #E7E5E5;
+}
+
+table tr.lng2{
+	background-color: #F6F6EF;
 }
 
 img.trombi {

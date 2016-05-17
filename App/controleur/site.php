@@ -1,6 +1,7 @@
 <?php
 include_once MODEL . 'site.php';
 include_once FUNC . 'site.func.php';
+
 function home()
 {
 

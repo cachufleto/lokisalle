@@ -4,31 +4,22 @@
 // Items du formulaire
 $_formulaire = array();
 
-$_formulaire['pseudo'] = array(
+$_formulaire['prenom'] = array(
 	'type' => 'text',
-	'maxlength' => 14,
-	'defaut' => $_trad['champ']['pseudo'],
+	'defaut' => $_trad['defaut']['Monprenom'],
 	'obligatoire' => true);
-	
-/*
-$_formulaire['mdp'] = array(
-	'type' => 'password',
-	'maxlength' => 14,
-	'defaut' => $_trad['defaut']['MotPasse'],
-	'obligatoire' => true,
-	'rectification' => true);
-*/
 
 $_formulaire['nom'] = array(
 	'type' => 'text',
 	'defaut' => $_trad['defaut']['Monnom'],
 	'obligatoire' => true);
-	
-$_formulaire['prenom'] = array(
+
+$_formulaire['pseudo'] = array(
 	'type' => 'text',
-	'defaut' => $_trad['defaut']['Monprenom'],
+	'maxlength' => 14,
+	'defaut' => $_trad['champ']['pseudo'],
 	'obligatoire' => true);
-	
+
 $_formulaire['email'] = array(
 	'type' => 'email',
 	'defaut' => "e.mail@webmail.net",

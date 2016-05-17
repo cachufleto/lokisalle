@@ -16,13 +16,9 @@ function selecMembreJeton($jeton)
     if ($inscription->field_count == 1) {
 
         $membre = $inscription->fetch_row();
-
         return $membre[0];
     }
-
     return false;
-
-
 }
 
 function updateMembreJeton($id)
@@ -61,12 +57,100 @@ function selectMailUser($id, $valeur)
 }
 
 
-function slectUsersActive()
+function userPseudoExist($pseudo){
+    $sql = "SELECT pseudo FROM membres WHERE pseudo='$pseudo'";
+    $membre = executeRequete ($sql);
+    if($membre->num_rows > 0){
+        return true;
+    }
+    return false;
+}
+
+function setUserActive($id, $active = 1){
+
+    $sql = "UPDATE membres SET active = $active WHERE id_membre = $id";
+    executeRequete($sql);
+}
+
+function userUpdate($sql_set, $id)
+{
+    // mise à jour de la base des données
+    $sql = "UPDATE membres SET $sql_set  WHERE id_membre = $id";
+    executeRequete ($sql);
+}
+
+function getUserMail($info)
+{
+    $sql = "SELECT id_membre, nom, prenom, email FROM membres WHERE email = '" . $info['email']['valide'] . "'";
+    $membre = executeRequete($sql);
+    if($membre->num_rows > 0){
+        $num = $membre->fetch_assoc();
+        return $num;
+    }
+    return false;
+}
+
+function getUserConnexion($sql_Where)
+{
+    $sql = "SELECT mdp, id_membre, email, pseudo, statut, nom, prenom, active FROM membres WHERE $sql_Where ";
+    $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
+
+    if($membre->num_rows === 1){
+        return $membre->fetch_assoc();
+    }
+    return false;
+}
+
+function userChangerMDPInsert($checkinscription, $info)
+{
+    $sql = "INSERT INTO checkinscription (id_membre, checkinscription)
+        VALUES ( (SELECT id_membre FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
+
+    return executeRequete($sql);
+}
+
+function userInscriptionInsert($sql_champs, $sql_Value, $checkinscription, $info)
+{
+
+    $sql = "INSERT INTO membres ($sql_champs, mdp) VALUES ($sql_Value, '$checkinscription');";
+    $sql .= "INSERT INTO checkinscription (id_membre, checkinscription)
+        VALUES ( (SELECT id_membre FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
+
+    return executeMultiRequete($sql);
+}
+
+function userMailExist($email)
+{
+    $sql = "SELECT email FROM membres WHERE email='$email'";
+    $membre = executeRequete($sql);
+    if($membre->num_rows > 0){
+        return true;
+    }
+    return false;
+}
+
+function selectUsersActive()
 {
     $sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active
         FROM membres  WHERE " . (!isSuperAdmin() ? "id_membre != 1 AND active == 1 " : "active != 2") . "
         ORDER BY nom, prenom";
     return executeRequete($sql);
+}
+
+function getUser($id)
+{
+
+    $sql = "SELECT prenom, nom, pseudo, email, telephone, gsm, sexe, ville, cp, adresse, statut
+            FROM membres WHERE id_membre = $id " . ( !isSuperAdmin()? " AND active != 0" : "" );
+
+    $data = executeRequete($sql);
+
+    if($data->num_rows < 1) {
+        return false;
+    }
+
+    return $data->fetch_assoc();
+
 }
 
 # Fonction testADMunique()
@@ -76,11 +160,8 @@ function slectUsersActive()
 
 function testADMunique($statut, $id_membre)
 {
-
-
     if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
     {
-
         // interdiction de modifier le statut pour le super administrateur
         if($id_membre == 1) return true;
 
@@ -95,32 +176,6 @@ function testADMunique($statut, $id_membre)
     }
     return false;
 
-}
-
-# Fonction modCheck()
-# Control des informations Postées
-# convertion avec htmlentities
-# $nomFormulaire => string nom du tableau
-# RETURN string alerte
-function modCheckMembres(&$_formulaire, $_id)
-{
-    $form = $_formulaire;
-
-    $sql = "SELECT * FROM membres WHERE id_membre = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
-
-    $data = executeRequete($sql) or die ($sql);
-    $user = $data->fetch_assoc();
-
-    if($data->num_rows < 1) return false;
-
-    foreach($form as $key => $info){
-        if($key != 'valide' && key_exists ( $key , $user )){
-            $_formulaire[$key]['valide'] = $user[$key];
-            $_formulaire[$key]['sql'] = $user[$key];
-        }
-    }
-
-    return true;
 }
 
 function userUpdateMDP($mdp, $id)

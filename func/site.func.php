@@ -141,6 +141,7 @@ function debugPhpInfo()
 function debugTestMail()
 {
     if (isset($_GET['info']) && $_GET['info'] == 'mail') {
+        echo "TEST d'envoi de mail ver " .WEBMAIL;
         testmail();
     }
 }
@@ -176,14 +177,19 @@ function cost()
 
 function testmail()
 {
-    $to = 'carlos.paz@free.fr';
+    $to = WEBMAIL;
     $subject = 'le sujet';
-    $message = 'Bonjour !';
-    $headers = 'From: webmaster@example.com' . "\r\n" .
-        'Reply-To: webmaster@example.com' . "\r\n" .
+    $message = "Bonjour!". "\r\n" . "Test envoi de mail depuis " . $_SERVER['HTTP_HOST'];
+    $headers = 'From: ' . SITEMAIL . "\r\n" .
+        'Reply-To: webmaster@' . $_SERVER['HTTP_HOST'] . '.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 
-    mail($to, $subject, $message, $headers);
+    if (mail($to, $subject, $message, $headers)){
+        echo " -------> Ok ";
+    } else {
+        echo " -------> ERROR SEND MAIL";
+    }
+
 }
 
 function debugParam()
