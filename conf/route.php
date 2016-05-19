@@ -112,11 +112,8 @@ if (utilisateurEstAdmin() && $_SESSION['BO'] == 1) {
     $route['users']['action'] = 'backOff_users';
 
     /****** SALLES ******/
-    $route['ficheSalles']['Controleur'] = 'salles.php';
     $route['ficheSalles']['action'] = 'backOff_ficheSalles';
-
-    $route['gestionSalles']['Controleur'] = 'salles.php';
-    $route['gestionSalles']['action'] = 'backOff_gestionSalles';
+    $route['salles']['action'] = 'backOff_gestionSalles';
 
     $route['editerSalles']['Controleur'] = 'salles.php';
     $route['editerSalles']['action'] = 'backOff_editerSalles';

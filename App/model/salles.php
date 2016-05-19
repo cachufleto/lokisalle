@@ -6,6 +6,12 @@
  * Time: 13:35
  */
 
+function sallesUpdate($sql_set, $id_salle){
+
+    $sql = 'UPDATE salles SET '.$sql_set.'  WHERE id_salle = '.$id_salle;
+    executeRequete($sql);
+}
+
 function setSallesActive($id, $active){
 
     $sql = "UPDATE salles SET active = $active WHERE id_salle = $id";
@@ -14,7 +20,7 @@ function setSallesActive($id, $active){
 
 function selectSalles()
 {
-    $sql = "SELECT * FROM salles";
+    $sql = "SELECT * FROM salles where active = 1";
     return executeRequete($sql);
 }
 

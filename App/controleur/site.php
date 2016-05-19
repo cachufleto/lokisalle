@@ -38,11 +38,29 @@ function dernieresOffres($salle)
     return $offre;
 }
 
+function recupNav()
+{
+    if($arg = basename(str_replace('?', '', $_SERVER['HTTP_REFERER']))){
+        if(preg_match('#&#', $_SERVER['HTTP_REFERER'])){
+            $_arg = $nav = explode('&', $arg);
+            $nav = explode('=', $_arg[0]);
+            return $nav[1];
+        } else {
+            $nav = explode('=', $arg);
+            return $nav[1];
+        }
+    }
+    return false;
+}
+
 function backoffice()
 {
     $nav = 'backoffice';
     $_trad = setTrad();
-
+    if($nav=recupNav()){
+        header('location:' . basename($_SERVER['HTTP_REFERER']));
+    }
+    // phpinfo();
 
     $activite = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' : 'Activité';
     $dernieresOffres = (!empty($_POST))? '<textarea name="notreAtivite"></textarea>' :  'Derniéres Offres';

@@ -132,7 +132,7 @@ $_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche',
 $_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
 $_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'recherche', 'backoffice', 'out');
 
-$navAdmin = array('home', 'gestionSalles','users','ventes','out' );
+$navAdmin = array('home', 'salles','users','ventes','out' );
 
 $navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
 

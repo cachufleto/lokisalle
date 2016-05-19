@@ -82,7 +82,7 @@ function typeForm($champ, $info)
 			$balise = '';
 			foreach($info['option'] as $value){
 				$check = radioCheck($info, $value)? 'checked' : ''; 
-				$balise .= $_trad['value'][$value].' <input type="radio" class="radio-inline" id="' . $champ . '" name="' . $champ . '" value="' .  $value. '" ' . $check . ' >';
+				$balise .= $_trad['value'][$value].' <input type="radio" class="radio-inline" id="' . $champ . $value . '" name="' . $champ . '" value="' .  $value. '" ' . $check . ' >';
 			}
 			// Balise par defaut
 			$balise .= '<input type="radio" class="radio-inline" id="' . $champ . '" name="' . $champ . '" value="" ' . (empty($info['valide'])? 'checked' : '') . ' style="visibility:hidden;" >';
@@ -107,7 +107,7 @@ function typeForm($champ, $info)
 			$balise = '';
 			foreach($info['option'] as $value){
 				$check = radioCheck($info, $value)? 'checked="checked" ': '';
-				$balise .=  $_trad['value'][$value] . '<input type="checkbox" class="radio-inline" id="' . $champ . '" name="' . $champ . '" '.  $check .'>';
+				$balise .=  $_trad['value'][$value] . '<input type="checkbox" class="radio-inline" id="' . $champ . $value .'" name="' . $champ . '" '.  $check .'>';
 			}
 			return $balise;
 		break;
@@ -220,7 +220,10 @@ function postValide(&$_formulaire, $mod=FALSE)
 
 			}
 
-			$_formulaire[$key]['valide'] = ($valide == $info['defaut'])? '' : $valide;
+				$_formulaire[$key]['valide'] = (
+					($info['type'] != 'radio' && $info['type'] != 'checkbox')
+					&& $valide == $info['defaut'])? '' : $valide;
+
 
 		} else if ($info['type'] == 'file'){
 			if (isset($_FILES[$key])){
