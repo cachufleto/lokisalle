@@ -57,12 +57,11 @@ function ficheSallesValider(&$_formulaire)
 
     global $minLen;
     $_trad = setTrad();
-
+    var_dump($_FILES);
     $msg = 	$erreur = false;
     $sql_set = '';
     // active le controle pour les champs telephone et gsm
     $controlTelephone = true;
-    var_dump($_formulaire);
 
     $id_salle = $_formulaire['id_salle']['sql'];
 
@@ -95,15 +94,15 @@ function ficheSallesValider(&$_formulaire)
 
                     case 'capacite':
                         break;
-                    /*
-                                        case 'photo':
 
-                                          $erreur = (controlImageUpload($key, $info))? true : $erreur;
-                                          $_formulaire[$key]['message'] = isset($info['message'])? $info['message'] : '' ;
-                                          $valeur = $info['valide'];
+                    case 'photo':
 
-                                        break;
-                    */
+                      $erreur = (controlImageUpload($key, $info))? true : $erreur;
+                      $_formulaire[$key]['message'] = isset($info['message'])? $info['message'] : '' ;
+                      $valeur = $info['valide'];
+
+                    break;
+
                     case 'categorie':
                         if(empty($valeur))
                         {
@@ -169,13 +168,14 @@ function ficheSallesValider(&$_formulaire)
     if(!$erreur) {
 
         // mise à jour de la base des données
-
         if (!empty($sql_set)){
+            exit(var_dump(array($sql_set, $id_salle, $_formulaire)));
+
             sallesUpdate($sql_set, $id_salle);
         }
         else {
-            header('Location:?nav=salles&pos=P-'.$position.'');
-            exit();
+            //header('Location:?nav=salles&pos=P-'.$position.'');
+            exit(var_dump(array($_FILES, $_formulaire)));
         }
         // ouverture d'une session
         $msg = "OK";
@@ -185,4 +185,150 @@ function ficheSallesValider(&$_formulaire)
     return $msg;
 }
 
+# Fonction editerSallesValider()
+# Verifications des informations en provenance du formulaire
+# @_formulaire => tableau des items
+# RETURN string msg
+function editerSallesValider(&$_formulaire)
+{
 
+    global $minLen;
+    $_trad = setTrad();
+
+
+    $msg = 	$erreur = false;
+    $sql_champs = $sql_Value = '';
+    // active le controle pour les champs telephone et gsm
+    $controlTelephone = true;
+
+    foreach ($_formulaire as $key => $info){
+
+        $label = $_trad['champ'][$key];
+        $valeur = (isset($info['valide']))? $info['valide'] : NULL;
+
+        if('valide' != $key && 'photo' != $key)
+            if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength'])  && !empty($valeur))
+            {
+
+                $erreur = true;
+                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label.
+                    ': ' . $_trad['erreur']['doitContenirEntre'] . $minLen .
+                    ' et ' . $info['maxlength'] . $_trad['erreur']['caracteres'];
+
+            } elseif (testObligatoire($info) && empty($valeur)){
+
+                $erreur = true;
+                $_formulaire[$key]['message'] = $label . $_trad['erreur']['obligatoire'];
+
+            } else {
+
+                switch($key){
+
+                    case 'capacite':
+                        break;
+                    /*
+                                        case 'photo':
+
+                                        break;
+                    */
+                    case 'categorie':
+
+                        if(empty($valeur))
+                        {
+                            $erreur = true;
+                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                ': '.$_trad['erreur']['vousDevezChoisireUneOption'];
+                        }
+
+                        break;
+
+                    default:
+                        if(!empty($valeur) && !testLongeurChaine($valeur))
+                        {
+                            $erreur = true;
+                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                ': '.$_trad['erreur']['minimumAphaNumerique'].' ' . $minLen . ' '.$_trad['erreur']['caracteres'];
+
+                        }
+
+                }
+
+                // Construction de la requettes
+                if(!empty($valeur)){
+                    $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
+                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
+                }
+            }
+    }
+
+    // control sur les numero de telephones
+    // au moins un doit être sonseigné
+    /*	if($controlTelephone) {
+            $erreur = true;
+            $_formulaire['telephone']['message'] =  $_trad['erreur']['controlTelephone'] ;
+        }
+    */
+    // si une erreur c'est produite
+    if($erreur)
+    {
+        $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
+
+    }else{
+
+        $erreur = controlImageUpload('photo', $_formulaire['photo'], $_formulaire['titre']['valide'])? true : $erreur;
+//	  $_formulaire['photo']['message'] = isset($info['message'])? $info['message'] : '' ;
+        $valeur = $_formulaire['photo']['valide'];
+
+        if(!$erreur){
+            $sql_champs .= ", photo";
+            $sql_Value .= ",'$valeur'";
+        }
+
+    }
+
+    if(!$erreur) {
+
+        $msg = setSalle($sql_champs, $sql_Value);//"OK";
+
+    }
+
+    return $msg;
+}
+
+function orderSallesValide()
+{
+    if(isset($_SESSION['orderSalles'])){
+        if(isset($_POST['ord']) AND $_POST['ord'] == 'active'){
+            $_SESSION['orderSalles']['orderActive'] =
+                ($_SESSION['orderSalles']['orderActive'] == "ASC")? false : true;
+        }
+    } else {
+        $_SESSION['orderSalles'] = array();
+        $_SESSION['orderSalles']['orderActive'] = false;
+    }
+    return ($_SESSION['orderSalles']['orderActive'])? "active ASC, " : '';
+}
+
+function orderSalles()
+{
+    if(isset($_SESSION['orderSalles'])){
+        if(isset($_POST['ord'])){
+            $ord = $_POST['ord'];
+            switch($ord){
+                case 'categorie':
+                case 'capacite':
+                case 'titre':
+                    $_SESSION['orderSalles']['order'] = ($_SESSION['orderSalles']['champ'] != $ord)?
+                        "ASC" : (($_SESSION['orderSalles']['order'] == "ASC")? "DESC" : "ASC" );
+
+                    $_SESSION['orderSalles']['champ'] = $ord;
+                break;
+            }
+        }
+    } else {
+        $_SESSION['orderSalles'] = array();
+        $_SESSION['orderSalles']['champ'] = 'categorie';
+        $_SESSION['orderSalles']['order'] = 'ASC';
+    }
+    return $_SESSION['orderSalles']['champ'] . " " . $_SESSION['orderSalles']['order'];
+}

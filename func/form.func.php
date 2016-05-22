@@ -353,7 +353,7 @@ function formulaireAfficherInfo($_form)
 					<label class="label" >' . $_trad['champ'][$champ] ;
 				if($info['type'] == 'file') {
 					$formulaire .= '</label>
-						<div class="champs"><img src="' . LINK. 'photo/' .$value . '">	</div>
+						<div class="champs"><img src="' . imageExiste($value) . '">	</div>
 					</div>';
 				}
 				else {
@@ -442,17 +442,17 @@ function controlImageUpload($key, &$info, $nomImage = 'salle')
 {
 	$_trad = setTrad();
 	// Tableaux de donnees
-	$tabExt = array('jpg','gif','png','jpeg');    // Extensions autorisees
+	$tabExt = array("jpg","gif","png","jpeg");    // Extensions autorisees
 	$infosImg = array();
 	$info['valide'] = '';
 
 	if( !empty($_FILES[$key]['name']) )
 	{
 		// Recuperation de l'extension du fichier
-		$extension  = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+		$extension  = strtolower(pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION));
 
 		// On verifie l'extension du fichier
-		if(in_array(strtolower($extension),$tabExt))
+		if(in_array($extension,$tabExt))
 		{
 			// On recupere les dimensions du fichier
 			$infosImg = getimagesize($_FILES[$key]['tmp_name']);
@@ -461,9 +461,6 @@ function controlImageUpload($key, &$info, $nomImage = 'salle')
 			if($infosImg[2] >= 1 && $infosImg[2] <= 14)
 			{
 				// On verifie les dimensions et taille de l'image;
-				// echo $infosImg[0]." <= " . WIDTH_MAX. ") && (" . $infosImg[1]." <= ".HEIGHT_MAX.") && ("; 
-				// echo filesize($_FILES[$key]['tmp_name'])." <= ".MAX_SIZE."))";
-				
 				if(($infosImg[0] <= WIDTH_MAX) && ($infosImg[1] <= HEIGHT_MAX) && (filesize($_FILES[$key]['tmp_name']) <= MAX_SIZE))
 				{
 					// Parcours du tableau d'erreurs

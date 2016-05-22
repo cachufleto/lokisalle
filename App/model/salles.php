@@ -24,12 +24,20 @@ function selectSalles()
     return executeRequete($sql);
 }
 
-function selectSallesUsers()
+function selectSallesOrder($order)
+{
+    $sql = "SELECT id_salle, titre, capacite, categorie, photo
+            FROM salles WHERE active = 1
+            ORDER BY $order";
+    return executeRequete($sql);
+}
+
+function selectSallesUsers($order)
 {
 // selection de tout les users sauffe le super-ADMIN
     $sql = "SELECT id_salle, titre, capacite, categorie, photo, active
             FROM salles " . (!isSuperAdmin() ? " WHERE active != 0 " : "") . "
-            ORDER BY cp, titre";
+            ORDER BY $order";
     return executeRequete($sql);
 }
 
@@ -40,4 +48,13 @@ function selectListeDistinc($champ, $table)
     $sql = "SELECT DISTINCT $champ FROM $table ORDER BY $champ ASC";
     return   executeRequete($sql);
 
+}
+
+
+function setSalle($sql_champs, $sql_value)
+{
+    // insertion en BDD
+    $sql = " INSERT INTO salles ($sql_champs) VALUES ($sql_value) ";
+    return executeRequete ($sql);
+    // ouverture d'une session
 }

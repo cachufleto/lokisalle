@@ -89,7 +89,7 @@ $route['identifians']['action'] = 'identifians';
 
 /****** SALLES ******/
 $route['ficheSalles']['Controleur'] = 'salles.php';
-$route['ficheSalles']['action'] = 'ficheSalles';
+$route['ficheSalles']['action'] = (utilisateurEstAdmin() && $_SESSION['BO'] == 1)? 'backOff_ficheSalles' : 'ficheSalles';
 
 $route['recherche']['Controleur'] = 'salles.php';
 $route['recherche']['action'] = 'recherche';
@@ -98,7 +98,7 @@ $route['reservation']['Controleur'] = 'salles.php';
 $route['reservation']['action'] = 'reservation';
 
 $route['salles']['Controleur'] = 'salles.php';
-$route['salles']['action'] = 'salles';
+$route['salles']['action'] = (utilisateurEstAdmin() && $_SESSION['BO'] == 1)? 'backOff_salles' : 'salles';
 
 /****** ADMINISTRATION ******/
 
@@ -110,10 +110,6 @@ if (utilisateurEstAdmin() && $_SESSION['BO'] == 1) {
     /****** USERS ******/
     $route['users']['Controleur'] = 'users.php';
     $route['users']['action'] = 'backOff_users';
-
-    /****** SALLES ******/
-    $route['ficheSalles']['action'] = 'backOff_ficheSalles';
-    $route['salles']['action'] = 'backOff_gestionSalles';
 
     $route['editerSalles']['Controleur'] = 'salles.php';
     $route['editerSalles']['action'] = 'backOff_editerSalles';

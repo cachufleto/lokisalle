@@ -11,7 +11,11 @@
         <tr>
             <?php
             foreach($table['champs'] as $champ=>$info ){
-                echo "<th>$info</th>";
+                echo '<th>
+                    <form action="?nav=salles" method="POST">
+                        <input type="submit" name="ord" value="' . $champ . '">
+                    </form>
+                    </th>';
             }
             ?>
         </tr>

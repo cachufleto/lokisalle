@@ -18,7 +18,7 @@ function salles()
 
     $table = array();
     $table['champs'] = array();
-    $table['champs']['id_salle'] = $_trad['champ']['id_salle'];
+    $table['champs']['id_salle'] = '#';
     $table['champs']['titre'] = $_trad['champ']['titre'];
     $table['champs']['capacite'] = $_trad['champ']['capacite'];
     $table['champs']['categorie'] = $_trad['champ']['categorie'];
@@ -26,7 +26,10 @@ function salles()
     $table['champs']['select'] = $_trad['select'];
 
     $position = 1;
-    $salles = selectSalles();
+
+
+    $salles = selectSallesOrder(orderSalles());
+
     while ($data = $salles->fetch_assoc()) {
         $table['info'][] = array(
             $data['id_salle'],
@@ -34,7 +37,7 @@ function salles()
             $data['capacite'],
             $_trad['value'][$data['categorie']],
             '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
-                <img class="trombi" src="' . LINK . 'photo/' . $data['photo'] . '" ></a>',
+                <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
             (isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
                 '<a href="' . LINK . '?nav=salles&enlever=' . $data['id_salle'] . '#P-' . ($position - 1) . '" >' . $_trad['enlever'] . '</a>' :
                 ' <a href="' . LINK . '?nav=salles&reserver=' . $data['id_salle'] . '#P-' . ($position - 1) . '">' . $_trad['reserver'] . '</a>'
@@ -69,17 +72,11 @@ function ficheSalles()
     include VUE . 'salles/ficheSalles.tpl.php';
 }
 
-function backOff_gestionSalles()
+function backOff_salles()
 {
     $nav = 'gestionSalles';
     $msg = '';
     $_trad = setTrad();
-
-
-    if(!utilisateurEstAdmin()){
-        header('Location:index.php');
-        exit();
-    }
 
     if (isset($_GET)) {
         if (!empty($_GET['delete'])) {
@@ -104,7 +101,8 @@ function backOff_gestionSalles()
 
 
     $position = 1;
-    $salles = selectSallesUsers();
+    $salles = selectSallesUsers(orderSallesValide() . orderSalles());
+
     while ($data = $salles->fetch_assoc()) {
         $table['info'][] = array(
             $data['id_salle'],
@@ -112,7 +110,7 @@ function backOff_gestionSalles()
             $data['capacite'],
             $_trad['value'][$data['categorie']],
             '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
-                <img class="trombi" src="' . LINK . 'photo/' . $data['photo'] . '" ></a>',
+                <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
             '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '">' . $_trad['modifier'] . '</a>',
             ($data['active'] == 1) ? ' <a href="' . LINKADMIN . '?nav=salles&delete=' . $data['id_salle'] . '">' . $_trad['delete'] . '</a>' :
             ' <a href="' . LINKADMIN . '?nav=salles&active=' . $data['id_salle'] . '">' . $_trad['activer'] . '</a>'
@@ -131,21 +129,21 @@ function backOff_ficheSalles()
     include PARAM . 'backOff_ficheSalles.param.php';
 
     include FUNC . 'form.func.php';
-    if (!isset($_SESSION['user'])) {
-        header('Location:index.php');
-        exit();
-    }
 
     // extraction des données SQL
     $form = $msg = '';
     if (modCheckSalles($_formulaire, $_id, 'salles')) {
 
-        // traitement POST du formulaire
+        // traitement POST du formulaire dans les parametres
         if ($_valider){
+            echo 'TRAITEENT **************<br><br><br><br><br>**************';
             $msg = $_trad['erreur']['inconueConnexion'];
             if(postCheck($_formulaire, TRUE)) {
-                $msg = ($_POST['valide'] == 'cookie') ? 'cookie' : ficheSallesValider($_formulaire);
+                //exit(var_dump($_formulaire));
+                $msg = ficheSallesValider($_formulaire);
+                exit('traitement');
             }
+            exit('tratement');
         }
 
         if ('OK' == $msg) {
@@ -187,5 +185,39 @@ function backOff_ficheSalles()
     }
 
     include VUE . 'salles/ficheSalles.tpl.php';
+}
+
+function backOff_editerSalles()
+{
+    // Variables
+    $extension = '';
+    $message = '';
+    $nomImage = '';
+
+    $nav = 'editerSalles';
+    $_trad = setTrad();
+
+    // traitement du formulaire
+    include PARAM . 'backOff_editerSalles.param.php';
+    include FUNC . 'form.func.php';
+
+    $msg = '';
+
+    if (postCheck($_formulaire)) {
+        if(isset($_POST['valide'])){
+            $msg = ($_POST['valide'] == 'cookie') ? 'cookie' : editerSallesValider($_formulaire);
+        }
+    }
+
+// affichage des messages d'erreur
+    if ('OK' == $msg) {
+        // on renvoi ver connection
+        header('Location:index.php?nav=salles&pos='.$_formulaire['position']['value']);
+        exit();
+    } else {
+        // RECUPERATION du formulaire
+        $form = formulaireAfficher($_formulaire);
+        include VUE . 'salles/editerSalles.tpl.php';
+    }
 }
 

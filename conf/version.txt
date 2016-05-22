@@ -1,7 +1,8 @@
-V 2:20/05
+V 2:22/05
 <!--
-V 2:20/05 : fiche des sales
-V 2:17/05 : Gestion des sales
+V 2:22/05 : Ajout des salles
+V 2:20/05 : fiche des salles
+V 2:17/05 : Gestion des salles
 V 2:15/05 : Parcours Users
 V 2:15/05 : Validation Inscription
 V 2:04/05 : Token

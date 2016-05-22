@@ -27,7 +27,7 @@ function dernieresOffres($salle)
 	<div class="offre">
 	<div>' . $salle['titre'] . '</div>
   	<figure>
-	  <img class="ingOffre" src="' . LINK . 'photo/' . $salle['photo'] . '" alt="" />
+	  <img class="ingOffre" src="' . imageExiste($salle['photo']) . '" alt="" />
   		<figcaption>Légende associée</figcaption>
 	</figure>
   	<div>' . $salle['capacite'] . ' / ' . $_trad['value'][$salle['categorie']] .'</div>

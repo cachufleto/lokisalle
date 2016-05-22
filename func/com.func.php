@@ -211,3 +211,10 @@ function ficheContactTemplate($contact)
 	return $offre;
 }
 
+function imageExiste($photo, $rep = 'photo'){
+
+	if(file_exists( RACINE_SERVER . RACINE_SITE . $rep . '/' . $photo)){
+		return LINK . $rep . '/' . $photo;
+	}
+	return LINK . 'img/salles.jpg';
+}

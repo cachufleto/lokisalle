@@ -1,6 +1,6 @@
 <?php $_trad = setTrad(); ?>
 <principal clas="fichesalles">
-    <h1><?php echo $_trad['titre']['fichesalles']; ?></h1>
+    <h1><?php echo $_trad['titre']['ficheSalles']; ?></h1>
     <hr />
     <div id="formulaire">
         <?php   echo $msg; ?>

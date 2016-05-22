@@ -13,7 +13,11 @@
                 <?php
                 foreach($table['champs'] as $champ=>$info ){
                     $cols = ($champ == 'active')? 'colspan="2"': '';
-                    echo "<th $cols>$info</th>";
+                    echo '<th ' . $cols . '>
+                    <form action="?nav=salles" method="POST">
+                        <input type="submit" name="ord" value="' . $champ . '">
+                    </form>
+                    </th>';
                 }
                 ?>
             </tr>
