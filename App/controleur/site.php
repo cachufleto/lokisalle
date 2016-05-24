@@ -26,10 +26,13 @@ function dernieresOffres($salle)
     $offre = '
 	<div class="offre">
 	<div>' . $salle['titre'] . '</div>
+	<a href="?nav=ficheSalles&id=' . $salle['id_salle'] . '">
   	<figure>
 	  <img class="ingOffre" src="' . imageExiste($salle['photo']) . '" alt="" />
   		<figcaption>Légende associée</figcaption>
+
 	</figure>
+	</a>
   	<div>' . $salle['capacite'] . ' / ' . $_trad['value'][$salle['categorie']] .'</div>
   	<hr/>
 	</div>

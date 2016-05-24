@@ -4,7 +4,7 @@
     <hr />
     <div id="formulaire">
         <?php   echo $msg; ?>
-        <form action="" method="POST">
+        <form action="#<?php echo "P-".($position -1); ?>" method="POST">
         <?php   echo $form; ?>
         </form>
     </div>

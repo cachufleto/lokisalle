@@ -18,8 +18,10 @@ function selectSallesActive()
 {
     // selection de tout les users sauffe le super-ADMIN
     $sql = "SELECT id_salle, titre, capacite, categorie, photo, active
-            FROM salles " . (!isSuperAdmin()? " WHERE active != 0 " : "") . "
-            ORDER BY cp, titre";
+            FROM salles
+            WHERE active != 0
+            ORDER BY titre
+            LIMIT 0,5;";
     return executeRequete($sql);
 }
 

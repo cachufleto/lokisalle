@@ -16,35 +16,8 @@ function salles()
         }
     }
 
-    $table = array();
-    $table['champs'] = array();
-    $table['champs']['id_salle'] = '#';
-    $table['champs']['titre'] = $_trad['champ']['titre'];
-    $table['champs']['capacite'] = $_trad['champ']['capacite'];
-    $table['champs']['categorie'] = $_trad['champ']['categorie'];
-    $table['champs']['photo'] = $_trad['champ']['photo'];
-    $table['champs']['select'] = $_trad['select'];
 
-    $position = 1;
-
-
-    $salles = selectSallesOrder(orderSalles());
-
-    while ($data = $salles->fetch_assoc()) {
-        $table['info'][] = array(
-            $data['id_salle'],
-            $data['titre'],
-            $data['capacite'],
-            $_trad['value'][$data['categorie']],
-            '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
-                <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            (isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
-                '<a href="' . LINK . '?nav=salles&enlever=' . $data['id_salle'] . '#P-' . ($position - 1) . '" >' . $_trad['enlever'] . '</a>' :
-                ' <a href="' . LINK . '?nav=salles&reserver=' . $data['id_salle'] . '#P-' . ($position - 1) . '">' . $_trad['reserver'] . '</a>'
-            );
-        $position++;
-    }
-
+    $table = listeSalles();
     include VUE . 'salles/salles.tpl.php';
 }
 
@@ -54,7 +27,7 @@ function ficheSalles()
     $_trad = setTrad();
     $msg = '';
     $_id = (int)(isset($_GET['id'])? $_GET['id'] : false);
-    $position = (int)(isset($_GET['pos'])? $_GET['pos'] : 1);
+    $position = (int)(isset($_GET['pos'])? $_GET['pos'] -1 : 1);
 
     include PARAM . 'ficheSalles.param.php';
     // on cherche la fiche dans la BDD
@@ -90,32 +63,7 @@ function backOff_salles()
 
     }
 
-    $table = array();
-
-    $table['champs']['id_salle'] = $_trad['champ']['id_salle'];
-    $table['champs']['titre'] = $_trad['champ']['titre'];
-    $table['champs']['capacite'] = $_trad['champ']['capacite'];
-    $table['champs']['categorie'] = $_trad['champ']['categorie'];
-    $table['champs']['photo'] = $_trad['champ']['photo'];
-    $table['champs']['active'] = $_trad['champ']['active'];
-
-
-    $position = 1;
-    $salles = selectSallesUsers(orderSallesValide() . orderSalles());
-
-    while ($data = $salles->fetch_assoc()) {
-        $table['info'][] = array(
-            $data['id_salle'],
-            $data['titre'],
-            $data['capacite'],
-            $_trad['value'][$data['categorie']],
-            '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
-                <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '">' . $_trad['modifier'] . '</a>',
-            ($data['active'] == 1) ? ' <a href="' . LINKADMIN . '?nav=salles&delete=' . $data['id_salle'] . '">' . $_trad['delete'] . '</a>' :
-            ' <a href="' . LINKADMIN . '?nav=salles&active=' . $data['id_salle'] . '">' . $_trad['activer'] . '</a>'
-        );
-    }
+    $table = listeSallesBO();
 
     include VUE . 'salles/gestionSalles.tpl.php';
 }
