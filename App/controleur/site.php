@@ -10,7 +10,7 @@ function home()
 
     $salles = selectSallesActive();
 
-    $dernieresOffres = '<div>';
+    $dernieresOffres = '<div id="dernieresOffres">';
     while($salle = $salles->fetch_assoc()){
         $dernieresOffres .= dernieresOffres($salle);
     }

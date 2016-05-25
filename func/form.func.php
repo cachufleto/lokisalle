@@ -59,7 +59,7 @@ function typeForm($champ, $info)
 
 	$_trad = setTrad();
 
-	$valeur = (!empty($info['valide']))? $info['valide'] : $info['defaut'];
+	$valeur = html_entity_decode((!empty($info['valide']))? $info['valide'] : $info['defaut']);
 	$check = (!empty($info['valide']))? 'checked' : '' ;
 	$class = (!empty($info['class']))? $info['class'] : '';
 	
@@ -114,7 +114,7 @@ function typeForm($champ, $info)
 		
 		case 'textarea':
 			$balise = '
-					<textarea id="' . $champ . '"  name="' . $champ . '" class="' . $class . '"   placeholder="' . $info['defaut'] . '">' . (isset($info['valide'])?$info['valide']:'') . '</textarea>';
+					<textarea id="' . $champ . '"  name="' . $champ . '" class="' . $class . '"   placeholder="' . $info['defaut'] . '">' . $valeur . '</textarea>';
 			return $balise;
 		break;
 		

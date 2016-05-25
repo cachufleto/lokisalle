@@ -1,4 +1,4 @@
-<principal clas="inscription">
+<div clas="inscription">
     <h1><?php echo $_trad['titre']['inscription']; ?></h1>
     <hr />
     <div id="formulaire">
@@ -13,4 +13,4 @@
         <?php } ?>
     </div>
     <hr />
-</principal>
+</div>

@@ -61,8 +61,11 @@ function getSalles($_formulaire, $_id)
 
     if($data->num_rows < 1) return false;
     $salle = $data->fetch_assoc();
-
-    return $salle;
+    $fiche = array();
+    foreach($salle as $key=>$info){
+        $fiche[$key] = html_entity_decode($info);
+    }
+    return $fiche;
 }
 
 # Fonction ficheSallesValider()

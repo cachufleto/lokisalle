@@ -274,16 +274,18 @@ function dernieresOffres($salle)
 
     $offre = '
 	<div class="offre">
-  	<div>' . $salle['ville'] . ' (' . $salle['pays'] .')</div>
-	<a href="?nav=ficheSalles&id=' . $salle['id_salle'] . '">
-  	<figure>
-	  <img class="ingOffre" src="' . imageExiste($salle['photo']) . '" alt="" />
-  		<figcaption>' . $salle['titre'] . '</figcaption>
+        <a href="?nav=ficheSalles&id=' . $salle['id_salle'] . '">
+        <figure>
+          <img class="ingOffre" src="' . imageExiste($salle['photo']) . '" alt="" />
+            <figcaption>
+                <span class="titre">' . $salle['titre'] . '</span> :: ' .
+                $salle['capacite'] . $_trad['personnes'] . ' / ' .
+                $_trad['value'][$salle['categorie']] . ' :: ' .
+                $salle['ville'] . ' (' . $salle['pays'] .')
+                </figcaption>
 
-	</figure>
-	</a>
-  	<div>' . $salle['capacite'] . $_trad['personnes'] . ' / ' . $_trad['value'][$salle['categorie']] .'</div>
-  	<hr/>
+        </figure>
+        </a>
 	</div>
 	';
 

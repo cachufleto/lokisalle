@@ -1,5 +1,5 @@
 <?php $_trad = setTrad(); ?>
-<principal clas="validerInscription">
+<div clas="validerInscription">
     <h1><?php echo $_trad['titre']['validerInscription']; ?></h1>
     <hr />
         <?php
@@ -11,4 +11,4 @@
         }
         ?>
     <hr />
-</principal>
+</div>

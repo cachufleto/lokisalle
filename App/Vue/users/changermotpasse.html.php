@@ -1,4 +1,4 @@
-<principal clas="changermotpasse">
+<div clas="changermotpasse">
     <h1><?php echo $_trad['titre']['validerMDP']; ?></h1>
     <hr />
     <div id="formulaire">
@@ -12,4 +12,4 @@
         <?php } ?>
         <hr />
     </div>
-</principal>
+</div>

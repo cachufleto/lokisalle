@@ -1,5 +1,5 @@
 <?php $_trad = setTrad(); ?>
-<principal class="backoffice">
+<div class="backoffice">
     <h1><?php echo $_trad['titre']['backoffice']; ?></h1>
     <hr />
     <form name="index" action="?nav=backoffice" method="POST">
@@ -13,4 +13,4 @@
         </div>
     </form>
     <hr />
-</principal>
+</div>

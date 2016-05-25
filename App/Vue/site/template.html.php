@@ -13,18 +13,23 @@
 </head>
 <body>
 <div id="content">
+    <!-- Menu Principal -->
     <nav class="navbar principal">
         <ul class="">
             <li><a href="?"><img src="<?php echo LINK; ?>img/Ubuntu.png" alt="Lokisalle" class="logo"></a></li>
             <?php echo $navPp; ?>
         </ul>
     </nav>
-    <div id="<?php $nav; ?>">
-    <?php
-    echo $contentPage;
-    echo $debug;
-    ?>
+    <!-- CORP -->
+    <div id="corp">
+        <div id="<?php echo $nav; ?>">
+        <?php
+        echo $contentPage;
+        echo $debug;
+        ?>
+        </div>
     </div>
+    <!-- Pied de Page -->
     <nav class="navbar footer">
         <ul class="">
             <?php echo $footer['menu']; ?>
@@ -33,6 +38,7 @@
             </li>
         </ul>
     </nav>
+    <!-- fin -->
 </div>
 </body>
 </html>

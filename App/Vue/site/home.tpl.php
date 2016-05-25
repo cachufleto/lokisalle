@@ -1,5 +1,5 @@
 <?php $_trad = setTrad(); ?>
-<principal class="home">
+<div class="home">
     <h1><?php echo $_trad['titre']['home']; ?></h1>
     <hr />
     <div id="homeG">
@@ -9,4 +9,4 @@
         <h3><?php echo $_trad['dernieresOffres']; ?></h3>
         <?php echo $dernieresOffres; ?>
     </div>
-</principal>
+</div>
