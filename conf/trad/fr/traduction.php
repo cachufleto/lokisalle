@@ -180,6 +180,7 @@ $_trad['ajouterSalle'] = "Ajouter une salle <a href=" . LINKADMIN . "?nav=editer
 $_trad['Bonjour'] = "Bonjour";
 $_trad['delete'] = "Supprimer";
 $_trad['demandeDeMotPasse'] = 'Demande de Mot de passe';
+$_trad['dernieresOffres'] = "Dernières Offres";
 $_trad['enConstruccion'] =  "En cours de réalisation!";
 $_trad['enlever'] = "Enlever";
 $_trad['ERRORSaisie'] = "Merci de Corriger le(s) erreur(s) dans le formulaire";
@@ -198,6 +199,7 @@ $_trad['pasDansMenuAdmin'] = " n'exisite pas dans le menu Admin!";
 $_trad['pasDansMenuFooter'] = " n'exisite pas dans le menu du pied de page!";
 $_trad['pasDansMenuMembre'] = " n'exisite pas dans le menu des membres!";
 $_trad['pasEncoreMembre'] = " Pas encore membre? ";
+$_trad['personnes'] = " personnes ";
 $_trad['priseEnCompteMDP'] = "Votre mot de passe sera reinitialisé en clicant sur ce liens qui vous est envoiyé à l'adresse mail d'inscription.";;
 $_trad['rectifier'] = "Rectifier";
 $_trad['redirigeVerConnection'] = $_trad['-bienvenu'] . "Vous serait redirigé ver la page de <a href='index.php?nav=actif'>connexion!</a>.</p>";

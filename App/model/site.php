@@ -17,7 +17,7 @@ function userSelectContactAll()
 function selectSallesActive()
 {
     // selection de tout les users sauffe le super-ADMIN
-    $sql = "SELECT id_salle, titre, capacite, categorie, photo, active
+    $sql = "SELECT id_salle, pays, ville, titre, capacite, categorie, photo, description, active
             FROM salles
             WHERE active != 0
             ORDER BY titre

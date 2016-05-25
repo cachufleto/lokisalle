@@ -467,9 +467,7 @@ function controlImageUpload($key, &$info, $nomImage = 'salle')
 					if(isset($_FILES[$key]['error']) && UPLOAD_ERR_OK === $_FILES[$key]['error'])
 					{
 						// On renomme le fichier
-						$nomImage =
-							$nomImage . '_' . uniqid() . '.' .
-							$extension;
+						$nomImage .= '_' . uniqid() . '.' . $extension;
 
 						// Si c'est OK, on teste l'upload
 						if(move_uploaded_file($_FILES[$key]['tmp_name'], TARGET.$nomImage))
@@ -503,7 +501,7 @@ function controlImageUpload($key, &$info, $nomImage = 'salle')
 		$info['message'] = $_trad['erreur']['veuillezRemplirFormulaire'];
 	}
 
-	//echo $info['message'];
+	echo __FUNCTION__ , '   ', $info['message'];
 	return true;
 
 }

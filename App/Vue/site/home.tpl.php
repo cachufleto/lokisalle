@@ -6,6 +6,7 @@
         <?php include 'activite.xhtml'; ?>
     </div>
     <div id="homeD">
+        <h3><?php echo $_trad['dernieresOffres']; ?></h3>
         <?php echo $dernieresOffres; ?>
     </div>
 </principal>

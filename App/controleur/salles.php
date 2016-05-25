@@ -33,10 +33,9 @@ function ficheSalles()
     // on cherche la fiche dans la BDD
     // extraction des données SQL
     include FUNC . 'form.func.php';
-    if (modCheckSalles($_formulaire, $_id, 'salles')) {
+    if ($salle = getSalles($_formulaire, $_id)) {
         // traitement POST du formulaire
-        $form = formulaireAfficherInfo($_formulaire);
-        $form .= '<a href="?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
+        $salle['lien'] = '<a href="?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
     } else {
         header('Location:index.php');
         exit();
@@ -75,32 +74,25 @@ function backOff_ficheSalles()
     $_trad = setTrad();
 
     include PARAM . 'backOff_ficheSalles.param.php';
-
     include FUNC . 'form.func.php';
 
     // extraction des données SQL
     $form = $msg = '';
     if (modCheckSalles($_formulaire, $_id, 'salles')) {
-
         // traitement POST du formulaire dans les parametres
         if ($_valider){
-            echo 'TRAITEENT **************<br><br><br><br><br>**************';
+
             $msg = $_trad['erreur']['inconueConnexion'];
             if(postCheck($_formulaire, TRUE)) {
-                //exit(var_dump($_formulaire));
                 $msg = ficheSallesValider($_formulaire);
-                exit('traitement');
             }
-            exit('tratement');
         }
 
         if ('OK' == $msg) {
             // on renvoi ver connection
             $msg = $_trad['lesModificationOntEteEffectues'];
             // on évite d'afficher les info du mot de passe
-            unset($_formulaire['mdp']);
             $form = formulaireAfficherInfo($_formulaire);
-
         } else {
 
             if (!empty($msg) || $_modifier) {
@@ -132,7 +124,7 @@ function backOff_ficheSalles()
 
     }
 
-    include VUE . 'salles/ficheSalles.tpl.php';
+    include VUE . 'salles/backOff_ficheSalles.tpl.php';
 }
 
 function backOff_editerSalles()
@@ -159,7 +151,7 @@ function backOff_editerSalles()
 
 // affichage des messages d'erreur
     if ('OK' == $msg) {
-        // on renvoi ver connection
+        // on renvoi ver la liste des salles
         header('Location:index.php?nav=salles&pos='.$_formulaire['position']['value']);
         exit();
     } else {
