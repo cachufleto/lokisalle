@@ -1,8 +1,8 @@
-<?php $_trad = setTrad(); ?>
 <!DOCTYPE html>
+<?php $_trad = setTrad(); ?>
 <html lang="<?php echo $_SESSION['lang']; ?>">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Projet DIWoo10 2015 - 2016, Lokisalle">
     <meta name="author" content="Carlos PAZ DUPRIEZ">
