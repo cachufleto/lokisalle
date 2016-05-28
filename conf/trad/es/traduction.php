@@ -1,7 +1,7 @@
 <?php
 
-$_trad['-bienvenu'] = "<h2>Bienvenido al sitio Lokisalle</h2>";
-$_trad['-gestion'] = "<h2>Servicio en linea Lokisalle</h2>";
+$_trad['-bienvenu'] = "<h2>Bienvenido al sitio LOKISALLE</h2>";
+$_trad['-gestion'] = "<h2>Servicio en linea LOKISALLE</h2>";
 /* trad pour les champs SQL */
 $_trad['champ']['active'] = "Activar";
 $_trad['champ']['adresse'] = "Direccion";
@@ -45,6 +45,7 @@ $_trad['defaut']['Ouhabite'] = "Donde vivo";
 $_trad['defaut']['photo'] = "Foto";
 $_trad['defaut']['SeConnecter'] = "Connectarse";
 $_trad['defaut']['telephone'] = "03 89 76 43 21";
+$_trad['defaut']['valider'] = "Validar";
 $_trad['defaut']['ville'] = "Santiago...";
 
 /* trad des messages d'erreurs dans les formulaires */
@@ -180,6 +181,7 @@ $_trad['ajouterSalle'] = "Agresar una sala <a href=" . LINKADMIN . "?nav=editerS
 $_trad['Bonjour'] = "Apreciado";
 $_trad['delete'] = "Suprimir";
 $_trad['demandeDeMotPasse'] = 'Solicitud de contraseña';
+$_trad['dernieresOffres'] = "Oportunidades";
 $_trad['enConstruccion'] =  "En construccion!";
 $_trad['enlever'] = "Retirar";
 $_trad['ERRORSaisie'] = "Por favor corrija el o los Errores en el formulario";
@@ -198,6 +200,7 @@ $_trad['pasDansMenuAdmin'] = " no existe dentro de los paràmetros del menu del 
 $_trad['pasDansMenuFooter'] = " no existe dentro de los paràmetros del menu del pied de pagina!";
 $_trad['pasDansMenuMembre'] = " no existe dentro de los paràmetros del menu de miembros!";
 $_trad['pasEncoreMembre'] = "Aun no es miembro? ";
+$_trad['personnes'] = " personnas ";
 $_trad['priseEnCompteMDP'] = "Su Contraseña sera reiniticializada al validar su informacion con el link enviado a la direccion mail de registro.";;
 $_trad['rectifier'] = "Rectificar";
 $_trad['redirigeVerConnection'] = $_trad['-bienvenu'] . "<p>Sera usted dirigido a la pagina de <a href='index.php?nav=actif'>conexion!</a>.</p>";

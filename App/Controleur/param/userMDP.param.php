@@ -17,4 +17,4 @@ $_formulaire['jeton'] = array(
 
 $_formulaire['valide'] = array(
     'type' => 'submit',
-    'defaut' => $_trad['defaut']['SeConnecter']);
+    'defaut' => $_trad['defaut']['valider']);

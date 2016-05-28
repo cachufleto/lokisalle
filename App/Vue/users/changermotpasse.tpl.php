@@ -12,6 +12,5 @@
             <?php echo $form; ?>
         </form>
         <?php } ?>
-        <hr />
     </div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
-$_trad['-bienvenu'] = "<h2>Bienvenu Sur le site de Lokisalle</h2>";
-$_trad['-gestion'] = "<h2>Service ON-LINE Lokisalle</h2>";
+$_trad['-bienvenu'] = "<h2>Bienvenu sur le site LOKISALLE</h2>";
+$_trad['-gestion'] = "<h2>Service ON-LINE LOKISALLE</h2>";
 /* trad pour les champs SQL */
 $_trad['champ']['active'] = "Activer";
 $_trad['champ']['adresse'] = "Adresse";
@@ -45,6 +45,7 @@ $_trad['defaut']['Ouhabite'] = "Ou j'habite";
 $_trad['defaut']['photo'] = "Photo";
 $_trad['defaut']['SeConnecter'] = "Se Connecter";
 $_trad['defaut']['telephone'] = "01 89 76 43 21";
+$_trad['defaut']['valider'] = "Valider";
 $_trad['defaut']['ville'] = "Mont...";
 
 /* trad des messages d'erreurs dans les formulaires */

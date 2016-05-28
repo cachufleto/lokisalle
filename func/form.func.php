@@ -25,10 +25,11 @@ function formulaireAfficher($_form)
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
+		$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? "ligneFile" : "ligneForm";
 		$trad = ($champ == 'valide')? '' : $_trad['champ'][$champ];
 		if($info['type'] != 'hidden') {
 			$formulaire .=  '
-			<div class="ligneForm'. ((!empty($info['rectification']))? ' rectifier' : '') .'">
+			<div class="'. $ligneForm . ' ' . ((!empty($info['rectification']))? ' rectifier' : '') .'">
 				<label class="label">' .  $trad;
 			$formulaire .= (isset($info['obligatoire']))? '<span class="alert">*</span>': '';
 			$formulaire .= '</label>';
@@ -372,6 +373,7 @@ function formulaireAfficherInfo($_form)
 	//global $_formIncription;
 	$formulaire = '';
 	foreach($_form as $champ => $info){
+		$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? "ligneFile" : "ligneForm";
 		$value = isset($info['valide'])? $info['valide'] : '';
 		if($info['type'] != 'hidden') 
 		{
@@ -383,7 +385,6 @@ function formulaireAfficherInfo($_form)
 				</div>';
 				
 			} else{
-				$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? "ligneFile" : "ligneForm";
 				$formulaire .=  '
 				<div class="' . $ligneForm . '" >
 					<label class="label" >' . $_trad['champ'][$champ] ;
@@ -421,7 +422,7 @@ function formulaireAfficherMod($_form)
 	$formulaire = '';
 
 	foreach($_form as $champ => $info){
-		
+		$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? 'ligneFile' : 'ligneForm';
 		$value = isset($info['valide'])? $info['valide'] : '';
 		if($champ == 'sexe') {
 			if(isset($_trad['value'][$value]))
@@ -435,7 +436,6 @@ function formulaireAfficherMod($_form)
 
 			if(!isset($info['obligatoire']) || utilisateurEstAdmin()){
 				$label = key_exists($champ, $_trad['champ'])? $_trad['champ'][$champ] : $champ;
-				$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? 'ligneFile' : 'ligneForm';
 				$formulaire .=  '
 				<div class="' . $ligneForm . '" >
 					<label class="label" >' . (($champ != 'valide')? $label : '&nbsp;') . '</label>
@@ -447,7 +447,7 @@ function formulaireAfficherMod($_form)
 				if(!empty($info['rectification']))
 				{
 				$formulaire .=  '
-				<div class="ligneForm" >
+				<div class="' . $ligneForm . '" >
 					<label class="label rectifier" style="color:red">Rectifier</label>
 					<div class="champs">' . typeForm($champ.'2', $info) . '</div>
 				</div>';
@@ -455,9 +455,9 @@ function formulaireAfficherMod($_form)
 				
 				$formulaire .= ((isset($info['message']))? '<div class="erreur">' .$info['message']. '</div>': '');
 			
-			} elseif($champ != 'statut'){ 				
+			} elseif($champ != 'statut'){
 				$formulaire .=  '
-				<div class="ligneForm" >
+				<div class="' . $ligneForm . '" >
 					<label class="label" >' . $_trad['champ'][$champ] ;
 				$formulaire .= '</label>
 					<div class="champs">' . $value . '</div>

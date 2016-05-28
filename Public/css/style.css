@@ -17,17 +17,12 @@ a {
 .ligne{
 	width:100%;
 }
-#cgv,
-#mentions,
-#contact,
-#newsletter,
-#plan,
-#salles,
-#users{
+
+#corp .content{
 	width: 90%;
 	margin-left: 5%;
 }
-
+/*
 #connection,
 #inscription,
 #recherche,
@@ -38,7 +33,7 @@ a {
 	width: 350px;
 	margin-left:calc(50% - 175px);
 }
-
+*/
 /* responcive */
 .col-2{ width: 50%; }
 .col-3{ width: 33%; }

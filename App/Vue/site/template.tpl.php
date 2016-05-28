@@ -9,7 +9,7 @@
     <link rel="icon" href="<?php echo LINK;  ?>img/lokisalle.png">
     <?php echo $_link; ?>
     <script src="<?php echo LINK;  ?>js/script.js" type="text/javascript"></script>
-    <title><?php echo $_trad['titre'][$nav]; ?></title>
+    <title><?php echo (isset($_trad['titre'][$nav])? $_trad['titre'][$nav] : "LOKISALLE"); ?></title>
 </head>
 <body>
 <div id="content">
@@ -22,7 +22,7 @@
     </nav>
     <!-- CORP -->
     <div id="corp">
-        <div id="<?php echo $nav; ?>">
+        <div id="<?php echo $nav; ?>" class="content">
         <?php
         echo $contentPage;
         ?>
