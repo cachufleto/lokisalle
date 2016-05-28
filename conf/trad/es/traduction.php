@@ -51,7 +51,7 @@ $_trad['defaut']['ville'] = "Santiago...";
 $_trad['erreur']['erreur'] = " Error ";
 $_trad['erreur']['acces'] = " <span class='alert'>Ha hecho demaciadas tentativas de conneccion<br>Por favor cierre su navegador y vuelva mas tarde !</span>";
 $_trad['erreur']['aphanumeriqueSansSpace'] = " Valores aceptados: A à Z et 0 à 9 sans espaces ";
-$_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENCION! Error SQL</span><br /><b>Mensage : </b>";
+$_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENCION! Error SQL</span><br />";
 $_trad['erreur']['ATTENTIONfaitQuoiAvec'] = " !!! CUIDADO !!!! Que hace usted con ";
 $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:red'>ATTENCION! Impossible de cerrar la conneccion con la BDD</span><br /><b>Message : </b>";
 $_trad['erreur']['caracteres'] = " letras y numeros ";

@@ -5,12 +5,38 @@ body {
 div{
 	float: left;
 }
+
 h1 {
 	text-align: center;
 }
 
 a {
 	text-decoration: none;
+}
+
+.ligne{
+	width:100%;
+}
+#cgv,
+#mentions,
+#contact,
+#newsletter,
+#plan,
+#salles,
+#users{
+	width: 90%;
+	margin-left: 5%;
+}
+
+#connection,
+#inscription,
+#recherche,
+#profil,
+#editerSalles,
+#ficheSalles,
+#reservation{
+	width: 350px;
+	margin-left:calc(50% - 175px);
 }
 
 /* responcive */
@@ -60,6 +86,7 @@ a {
 	color:white;
 	text-decoration: none;
 }
+
 #content .navbar ul li.admin a,
 #content .navbar ul li a.admin{
 	color:red;
@@ -96,37 +123,13 @@ a {
 	background-color: ghostwhite;
 }
 
-/* conteneur par page */
-#home,
-#salles,
-#ficheSalles,
-#recherche {
-	height: auto;
-	padding: 25px;
-	width: calc(100% - 50px);
-	/*background-color: lavenderblush;*/
-}
-
-/* conteneur dans le conteneur */
-.fichesalles {
+#debug {
 	width: 100%;
-}
-#homeG {
-	width: 65%;
-	border-right: solid 1px #000;
-	padding: 25px;
-}
-
-#homeD {
-	width: 30%;
-	padding-left: 25px;
-}
-
-#homeD, #homeG {
-	float: left;
 	height: auto;
 }
 
+
+/* conteneur par page */
 #dernieresOffres{
 	width: 100%;
 }
@@ -155,24 +158,17 @@ a {
 	font-size: 1.4em;
 }
 
-#debug {
-	position: relative;
-	float: left;
-	width: 100%;
-	height: auto;
-}
-
 #salles .ligne{
 	float: left;
 	width: 100%;
 }
 
 /*
-
 a.order{
 	text-decoration: none;
 	color: inherit;
 }*/
+
 table {
 	width: 100%;
 }
@@ -198,8 +194,6 @@ img.trombi {
 	width: 200px;
 }
 
-/*
-
 .alert {
 	color:red !important;
 	padding-bottom: 10px;
@@ -217,68 +211,13 @@ img.trombi {
 	width: 250px;
 	padding-left: 12px;
 }
-*/
-#fiche {
-	width: 600px;
-	margin-left: calc( 49% - 300px);
-}
 
-#fiche .ligne{
-	float: left;
-	width: 100%;
-}
 
-#fiche .ligne .lien{
-	position: relative;
-	margin-bottom: 0px;
-}
-
-#fiche .ligne .ville{
-	float: inherit;
-	width: 100%;
-	font-size: 1.8em;
-	color: #6D1907;
-	text-align: center;
-	height: 50px;
-}
-
-#fiche .salle {
-	padding: inherit;
-}
-
-#fiche .photo{
-	float: left;
-	width: 450px;
-}
-
-#fiche .photo img{
-	width: 450px;
-	height: auto;
-}
-
-#fiche .info{
-	float: left;
-	width: 150px;
-	padding-left: 10px;
-}
-
-#fiche .info .titre{
-	font-size: 1.8em;
-	width: 100%;
-}
-
-#fiche .info .fiche{
-	padding-bottom: 15px;
-}
-
-#fiche .description{
-	width: 100%;
-}
 /*
 .ingOffre {
 	width: 250px;
 }
-
+*/
 
 #formulaire {
 	padding:13px;
@@ -291,6 +230,12 @@ img.trombi {
 	display:inline-block;
 	width:100%;
 	height: 40px;
+}
+
+#formulaire .ligneFile{
+	width:100%;
+	height: auto;
+	padding-bottom: 24px;
 }
 
 #formulaire .label,
@@ -307,7 +252,7 @@ img.trombi {
 	color:blue !important;
 }
 
-
+/*
 #activite {
 	padding: 0 50px;
 }

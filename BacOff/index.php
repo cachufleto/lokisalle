@@ -46,9 +46,10 @@ $debug = ob_get_contents();
 ob_end_clean();
 
 $_link = siteHeader($_linkCss);
+$_link .= siteHeaderJS($_linkJs);
 $navPp = nav('navAdmin');
 $nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 
 $footer = footer();
 
-include VUE . 'site/template.html.php';
+include VUE . 'site/template.tpl.php';

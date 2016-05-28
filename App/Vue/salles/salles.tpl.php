@@ -3,7 +3,7 @@
     <h1><?php echo $_trad['titre']['salles']; ?></h1>
 </div>
 <div class="ligne">
-    <?php echo $msg; ?>
+    <p><?php echo $msg; ?></p>
     <table>
     <tr>
         <?php

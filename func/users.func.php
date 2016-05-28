@@ -609,7 +609,6 @@ function userMDP($jeton)
         }
     }
 
-
     include VUE . 'users/userMDP.tpl.php';
 
 }

@@ -63,7 +63,7 @@ function contact()
         }
     }
 
-    include VUE . 'site/contact.html.php';
+    include VUE . 'site/contact.tpl.php';
 }
 
 function mentions()

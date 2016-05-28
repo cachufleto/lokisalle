@@ -68,6 +68,27 @@ function getSalles($_formulaire, $_id)
     return $fiche;
 }
 
+function remplaceAccents($str, $charset='utf-8')
+{
+    $str = htmlentities($str, ENT_NOQUOTES, $charset);
+
+    $str = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+    $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
+    $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
+
+    return $str;
+}
+
+function nomImage($_formulaire){
+
+    $pays = (!empty($_formulaire['pays']['value']))? $_formulaire['pays']['value'] : $_formulaire['pays']['sql'];
+    $ville = (!empty($_formulaire['ville']['value']))? $_formulaire['ville']['value'] : $_formulaire['ville']['sql'];
+    $titre = (!empty($_formulaire['titre']['value']))? $_formulaire['titre']['value'] : $_formulaire['titre']['sql'];
+    $nomImage = str_replace(' ', '_', remplaceAccents($pays.'_'.$ville.'_'.$titre, $charset='utf-8'));
+
+    return $nomImage;
+}
+
 # Fonction ficheSallesValider()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
@@ -158,16 +179,11 @@ function ficheSallesValider(&$_formulaire)
 
     }elseif(!empty($_FILES['photo'])){
 
-        $nomImage  = $_formulaire['pays']['value'];
-        $nomImage .= '_' . $_formulaire['ville']['value'];
-        $nomImage .= '_' . $_formulaire['titre']['value'];
-        $nomImage .= str_replace(' ', '_', $nomImage);
-
-        $erreur = controlImageUpload('photo', $_formulaire['photo'], $nomImage)? true : $erreur;
+        $erreur = controlImageUpload('photo', $_formulaire['photo'], nomImage($_formulaire))? true : $erreur;
         $valeur = $_formulaire['photo']['valide'];
 
         if(!$erreur){
-            $sql_set .= ", photo = '$valeur'";
+            $sql_set .= ((!empty($sql_set))? ", " : "")."photo = '$valeur'";
         }
 
     }elseif(empty($_FILES['photo'])){
@@ -383,7 +399,7 @@ function listeSallesBO()
 
 function orderSalles()
 {
-    if(isset($_SESSION['orderSalles'])){
+    if(isset($_SESSION['orderSalles']['champ'])){
         if(isset($_POST['ord'])){
             $ord = $_POST['ord'];
             switch($ord){
@@ -403,5 +419,6 @@ function orderSalles()
         $_SESSION['orderSalles']['champ'] = 'categorie';
         $_SESSION['orderSalles']['order'] = 'ASC';
     }
+
     return $_SESSION['orderSalles']['champ'] . " " . $_SESSION['orderSalles']['order'];
 }

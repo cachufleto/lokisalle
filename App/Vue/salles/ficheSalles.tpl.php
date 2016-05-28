@@ -1,6 +1,8 @@
 <?php $_trad = setTrad(); ?>
-<div class="fichesalles">
+<div class="ligne">
     <h1><?php echo $_trad['titre']['ficheSalles']; ?></h1>
+</div>
+<div class="ligne">
     <div id="fiche" class="salle">
         <div class="ligne">
             <div class="ville"><?php echo $salle['ville']; ?> (<?php echo $salle['pays']; ?>)</div>
@@ -16,23 +18,24 @@
                     <?php echo $salle['cp'], ' ', $salle['ville']; ?><br>
                     <?php echo $salle['telephone']; ?><br>
                     <?php echo $salle['gsm']; ?></div>
-                <div><?php echo 'Cat. ', $_trad['value'][$salle['categorie']], ' :: ', $salle['capacite'] . $_trad['personnes']; ?>
+                <div>
+                    <?php echo 'Cat. ', $_trad['value'][$salle['categorie']], ' :: ', $salle['capacite'] . $_trad['personnes']; ?>
                 </div>
-                <div class="lien"><?php echo $salle['lien']; ?></div>
+                <div class="ligne lien">
+                    <?php echo $salle['lien']; ?>
+                </div>
             </div>
         </div>
         <div class="ligne description">
-            <div><?php echo $salle['description']; ?></div>
-            <div><?php echo $salle['capacite'] . $_trad['personnes'] , ' Cat. ' ,
-                    $_trad['value'][$salle['categorie']]; ?>
+            <div>
+                <?php echo $salle['description'] . '<br>[' . $salle['capacite'] . $_trad['personnes'] , ' Cat. ' ,
+                    $_trad['value'][$salle['categorie']]; ?>]
             </div>
             <form action="#<?php echo "P-".($position -1); ?>" method="POST">
-                <div><?php $salle['id_salle']; ?></div>
+                <div>
+                    <?php $salle['id_salle']; ?>
+                </div>
             </form>
         </div>
-        <div>
     </div>
 </div>
-</div>
-
-

@@ -1,0 +1,22 @@
+#home {
+    height: auto;
+    padding: 25px;
+    width: calc(100% - 50px);
+    /*background-color: lavenderblush;*/
+}
+
+#homeG {
+    width: 65%;
+    border-right: solid 1px #000;
+    padding: 25px;
+}
+
+#homeD {
+    width: 30%;
+    padding-left: 25px;
+}
+
+#homeD, #homeG {
+    float: left;
+    height: auto;
+}

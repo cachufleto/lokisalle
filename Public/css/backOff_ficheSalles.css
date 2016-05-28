@@ -1,0 +1,9 @@
+#ficheSalles{
+    width: 800px;
+    margin-left:calc(50% - 400px);
+}
+
+.champs img{
+    width: 250px;
+    height: auto;
+}

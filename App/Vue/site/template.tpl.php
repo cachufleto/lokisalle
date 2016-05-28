@@ -25,9 +25,11 @@
         <div id="<?php echo $nav; ?>">
         <?php
         echo $contentPage;
-        echo $debug;
         ?>
         </div>
+    </div>
+    <div  id="debug">
+        <?php echo $debug; ?>
     </div>
     <!-- Pied de Page -->
     <nav class="navbar footer">

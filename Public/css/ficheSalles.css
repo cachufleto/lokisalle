@@ -1,0 +1,67 @@
+#ficheSalles{
+    width: 800px;
+    margin-left:calc(50% - 400px);
+}
+
+.champs img{
+    width: 250px;
+    height: auto;
+}
+
+#fiche {
+    width: 860px;
+    margin-left: calc( 49% - 430px);
+    border: 1px solid gray;
+}
+
+#fiche .ligne{
+    float: left;
+    width: 100%;
+}
+
+#fiche .ligne .lien{
+    position: relative;
+    margin-bottom: 0px;
+}
+
+#fiche .ligne .ville{
+    float: inherit;
+    width: 100%;
+    font-size: 1.8em;
+    color: #6D1907;
+    text-align: center;
+    height: 50px;
+}
+
+#fiche .salle {
+    padding: inherit;
+}
+
+#fiche .photo{
+    float: left;
+    width: 450px;
+}
+
+#fiche .photo img{
+    width: 450px;
+    height: auto;
+}
+
+#fiche .info{
+    float: left;
+    width: 250px;
+    padding-left: 10px;
+}
+
+#fiche .info .titre{
+    font-size: 1.8em;
+    width: 100%;
+}
+
+#fiche .info .fiche{
+    padding-bottom: 15px;
+}
+
+#fiche .description{
+    width: 100%;
+}

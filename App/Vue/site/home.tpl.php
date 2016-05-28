@@ -1,7 +1,8 @@
 <?php $_trad = setTrad(); ?>
-<div class="home">
+<div class="ligne">
     <h1><?php echo $_trad['titre']['home']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <div id="homeG">
         <?php include 'activite.xhtml'; ?>
     </div>

@@ -1,6 +1,8 @@
-<div clas="<?php echo $nav; ?>">
+<?php $_trad = setTrad(); ?>
+<div class="ligne">
     <h1><?php echo $_trad['titre']['profil']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <div id="formulaire">
         <?php
         // affichage
@@ -13,5 +15,4 @@
             ?>
         </form>
     </div>
-    <hr />
 </div>

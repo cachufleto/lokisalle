@@ -41,10 +41,17 @@ debugTestMail();
 $debug = ob_get_contents();
 ob_end_clean();
 
+if(file_exists(APP . 'Public/css/' . $route[$nav]['action'] . '.css')){
+	$_linkCss[] = LINK . 'css/' . $route[$nav]['action'] . '.css';
+}
+if(file_exists(APP . 'Public/js/' . $route[$nav]['action'] . '.js')){
+	$_linkJs[] = LINK . 'js/' . $route[$nav]['action'] . '.js';
+}
+
 $_link = siteHeader($_linkCss);
 $navPp = nav((utilisateurEstAdmin() && $_SESSION['BO'])? 'navAdmin' : '');
 $nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 
 $footer = footer();
 
-include VUE . 'site/template.html.php';
+include VUE . 'site/template.tpl.php';

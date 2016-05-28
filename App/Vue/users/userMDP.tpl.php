@@ -1,7 +1,8 @@
 <?php $_trad = setTrad(); ?>
-<div clas="validerInscription">
+<div class="ligne">
     <h1><?php echo $_trad['titre']['validerMDP']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <div id="formulaire">
         <?php
         // affichage
@@ -15,5 +16,4 @@
         }
         ?>
     </div>
-    <hr />
 </div>

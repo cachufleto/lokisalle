@@ -1,6 +1,8 @@
-<div clas="changermotpasse">
+<?php $_trad = setTrad(); ?>
+<div class="ligne">
     <h1><?php echo $_trad['titre']['validerMDP']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <div id="formulaire">
         <?php if($msg == 'OK'){
             echo $_trad['priseEnCompteMDP'];

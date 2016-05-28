@@ -32,17 +32,20 @@ function connectMysqli()
 # RETURN object
 function executeRequete($req)
 {
-	
+	$_trad = setTrad();
+
+	_debug($req, 'SQL REQUETTE');
+
 	$connexion = connectMysqli();
 
 	$resultat = $connexion->query($req);
 
 	if(!$resultat) {
-		die ('<span style="color:red">ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>' . $connexion->error . '<br />');
+		die ($_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] . $req . '<br /><b>---> : </b>' . $connexion->error . '<br />');
 	}
-	_debug($req, 'SQL REQUETTE');
+
 	// deconnectMysqli();
-	$connexion->close() or die ('<span style="color:red">ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>' . ${$connexion}->error . '<br />');
+	$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
 	
 	return $resultat;
 }

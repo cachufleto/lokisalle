@@ -1,7 +1,8 @@
 <?php $_trad = setTrad(); ?>
-<div class="backoffice">
+<div class="ligne">
     <h1><?php echo $_trad['titre']['backoffice']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <form name="index" action="?nav=backoffice" method="POST">
         <div class=" col-2">
             <input type="submit" value="modifier" name="activite">
@@ -12,5 +13,4 @@
             <?php echo $dernieresOffres; ?>
         </div>
     </form>
-    <hr />
 </div>

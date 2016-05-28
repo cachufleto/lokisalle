@@ -130,7 +130,11 @@ function typeForm($champ, $info)
 		
 		case 'file':
 			// $maxlength = (isset($info['maxlength']) AND !empty($info['maxlength']))? ' maxlength ="' . $info['maxlength'] . '"' : '';
-			return '<input type="file" class="' . $class . '"   name="' . $champ . '" >';
+			$image = '';
+			if(isset($info['sql'])){
+				$image = '<img class="trombi" src="' . imageExiste($info['sql']) . '" >';
+			}
+			return $image . '<input type="file" class="' . $class . '"   name="' . $champ . '" >';
 		break;
 		
 		case 'submit':
@@ -327,10 +331,41 @@ function testLongeurChaine($valeur, $maxLen=250)
 
 }
 
-# Fonction formulaireAfficherInfo()
+# Fonction AfficherInfo()
 # Mise en forme des differents items du formulaire
 #$_form => tableau des items
 # RETURN string du formulaire
+function AfficherInfo($_form)
+{
+	$_trad = setTrad();
+	//global $_formIncription;
+	$formulaire = array();
+	foreach($_form as $champ => $info){
+		$value = isset($info['valide'])? $info['valide'] : '';
+		if($info['type'] != 'hidden')
+		{
+			if($champ == 'valide'){
+				$formulaire[$champ] = typeForm($champ, $info);
+
+			} else{
+				if($info['type'] == 'file') {
+					$formulaire[$champ] = '<img src="' . imageExiste($value) . '">';
+				}
+				else {
+					$formulaire[$champ] =
+						(isset($info['option'])
+							? ((array_key_exists($value, $_trad['value']))?
+								$_trad['value'][$value] : $_trad['value']['indefini'])
+							: $value );
+				}
+			}
+		} elseif(isset($info['acces'])) {
+			$formulaire[$champ] = typeForm($champ, $info);
+		}
+	}
+
+	return $formulaire; // texte
+}
 function formulaireAfficherInfo($_form)
 {
 	$_trad = setTrad();
@@ -348,8 +383,9 @@ function formulaireAfficherInfo($_form)
 				</div>';
 				
 			} else{
+				$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? "ligneFile" : "ligneForm";
 				$formulaire .=  '
-				<div class="ligneForm" >
+				<div class="' . $ligneForm . '" >
 					<label class="label" >' . $_trad['champ'][$champ] ;
 				if($info['type'] == 'file') {
 					$formulaire .= '</label>
@@ -399,8 +435,9 @@ function formulaireAfficherMod($_form)
 
 			if(!isset($info['obligatoire']) || utilisateurEstAdmin()){
 				$label = key_exists($champ, $_trad['champ'])? $_trad['champ'][$champ] : $champ;
+				$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? 'ligneFile' : 'ligneForm';
 				$formulaire .=  '
-				<div class="ligneForm" >
+				<div class="' . $ligneForm . '" >
 					<label class="label" >' . (($champ != 'valide')? $label : '&nbsp;') . '</label>
 					<div class="champs">' . typeForm($champ, $info);
 

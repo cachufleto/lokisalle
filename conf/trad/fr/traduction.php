@@ -51,7 +51,7 @@ $_trad['defaut']['ville'] = "Mont...";
 $_trad['erreur']['erreur'] = " Erreur ";
 $_trad['erreur']['acces'] = " <span class='alert'>Désoles Vous avez épuisée vos tentatives de connexion authorises<br>Veuillez quiter votre navigateur et venir plus tard !</span>";
 $_trad['erreur']['aphanumeriqueSansSpace'] = " Caractere acceptés: A à Z et 0 à 9 sans espaces ";
-$_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENTION! Erreur sur la requete SQL</span><br /><b>Message : </b>";
+$_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENTION! Erreur sur la requete SQL</span><br />";
 $_trad['erreur']['ATTENTIONfaitQuoiAvec'] = " ATTENTION !!!! Vous fait Quoi avec ";
 $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:red'>ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>";
 $_trad['erreur']['caracteres'] = " caracteres ";

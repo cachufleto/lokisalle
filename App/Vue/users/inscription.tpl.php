@@ -1,6 +1,8 @@
-<div clas="inscription">
+<?php $_trad = setTrad(); ?>
+<div class="ligne">
     <h1><?php echo $_trad['titre']['inscription']; ?></h1>
-    <hr />
+</div>
+<div class="ligne">
     <div id="formulaire">
         <?php
         if('OK' == $msg){ ?>
@@ -12,5 +14,4 @@
             </form>
         <?php } ?>
     </div>
-    <hr />
 </div>

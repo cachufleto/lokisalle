@@ -2,12 +2,22 @@
 function siteHeader($_linkCss)
 {
     $_link = '';
-    foreach($_linkCss as $link)
+    foreach($_linkCss as $link) {
         $_link .= '
-    <link href="'. $link .'" rel="stylesheet">';
+    <link href="' . $link . '" rel="stylesheet">';
+    }
     return $_link;
 }
 
+function siteHeaderJS($_linkJS)
+{
+    $_link = '';
+    foreach($_linkJS as $link) {
+        $_link .= '
+    <script src="' . $link . '"></script>';
+    }
+    return $_link;
+}
 
 function nav($_menu = '')
 {

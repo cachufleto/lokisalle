@@ -419,7 +419,7 @@ function changermotpasse()
         $form = formulaireAfficher($_formulaire);
     }
 
-    include VUE . 'users/changermotpasse.html.php';
+    include VUE . 'users/changermotpasse.tpl.php';
 }
 
 function validerInscription()
@@ -445,6 +445,6 @@ function newMDP()
 
 function expiration()
 {
-    include VUE . 'users/expiration.html.php';
+    include VUE . 'users/expiration.tpl.php';
 }
 
