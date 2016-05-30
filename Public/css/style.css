@@ -1,5 +1,8 @@
 body {
 	margin:0;
+	font-family: "Monotype Corsiva";
+	background-color: ghostwhite;
+
 }
 
 div{
@@ -14,6 +17,9 @@ a {
 	text-decoration: none;
 }
 
+img {
+	border-radius: 10px;
+}
 .ligne{
 	width:100%;
 }
@@ -21,6 +27,27 @@ a {
 #corp .content{
 	width: 90%;
 	margin-left: 5%;
+}
+
+.trier{
+	border: solid #ccc 2px;
+	box-shadow: 8px 8px 4px #CCC;
+	border-radius: 10px;
+	background-color: white;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+input{
+	font: 1em "Monotype Corsiva";
+	background-color: #E15007;
+	border-radius: 6px;
+	color: #E7E5E5;
+}
+
+.ficheContact{
+	padding: 25px;
+	width: 40%;
 }
 /*
 #connection,
@@ -39,7 +66,7 @@ a {
 .col-3{ width: 33%; }
 .col-4{ width: 25%; }
 .col-5{ width: 20%; }
-.col-6{ width: 16%; }
+.col-6{ width: 10%; }
 .col-7{ width: 11%; }
 .col-8{ width: 7%; }
 .col-9{ width: 6%; }
@@ -52,29 +79,43 @@ a {
 	/*border:solid 1px black;*/
 	width:calc(100% - 50px);
 	margin-left:25px;
+	margin-top: 0;
 	overflow: hidden;
-	padding: 50px 0;
+	padding: 0;
 }
 
 #content .navbar {
 	float: left;
 	width: 100%;
 	height: 50px;
-	background-color: #82949C;
+	background-color: #9C1E16;
+}
+
+#content .navbar ul{
+	margin-top: 380px;
 }
 
 #content .navbar ul li {
 	float: left;
 	display: inline;
 	color: white;
-	/*width: auto;*/
+	text-align: center;
 	height: 25px;
 	padding-left: 15px;
 	padding-right: 15px;
+	background-color: #E15007;
+	border-radius: 25px;
+	padding-top: 6px;
+	box-shadow: 4px 4px 2px #CCC;
+	margin-left: 15px;
 }
 
 #content .navbar ul li.active{
 	background-color: #55787D;
+}
+
+#content .navbar ul li.drapeau{
+	width: 28px;
 }
 
 #content .navbar ul li a {
@@ -84,30 +125,59 @@ a {
 
 #content .navbar ul li.admin a,
 #content .navbar ul li a.admin{
-	color:red;
+	color:#67ED00;
 }
 
 #content .navbar img.logo {
-	width: 50px;
-	height: 50px;
+	width: 100px;
+	height: 100px;
 	position: relative;
 	margin-left: -29px;
-	margin-top: -16px;
+	margin-top: -48px;
 }
 
 #content .principal {
 	z-index: 988;
-	position: fixed;
 	top: 0;
+	background-image: url("../img/theatre_du_chatelet.jpg");
 	width: calc(100% - 50px);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10PX;
+	box-shadow: 8px 8px 4px #CCC;
+	padding-bottom:6px;
+	height: 430px;
+}
+#content .principal ul{
+	margin-top: 390px;
+}
+
+#content .principal ul li{
+	border: 1px solid wheat;
+}
+
+#content .navbar ul li.none {
+	background-color: inherit;
+	box-shadow: inherit;
+	position: absolute;
+	top: 60px;
+	border: inherit;
 }
 
 #content .footer {
 	z-index: 999;
-	position: fixed;
 	bottom: 0;
 	width: calc(100% - 50px);
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10PX;
+	box-shadow: 8px 8px 4px #CCC;
+	margin-top: 150px;
+	height: 66px;
 }
+
+#content .footer ul{
+	margin-top: 10px;
+}
+
 
 #content .menu{
 }
@@ -115,7 +185,6 @@ a {
 /* conteneur global du corp */
 #corp {
 	width: 100%;
-	background-color: ghostwhite;
 }
 
 #debug {
@@ -124,40 +193,54 @@ a {
 }
 
 
-/* conteneur par page */
-#dernieresOffres{
-	width: 100%;
-}
-
-#dernieresOffres .offre{
-	padding-bottom: 20px;
-}
-
-#dernieresOffres .offre,
-#dernieresOffres .ligne{
-	float: left;
-	width: 100%;
-}
-#dernieresOffres figure{
-	margin:0;
-	width: 350px;
-}
-
-
-#dernieresOffres img{
-	width: 350px;
-	height: auto;
-}
-
-#dernieresOffres .titre{
-	font-size: 1.4em;
-}
-
 #salles .ligne{
 	float: left;
 	width: 100%;
 }
 
+.quart img.trombi {
+	width: 240px;
+}
+
+.quart{
+	width: 240px;
+	padding: 10px;
+	height: 390px;
+	border-bottom: double;
+	margin: 2px;
+	border: solid #ccc 2px;
+	box-shadow: 8px 8px 4px #CCC;
+	border-radius: 10px;
+	background-color: white;
+}
+
+.quart .quart_photo{
+	height: 180px;
+}
+
+.quart .reserver{
+	width: 95%;
+	height: 25px;
+	/* margin-left: 5%; */
+	background-color: #E15007;
+	color: whitesmoke;
+	padding: 5px;
+	text-align: center;
+	border: solid #ccc 1px;
+	box-shadow: 4px 4px 2px #CCC;
+	border-radius: 6px;
+}
+
+.quart .reserver a{
+	color: #F6F6EF;
+	text-decoration: none;
+	font-size: medium;
+	font-weight: bold;
+}
+
+.quart .active {
+	background-color: darkorange;
+}
 /*
 a.order{
 	text-decoration: none;
@@ -166,6 +249,8 @@ a.order{
 
 table {
 	width: 100%;
+	border-collapse: inherit;
+	border-spacing: 0;
 }
 
 table td {
@@ -177,6 +262,11 @@ table th {
 	color: white;
 }
 
+table tr,
+table th {
+	text-align: center;
+}
+
 table tr.lng1{
 	background-color: #E7E5E5;
 }
@@ -186,7 +276,7 @@ table tr.lng2{
 }
 
 img.trombi {
-	width: 200px;
+	width: 180px;
 }
 
 .alert {

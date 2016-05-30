@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `salles` (
   `ville` varchar(20) NOT NULL,
   `adresse` text NOT NULL,
   `cp` varchar(10) NOT NULL,
-  `titre` varchar(25) NOT NULL,
+  `titre` varchar(50) NOT NULL,
   `telephone` varchar(10) DEFAULT NULL,
   `gsm` varchar(10) DEFAULT NULL,
   `description` text NOT NULL,

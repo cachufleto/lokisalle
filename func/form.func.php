@@ -326,8 +326,9 @@ function testLongeurChaine($valeur, $maxLen=250)
 {
 	global $minLen;
 	
-	$taille = strlen($valeur);
-	
+	$taille = strlen(html_entity_decode($valeur));
+	_debug("$taille < $minLen  || $taille > $maxLen", __FUNCTION__);
+
 	return ($taille < $minLen  || $taille > $maxLen)? false : true;
 
 }
@@ -342,7 +343,7 @@ function AfficherInfo($_form)
 	//global $_formIncription;
 	$formulaire = array();
 	foreach($_form as $champ => $info){
-		$value = isset($info['valide'])? $info['valide'] : '';
+		$value = isset($info['valide'])? html_entity_decode($info['valide']) : '';
 		if($info['type'] != 'hidden')
 		{
 			if($champ == 'valide'){
@@ -374,7 +375,7 @@ function formulaireAfficherInfo($_form)
 	$formulaire = '';
 	foreach($_form as $champ => $info){
 		$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? "ligneFile" : "ligneForm";
-		$value = isset($info['valide'])? $info['valide'] : '';
+		$value = isset($info['valide'])? html_entity_decode($info['valide']) : '';
 		if($info['type'] != 'hidden') 
 		{
 			if($champ == 'valide'){
@@ -423,7 +424,7 @@ function formulaireAfficherMod($_form)
 
 	foreach($_form as $champ => $info){
 		$ligneForm = ($info['type'] == 'file' OR $info['type'] == 'textarea' )? 'ligneFile' : 'ligneForm';
-		$value = isset($info['valide'])? $info['valide'] : '';
+		$value = isset($info['valide'])? html_entity_decode($info['valide']) : '';
 		if($champ == 'sexe') {
 			if(isset($_trad['value'][$value]))
 				$value = $_trad['value'][$value];

@@ -11,7 +11,12 @@
 #fiche {
     width: 860px;
     margin-left: calc( 49% - 430px);
-    border: 1px solid gray;
+    padding: 10px;
+    border: solid #ccc 2px;
+    box-shadow: 8px 8px 4px #CCC;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 60px;
 }
 
 #fiche .ligne{
@@ -49,8 +54,8 @@
 
 #fiche .info{
     float: left;
-    width: 250px;
     padding-left: 10px;
+    width: 400px;
 }
 
 #fiche .info .titre{
@@ -59,9 +64,46 @@
 }
 
 #fiche .info .fiche{
+    width: 100%;
     padding-bottom: 15px;
+    height: 150px;
 }
 
 #fiche .description{
     width: 100%;
+}
+#fiche .reserver {
+    width: 100%;
+}
+
+#fiche .categorie,
+#fiche .reserver{
+    width: 60%;
+    float: right;
+}
+#fiche .reserver{
+    height: 25px;
+    /* margin-left: 5%; */
+    background-color: #E15007;
+    color: whitesmoke;
+    padding: 5px;
+    text-align: center;
+    border: solid #ccc 1px;
+    box-shadow: 4px 4px 2px #CCC;
+    border-radius: 6px;
+}
+
+#fiche .reserver a{
+    color: #F6F6EF;
+    text-decoration: none;
+    font-size: medium;
+    font-weight: bold;
+}
+
+#fiche .active {
+    background-color: darkorange;
+}
+#fiche .lien {
+    background-color: #55787D ;
+    margin-top: 6px;
 }

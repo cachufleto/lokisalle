@@ -12,7 +12,8 @@
             $cols = ($champ == 'active')? 'colspan="2"': '';
             echo '<th ' . $cols . '>
                 <form action="?nav=salles" method="POST">
-                    <input type="submit" name="ord" value="' . $champ . '">
+                    <input type="hidden" name="ord" value="' . $champ . '">
+                    <input type="submit" name="" value="' . $info . '">
                 </form>
                 </th>';
         }

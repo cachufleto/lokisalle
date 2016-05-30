@@ -24,11 +24,11 @@ function selectSalles()
     return executeRequete($sql);
 }
 
-function selectSallesOrder($order)
+function selectSallesOrder($order, $listeId)
 {
     $sql = "SELECT id_salle, titre, capacite, categorie, photo
-            FROM salles WHERE active = 1
-            ORDER BY $order";
+            FROM salles WHERE active = 1 " . ((!empty($listeId))? " AND $listeId " : "") .
+            " ORDER BY $order";
     return executeRequete($sql);
 }
 

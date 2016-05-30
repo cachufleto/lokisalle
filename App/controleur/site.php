@@ -59,7 +59,7 @@ function contact()
 
     if ($membres->num_rows > 0) {
         while ($membre = $membres->fetch_assoc()) {
-            $listConctact[] = ficheContactTemplate($membre);
+            $listConctact[] = $membre; //
         }
     }
 
@@ -68,12 +68,14 @@ function contact()
 
 function mentions()
 {
-    include VUE . 'site/mentions.tpl.php';
+    $nav = 'mentions';
+    include VUE . 'site/static.tpl.php';
 }
 
 function cgv()
 {
-    include VUE . 'site/activite.xhtml';
+    $nav = 'cgv';
+    include VUE . 'site/static.tpl.php';
 }
 
 function erreur404($nav)

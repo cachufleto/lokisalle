@@ -155,7 +155,8 @@ function ficheSallesValider(&$_formulaire)
                             break;
 
                         default:
-                            if(!empty($valeur) && !testLongeurChaine($valeur))
+                            $long = (isset($info['maxlength']))? $info['maxlength'] : 250;
+                            if(!empty($valeur) && !testLongeurChaine($valeur, $long))
                             {
                                 $erreur = true;
                                 $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -224,7 +225,7 @@ function editerSallesValider(&$_formulaire)
     $controlTelephone = true;
 
     foreach ($_formulaire as $key => $info){
-
+        _debug($info, $key);
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
@@ -265,7 +266,8 @@ function editerSallesValider(&$_formulaire)
                         break;
 
                     default:
-                        if(!empty($valeur) && !testLongeurChaine($valeur))
+                        $long = (isset($info['maxlength']))? $info['maxlength'] : 250;
+                        if(!empty($valeur) && !testLongeurChaine($valeur, $long))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
@@ -290,9 +292,9 @@ function editerSallesValider(&$_formulaire)
 
     }else{
 
-        $nomImage  = trim($_formulaire['pays']['value']);
-        $nomImage .= '_' . trim($_formulaire['ville']['value']);
-        $nomImage .= '_' . trim($_formulaire['titre']['value']);
+        $nomImage  = trim($_formulaire['pays']['valide']);
+        $nomImage .= '_' . trim($_formulaire['ville']['valide']);
+        $nomImage .= '_' . trim($_formulaire['titre']['valide']);
         $nomImage .= str_replace(' ', '_', $nomImage);
 
         $erreur = controlImageUpload('photo', $_formulaire['photo'], $nomImage)? true : $erreur;
@@ -327,34 +329,47 @@ function orderSallesValide()
     return ($_SESSION['orderSalles']['orderActive'])? "active ASC, " : '';
 }
 
-function listeSalles()
+function selectSallesReservations()
+{
+    $liste = '';
+
+    if(isset($_SESSION['panier']) && !empty($_SESSION['panier'])){
+
+        foreach ($_SESSION["panier"] as $key => $value) {
+            $liste .= ((empty($liste))? '':',') . $key;
+        }
+
+        $liste =  " id_salle in ($liste) ";
+    } else {
+
+        $liste =  " id_salle = -1 ";
+    }
+
+    return listeSalles($liste);
+}
+
+function listeSalles($reservation = false)
 {
     $_trad = setTrad();
 
     $table = array();
-    $table['champs'] = array();
-    $table['champs']['id_salle'] = '#';
-    $table['champs']['titre'] = $_trad['champ']['titre'];
-    $table['champs']['capacite'] = $_trad['champ']['capacite'];
-    $table['champs']['categorie'] = $_trad['champ']['categorie'];
-    $table['champs']['photo'] = $_trad['champ']['photo'];
-    $table['champs']['select'] = $_trad['select'];
-
     $position = 1;
-
-    $salles = selectSallesOrder(orderSalles());
+    $nav = ($reservation)? 'reservation' : 'salles';
+    $salles = selectSallesOrder(orderSalles(), $reservation);
 
     while ($data = $salles->fetch_assoc()) {
         $table['info'][] = array(
-            $data['id_salle'],
-            $data['titre'],
-            $data['capacite'],
-            $_trad['value'][$data['categorie']],
-            '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
+            'ref'=>$data['id_salle'],
+            'nom'=>html_entity_decode($data['titre']),
+            'capacite'=>$data['capacite'],
+            'categorie'=>$_trad['value'][$data['categorie']],
+            'photo'=>'<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" " >
                 <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            (isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
-                '<a href="' . LINK . '?nav=salles&enlever=' . $data['id_salle'] . '#P-' . ($position - 1) . '" >' . $_trad['enlever'] . '</a>' :
-                ' <a href="' . LINK . '?nav=salles&reserver=' . $data['id_salle'] . '#P-' . ($position - 1) . '">' . $_trad['reserver'] . '</a>'
+            'reservation'=>(isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
+                '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '#P-' . $position . '" >' . $_trad['enlever'] . '</a>' :
+                ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '#P-' . $position . '">' . $_trad['reserver'] . '</a>',
+            'position'=>'<a id="P-' . $position . '"></a>'
+
         );
         $position++;
     }
@@ -368,7 +383,7 @@ function listeSallesBO()
 
     $table = array();
 
-    $table['champs']['id_salle'] = $_trad['champ']['id_salle'];
+    $table['champs']['id_salle'] = 'REF';
     $table['champs']['titre'] = $_trad['champ']['titre'];
     $table['champs']['capacite'] = $_trad['champ']['capacite'];
     $table['champs']['categorie'] = $_trad['champ']['categorie'];
@@ -382,14 +397,14 @@ function listeSallesBO()
     while ($data = $salles->fetch_assoc()) {
         $table['info'][] = array(
             $data['id_salle'],
-            $data['titre'],
+            html_entity_decode($data['titre']),
             $data['capacite'],
             $_trad['value'][$data['categorie']],
                 '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
             <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" >' . $_trad['modifier'] . '</a>',
-            ($data['active'] == 1) ? ' <a href="' . LINKADMIN . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '">' . $_trad['delete'] . '</a>' :
-                ' <a href="' . LINKADMIN . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '">' . $_trad['activer'] . '</a>'
+            '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
+            ($data['active'] == 1) ? ' <a href="' . LINKADMIN . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINKADMIN . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
         );
         $position++;
     }
@@ -421,4 +436,16 @@ function orderSalles()
     }
 
     return $_SESSION['orderSalles']['champ'] . " " . $_SESSION['orderSalles']['order'];
+}
+
+function reservationSalles(){
+
+    if (isset($_GET)) {
+        if (!empty($_GET['reserver'])) {
+            $_SESSION['panier'][$_GET['reserver']] = true;
+        } elseif (!empty($_GET['enlever'])) {
+            unset($_SESSION['panier'][$_GET['enlever']]);
+        }
+    }
+
 }

@@ -6,17 +6,57 @@
 }
 
 #homeG {
-    width: 65%;
-    border-right: solid 1px #000;
+    width: calc(100% - 450px);
+    /*border-right: solid 1px #000;*/
     padding: 25px;
 }
 
 #homeD {
-    width: 30%;
+    width: 368px;
     padding-left: 25px;
+    background-color: #AF271D;
+    border: solid #ccc 2px;
+    box-shadow: 8px 8px 4px #CCC;
+    border-radius: 10px;
 }
 
 #homeD, #homeG {
     float: left;
     height: auto;
 }
+
+#homeD h3{
+    color:#F6F6EF;
+}
+/* conteneur par page */
+#dernieresOffres a{
+    color: #F6F6EF;
+}
+#dernieresOffres{
+    width: 350px;
+}
+
+#dernieresOffres .offre{
+    padding-bottom: 20px;
+}
+
+#dernieresOffres .offre,
+#dernieresOffres .ligne{
+    float: left;
+    width: 100%;
+}
+#dernieresOffres figure{
+    margin:0;
+    width: 350px;
+}
+
+
+#dernieresOffres img{
+    width: 350px;
+    height: auto;
+}
+
+#dernieresOffres .titre{
+    font-size: 1.4em;
+}
+

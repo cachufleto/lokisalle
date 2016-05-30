@@ -35,8 +35,13 @@ function nav($_menu = '')
         $li .= $_SESSION['user']['user'] . ']</a></li>';
     }
 
-    $li .= "<li class='$class'>" . (($_SESSION['lang'] == 'es') ? "<a href='?$_link&lang=fr'>FR</a>" : "FR");
-    $li .= " : " . (($_SESSION['lang'] == 'fr') ? "<a href='?$_link&lang=es'>ES</a>" : "ES") . "</li>";
+    $langfr = ($_SESSION['lang'] == 'fr')? 'active' : '';
+    $langes = ($_SESSION['lang'] == 'es')? 'active' : '';
+    $li .= "<li class='drapeau'>" .
+            (($_SESSION['lang'] == 'es') ?
+                "<a class='$langfr' href='?$_link&lang=fr'><img width='25px' src='img/drapeaux_fr.png'></a>" :
+                "<a class='$langes' href='?$_link&lang=es'><img width='25px' src='img/drapeaux_es.png'></a>") .
+            "</li>";
 
     return $li;
 }
@@ -118,6 +123,7 @@ function liste_nav($liste='')
     foreach ($_liste as $item){
         $info = $_pages[$item];
         $active = ($item == $nav)? 'active' : '';
+        $active = ($item == $nav || ($item == 'actif' && $nav == 'connection'))? 'active' : $active;
         $class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';
         $menu .= '
 		<li class="' . $active .' '. $class.' col-'.$col.'">

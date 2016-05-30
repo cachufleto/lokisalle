@@ -7,15 +7,7 @@ function salles()
     $nav = 'salles';
     $msg = '';
     $_trad = setTrad();
-
-    if (isset($_GET)) {
-        if (!empty($_GET['reserver'])) {
-            $_SESSION['panier'][$_GET['reserver']] = true;
-        } elseif (!empty($_GET['enlever'])) {
-            $_SESSION['panier'][$_GET['enlever']] = false;
-        }
-    }
-
+    reservationSalles();
 
     $table = listeSalles();
     include VUE . 'salles/salles.tpl.php';
@@ -27,7 +19,8 @@ function ficheSalles()
     $_trad = setTrad();
     $msg = '';
     $_id = (int)(isset($_GET['id'])? $_GET['id'] : false);
-    $position = (int)(isset($_GET['pos'])? $_GET['pos'] -1 : 1);
+    $position = (int)(isset($_GET['pos'])? $_GET['pos'] : 1);
+    reservationSalles();
 
     include PARAM . 'ficheSalles.param.php';
     // on cherche la fiche dans la BDD
@@ -35,13 +28,12 @@ function ficheSalles()
     include FUNC . 'form.func.php';
     if ($salle = getSalles($_formulaire, $_id)) {
         // traitement POST du formulaire
-        $salle['lien'] = '<a href="?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
+        include VUE . 'salles/ficheSalles.tpl.php';
     } else {
         header('Location:index.php');
         exit();
     }
 
-    include VUE . 'salles/ficheSalles.tpl.php';
 }
 
 function backOff_salles()
@@ -161,3 +153,15 @@ function backOff_editerSalles()
     }
 }
 
+
+function reservation()
+{
+    $_trad = setTrad();
+    reservationSalles();
+
+    $nav = 'reservation';
+    $table = selectSallesReservations();
+    $msg = (!empty($table))? $_trad['reservationOk'] : $_trad['erreur']['reservationVide'];
+
+    include VUE . "salles/salles.tpl.php";
+}

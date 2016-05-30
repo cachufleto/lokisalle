@@ -18,24 +18,32 @@
                     <?php echo $salle['cp'], ' ', $salle['ville']; ?><br>
                     <?php echo $salle['telephone']; ?><br>
                     <?php echo $salle['gsm']; ?></div>
-                <div>
+                <div class="categorie">
                     <?php echo 'Cat. ', $_trad['value'][$salle['categorie']], ' :: ', $salle['capacite'] . $_trad['personnes']; ?>
                 </div>
-                <div class="ligne lien">
-                    <?php echo $salle['lien']; ?>
+
+                <div class="reserver <?php echo ((isset($_SESSION['panier'][$salle['id_salle']])? "active" : "" )); ?>">
+                    <?php
+                    echo (isset($_SESSION['panier'][$salle['id_salle']]) && $_SESSION['panier'][$salle['id_salle']] === true) ?
+                        '<a href="' . LINK . '?nav=ficheSalles&id=' . $salle['id_salle'] . '&enlever=' . $salle['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
+                        ' <a href="' . LINK . '?nav=ficheSalles&id=' . $salle['id_salle'] . '&reserver=' . $salle['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>';
+                    ?>
+                </div>
+                <div class="reserver lien">
+                    <!--
+                    $salle['lien'] = '<a href="?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
+                    $salle['reserver'] = '<a href="?nav=ficheSalles&id=' . $_id .
+                        '&reserver=' . $salle['id_salle'] . '&pos=' . $position . '">Reserver</a>';
+                    -->
+                    <a href="?nav=salles#P-<?php echo $position; ?>"><?php echo $_trad['revenir']; ?></a>
+
                 </div>
             </div>
         </div>
         <div class="ligne description">
             <div>
-                <?php echo $salle['description'] . '<br>[' . $salle['capacite'] . $_trad['personnes'] , ' Cat. ' ,
-                    $_trad['value'][$salle['categorie']]; ?>]
+                <?php echo $salle['description']; ?>
             </div>
-            <form action="#<?php echo "P-".($position -1); ?>" method="POST">
-                <div>
-                    <?php $salle['id_salle']; ?>
-                </div>
-            </form>
         </div>
     </div>
 </div>

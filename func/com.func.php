@@ -194,26 +194,6 @@ function setTrad(){
 
 }
 
-/**
- * function ficheContactTemplate()
- * @param $contact
- * @return string
- */
-function ficheContactTemplate($contact)
-{
-
-	$_trad = setTrad();
-
-	$offre  = "<div class=\"fiche\">\r\n";
-	$offre .= "\t<div>" . $contact['prenom'] . " " . $contact['nom'] . "</div>\r\n";
-	$offre .= "\t\t<div><a href=\"mailto:" . $contact['email'] . "\">" . $contact['email'] . "</a></div>\r\n";
-	$offre .= "\t\t<div>" . $_trad['value'][$contact['statut']] . "</div>\r\n";
-	$offre .= "\t<hr/>\r\n";
-	$offre .= "</div>\r\n";
-
-	return $offre;
-}
-
 function imageExiste($photo, $rep = 'photo'){
 
 	if(file_exists( RACINE_SERVER . RACINE_SITE . $rep . '/' . $photo)){

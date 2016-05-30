@@ -4,7 +4,7 @@
 </div>
 <div class="ligne">
     <div id="homeG">
-        <?php include 'activite.xhtml'; ?>
+        <?php cgv(); ?>
     </div>
     <div id="homeD">
         <h3><?php echo $_trad['dernieresOffres']; ?></h3>

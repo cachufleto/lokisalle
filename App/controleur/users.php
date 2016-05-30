@@ -98,11 +98,10 @@ function backOff_users()
                     $data['prenom'],
                     '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
                     $_trad['value'][$data['statut']],
-                    "<a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>" . (($info == 2) ? "NEW" : ""),
+                    '<a href="' . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
                     (($data['active'] == 1) ?
-                        " <a href='" . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . "'>" . $_trad['delete'] . "</a>" :
-                        " <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ'][$data['active']] . "</a>")
-
+                        ' <a href="' . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                        ' <a href="' . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
                 );
             }
         }
@@ -117,10 +116,10 @@ function backOff_users()
             $data['prenom'],
             '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
             $_trad['value'][$data['statut']],
-            "<a href='" . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . "'>" . $_trad['modifier'] . "</a>",
+            '<a href="' . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>',
             (($data['active'] == 1) ?
-                " <a href='" . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . "'>" . $_trad['delete'] . "</a>" :
-                " <a href='" . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . "'>" . $_trad['champ']['active'] . "</a>")
+                ' <a href="' . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
 
         );
     }
@@ -328,7 +327,8 @@ function profilValider(&$_formulaire)
                         break;
 
                     default:
-                        if(!empty($valeur) && !testLongeurChaine($valeur))
+                        $long = (isset($info['maxlength']))? $info['maxlength'] : 250;
+                        if(!empty($valeur) && !testLongeurChaine($valeur, $long))
                         {
                             $erreur = true;
                             $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .

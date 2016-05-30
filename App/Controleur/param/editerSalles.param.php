@@ -18,6 +18,7 @@ $_formulaire['ville'] = array(
 $_formulaire['adresse'] = array(
 	'type' => 'textarea',
 	'defaut' => $_trad['defaut']['Ouhabite'],
+	'maxlength' => 300,
 	'obligatoire' => true);
 
 $_formulaire['cp'] = array(
@@ -37,14 +38,15 @@ $_formulaire['telephone'] = array(
 	'defaut' => $_trad['defaut']['telephone'],
 	'obligatoire' => true);
 
-$_formulaire['description'] = array(
-	'type' => 'textarea',
-	'defaut' => $_trad['defaut']['description'],
-	'obligatoire' => true);
-
 $_formulaire['photo'] = array(
 	'type' => 'file',
 	'defaut' => $_trad['defaut']['photo'],
+	'obligatoire' => true);
+
+$_formulaire['description'] = array(
+	'type' => 'textarea',
+	'defaut' => $_trad['defaut']['description'],
+	'maxlength' => 800,
 	'obligatoire' => true);
 
 $_formulaire['capacite'] = array(

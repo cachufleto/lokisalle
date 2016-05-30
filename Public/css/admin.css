@@ -1,3 +1,6 @@
+body {
+	background-color: #55787D;
+}
 #content .navbar {
     background-color: #6D1907;
 }
@@ -5,3 +8,7 @@
 #content .navbar ul li a .admin{
 		display: none;
 	}
+
+#content .navbar ul li {
+	background-color: #070EE1; important!
+}

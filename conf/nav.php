@@ -128,12 +128,16 @@ $_pages['changermotpasse'] = array(
 
 
 // Onglets à activer dans le menu de navigation selon le profil listeMenu();
-$_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');
-$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
-$_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'recherche', 'backoffice', 'out');
+//$_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');
+$_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'actif');
+//$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
+$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'out');
+//$_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'recherche', 'backoffice', 'out');
+$_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'backoffice', 'out');
 
 $navAdmin = array('home', 'salles','users','ventes','out' );
 
-$navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
+//$navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
+$navFooter = array('mentions', 'cgv', 'contact' );
 
 

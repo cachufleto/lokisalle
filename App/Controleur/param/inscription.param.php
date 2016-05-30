@@ -52,6 +52,7 @@ $_formulaire['cp'] = array(
 
 $_formulaire['adresse'] = array(
 	'type' => 'textarea',
+	'maxlength' => 300,
 	'defaut' => $_trad['defaut']["Ouhabite"]);
 
 // ############## SUBMIT ############
