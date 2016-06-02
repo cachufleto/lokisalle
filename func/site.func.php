@@ -39,8 +39,8 @@ function nav($_menu = '')
     $langes = ($_SESSION['lang'] == 'es')? 'active' : '';
     $li .= "<li class='drapeau'>" .
             (($_SESSION['lang'] == 'es') ?
-                "<a class='$langfr' href='?$_link&lang=fr'><img width='25px' src='img/drapeaux_fr.png'></a>" :
-                "<a class='$langes' href='?$_link&lang=es'><img width='25px' src='img/drapeaux_es.png'></a>") .
+                "<a class='$langfr' href='" . LINK . "?$_link&lang=fr'><img width='25px' src='img/drapeaux_fr.png'></a>" :
+                "<a class='$langes' href='" . LINK . "?$_link&lang=es'><img width='25px' src='img/drapeaux_es.png'></a>") .
             "</li>";
 
     return $li;
@@ -127,7 +127,7 @@ function liste_nav($liste='')
         $class = (isset($_pages[$item]['class']))? $_pages[$item]['class'] : 'menu';
         $menu .= '
 		<li class="' . $active .' '. $class.' col-'.$col.'">
-			<a href="'. (($ADM)? LINKADMIN : $info['link'] ) .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a>
+			<a href="'. LINK .'?nav='. $item .'">' . $_trad['nav'][$item] . '</a>
 		</li>';
     }
 
@@ -290,7 +290,7 @@ function dernieresOffres($salle)
 
     $offre = '
 	<div class="offre">
-        <a href="?nav=ficheSalles&id=' . $salle['id_salle'] . '">
+        <a href="'. LINK . '?nav=ficheSalles&id=' . $salle['id_salle'] . '">
         <figure>
           <img class="ingOffre" src="' . imageExiste($salle['photo']) . '" alt="" />
             <figcaption>

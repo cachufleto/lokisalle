@@ -6,7 +6,7 @@
     <div id="formulaire">
         <?php
         if('OK' == $msg){ ?>
-            <a href="?index.php"> <?php echo $_trad['validerInscription'] ?> </a>;
+            <a href="<?php echo LINK; ?>?"> <?php echo $_trad['validerInscription'] ?> </a>;
         <?php } else{
             echo $msg; ?>
             <form action="#" method="POST">

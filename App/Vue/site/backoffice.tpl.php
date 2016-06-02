@@ -3,7 +3,7 @@
     <h1><?php echo $_trad['titre']['backoffice']; ?></h1>
 </div>
 <div class="ligne">
-    <form name="index" action="?nav=backoffice" method="POST">
+    <form name="index" action="<?php echo LINK; ?>?nav=backoffice" method="POST">
         <div class=" col-2">
             <input type="submit" value="modifier" name="activite">
             <?php echo $activite; ?>

@@ -6,22 +6,22 @@
     <p><?php echo $msg; ?></p>
     <div class="trier"><div>Trier par: </div>
             <div>
-                <form action="?nav=<?php echo $nav; ?>" method="POST">
+                <form action="<?php echo LINK; ?>?nav=<?php echo $nav; ?>" method="POST">
                     <input type="hidden" name="ord" value="id_salle">
                     <input type="submit" name="" value="REF">
                 </form>
             </div><div>
-                <form action="?nav=<?php echo $nav; ?>" method="POST">
+                <form action="<?php echo LINK; ?>?nav=<?php echo $nav; ?>" method="POST">
                     <input type="hidden" name="ord" value="titre">
                     <input type="submit" name="" value="<?php echo $_trad['champ']['titre']; ?>">
                 </form>
             </div><div>
-                <form action="?nav=<?php echo $nav; ?>" method="POST">
+                <form action="<?php echo LINK; ?>?nav=<?php echo $nav; ?>" method="POST">
                     <input type="hidden" name="ord" value="capacite">
                     <input type="submit" name="" value="<?php echo $_trad['champ']['capacite']; ?>">
                 </form>
             </div><div>
-                <form action="?nav=<?php echo $nav; ?>" method="POST">
+                <form action="<?php echo LINK; ?>?nav=<?php echo $nav; ?>" method="POST">
                     <input type="hidden" name="ord" value="categorie">
                     <input type="submit" name="" value="<?php echo $_trad['champ']['categorie']; ?>">
                 </form>

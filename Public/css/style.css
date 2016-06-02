@@ -7,6 +7,7 @@ body {
 
 div{
 	float: left;
+	/*border: 1px solid gold;*/
 }
 
 h1 {
@@ -25,8 +26,8 @@ img {
 }
 
 #corp .content{
-	width: 90%;
-	margin-left: 5%;
+	width: 95%;
+	margin-left: 2%;
 }
 
 .trier{
@@ -74,10 +75,27 @@ input{
 .col-11{ width: 4%; }
 .col-12{ width: 3%; }
 
+header.mainHeader {
+}
+
+
+.mainHeader img.logo {
+	width: 10%;
+	height: auto;
+	margin: 3% 0;
+}
+
+
+header li.drapeu img {
+	width: 25px;
+	height: auto;
+	margin: 3% 0;
+}
+
 /* conteneur global des menus */
 #content {
 	/*border:solid 1px black;*/
-	width:calc(100% - 50px);
+	width: calc(100% - 50px);
 	margin-left:25px;
 	margin-top: 0;
 	overflow: hidden;
@@ -87,12 +105,12 @@ input{
 #content .navbar {
 	float: left;
 	width: 100%;
-	height: 50px;
+	/*height: 50px;*/
 	background-color: #9C1E16;
 }
 
 #content .navbar ul{
-	margin-top: 380px;
+	/*margin-top: 380px;*/
 }
 
 #content .navbar ul li {
@@ -111,7 +129,7 @@ input{
 }
 
 #content .navbar ul li.active{
-	background-color: #55787D;
+	background-color: #F49B01;
 }
 
 #content .navbar ul li.drapeau{
@@ -127,7 +145,7 @@ input{
 #content .navbar ul li a.admin{
 	color:#67ED00;
 }
-
+/*
 #content .navbar img.logo {
 	width: 100px;
 	height: 100px;
@@ -135,20 +153,27 @@ input{
 	margin-left: -29px;
 	margin-top: -48px;
 }
+*/
+#content .fondprincipal {
+	width: calc(100% - 10px);
+	box-shadow: 8px 8px 4px #CCC;
+	background-image: url("../img/theatre_du_chatelet.jpg");
+	background-size: 100%;
+}
 
 #content .principal {
 	z-index: 988;
 	top: 0;
-	background-image: url("../img/theatre_du_chatelet.jpg");
-	width: calc(100% - 50px);
+	width: calc(100% - 10px);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10PX;
 	box-shadow: 8px 8px 4px #CCC;
 	padding-bottom:6px;
-	height: 430px;
+	/*height: 100%;*/
 }
+
 #content .principal ul{
-	margin-top: 390px;
+	/*margin-top: 20%;*/
 }
 
 #content .principal ul li{
@@ -163,14 +188,19 @@ input{
 	border: inherit;
 }
 
+#content .barre{
+	float: right;
+	width: 1px;
+	height: 420px;
+}
+
 #content .footer {
 	z-index: 999;
 	bottom: 0;
-	width: calc(100% - 50px);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10PX;
+	width: calc(100% - 10px);
+	border-radius: 10px;
 	box-shadow: 8px 8px 4px #CCC;
-	margin-top: 150px;
+	margin-top: 30px;
 	height: 66px;
 }
 
@@ -239,7 +269,7 @@ input{
 }
 
 .quart .active {
-	background-color: darkorange;
+	background-color: #F49B01;
 }
 /*
 a.order{
@@ -258,7 +288,7 @@ table td {
 }
 
 table th {
-	background-color: darkslategrey;
+	background-color: #F49B01;
 	color: white;
 }
 
@@ -342,3 +372,19 @@ img.trombi {
 	padding: 0 50px;
 }
 */
+
+@media only screen and (min-width : 150px) and (max-width : 680px) {
+
+	#content nav {
+		background: #666;
+		font-size: 1.143em;
+		height: 276px;
+		line-height: 30px;
+		margin-bottom: 0;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+	}
+
+
+}

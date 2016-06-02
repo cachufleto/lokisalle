@@ -98,10 +98,10 @@ function backOff_users()
                     $data['prenom'],
                     '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
                     $_trad['value'][$data['statut']],
-                    '<a href="' . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
+                    '<a href="' . LINK . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
                     (($data['active'] == 1) ?
-                        ' <a href="' . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
-                        ' <a href="' . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
+                        ' <a href="' . LINK . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                        ' <a href="' . LINK . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
                 );
             }
         }
@@ -116,10 +116,10 @@ function backOff_users()
             $data['prenom'],
             '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
             $_trad['value'][$data['statut']],
-            '<a href="' . LINKADMIN . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>',
+            '<a href="' . LINK . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>',
             (($data['active'] == 1) ?
-                ' <a href="' . LINKADMIN . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
-                ' <a href="' . LINKADMIN . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
+                ' <a href="' . LINK . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINK . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
 
         );
     }
@@ -165,7 +165,7 @@ function profil()
                 $_POST['valide'] == $_trad['Out'] &&
                 $_POST['origin'] != $_trad['defaut']['MiseAJ']
             ){
-                header('Location:?nav=users');
+                header('Location:' . LINK . '?nav=users');
                 exit();
             } else {
                 unset($_formulaire['mdp']);

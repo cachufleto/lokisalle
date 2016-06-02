@@ -138,9 +138,9 @@ function ficheSallesValider(&$_formulaire)
 
                         case 'photo':
 
-                          $erreur = (controlImageUpload($key, $info))? true : $erreur;
-                          $_formulaire[$key]['message'] = isset($info['message'])? $info['message'] : '' ;
-                          $valeur = $info['valide'];
+                            $erreur = (controlImageUpload($key, $info))? true : $erreur;
+                            $_formulaire[$key]['message'] = isset($info['message'])? $info['message'] : '' ;
+                            $valeur = $info['valide'];
 
                         break;
 
@@ -178,7 +178,7 @@ function ficheSallesValider(&$_formulaire)
     {
         $msg = '<div class="alert">'.$_trad['ERRORSaisie']. $msg . '</div>';
 
-    }elseif(!empty($_FILES['photo'])){
+    }elseif(!empty($_FILES['photo']) && $_FILES['photo']['error'] != 4){
 
         $erreur = controlImageUpload('photo', $_formulaire['photo'], nomImage($_formulaire))? true : $erreur;
         $valeur = $_formulaire['photo']['valide'];
@@ -187,7 +187,7 @@ function ficheSallesValider(&$_formulaire)
             $sql_set .= ((!empty($sql_set))? ", " : "")."photo = '$valeur'";
         }
 
-    }elseif(empty($_FILES['photo'])){
+    }elseif(!empty($_FILES['photo']) && $_FILES['photo']['error'] == 4){
         $_formulaire['photo']['valide'] = $_formulaire['photo']['sql'];
     }
 
@@ -198,7 +198,7 @@ function ficheSallesValider(&$_formulaire)
             sallesUpdate($sql_set, $id_salle);
         }
         else {
-            header('Location:?nav=salles&pos=P-' . ($position -1) . '');
+            header('Location:' . LINK . '?nav=salles&pos=P-' . ($position -1) . '');
         }
         // ouverture d'une session
         $msg = "OK";
@@ -400,11 +400,11 @@ function listeSallesBO()
             html_entity_decode($data['titre']),
             $data['capacite'],
             $_trad['value'][$data['categorie']],
-                '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
+                '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
             <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            '<a href="' . LINKADMIN . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
-            ($data['active'] == 1) ? ' <a href="' . LINKADMIN . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
-                ' <a href="' . LINKADMIN . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
+            '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
+            ($data['active'] == 1) ? ' <a href="' . LINK . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINK . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
         );
         $position++;
     }

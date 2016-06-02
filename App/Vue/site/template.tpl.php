@@ -14,13 +14,17 @@
 </head>
 <body>
 <div id="content">
-    <!-- Menu Principal -->
-    <nav class="navbar principal">
-        <ul class="">
-            <li class="none"><a href="?"><img src="<?php echo LINK; ?>img/lokisalle.png" alt="Lokisalle" class="logo"></a></li>
-            <?php echo $navPp; ?>
-        </ul>
-    </nav>
+    <header class="mainHeader">
+        <!-- Menu Principal -->
+        <div class="fondprincipal">
+        <a href="?"><img class="logo" src="<?php echo LINK; ?>img/lokisalle.png" alt="Lokisalle" class="logo"></a>
+        </div>
+        <nav class="navbar principal">
+            <ul>
+                <?php echo $navPp; ?>
+            </ul>
+        </nav>
+    </header>
     <!-- CORP -->
     <div id="corp">
         <div id="<?php echo $nav; ?>" class="content">
@@ -28,6 +32,7 @@
         echo $contentPage;
         ?>
         </div>
+        <div class="barre">&nbsp;</div>
     </div>
     <div  id="debug">
         <?php echo $debug; ?>

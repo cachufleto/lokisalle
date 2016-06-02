@@ -179,7 +179,7 @@ $_trad['value']['on'] = "Se rappeler de moi";
 /* trad pour les autres textes */
 $_trad['activer'] = "Activer";
 $_trad['admin'] = "Adminitrateur";
-$_trad['ajouterSalle'] = "Ajouter une salle <a href=" . LINKADMIN . "?nav=editerSalles>AJOUTER</a>";
+$_trad['ajouterSalle'] = "Ajouter une salle <a href=" . LINK . "?nav=editerSalles>AJOUTER</a>";
 $_trad['Bonjour'] = "Bonjour";
 $_trad['delete'] = "Supprimer";
 $_trad['demandeDeMotPasse'] = 'Demande de Mot de passe';

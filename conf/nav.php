@@ -97,28 +97,28 @@ $_pages['ficheMembre'] = array(
 /************   ADMIN    **************/
 
 $_pages['backoffice'] = array(
-		'link' => LINKADMIN,
+		'link' => LINK,
 		'class' => 'admin',
 		'affiche' => false);
 
 $_pages['boutique'] = array(
-		'link' => LINKADMIN,
+		'link' => LINK,
 		'affiche' => false);
 
 $_pages['users'] = array(
-		'link' => LINKADMIN,
+		'link' => LINK,
 		'affiche' => false);
 
 $_pages['ventes'] = array(
-		'link' => LINKADMIN,
+		'link' => LINK,
 		'affiche' => false);
 
 $_pages['gestionSalles'] = array(
-		'link' => LINKADMIN,
+		'link' => LINK,
 		'affiche' => false);
 
 $_pages['editerSalles'] = array(
-	'link' => LINKADMIN,
+	'link' => LINK,
 	'affiche' => false);
 
 $_pages['changermotpasse'] = array(

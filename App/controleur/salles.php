@@ -98,7 +98,7 @@ function backOff_ficheSalles()
                 $_POST['valide'] == $_trad['Out'] &&
                 $_POST['origin'] != $_trad['defaut']['MiseAJ']
             ){
-                header('Location:?nav=salles&pos=P-' . $position . '');
+                header('Location:' . LINK . '?nav=salles&pos=P-' . $position . '');
                 exit();
 
             } else {
