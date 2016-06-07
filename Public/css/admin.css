@@ -2,11 +2,50 @@ body {
 	background-color: #FFFFF8;
 }
 
-#content .navbar ul li a .admin{
-		display: none;
-	}
 
-#content .navbar,
-#content .navbar ul li {
-	background-color: #2C6F63;
+.valide {
+	color:blue !important;
+	font-size: 1.5em;
+	width: 250px;
+	padding-left: 12px;
+}
+
+.mainHeader nav {
+	height: 82px;
+}
+
+table {
+	width: 100%;
+	border-collapse: inherit;
+	border-spacing: 0;
+}
+
+table td {
+	border: 0px solid black;
+}
+
+table th {
+	background-color: #F49B01;
+	color: white;
+}
+
+table tr,
+table th {
+	text-align: center;
+}
+
+table tr.lng1{
+	background-color: #E7E5E5;
+}
+
+table tr.lng2{
+	background-color: #F6F6EF;
+}
+
+img.trombi {
+	width: 180px;
+}
+
+table a{
+	color: #6D1907;
 }

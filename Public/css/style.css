@@ -1,390 +1,328 @@
+/*
+	Theme Name: 1stwebdesigner HTML5/CSS3 Layout
+	Date: March 2013
+	Description: Basic HTML5/CSS3 layout built on a responsive framework
+	Version: 1.0
+	Author: Christian Vasile
+	Author URL: http://christianvasile.com
+*/
+
+/* ===========================
+   ======= Body style ========
+   =========================== */
+
 body {
-	margin:0;
-	font-family: "Monotype Corsiva";
-	background-color: ghostwhite;
-
+    color: #000305;
+    font-size: 87.5%; /* Base font size: 14px */
+    font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    line-height: 1.429;
+    margin: 0;
+    padding: 0;
+    text-align: left;
 }
 
-div{
-	float: left;
-	/*border: 1px solid gold;*/
-}
-
-h1 {
-	text-align: center;
-}
-
-a {
-	text-decoration: none;
+.body {
+    clear: both;
+    margin: 0 auto;
+    width: 90%;
 }
 
 img {
-	border-radius: 10px;
-}
-.ligne{
-	width:100%;
-}
-
-#corp .content{
-	width: 95%;
-	margin-left: 2%;
-}
-
-.trier{
-	border: solid #ccc 2px;
-	box-shadow: 8px 8px 4px #CCC;
-	border-radius: 10px;
-	background-color: white;
-	margin-bottom: 10px;
-	padding: 5px;
+    border-radius: 10px;
 }
 
 input{
-	font: 1em "Monotype Corsiva";
-	background-color: #E15007;
-	border-radius: 6px;
-	color: #E7E5E5;
+    font: 1em "Monotype Corsiva";
+    background-color: #E15007;
+    border-radius: 6px;
+    color: #E7E5E5;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+}
+
+h2 {font-size: 1.571em}	/* 22px */
+h3 {font-size: 1.429em}	/* 20px */
+h4 {font-size: 1.286em}	/* 18px */
+h5 {font-size: 1.143em}	/* 16px */
+h6 {font-size: 1em}		/* 14px */
+
+h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: .8em;
+}
+
+div{
+    float: left;
+    /*border: 1px solid gold;*/
+}
+
+.ligne{
+    width:calc(100% - 2px);
+}
+
+.alert {
+    color:red !important;
+    padding-bottom: 10px;
+}
+
+.erreur {
+    color:violet !important;
+    width: 250px;
+    padding-left: 12px;
 }
 
 .ficheContact{
-	padding: 25px;
-	width: 40%;
+    padding: 25px;
+    width: 40%;
 }
-/*
-#connection,
-#inscription,
-#recherche,
-#profil,
-#editerSalles,
-#ficheSalles,
-#reservation{
-	width: 350px;
-	margin-left:calc(50% - 175px);
+
+.ficheContact a{
+    color: #6D1907;
 }
-*/
-/* responcive */
-.col-2{ width: 50%; }
-.col-3{ width: 33%; }
-.col-4{ width: 25%; }
-.col-5{ width: 20%; }
-.col-6{ width: 10%; }
-.col-7{ width: 11%; }
-.col-8{ width: 7%; }
-.col-9{ width: 6%; }
-.col-10{ width: 5%; }
-.col-11{ width: 4%; }
-.col-12{ width: 3%; }
+
+/* ===========================
+   ======= Anchor style ======
+   =========================== */
+a {
+    outline: 0;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #fff;
+    padding: 0 1px;
+}
+
+a img {
+    border: 0;
+}
+
+a:hover, a:active,
+a:link img, a:visited img{
+    background-color: inherit;
+}
+
+a.logo{
+}
+
+a.lng img{
+    width: 25px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+/* ===========================
+   ========= Headings ========
+   =========================== */
 
 header.mainHeader {
+    background-image: url("../img/theatre_du_chatelet.jpg");
+    background-size: 100%;
+    background-position-y: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10PX;
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    box-shadow: 8px 8px 4px #CCC;
+    margin-top: -10px;
+}
+
+header li.drapeu img {
+    width: 25px;
+    height: auto;
+    margin: 3% 0;
 }
 
 
 .mainHeader img.logo {
-	width: 10%;
-	height: auto;
-	margin: 3% 0;
+    width: 10%;
+    height: auto;
+    margin: 3% 0;
 }
 
-
-header li.drapeu img {
-	width: 25px;
-	height: auto;
-	margin: 3% 0;
+.mainFooter nav,
+.mainHeader nav {
+    background: #9C1E16;
+    font-size: 1.143em;
+    height: 40px;
+    line-height: 30px;
+    text-align: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10PX;
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    box-shadow: 8px 8px 4px #CCC;
 }
 
-/* conteneur global des menus */
-#content {
-	/*border:solid 1px black;*/
-	width: calc(100% - 50px);
-	margin-left:25px;
-	margin-top: 0;
-	overflow: hidden;
-	padding: 0;
+.mainFooter nav{
+    margin: 15px 0;
+    border-radius: 10px;
 }
 
-#content .navbar {
-	float: left;
-	width: 100%;
-	/*height: 50px;*/
-	background-color: #9C1E16;
+.mainFooter nav ul,
+.mainHeader nav ul {
+    list-style: none;
+    margin: 0 auto;
 }
 
-#content .navbar ul{
-	/*margin-top: 380px;*/
+.mainHeader nav ul {
+    width: 600px;
 }
 
-#content .navbar ul li {
-	float: left;
-	display: inline;
-	color: white;
-	text-align: center;
-	height: 25px;
-	padding-left: 15px;
-	padding-right: 15px;
-	background-color: #E15007;
-	border-radius: 25px;
-	padding-top: 6px;
-	box-shadow: 4px 4px 2px #CCC;
-	margin-left: 15px;
+.mainFooter nav ul {
+    width: 500px;
 }
 
-#content .navbar ul li.active{
-	background-color: #F49B01;
+.mainFooter nav ul li,
+.mainHeader nav ul li {
+    float: left;
+    display: inline;
+    margin: 0 auto;
 }
 
-#content .navbar ul li.drapeau{
-	width: 28px;
+.mainFooter nav a:link, .mainFooter nav a:visited,
+.mainHeader nav a:link, .mainHeader nav a:visited {
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    margin: 5px;
+    padding: 0 15px;
+    text-decoration: none;
+}
+.mainFooter nav a:hover, .mainFooter nav a:active,
+.mainFooter nav .active a:link, .mainFooter nav .active a:visited,
+.mainHeader nav a:hover, .mainHeader nav a:active,
+.mainHeader nav .active a:link, .mainHeader nav .active a:visited {
+    background: #E15007;
+    color: #fff;
+    text-shadow: none !important;
 }
 
-#content .navbar ul li a {
-	color:white;
-	text-decoration: none;
+.mainFooter nav li a,
+.mainHeader nav li a {
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
 }
 
-#content .navbar ul li.admin a,
-#content .navbar ul li a.admin{
-	color:#67ED00;
-}
-/*
-#content .navbar img.logo {
-	width: 100px;
-	height: 100px;
-	position: relative;
-	margin-left: -29px;
-	margin-top: -48px;
-}
-*/
-#content .fondprincipal {
-	width: calc(100% - 10px);
-	box-shadow: 8px 8px 4px #CCC;
-	background-image: url("../img/theatre_du_chatelet.jpg");
-	background-size: 100%;
+.mainHeader img {
+    height: auto;
+    margin: 3% 0;
 }
 
-#content .principal {
-	z-index: 988;
-	top: 0;
-	width: calc(100% - 10px);
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10PX;
-	box-shadow: 8px 8px 4px #CCC;
-	padding-bottom:6px;
-	/*height: 100%;*/
+/* ***************************
+   ===== Main Content =====
+   *************************** */
+
+.mainContent {
+    overflow: hidden;
+    line-height: 25px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
-#content .principal ul{
-	/*margin-top: 20%;*/
+.mainContent .barre{
+    float: left;
+    width: 1px;
+    height: 400px;
+}
+/* ***************************
+   ===== Tableaux =====
+   *************************** */
+
+.trier{
+    border: solid #ccc 2px;
+    box-shadow: 8px 8px 4px #CCC;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
-#content .principal ul li{
-	border: 1px solid wheat;
-}
-
-#content .navbar ul li.none {
-	background-color: inherit;
-	box-shadow: inherit;
-	position: absolute;
-	top: 60px;
-	border: inherit;
-}
-
-#content .barre{
-	float: right;
-	width: 1px;
-	height: 420px;
-}
-
-#content .footer {
-	z-index: 999;
-	bottom: 0;
-	width: calc(100% - 10px);
-	border-radius: 10px;
-	box-shadow: 8px 8px 4px #CCC;
-	margin-top: 30px;
-	height: 66px;
-}
-
-#content .footer ul{
-	margin-top: 10px;
-}
-
-
-#content .menu{
-}
-
-/* conteneur global du corp */
-#corp {
-	width: 100%;
-}
-
-#debug {
-	width: 100%;
-	height: auto;
-}
-
-
-#salles .ligne{
-	float: left;
-	width: 100%;
-}
-
+/* ***************************
+   ===== Fiches =====
+   *************************** */
 .quart img.trombi {
-	width: 240px;
+    width: 240px;
 }
 
 .quart{
-	width: 240px;
-	padding: 10px;
-	height: 390px;
-	border-bottom: double;
-	margin: 2px;
-	border: solid #ccc 2px;
-	box-shadow: 8px 8px 4px #CCC;
-	border-radius: 10px;
-	background-color: white;
+    width: 240px;
+    padding: 10px;
+    height: 420px;
+    border-bottom: double;
+    margin: 6px;
+    border: solid #ccc 2px;
+    box-shadow: 8px 8px 4px #CCC;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .quart .quart_photo{
-	height: 180px;
+    height: 180px;
 }
 
 .quart .reserver{
-	width: 95%;
-	height: 25px;
-	/* margin-left: 5%; */
-	background-color: #E15007;
-	color: whitesmoke;
-	padding: 5px;
-	text-align: center;
-	border: solid #ccc 1px;
-	box-shadow: 4px 4px 2px #CCC;
-	border-radius: 6px;
+    width: 95%;
+    height: 25px;
+    /* margin-left: 5%; */
+    background-color: #E15007;
+    color: whitesmoke;
+    padding: 5px;
+    text-align: center;
+    border: solid #ccc 1px;
+    box-shadow: 4px 4px 2px #CCC;
+    border-radius: 6px;
 }
 
 .quart .reserver a{
-	color: #F6F6EF;
-	text-decoration: none;
-	font-size: medium;
-	font-weight: bold;
+    color: #F6F6EF;
+    text-decoration: none;
+    font-size: medium;
+    font-weight: bold;
 }
 
 .quart .active {
-	background-color: #F49B01;
-}
-/*
-a.order{
-	text-decoration: none;
-	color: inherit;
-}*/
-
-table {
-	width: 100%;
-	border-collapse: inherit;
-	border-spacing: 0;
-}
-
-table td {
-	border: 0px solid black;
-}
-
-table th {
-	background-color: #F49B01;
-	color: white;
-}
-
-table tr,
-table th {
-	text-align: center;
-}
-
-table tr.lng1{
-	background-color: #E7E5E5;
-}
-
-table tr.lng2{
-	background-color: #F6F6EF;
-}
-
-img.trombi {
-	width: 180px;
-}
-
-.alert {
-	color:red !important;
-	padding-bottom: 10px;
-}
-
-.erreur {
-	color:violet !important;
-	width: 250px;
-	padding-left: 12px;
-}
-
-.valide {
-	color:blue !important;
-	font-size: 1.5em;
-	width: 250px;
-	padding-left: 12px;
+    background-color: #F49B01;
 }
 
 
-/*
-.ingOffre {
-	width: 250px;
-}
-*/
+/* ***************************
+   ===== Formulaire =====
+   *************************** */
 
 #formulaire {
-	padding:13px;
-	display:block;
-	width:420px;
-	margin-left: calc(50% - 210px );
+    padding:13px;
+    display:block;
+    width:420px;
+    margin-left: calc(50% - 210px );
 }
 
 #formulaire .ligneForm{
-	display:inline-block;
-	width:100%;
-	height: 40px;
+    display:inline-block;
+    width:100%;
+    height: 40px;
 }
 
 #formulaire .ligneFile{
-	width:100%;
-	height: auto;
-	padding-bottom: 24px;
+    width:100%;
+    height: auto;
+    padding-bottom: 24px;
 }
 
 #formulaire .label,
 #formulaire .champs{
-	float:left;
-	width:50%;
+    float:left;
+    width:50%;
 }
 
 #formulaire div.rectifier{
-	height: 64px;
+    height: 64px;
 }
 
 #formulaire label.rectifier {
-	color:blue !important;
-}
-
-/*
-#activite {
-	padding: 0 50px;
-}
-*/
-
-@media only screen and (min-width : 150px) and (max-width : 680px) {
-
-	#content nav {
-		background: #666;
-		font-size: 1.143em;
-		height: 276px;
-		line-height: 30px;
-		margin-bottom: 0;
-		border-radius: 5px;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-	}
-
-
+    color:blue !important;
 }

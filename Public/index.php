@@ -54,4 +54,4 @@ $nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 
 $footer = footer();
 
-include VUE . 'site/template.tpl.php';
+include VUE . 'template.tpl.php';

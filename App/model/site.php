@@ -21,7 +21,7 @@ function selectSallesActive()
             FROM salles
             WHERE active != 0
             ORDER BY titre
-            LIMIT 0,5;";
+            LIMIT 0,3;";
     return executeRequete($sql);
 }
 

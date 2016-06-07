@@ -1,6 +1,6 @@
 <?php $_trad = setTrad(); ?>
 <div class="ligne">
-    <h1><?php echo $_trad['titre'][$nav]; ?></h1>
+    <h2><?php echo $_trad['titre'][$nav]; ?></h2>
 </div>
 <div class="ligne">
 <?php if(file_exists(APP . 'Public/statics/' . $nav . '.xhtml')){

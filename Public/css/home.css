@@ -1,29 +1,24 @@
-#home {
-    height: auto;
-    padding: 25px;
-    width: calc(100% - 50px);
-    /*background-color: lavenderblush;*/
-}
-
-#homeG {
-    width: calc(100% - 450px);
-    /*border-right: solid 1px #000;*/
-    padding: 25px;
-}
-
-#homeD {
-    width: 368px;
-    padding-left: 25px;
-    background-color: #AF271D;
-    border: solid #ccc 2px;
-    box-shadow: 8px 8px 4px #CCC;
-    border-radius: 10px;
-}
-
-#homeD, #homeG {
+.homeG {
+    width: calc(100% - 430px);
     float: left;
-    height: auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
+
+.homeD {
+    width: 350px;
+    float: left;
+    margin-left: 10px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background-color: #AF271D;
+    box-shadow: 8px 8px 4px #CCC;
+    padding: 20px 30px;
+    margin-bottom: 10px;
+}
+
 
 .homeD h3{
     color:#F6F6EF;
@@ -60,3 +55,61 @@
     font-size: 1.4em;
 }
 
+@media only screen and (max-width : 780px){
+    .homeG {
+        width: calc(95% - 10px);
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        box-shadow: 8px 8px 4px #CCC;
+    }
+
+    .homeD {
+        width: calc(100% - 30px);
+        margin-top: 4%;
+        margin-left: 0;
+        padding: 0 10px;
+        margin-bottom: 0;
+    }
+
+    .homeD p {
+        width: 90%;
+    }
+
+    #dernieresOffres img{
+        width: 435px;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width : 473px){
+    .homeG {
+        width: calc(95% - 10px);
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        box-shadow: 8px 8px 4px #CCC;
+    }
+
+    .homeD {
+        width: calc(100% - 30px);
+        margin-top: 4%;
+        margin-left: 0;
+        padding: 0 10px;
+        margin-bottom: 0;
+    }
+
+    .homeD p {
+        width: 90%;
+    }
+
+    #dernieresOffres img{
+        width: 358px;
+        height: auto;
+    }
+
+}

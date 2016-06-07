@@ -47,10 +47,13 @@ require CONF . 'route.php';
 // Traduction du titre de la page
 
 $_linkCss[] = LINK . 'css/style.css';
-$_linkJs[] = LINK . 'js/script.js';
-if (isset($_SESSION['BO']) && $_SESSION['BO']) {
+$_linkCss[] = LINK . 'css/tablette.css';
+$_linkCss[] = LINK . 'css/smart.css';
+if (isSuperAdmin()) {
 	// ajout du css admin
 	$_linkCss[] = LINK . 'css/admin.css';
 }
+
+$_linkJs[] = LINK . 'js/script.js';
 
 
