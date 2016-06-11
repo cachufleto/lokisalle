@@ -1,21 +1,10 @@
 <?php
-# FORMULAIRE D'INSCRIPTION
+# FORMULAIRE SALLES
 
+include_once 'editerSalles.param.php';
+/*
 // Items du formulaire
 $_formulaire = array();
-
-/*
-  `id_salle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pays` varchar(20) NOT NULL,
-  `ville` varchar(20) NOT NULL,
-  `adresse` text NOT NULL,
-  `cp` varchar(5) NOT NULL,
-  `titre` varchar(20) NOT NULL,
-  `description` text NOT NULL,
-  `photo` varchar(200) NOT NULL,
-  `capacite` int(3) UNSIGNED NOT NULL,
-  `categorie` enum('R','C','F') NOT NULL DEFAULT 'R',
-*/
 
 $_formulaire['pays'] = array(
 	'type' => 'text',
@@ -33,8 +22,8 @@ $_formulaire['ville'] = array(
 $_formulaire['adresse'] = array(
 	'type' => 'textarea',
 	'content' => 'text',
-	'maxlength' => 300,
 	'defaut' => $_trad['defaut']['Ouhabite'],
+	'maxlength' => 300,
 	'obligatoire' => true);
 
 $_formulaire['cp'] = array(
@@ -66,8 +55,8 @@ $_formulaire['photo'] = array(
 $_formulaire['description'] = array(
 	'type' => 'textarea',
 	'content' => 'text',
-	'maxlength' => 800,
 	'defaut' => $_trad['defaut']['description'],
+	'maxlength' => 800,
 	'obligatoire' => true);
 
 $_formulaire['capacite'] = array(
@@ -83,8 +72,9 @@ $_formulaire['cap_min'] = array(
 	'obligatoire' => true);
 
 $_formulaire['tranche'] = array(
-	'type' => 'text',
+	'type' => 'selectTableau',
 	'content' => 'int',
+	'option' => array(1=>'T1', 2=>'T2', 3=>'T3', 4=>'T4'),
 	'defaut' => $_trad['defaut']['tranche'],
 	'obligatoire' => true);
 
@@ -97,12 +87,12 @@ $_formulaire['prix_personne'] = array(
 $_formulaire['categorie'] = array(
 	'type' => 'radio',
 	'content' => 'text',
-	'option' => array('R', 'F', 'C', 'T' ),
-	'defaut' => '',
+	'option' => array('R', 'F', 'C', 'T'),
+	'defaut' => 'R',
 	'obligatoire' => true);
 
 // ############## SUBMIT ############
 $_formulaire['valide'] = array(
 	'type' => 'submit',
 	'defaut' => $_trad['defaut']["ajouter"]);
-	
+	*/

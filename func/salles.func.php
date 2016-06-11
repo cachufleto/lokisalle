@@ -514,8 +514,8 @@ function listeSalles($reservation = false)
             'photo'=>'<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" " >
                 <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
             'reservation'=>(isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
-                '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '#P-' . $position . '" >' . $_trad['enlever'] . '</a>' :
-                ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '#P-' . $position . '">' . $_trad['reserver'] . '</a>',
+                '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
+                ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>',
             'position'=>'<a id="P-' . $position . '"></a>'
 
         );
@@ -552,9 +552,9 @@ function listeSallesBO()
             listeProduits($data),
                 '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
             <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
-            ($data['active'] == 1) ? ' <a href="' . LINK . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
-                ' <a href="' . LINK . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
+            '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
+            ($data['active'] == 1) ? ' <a href="' . LINK . '?nav=salles&delete=' . $data['id_salle'] . '&pos=' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINK . '?nav=salles&active=' . $data['id_salle'] . '&pos=' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
         );
         $position++;
     }
@@ -564,15 +564,31 @@ function listeSallesBO()
 
 function listeProduits(array $data)
 {
-    $prix_salle = '<br>PRIX : ';
+    $_trad = setTrad();
+
+    $_prixPlage[4]['taux'] = 1.25;
+    $_prixPlage[3]['taux'] = 1;
+    $_prixPlage[2]['taux'] = 0.9;
+    $_prixPlage[1]['taux'] = 0.8;
+    $_prixPlage[4]['libelle'] = $_trad['value']['nocturne'];
+    $_prixPlage[3]['libelle'] = $_trad['value']['soiree'];
+    $_prixPlage[2]['libelle'] = $_trad['value']['journee'];
+    $_prixPlage[1]['libelle'] = $_trad['value']['matinee'];
+
+
+        $prix_salle = '<br>PRIX ';
     if($prix = selectProduitsSalle($data['id_salle'])){
-        foreach($prix as $info){
-            $prix_salle .= ' / ' . $data['prix_personne'] * $data['capacite'];
+        while($info = $prix->fetch_assoc() ){
+            $prix_salle .=  '<br>' . $_prixPlage[$info['id_plagehoraire']]['libelle'] . ' : ' .
+                    $data['prix_personne'] * $data['capacite'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $info['id_plagehoraire'];
         }
     }
-
-    return $prix_salle . $data['prix_personne'] * $data['capacite'];
-
+    return $prix_salle;
+/*(
+    [id] => 29
+    [id_salle] => 1
+    [id_plagehoraire] => 4
+)*/
 }
 
 function treeProduitsSalle($_formulaire, $_id){

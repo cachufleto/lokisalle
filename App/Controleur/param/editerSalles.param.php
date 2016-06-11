@@ -1,5 +1,5 @@
 <?php
-# FORMULAIRE D'INSCRIPTION
+# FORMULAIRE SALLES
 
 // Items du formulaire
 $_formulaire = array();

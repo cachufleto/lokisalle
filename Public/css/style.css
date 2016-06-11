@@ -293,6 +293,12 @@ header li.drapeu img {
 /* ***************************
    ===== Formulaire =====
    *************************** */
+#ajout a {
+    color: #6D1907;
+    background-color: burlywood;
+    border-radius: 5px;
+    padding: 0 5px;
+}
 
 #formulaire {
     padding:13px;

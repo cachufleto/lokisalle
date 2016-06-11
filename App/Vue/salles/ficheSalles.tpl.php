@@ -35,7 +35,7 @@
                     $salle['reserver'] = '<a href="' . LINK . '?nav=ficheSalles&id=' . $_id .
                         '&reserver=' . $salle['id_salle'] . '&pos=' . $position . '">Reserver</a>';
                     -->
-                    <a href="<?php echo LINK; ?>?nav=salles#P-<?php echo $position; ?>"><?php echo $_trad['revenir']; ?></a>
+                    <a href="<?php echo LINK; ?>?nav=salles&pos=<?php echo $position; ?>"><?php echo $_trad['revenir']; ?></a>
 
                 </div>
             </div>

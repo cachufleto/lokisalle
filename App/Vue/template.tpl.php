@@ -33,7 +33,7 @@
 <!-- DEBUG -->
 <section id="debug">
 	<?php
-	//echo $debug;
+	echo $debug;
 	?>
 </section>
 <!-- Pied de Page -->

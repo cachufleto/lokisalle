@@ -1,7 +1,7 @@
 <?php $_trad = setTrad(); ?>
 <div class="ligne">
     <h1><?php echo $_trad['titre']['gestionSalles']; ?></h1>
-    <?php echo $_trad['ajouterSalle']; ?>
+    <span id="ajout"><?php echo $_trad['ajouterSalle']; ?></span>
 </div>
 <div class="ligne">
     <?php echo $msg; ?>
