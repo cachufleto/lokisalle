@@ -59,17 +59,35 @@ function backOff_salles()
     include VUE . 'salles/gestionSalles.tpl.php';
 }
 
-function backOff_editProduits($id)
+function backOff_editProduits()
 {
-    //$table = selectProduitsSalle($id);
-    //include VUE . 'salles/gestionProduits.tpl.php';
+    $_trad = setTrad();
+    include PARAM . 'backOff_produits.param.php';
+    modCheckProduits($_formulaire, $_id);
+    $form = formulaireAfficher($_formulaire);
+
+    include VUE . 'salles/gestionProduits.tpl.php';
 }
 
 function backOff_gestionProduits()
 {
-    backOff_ficheSalles();
-    echo __FUNCTION__;
+ echo 'je suis la';
+    $_trad = setTrad();
+    include FUNC . 'form.func.php';
+    include PARAM . 'backOff_produits.param.php';
+
+    $msg = '';
+    if (isset($_POST['valide']) && postCheck($_formulaire, true)) {
+
+        if(!($msg = produitsValider($_formulaire))) {
+
+            treeProduitsSalle($_formulaire, $_id);
+        }
+    }
+
+   header('Location:?nav=ficheSalles&id=' . $_GET['id'] . '&pos=' . $_GET['pos']);
 }
+
 
 function backOff_ficheSalles()
 {

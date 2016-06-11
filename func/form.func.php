@@ -60,7 +60,10 @@ function typeForm($champ, $info)
 
 	$_trad = setTrad();
 
-	$valeur = html_entity_decode((!empty($info['valide']))? $info['valide'] : $info['defaut']);
+	$valeur = (!empty($info['valide']) && !is_array($info['valide']))?
+		html_entity_decode((!empty($info['valide']))? $info['valide'] : $info['defaut']) :
+		((!empty($info['valide']))? $info['valide'] : $info['defaut']);
+
 	$check = (!empty($info['valide']))? 'checked' : '' ;
 	$class = (!empty($info['class']))? $info['class'] : '';
 	
@@ -93,13 +96,16 @@ function typeForm($champ, $info)
 
 		case 'select':
 
-			$balise = '<select class=" " id="' . $champ . '" name="' . $champ . '">';
+			$balise = '
+			<select class=" " id="' . $champ . '" name="' . $champ . '">';
 			foreach($info['option'] as $value){
 				$check = selectCheck($info, $value); 
-				$balise .= '<option value="' .  $value . '" ' . $check . ' >'.$_trad['value'][$value].'</option>';
+				$balise .= '
+				<option value="' .  $value . '" ' . $check . ' >'.$_trad['value'][$value].'</option>';
 			}
 			// Balise par defaut
-			$balise .= '</select>';
+			$balise .= '
+			</select>';
 			
 			return $balise;
 		break;
@@ -119,9 +125,10 @@ function typeForm($champ, $info)
 
 		case 'checkbox':
 			$balise = '';
-			foreach($info['option'] as $value){
-				$check = radioCheck($info, $value)? 'checked="checked" ': '';
-				$balise .=  $_trad['value'][$value] . '<input type="checkbox" class="radio-inline" id="' . $champ . $value .'" name="' . $champ . '" '.  $check .'>';
+			foreach($info['option'] as $key => $value){
+				$check = checkboxCheck($info, $key)? 'checked="checked" ': '';
+				$balise .=  $_trad['value'][$value] .
+					'<input type="checkbox" class="radio-inline" id="' . $champ . $key .'" name="' . $champ . '[' . $key . ']" '.  $check .'>';
 			}
 			return $balise;
 		break;
@@ -196,7 +203,7 @@ function postValide(&$_formulaire, $mod=FALSE)
 		if(isset($_POST[$key]) && $key != 'valide'){
 
 			// on encode en htmlentities
-			$valide = htmlentities($_POST[$key], ENT_QUOTES);
+			$valide = (!is_array($_POST[$key]))? htmlentities($_POST[$key], ENT_QUOTES) : $_POST[$key];
 			// si le champ fait objet d'une rectification
 			if(!empty($info['rectification'])){
 
@@ -249,7 +256,8 @@ function postValide(&$_formulaire, $mod=FALSE)
 			}
 		} else if ($info['type'] == 'checkbox'){
 			
-			$ok = testObligatoire($info)? false : $ok;
+			$ok = (testObligatoire($info) && empty($valeur))? false : $ok;
+
 
 		} else if (!$mod && $key != 'valide'){
 
@@ -274,6 +282,18 @@ function radioCheck($info, $value)
 {
 	// info['valide'] => valeur du formulaire
 	return (!empty($info['valide']) && $info['valide'] == $value)? true : false;
+
+}
+
+# Fonction radioCheck()
+# Vérifie la valeur du check
+# $info => array(...'valide'), valeurs du champs
+# $value => valeur à comparer
+# RETURN string
+function checkboxCheck($info, $value)
+{
+	// info['valide'] => valeur du formulaire
+	return (!empty($info['valide']) && in_array($value, $info['valide']))? true : false;
 
 }
 

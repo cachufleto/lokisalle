@@ -27,6 +27,27 @@ function ListeDistinc($champ, $table, $info)
 # convertion avec htmlentities
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
+function modCheckProduits(&$_formulaire, $_id)
+{
+
+    $sql = "SELECT id_plagehoraire FROM produits WHERE id_salle = ". $_id ;
+
+    $data = executeRequete($sql) or die ($sql);
+    if($data->num_rows < 1) return false;
+
+    while ($produit = $data->fetch_assoc()){
+        $_formulaire['plagehoraire']['valide'][] = $produit['id_plagehoraire'];
+        $_formulaire['plagehoraire']['sql'][] = $produit['id_plagehoraire'];
+    }
+
+    return true;
+}
+
+# Fonction modCheck()
+# Control des informations Postées
+# convertion avec htmlentities
+# $nomFormulaire => string nom du tableau
+# RETURN string alerte
 function modCheckSalles(&$_formulaire, $_id)
 {
     $form = $_formulaire;
@@ -89,13 +110,50 @@ function nomImage($_formulaire){
     return $nomImage;
 }
 
+
+function produitsValider(&$_formulaire)
+{
+    global $minLen;
+    $_trad = setTrad();
+
+    $msg = '';
+    $erreur = false;
+    $sql_Where = '';
+    $control = true;
+    $message ='';
+
+    foreach ($_formulaire as $key => $info){
+
+        $label = $_trad['champ'][$key];
+        $valeur = (isset($info['valide']))? $info['valide'] : NULL;
+        if(testObligatoire($info) && empty($valeur)) {
+            $erreur = true;
+            $_formulaire[$key]['message'] = inputMessage(
+                $_formulaire[$key], $label . $_trad['erreur']['obligatoire']);
+        }
+
+        switch ($key){
+            case 'plagehoraire':
+                break;
+        }
+    }
+
+    if($erreur) // si la variable $msg est vide alors il n'y a pas d'erreurr !
+    {  // le pseudo n'existe pas en BD donc on peut lancer l'inscription
+
+        $msg .= '<br />'.$_trad['erreur']['uneErreurEstSurvenue'];
+
+    }
+
+    return $msg;
+}
+
 # Fonction ficheSallesValider()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
 # RETURN string msg
 function ficheSallesValider(&$_formulaire)
 {
-
     global $minLen;
     $_trad = setTrad();
     $msg = 	$erreur = false;
@@ -515,6 +573,26 @@ function listeProduits(array $data)
 
     return $prix_salle . $data['prix_personne'] * $data['capacite'];
 
+}
+
+function treeProduitsSalle($_formulaire, $_id){
+
+    $existProduits = selectProduitsSalle($_id);
+
+    $produit = array();
+    while($exist = $existProduits->fetch_assoc()){
+        if(!isset($_POST['plagehoraire'][$exist['id_plagehoraire']])){
+            deleteProduit($exist['id']);
+        } else {
+            unset($_formulaire['plagehoraire']['valide'][$exist['id_plagehoraire']]);
+        }
+    }
+
+    foreach($_formulaire['plagehoraire']['valide'] as $plage_horaire => $info){
+        setProduit($_id, $plage_horaire);
+    }
+
+    return true;
 }
 
 function orderSalles()

@@ -23,5 +23,6 @@ $_formulaire['valide'] = array(
 $_formulaire['rapel'] = array(
 	'type' => 'checkbox',
 	'content' => 'text',
-	'option' => array('deMoi'=>'on'),
+	'option' => array('on'=>'deMoi'),
 	'defaut' => $_trad['defaut']['MotPasse']);
+

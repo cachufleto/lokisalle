@@ -59,11 +59,22 @@ function selectProduitsSalle($id)
     return executeRequete($sql);
 }
 
+function setProduit($_id, $key)
+{
+    $sql = "INSERT INTO `produits` (`id`, `id_salle`, `id_plagehoraire`) VALUES (NULL, '$_id', '$key');";
+    return executeRequete($sql);
+}
+
+function deleteProduit($idproduit)
+{
+    $sql = "DELETE FROM `produits` WHERE `id` = $idproduit";
+    return executeRequete($sql);
+}
 
 function setSalle($sql_champs, $sql_value)
 {
     // insertion en BDD
-    $sql = " INSERT INTO salles ($sql_champs) VALUES ($sql_value) ";
+    $sql = " INSERT INTO salles ($sql_champs) VALUES ($sql_value)";
     return executeRequete ($sql);
     // ouverture d'une session
 }

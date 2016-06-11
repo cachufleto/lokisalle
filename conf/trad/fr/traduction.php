@@ -31,6 +31,7 @@ $_trad['champ']['tranche'] = "Tranches";
 $_trad['champ']['valide'] = "Valider";
 $_trad['champ']['ville'] = "Ville";
 $_trad['champ']['cap_min'] = "Cap. Min.";
+$_trad['champ']['plagehoraire'] = "Plage Horaire";
 $_trad['champ']['prix_personne'] = "Prix par personne";
 
 /* trad pour valeurs par defaut dans les formulaires */
@@ -180,13 +181,17 @@ $_trad['titre']['ventes'] = "Commandes";
 $_trad['value']['ADM'] = "ADMIN.";
 $_trad['value']['C'] = "Conferences";
 $_trad['value']['COL'] = "INT";
+$_trad['value']['deMoi'] = "Se rappeler de moi";
 $_trad['value']['F'] = "Fêtes";
 $_trad['value']['f'] = "Femme";
 $_trad['value']['indefini'] = "Indefini(e)";
+$_trad['value']['journee'] = "Journee";
 $_trad['value']['m'] = "Homme";
+$_trad['value']['matinee'] = "Matinee";
 $_trad['value']['MEM'] = "MEMBRE";
-$_trad['value']['on'] = "Se rappeler de moi";
+$_trad['value']['nocturne'] = "Nocturne";
 $_trad['value']['R'] = "Reunions";
+$_trad['value']['soiree'] = "Soiree";
 $_trad['value']['T'] = "Théâtre";
 $_trad['value']['T1'] = "Un groupement";
 $_trad['value']['T2'] = "Deux groupement";

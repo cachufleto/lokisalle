@@ -299,7 +299,7 @@ function actifUser($_formulaire)
         $_POST['valide'] = 'cookie';
         $_POST['mdp'] = '';
         $_POST['pseudo'] = $_COOKIE['Lokisalle']['pseudo'];
-        $_POST['rapel'] = 'on';
+        $_POST['rapel']['on'] = 'on';
     }
 
     // traitement du formulaire
