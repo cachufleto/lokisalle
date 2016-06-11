@@ -20,6 +20,7 @@ $_formulaire['pseudo']['type'] = 'null';
 // id_membre champ cachée
 $_formulaire['id_membre'] = array(
 	'type' => 'hidden',
+	'content' => 'int',
 	'acces' => 'private',
 	'defaut' => $_id);
 

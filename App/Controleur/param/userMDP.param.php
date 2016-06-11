@@ -5,6 +5,7 @@ $_formulaire = array();
 
 $_formulaire['mdp'] = array(
     'type' => 'password',
+    'content' => 'text',
     'maxlength' => 14,
     'defaut' => $_trad['defaut']['MotPasse'],
     'obligatoire' => true,
@@ -12,6 +13,7 @@ $_formulaire['mdp'] = array(
 
 $_formulaire['jeton'] = array(
     'type' => 'hidden',
+    'content' => 'text',
     'acces' => 'private',
     'defaut' => 'validation');
 

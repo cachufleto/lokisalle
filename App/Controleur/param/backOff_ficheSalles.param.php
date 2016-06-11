@@ -23,12 +23,14 @@ $_formulaire['valide']['origin']  = (isset($_POST['valide']) && $_POST['valide']
 
 $_formulaire['pos'] = array(
 	'type' => 'hidden',
+	'content' => 'text',
 	'acces' => 'private',
 	'defaut' => $position);
 
 // id_salle champ cachée
 $_formulaire['id_salle'] = array(
 	'type' => 'hidden',
+	'content' => 'int',
 	'acces' => 'private',
 	'defaut' => $_id);
 

@@ -261,7 +261,7 @@ function inscriptionValider(&$_formulaire)
                 // Construction de la requettes
                 if(!empty($valeur)){
                     $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : $valeur) ;
+                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($info[$key]['content'] != 'int' AND $info[$key]['content'] != 'float')? "'$valeur'" : $valeur) ;
                 }
             }
     }

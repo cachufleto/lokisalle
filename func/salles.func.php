@@ -134,6 +134,26 @@ function ficheSallesValider(&$_formulaire)
                     switch($key){
 
                         case 'capacite':
+                        case 'cap_min':
+                        case 'tranche':
+                            if(empty($valeur = intval($valeur)))
+                            {
+                                $erreur = true;
+                                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                    ': '.$_trad['erreur']['minimumNumerique'];
+                            }
+                            $_formulaire[$key]['valide'] = $valeur;
+                            break;
+
+                        case 'prix_personne':
+                            if(($valeur = doubleval(str_replace(',', '.', $valeur))) < PRIX)
+                            {
+                                $erreur = true;
+                                $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                    ': '.$_trad['erreur']['prixPersonne'];
+                                $valeur = PRIX;
+                            }
+                            $_formulaire[$key]['valide'] = $valeur;
                             break;
 
                         case 'photo':
@@ -173,6 +193,20 @@ function ficheSallesValider(&$_formulaire)
         }
     }
 
+    if(!$erreur && $_formulaire['capacite']['valide'] < $_formulaire['cap_min']['valide']){
+
+        $erreur = true;
+        $_formulaire['cap_min']['message'] = $_trad['erreur']['surLe'] . $_trad['champ']['cap_min'] .
+            ': '.$_trad['erreur']['capaciteMinSuperieur'];
+        $_formulaire['cap_min']['valide'] = $_formulaire['capacite']['valide'];
+    }
+
+    if(controlTranche($_formulaire)){
+        $erreur = true;
+        $_formulaire['tranche']['message'] = $_trad['erreur']['surLe'] . $_trad['champ']['tranche'] .
+            ': '.$_trad['erreur']['repartitionTranche'];
+    }
+
     // si une erreur c'est produite
     if($erreur)
     {
@@ -208,6 +242,40 @@ function ficheSallesValider(&$_formulaire)
     return $msg;
 }
 
+function controlTranche(&$_formulaire)
+{
+    $max = $_formulaire['capacite']['valide'];
+    $min = $_formulaire['cap_min']['valide'];
+    $tranche = $_formulaire['tranche']['valide'];
+
+    if($max == $min AND $tranche != 1) {
+        $_formulaire['tranche']['valide'] = 1;
+        return true;
+    }
+
+    if( ($max - $min) < ($max*0.1) AND $tranche != 1) {
+        $_formulaire['tranche']['valide'] = 1;
+        return true;
+    }
+
+    if( ($max - $min) < ($max*0.2) AND $tranche > 2) {
+        $_formulaire['tranche']['valide'] = 2;
+        return true;
+    }
+
+    if( ($max - $min) < ($max*0.35) AND $tranche > 3) {
+        $_formulaire['tranche']['valide'] = 3;
+        return true;
+    }
+
+    if($tranche > 4) {
+        $_formulaire['tranche']['valide'] = 4;
+        return true;
+    }
+
+    return false;
+
+}
 # Fonction editerSallesValider()
 # Verifications des informations en provenance du formulaire
 # @_formulaire => tableau des items
@@ -248,11 +316,33 @@ function editerSallesValider(&$_formulaire)
                 switch($key){
 
                     case 'capacite':
-                        break;
-                    /*
-                                        case 'photo':
+                    case 'cap_min':
+                    case 'tranche':
+                        if(empty($valeur = intval($valeur)))
+                        {
+                            $erreur = true;
+                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                ': '.$_trad['erreur']['minimumNumerique'];
+                        }
 
-                                        break;
+                        $_formulaire[$key]['valide'] = $valeur;
+                        break;
+
+                    case 'prix_personne':
+                        if(($valeur = doubleval(str_replace(',', '.', $valeur))) < PRIX)
+                        {
+                            $erreur = true;
+                            $_formulaire[$key]['message'] = $_trad['erreur']['surLe'] . $label .
+                                ': '.$_trad['erreur']['prixPersonne'];
+                            $valeur = PRIX;
+                        }
+                        $_formulaire[$key]['valide'] = $valeur;
+                        break;
+
+                    /*
+                    case 'photo':
+
+                    break;
                     */
                     case 'categorie':
 
@@ -280,7 +370,7 @@ function editerSallesValider(&$_formulaire)
                 // Construction de la requettes
                 if(!empty($valeur)){
                     $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($key != 'cp')? "'$valeur'" : "$valeur") ;
+                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($info[$key]['content'] != 'int' AND $info[$key]['content'] != 'float')? "'$valeur'" : "$valeur") ;
                 }
             }
     }
@@ -387,6 +477,7 @@ function listeSallesBO()
     $table['champs']['titre'] = $_trad['champ']['titre'];
     $table['champs']['capacite'] = $_trad['champ']['capacite'];
     $table['champs']['categorie'] = $_trad['champ']['categorie'];
+    $table['champs']['produit'] = $_trad['champ']['produit'];
     $table['champs']['photo'] = $_trad['champ']['photo'];
     $table['champs']['active'] = $_trad['champ']['active'];
 
@@ -398,8 +489,9 @@ function listeSallesBO()
         $table['info'][] = array(
             $data['id_salle'],
             html_entity_decode($data['titre']),
-            $data['capacite'],
+            "[{$data['cap_min']} - {$data['capacite']}]",
             $_trad['value'][$data['categorie']],
+            listeProduits($data),
                 '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
             <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
             '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '#P-' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
@@ -410,6 +502,19 @@ function listeSallesBO()
     }
 
     return $table;
+}
+
+function listeProduits(array $data)
+{
+    $prix_salle = '<br>PRIX : ';
+    if($prix = selectProduitsSalle($data['id_salle'])){
+        foreach($prix as $info){
+            $prix_salle .= ' / ' . $data['prix_personne'] * $data['capacite'];
+        }
+    }
+
+    return $prix_salle . $data['prix_personne'] * $data['capacite'];
+
 }
 
 function orderSalles()

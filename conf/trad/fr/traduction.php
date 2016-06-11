@@ -20,18 +20,23 @@ $_trad['champ']['pays'] = "Pays";
 $_trad['champ']['photo'] = "Photo";
 $_trad['champ']['pos'] = "Position";
 $_trad['champ']['prenom'] = "Prénom";
+$_trad['champ']['produit'] = "Produits";
 $_trad['champ']['pseudo'] = "Pseudonime";
 $_trad['champ']['rapel'] = "Option";
 $_trad['champ']['sexe'] = "Sexe";
 $_trad['champ']['statut'] = "Statut";
 $_trad['champ']['telephone'] = "N°. téléphone";
 $_trad['champ']['titre'] = "Nom";
+$_trad['champ']['tranche'] = "Tranches";
 $_trad['champ']['valide'] = "Valider";
 $_trad['champ']['ville'] = "Ville";
+$_trad['champ']['cap_min'] = "Cap. Min.";
+$_trad['champ']['prix_personne'] = "Prix par personne";
 
 /* trad pour valeurs par defaut dans les formulaires */
 $_trad['defaut']['ajouter'] = "Ajouter";
 $_trad['defaut']['capacite'] = "Capacité";
+$_trad['defaut']['cap_min'] = "Minimum de Personnes";
 $_trad['defaut']['cp'] = "99000";
 $_trad['defaut']['description'] = "Description...";
 $_trad['defaut']['gsm'] = "06 12 34 56 78";
@@ -43,10 +48,13 @@ $_trad['defaut']['Monprenom'] = "Mon prenom";
 $_trad['defaut']['MotPasse'] = "MotPasse!";
 $_trad['defaut']['Ouhabite'] = "Ou j'habite";
 $_trad['defaut']['photo'] = "Photo";
+$_trad['defaut']['prix_personne'] = "Prix";
 $_trad['defaut']['SeConnecter'] = "Se Connecter";
 $_trad['defaut']['telephone'] = "01 89 76 43 21";
+$_trad['defaut']['tranche'] = "Tranche";
 $_trad['defaut']['valider'] = "Valider";
 $_trad['defaut']['ville'] = "Mont...";
+
 
 /* trad des messages d'erreurs dans les formulaires */
 $_trad['erreur']['erreur'] = " Erreur ";
@@ -55,6 +63,7 @@ $_trad['erreur']['aphanumeriqueSansSpace'] = " Caractere acceptés: A à Z et 0 
 $_trad['erreur']['ATTENTIONErreurSurRequeteSQL'] = "<span style='color:red'>ATTENTION! Erreur sur la requete SQL</span><br />";
 $_trad['erreur']['ATTENTIONfaitQuoiAvec'] = " ATTENTION !!!! Vous fait Quoi avec ";
 $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:red'>ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>";
+$_trad['erreur']['capaciteMinSuperieur'] = "La capacité minimal ne peut pas être supperieur à la capacité de la sale";
 $_trad['erreur']['caracteres'] = " caracteres ";
 $_trad['erreur']['controlTelephone'] = " Au moins un N° de téléphone doit être renseigné ";
 $_trad['erreur']['corrigerErreurDans'] = " Merci de rectifier ";
@@ -75,13 +84,16 @@ $_trad['erreur']['mailInexistant'] = "Ce mail n'existe pas chez nous!";
 $_trad['erreur']['installData'] = "<span style='color:red'>ERREUR FATAL!</span>";
 $_trad['erreur']['leRepertoireNePeutEtreCree'] = "Erreur : le répertoire cible ne peut-être créé ! Vérifiez que vous diposiez des droits suffisants pour le faire ou créez le manuellement !";
 $_trad['erreur']['minimumAphaNumerique'] = " Il doit avoir un nombre de minimum ";
+$_trad['erreur']['minimumNumerique'] = "Ne peut pas être zero";
 $_trad['erreur']['nonVide'] = " Il ne doit pas étre vide ";
 $_trad['erreur']['NULL'] = $_trad['erreur']['inconueConnexion'] . "<br/>L'information que vous demandez n'existe pas!";
 $_trad['erreur']['obligatoire'] = " est obligatoire ";
 $_trad['erreur']['problemeLorsUpload'] = "Problème lors de l'upload !";
+$_trad['erreur']['prixPersonne'] = "La valeur ne peut être inferieur à " . PRIX . " !";
 $_trad['erreur']['pseudoIndisponble'] = " <span class='alert'>Pseudo indisponible !</span> ";
 $_trad['erreur']['queDesChiffres'] = " Il doit comptenir que des chiffres ";
 $_trad['erreur']['redirigeVerConnection'] = $_trad['-bienvenu'] . "<p style='color:red'>" . $_trad['erreur']['NULL'] . "</p><p>Vous serait redirigé ver la page de <a href='index.php?nav=actif'>connexion!</a>.</p>";
+$_trad['erreur']['repartitionTranche'] = "La valeur n'est pas authorisée";
 $_trad['erreur']['reservationVide'] = "Votre panier est vide!";
 $_trad['erreur']['statics'] = "Le contenue n'est plus disponible!";
 $_trad['erreur']['surLe'] = " Erreur sur ";
@@ -173,8 +185,13 @@ $_trad['value']['f'] = "Femme";
 $_trad['value']['indefini'] = "Indefini(e)";
 $_trad['value']['m'] = "Homme";
 $_trad['value']['MEM'] = "MEMBRE";
-$_trad['value']['R'] = "Reunions";
 $_trad['value']['on'] = "Se rappeler de moi";
+$_trad['value']['R'] = "Reunions";
+$_trad['value']['T'] = "Théâtre";
+$_trad['value']['T1'] = "Un groupement";
+$_trad['value']['T2'] = "Deux groupement";
+$_trad['value']['T3'] = "Trois groupement";
+$_trad['value']['T4'] = "Quatre groupement";
 
 /* trad pour les autres textes */
 $_trad['activer'] = "Activer";

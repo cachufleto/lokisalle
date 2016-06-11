@@ -104,6 +104,19 @@ function typeForm($champ, $info)
 			return $balise;
 		break;
 		
+		case 'selectTableau':
+
+			$balise = '<select class=" " id="' . $champ . '" name="' . $champ . '">';
+			foreach($info['option'] as $key=>$value){
+				$check = selectCheck($info, $key);
+				$balise .= '<option value="' .  $key . '" ' . $check . ' >'.$_trad['value'][$value].'</option>';
+			}
+			// Balise par defaut
+			$balise .= '</select>';
+
+			return $balise;
+		break;
+
 		case 'checkbox':
 			$balise = '';
 			foreach($info['option'] as $value){

@@ -113,4 +113,9 @@ if (utilisateurEstAdmin() && $_SESSION['BO'] == 1) {
 
     $route['editerSalles']['Controleur'] = 'salles.php';
     $route['editerSalles']['action'] = 'backOff_editerSalles';
+
+    /****** SALLES ******/
+    $route['produits']['Controleur'] = 'salles.php';
+    $route['produits']['action'] = 'backOff_produits';
+
 }

@@ -6,6 +6,7 @@ $_id = utilisateurEstAdmin()? (!empty($_id)? $_id : $_SESSION['user']['id']) : $
 
 $_formulaire['statut'] = array(
 	'type' => 'null',
+	'content' => 'text',
 	'option' => array('MEM', 'COL', 'ADM'),
 	'obligatoire' => true,
 	'defaut' => '');
@@ -16,6 +17,7 @@ if(isSuperAdmin() && $_id != 1)
 // id_membre champ cachée
 $_formulaire['id_membre'] = array(
 	'type' => 'hidden',
+	'content' => 'int',
 	'acces' => 'private',
 	'defaut' => $_id);
 

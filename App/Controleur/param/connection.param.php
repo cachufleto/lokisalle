@@ -5,11 +5,13 @@ $_formulaire = array();
 
 $_formulaire['pseudo'] = array(
 	'type' => 'text',
+	'content' => 'text',
 	'maxlength' => 14,
 	'defaut' => $_trad['champ']['pseudo']);
 	
 $_formulaire['mdp'] = array(
 	'type' => 'password',
+	'content' => 'text',
 	'maxlength' => 14,
 	'defaut' => $_trad['defaut']['MotPasse']);
 
@@ -20,7 +22,6 @@ $_formulaire['valide'] = array(
 
 $_formulaire['rapel'] = array(
 	'type' => 'checkbox',
+	'content' => 'text',
 	'option' => array('deMoi'=>'on'),
 	'defaut' => $_trad['defaut']['MotPasse']);
-
-

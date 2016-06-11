@@ -59,6 +59,18 @@ function backOff_salles()
     include VUE . 'salles/gestionSalles.tpl.php';
 }
 
+function backOff_editProduits($id)
+{
+    //$table = selectProduitsSalle($id);
+    //include VUE . 'salles/gestionProduits.tpl.php';
+}
+
+function backOff_gestionProduits()
+{
+    backOff_ficheSalles();
+    echo __FUNCTION__;
+}
+
 function backOff_ficheSalles()
 {
     $nav = 'ficheSalles';
@@ -117,6 +129,7 @@ function backOff_ficheSalles()
     }
 
     include VUE . 'salles/backOff_ficheSalles.tpl.php';
+    backOff_editProduits($_formulaire['id_salle']['valide']);
 }
 
 function backOff_editerSalles()
