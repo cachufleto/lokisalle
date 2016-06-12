@@ -194,6 +194,18 @@ function setTrad(){
 
 }
 
+function setPrixPlage(){
+
+	include CONF . 'parametres.param.php';
+	return $_prixPlage;
+}
+
+function setPrixTranches(){
+
+	include CONF . 'parametres.param.php';
+	return $_tranches;
+}
+
 function imageExiste($photo, $rep = 'photo'){
 
 	if(file_exists( RACINE_SERVER . RACINE_SITE . $rep . '/' . $photo)){

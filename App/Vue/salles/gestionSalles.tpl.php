@@ -32,3 +32,4 @@
         <?php } ?>
     </table>
 </div>
+<?php echo $alert; ?>

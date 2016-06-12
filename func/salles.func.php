@@ -251,12 +251,12 @@ function ficheSallesValider(&$_formulaire)
         }
     }
 
-    if(!$erreur && $_formulaire['capacite']['valide'] < $_formulaire['cap_min']['valide']){
+    if(!$erreur && intval($_formulaire['capacite']['valide']*.9) < $_formulaire['cap_min']['valide']){
 
         $erreur = true;
         $_formulaire['cap_min']['message'] = $_trad['erreur']['surLe'] . $_trad['champ']['cap_min'] .
             ': '.$_trad['erreur']['capaciteMinSuperieur'];
-        $_formulaire['cap_min']['valide'] = $_formulaire['capacite']['valide'];
+        $_formulaire['cap_min']['valide'] = intval($_formulaire['capacite']['valide']*.9);
     }
 
     if(controlTranche($_formulaire)){
@@ -539,7 +539,6 @@ function listeSallesBO()
     $table['champs']['photo'] = $_trad['champ']['photo'];
     $table['champs']['active'] = $_trad['champ']['active'];
 
-
     $position = 1;
     $salles = selectSallesUsers(orderSallesValide() . orderSalles());
 
@@ -547,14 +546,14 @@ function listeSallesBO()
         $table['info'][] = array(
             $data['id_salle'],
             html_entity_decode($data['titre']),
-            "[{$data['cap_min']} - {$data['capacite']}]",
+            "MIN. {$data['cap_min']}, MAX. : {$data['capacite']}<br> prix ref: {$data['prix_personne']}",
             $_trad['value'][$data['categorie']],
             listeProduits($data),
                 '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" id="P-' . $position . '" >
             <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
             '<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . ($position - 1) . '" ><img width="25px" src="img/modifier.png"></a>',
-            ($data['active'] == 1) ? ' <a href="' . LINK . '?nav=salles&delete=' . $data['id_salle'] . '&pos=' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>' :
-                ' <a href="' . LINK . '?nav=salles&active=' . $data['id_salle'] . '&pos=' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>'
+            ($data['active'] == 1) ? ' <a href="' . LINK . '?nav=salles&delete=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerOk.png"></a>' :
+                ' <a href="' . LINK . '?nav=salles&active=' . $data['id_salle'] . '#P-' . ($position - 1) . '"><img width="25px" src="img/activerKo.png"></a>'
         );
         $position++;
     }
@@ -562,33 +561,42 @@ function listeSallesBO()
     return $table;
 }
 
+function listeCapacites($data, $info){
+
+    $_trad = setTrad();
+    $_prixPlage = setPrixPlage();
+    $_tranches = setPrixTranches();
+
+    $prix_salle = '';
+    $max = $data['capacite'];
+    $min = $data['cap_min'];
+    $dif = $max - $min;
+    $it = intval(str_replace('T', '', $data['tranche']));
+    $delta = intval($dif/$it);
+
+    for ($i=1, $j=$it; $i<=$it; $i++, $j--){
+        $per = ($i != $it)? $min + $i*$delta : $max;
+
+        $prix = $per * $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i] ;
+
+        $prix_salle .=  "<br>{$data['tranche']}/" . $_prixPlage[$info['id_plagehoraire']]['libelle'] . ' : ' .
+            number_format ($prix , 2) .
+            "€ [Max. " . $per . " ". utf8_encode($info['description']) . " : " . number_format (($prix/$per) , 2) . "€/personne]";
+    }
+
+    return $prix_salle;
+}
+
 function listeProduits(array $data)
 {
-    $_trad = setTrad();
 
-    $_prixPlage[4]['taux'] = 1.25;
-    $_prixPlage[3]['taux'] = 1;
-    $_prixPlage[2]['taux'] = 0.9;
-    $_prixPlage[1]['taux'] = 0.8;
-    $_prixPlage[4]['libelle'] = $_trad['value']['nocturne'];
-    $_prixPlage[3]['libelle'] = $_trad['value']['soiree'];
-    $_prixPlage[2]['libelle'] = $_trad['value']['journee'];
-    $_prixPlage[1]['libelle'] = $_trad['value']['matinee'];
-
-
-        $prix_salle = '<br>PRIX ';
+        $prix_salle = '';
     if($prix = selectProduitsSalle($data['id_salle'])){
         while($info = $prix->fetch_assoc() ){
-            $prix_salle .=  '<br>' . $_prixPlage[$info['id_plagehoraire']]['libelle'] . ' : ' .
-                    $data['prix_personne'] * $data['capacite'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $info['id_plagehoraire'];
+            $prix_salle .= listeCapacites($data, $info);
         }
     }
     return $prix_salle;
-/*(
-    [id] => 29
-    [id_salle] => 1
-    [id_plagehoraire] => 4
-)*/
 }
 
 function treeProduitsSalle($_formulaire, $_id){
@@ -647,4 +655,24 @@ function reservationSalles(){
         }
     }
 
+}
+
+function activeSalles()
+{
+    if (isset($_GET)) {
+        if (!empty($_GET['delete'])) {
+
+            setSallesActive($_GET['delete'], 0);
+
+        } elseif (!empty($_GET['active'])) {
+
+            if(!empty(selectProduitsSalle($_GET['active'])->num_rows)){
+                setSallesActive($_GET['active'], 1);
+            } else {
+                return false;
+            }
+        }
+
+    }
+    return true;
 }

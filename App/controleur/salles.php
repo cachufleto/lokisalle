@@ -39,19 +39,11 @@ function ficheSalles()
 function backOff_salles()
 {
     $nav = 'gestionSalles';
-    $msg = '';
+    $alert = $msg = '';
     $_trad = setTrad();
 
-    if (isset($_GET)) {
-        if (!empty($_GET['delete'])) {
-
-            setSallesActive($_GET['delete'], 0);
-
-        } elseif (!empty($_GET['active'])) {
-
-            setSallesActive($_GET['active'], 1);
-        }
-
+    if(!activeSalles()){
+        $alert = "<script>alert(\"{$_trad['erreur']['manqueProduit']}\");</script>";
     }
 
     $table = listeSallesBO();

@@ -82,6 +82,7 @@ $_trad['erreur']['extensionFichierEstIncorrecte'] = "L'extension du fichier est 
 $_trad['erreur']['fichierUploaderNestPasUneImage'] = "Le fichier à uploader n'est pas une image !";
 $_trad['erreur']['inconueConnexion'] = "<span class='alert'>Une erreur est survenue </span>";
 $_trad['erreur']['mailInexistant'] = "Ce mail n'existe pas chez nous!";
+$_trad['erreur']['manqueProduit'] = "Vous n'avez pas crée de produit pour cette salle";
 $_trad['erreur']['installData'] = "<span style='color:red'>ERREUR FATAL!</span>";
 $_trad['erreur']['leRepertoireNePeutEtreCree'] = "Erreur : le répertoire cible ne peut-être créé ! Vérifiez que vous diposiez des droits suffisants pour le faire ou créez le manuellement !";
 $_trad['erreur']['minimumAphaNumerique'] = " Il doit avoir un nombre de minimum ";
