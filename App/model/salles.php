@@ -35,7 +35,7 @@ function selectSallesOrder($order, $listeId)
 function selectSallesUsers($order)
 {
 // selection de tout les users sauffe le super-ADMIN
-    $sql = "SELECT id_salle, titre, capacite, cap_min, categorie, photo, active, prix_personne
+    $sql = "SELECT id_salle, titre, capacite, cap_min, categorie, photo, active, prix_personne, tranche
             FROM salles " . (!isSuperAdmin() ? " WHERE active != 0 " : "") . "
             ORDER BY $order";
     return executeRequete($sql);
@@ -52,9 +52,10 @@ function selectListeDistinc($champ, $table)
 
 function selectProduitsSalle($id)
 {
-    $sql = "SELECT *
-            FROM produits
+    $sql = "SELECT p.*, h.description
+            FROM produits p, plagehoraires h
             WHERE id_salle = $id
+              AND p.id_plagehoraire = h.id
             ORDER BY id_plagehoraire ASC";
     return executeRequete($sql);
 }
