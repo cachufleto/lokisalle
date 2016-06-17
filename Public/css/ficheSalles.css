@@ -9,7 +9,7 @@
 }
 
 #fiche {
-    width: 860px;
+    width: 915px;
     margin-left: calc( 49% - 430px);
     padding: 10px;
     border: solid #ccc 2px;
@@ -26,7 +26,6 @@
 
 #fiche .ligne .lien{
     position: relative;
-    margin-bottom: 0px;
 }
 
 #fiche .ligne .ville{
@@ -49,13 +48,13 @@
 
 #fiche .photo img{
     width: 450px;
-    height: auto;
+    height: 340px;
 }
 
 #fiche .info{
     float: left;
     padding-left: 10px;
-    width: 400px;
+    width: calc(100% - 460px);
 }
 
 #fiche .info .titre{
@@ -66,7 +65,7 @@
 #fiche .info .fiche{
     width: 100%;
     padding-bottom: 15px;
-    height: 150px;
+    height: 64px;
 }
 
 #fiche .description{
@@ -78,12 +77,13 @@
 
 #fiche .categorie,
 #fiche .reserver{
-    width: 60%;
-    float: right;
+    width: 100%;
+    float: left;
+    height: 196px;
 }
 #fiche .reserver{
     height: 25px;
-    /* margin-left: 5%; */
+    width: 46%;
     background-color: #E15007;
     color: whitesmoke;
     padding: 5px;
@@ -105,7 +105,7 @@
 }
 #fiche .lien {
     background-color: #55787D ;
-    margin-top: 6px;
+
 }
 
 @media only screen and (max-width : 780px) {

@@ -107,12 +107,12 @@ function ouvrirSession($session, $control = false)
 {
 
 	$_SESSION['user'] = array(
-		'id'=>$session['id_membre'],
+		'id'=>$session['id'],
 		'pseudo'=>$session['pseudo'],
 		'statut'=>$session['statut'],
 		'user'=>$session['prenom']);
 
-	$control = ($session['id_membre'] == 1)? false : $control;
+	$control = ($session['id'] == 1)? false : $control;
 
 	setcookie( 'Lokisalle[pseudo]' , ($control)? $session['pseudo'] : '' , time()+360000 );
 }

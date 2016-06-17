@@ -74,7 +74,10 @@ div{
     width: 250px;
     padding-left: 12px;
 }
-
+.ref{
+    color: #1916be;
+    font-style: oblique;
+}
 .ficheContact{
     padding: 25px;
     width: 40%;
@@ -215,6 +218,9 @@ header li.drapeu img {
 /* ***************************
    ===== Main Content =====
    *************************** */
+.tableauprix{
+    background-color: rosybrown;
+}
 
 .mainContent {
     overflow: hidden;
@@ -247,15 +253,15 @@ header li.drapeu img {
    *************************** */
 .quart img.trombi {
     width: 240px;
+    height: 180px;
 }
 
 .quart{
     width: 240px;
     padding: 10px;
     height: 420px;
-    border-bottom: double;
-    margin: 6px;
     border: solid #ccc 2px;
+    margin: 6px;
     box-shadow: 8px 8px 4px #CCC;
     border-radius: 10px;
     background-color: white;
@@ -289,6 +295,10 @@ header li.drapeu img {
     background-color: #F49B01;
 }
 
+#formulaire.produits{
+    background-color: #55787D;
+    color: #E7E5E5;
+}
 
 /* ***************************
    ===== Formulaire =====

@@ -74,18 +74,19 @@ function modCheckSalles(&$_formulaire, $_id)
 # convertion avec htmlentities
 # $nomFormulaire => string nom du tableau
 # RETURN string alerte
-function getSalles($_formulaire, $_id)
+function getSalles($_id)
 {
-    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
-
-    $data = executeRequete($sql) or die ($sql);
-
-    if($data->num_rows < 1) return false;
+    $data = selectSalleId($_id) or die ($sql);
+    if($data->num_rows < 1) {
+        return false;
+    }
     $salle = $data->fetch_assoc();
     $fiche = array();
     foreach($salle as $key=>$info){
         $fiche[$key] = html_entity_decode($info);
     }
+    $fiche['produits'] = listeProduitsReservation($fiche);
+
     return $fiche;
 }
 
@@ -513,7 +514,7 @@ function listeSalles($reservation = false)
             'categorie'=>$_trad['value'][$data['categorie']],
             'photo'=>'<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" " >
                 <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            'reservation'=>(isset($_SESSION['panier'][$data['id_salle']]) && $_SESSION['panier'][$data['id_salle']] === true) ?
+            'reservation'=>(isset($_SESSION['panier'][$data['id_salle']])) ?
                 '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
                 ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>',
             'position'=>'<a id="P-' . $position . '"></a>'
@@ -567,36 +568,81 @@ function listeCapacites($data, $info){
     $_prixPlage = setPrixPlage();
     $_tranches = setPrixTranches();
 
-    $prix_salle = '';
+    $prixSalle = [];
     $max = $data['capacite'];
     $min = $data['cap_min'];
     $dif = $max - $min;
     $it = intval(str_replace('T', '', $data['tranche']));
     $delta = intval($dif/$it);
 
-    for ($i=1, $j=$it; $i<=$it; $i++, $j--){
+    for ($i=1; $i<=$it; $i++){
         $per = ($i != $it)? $min + $i*$delta : $max;
-
-        $prix = $per * $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i] ;
-
-        $prix_salle .=  "<br>{$data['tranche']}/" . $_prixPlage[$info['id_plagehoraire']]['libelle'] . ' : ' .
-            number_format ($prix , 2) .
-            "€ [Max. " . $per . " ". utf8_encode($info['description']) . " : " . number_format (($prix/$per) , 2) . "€/personne]";
+        $prix = $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i];
+        $prixSalle[$i]['id'] = $info['id'];
+        $prixSalle[$i]['num'] = $per;
+        $prixSalle[$i]['prix'] = number_format ($prix *$per , 2);
+        $prixSalle[$i]['prix_personne'] = number_format ($prix , 2);
+        $prixSalle[$i]['libelle'] = utf8_encode($_prixPlage[$info['id_plagehoraire']]['libelle']);
+        $prixSalle[$i]['description'] = utf8_encode($info['description']);
     }
 
-    return $prix_salle;
+    return $prixSalle;
 }
 
 function listeProduits(array $data)
 {
-
-        $prix_salle = '';
+    $prix_salle = $ref ='';
+    $affiche = [];
     if($prix = selectProduitsSalle($data['id_salle'])){
         while($info = $prix->fetch_assoc() ){
-            $prix_salle .= listeCapacites($data, $info);
+            $prixSalle= listeCapacites($data, $info);
+            $ref = '';
+            foreach($prixSalle as $key =>$produit){
+                $ref .=  "<td>" . $produit['prix'] . "€</td>";
+                $affiche[$key] = $produit['num'];
+            }
+            $prix_salle .= "<tr><td class='tableauprix'>{$produit['libelle']}</td>$ref</tr>";
+
         }
     }
-    return $prix_salle;
+    $ref = '';
+    foreach($affiche as $col){
+        $ref .=  "<td class='tableauprix'>$col pers.</td>";
+    }
+    $prix_salle = "<tr><td class='tableauprix' width='90'>Max. </td>$ref</tr>" . $prix_salle;
+    $_trad['produitNonDispoble'] = "Produits non disponibles";
+    return (empty($affiche))? $_trad['produitNonDispoble'] : "<table border='1' cellspacing='1' BGCOLOR='#ccc'>$prix_salle</table>";
+}
+
+function listeProduitsReservation(array $data)
+{
+    $prix_salle = $ref ='';
+    $affiche = [];
+    $i=0;
+    if($prix = selectProduitsSalle($data['id_salle'])){
+        while($info = $prix->fetch_assoc() ){
+            $prixSalle= listeCapacites($data, $info);
+            $ref = '';
+            $i++;
+
+            $reservation = isset($_SESSION['panier'][$data['id_salle']])? $_SESSION['panier'][$data['id_salle']] : [];
+            foreach($prixSalle as $key =>$produit){
+                $checked = (isset($reservation[$i]) && $reservation[$i] == $key)? 'checked' : '';
+
+                $ref .=  "<td>" . $produit['prix'] . "€ <input type='radio' name='prix[".$i."]' value='$key' $checked></checkbox></td>";
+                $affiche[$key] = $produit['num'];
+            }
+            $prix_salle .= "<tr><td class='tableauprix'>{$produit['libelle']}</td>$ref</tr>";
+
+        }
+    }
+    $ref = '';
+    foreach($affiche as $col){
+        $ref .=  "<td class='tableauprix'>$col pers.</td>";
+    }
+    $prix_salle = "<tr><td class='tableauprix' width='90'>Max. </td>$ref</tr>" . $prix_salle;
+    $_trad['produitNonDispoble'] = "Produits non disponibles";
+    return (empty($affiche))? $_trad['produitNonDispoble'] : "<table border='1' cellspacing='1' BGCOLOR='#ccc'>$prix_salle</table>";
 }
 
 function treeProduitsSalle($_formulaire, $_id){
@@ -645,16 +691,32 @@ function orderSalles()
     return $_SESSION['orderSalles']['champ'] . " " . $_SESSION['orderSalles']['order'];
 }
 
-function reservationSalles(){
-
-    if (isset($_GET)) {
-        if (!empty($_GET['reserver'])) {
-            $_SESSION['panier'][$_GET['reserver']] = true;
-        } elseif (!empty($_GET['enlever'])) {
-            unset($_SESSION['panier'][$_GET['enlever']]);
+function reservationSalles()
+{
+    if (!empty($_POST)) {
+        if (!empty($_POST['reserver'])) {
+            if(isset($_POST['prix'])) {
+                $_SESSION['panier'][$_POST['id']] = isset($_POST['prix']) ? $_POST['prix'] : [];
+            } else {
+                return false;
+            }
+        } elseif (!empty($_POST['enlever'])) {
+            unset($_SESSION['panier'][$_POST['id']]);
         }
     }
 
+    if (!empty($_GET)) {
+        if (isset($_GET['reserver'])) {
+            if(!(utilisateurEstConnecte())){
+                return false;
+            }
+            header('location:?nav=ficheSalles&id='.$_GET['reserver'].'&pos='.$_GET['pos']);
+
+        } else if (isset($_GET['enlever'])) {
+            unset($_SESSION['panier'][$_GET['enlever']]);
+        }
+    }
+    return true;
 }
 
 function activeSalles()

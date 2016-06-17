@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 12 Juin 2016 à 23:52
+-- Généré le :  Dim 12 Juin 2016 à 23:45
 -- Version du serveur :  5.7.9
 -- Version de PHP :  5.6.16
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `lokisalle_1206`
+-- Base de données :  `lokisalle`
 --
 
 -- --------------------------------------------------------
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `commandes` (
 
 DROP TABLE IF EXISTS `membres`;
 CREATE TABLE IF NOT EXISTS `membres` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `id_membre` int(5) NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(15) NOT NULL,
   `mdp` varchar(250) NOT NULL,
   `nom` varchar(20) NOT NULL,
@@ -75,10 +75,10 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `statut` set('MEM','COL','ADM') NOT NULL DEFAULT 'MEM',
   `inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(1) UNSIGNED NOT NULL DEFAULT '2' COMMENT 'suppression',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id_membre`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -92,17 +92,8 @@ CREATE TABLE IF NOT EXISTS `plagehoraires` (
   `libelle` varchar(15) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `plagehoraires`
---
-
-INSERT INTO `plagehoraires` (`id`, `libelle`, `description`) VALUES
-(1, 'matinee', '8:00h - 12:00h'),
-(2, 'journee', '1300h - 18:00h'),
-(3, 'soiree', '19:00h - 22:00h'),
-(4, 'nocturne', '22:00h - 5:00h');
 -- --------------------------------------------------------
 
 --
@@ -115,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `id_salle` int(10) UNSIGNED NOT NULL,
   `id_plagehoraire` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Prix des salles';
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='Prix des salles';
 
 -- --------------------------------------------------------
 
@@ -133,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `promotions` (
   `date_debut` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dete_fin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -156,25 +147,21 @@ CREATE TABLE IF NOT EXISTS `reservations` (
 
 DROP TABLE IF EXISTS `salles`;
 CREATE TABLE IF NOT EXISTS `salles` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_salle` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pays` varchar(20) NOT NULL,
   `ville` varchar(20) NOT NULL,
   `adresse` text NOT NULL,
   `cp` varchar(10) NOT NULL,
-  `titre` varchar(50) NOT NULL,
+  `titre` varchar(25) NOT NULL,
   `telephone` varchar(10) DEFAULT NULL,
   `gsm` varchar(10) DEFAULT NULL,
   `description` text NOT NULL,
   `photo` varchar(200) NOT NULL,
   `capacite` int(3) UNSIGNED NOT NULL,
-  `cap_min` int(11) NOT NULL DEFAULT '1',
-  `tranche` enum('T1','T2','T3','T4') NOT NULL DEFAULT 'T1',
-  `categorie` enum('R','C','F','T') NOT NULL DEFAULT 'R',
-  `prix_personne` float(4,1) NOT NULL DEFAULT '5.5',
+  `categorie` enum('R','C','F') NOT NULL DEFAULT 'R',
   `active` int(1) DEFAULT '0',
-  PRIMARY KEY (`id_salle`),
-  KEY `id_salle` (`id_salle`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_salle`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

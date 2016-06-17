@@ -1,7 +1,7 @@
 <?php
 
 // recuparation de l'id par GET ou POST
-$_id = (int)(isset($_POST['id_membre'])? $_POST['id_membre'] : (isset($_GET['id'])? $_GET['id'] : $_id) );
+$_id = (int)(isset($_POST['id'])? $_POST['id'] : (isset($_GET['id'])? $_GET['id'] : $_id) );
 $_id = utilisateurEstAdmin()? (!empty($_id)? $_id : $_SESSION['user']['id']) : $_SESSION['user']['id'];
 
 $_formulaire['statut'] = array(
@@ -14,8 +14,8 @@ $_formulaire['statut'] = array(
 if(isSuperAdmin() && $_id != 1)
 	$_formulaire['statut']['type'] = 'select';
 
-// id_membre champ cachée
-$_formulaire['id_membre'] = array(
+// id champ cachée
+$_formulaire['id'] = array(
 	'type' => 'hidden',
 	'content' => 'int',
 	'acces' => 'private',

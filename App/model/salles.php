@@ -79,3 +79,9 @@ function setSalle($sql_champs, $sql_value)
     return executeRequete ($sql);
     // ouverture d'une session
 }
+
+function selectSalleId($_id)
+{
+    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
+    return executeRequete($sql);
+}

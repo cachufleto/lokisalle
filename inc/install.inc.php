@@ -18,9 +18,9 @@ function install()
         // echo "<pre>$sql</pre>";
         if (executeMultiRequete($sql)) {
 
-            $membres = executeRequete("SELECT id_membre, mdp FROM membres");
+            $membres = executeRequete("SELECT id, mdp FROM membres");
             while ($membre = $membres->fetch_assoc()) {
-                userUpdateMDP($membre['mdp'], $membre['id_membre']);
+                userUpdateMDP($membre['mdp'], $membre['id']);
             }
         }
         exit();

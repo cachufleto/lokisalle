@@ -17,8 +17,8 @@ unset($_formulaire['email']['rectification']);
 
 // interdir une balise pour modification
 $_formulaire['pseudo']['type'] = 'null';
-// id_membre champ cachée
-$_formulaire['id_membre'] = array(
+// id champ cachée
+$_formulaire['id'] = array(
 	'type' => 'hidden',
 	'content' => 'int',
 	'acces' => 'private',

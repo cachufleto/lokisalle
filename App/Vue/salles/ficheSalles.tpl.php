@@ -1,49 +1,58 @@
-<?php $_trad = setTrad(); ?>
-<div class="ligne">
-    <h1><?php echo $_trad['titre']['ficheSalles']; ?></h1>
+<?php
+$_trad = setTrad();
+$href = imageExiste($salle['photo']);
+$titre = strtoupper($salle['titre']);
+$lien = LINK . "?nav=salles&pos=$position";
+$active = "";
+$reserver = 'reserver';
+
+if(isset($_SESSION['panier'][$salle['id_salle']])){
+    $active = "active";
+    $reserver = 'enlever';
+}
+
+echo <<<EOL
+ <div class="ligne">
+    <h1>{$_trad['titre']['ficheSalles']}</h1>
 </div>
 <div class="ligne">
     <div id="fiche" class="salle">
         <div class="ligne">
-            <div class="ville"><?php echo $salle['ville']; ?> (<?php echo $salle['pays']; ?>)</div>
-            <div><?php echo $msg; ?></div>
+            <div class="ville">{$salle['ville']} ({$salle['pays']})</div>
+            <div>{$msg}</div>
         </div>
         <div class="ligne">
             <div class="photo">
-                <div><img src="<?php echo imageExiste($salle['photo']) ; ?>"></div>
+                <div><img src="$href"></div>
             </div>
             <div class="info">
-                <div class="titre"><?php echo strtoupper($salle['titre']); ?></div>
-                <div class="fiche"><?php echo $salle['adresse']; ?><br>
-                    <?php echo $salle['cp'], ' ', $salle['ville']; ?><br>
-                    <?php echo $salle['telephone']; ?><br>
-                    <?php echo $salle['gsm']; ?></div>
-                <div class="categorie">
-                    <?php echo 'Cat. ', $_trad['value'][$salle['categorie']], ' :: ', $salle['capacite'] . $_trad['personnes']; ?>
+                <div class="titre">$titre</div>
+                <div class="fiche">{$salle['adresse']}<br>
+                    {$salle['cp']} {$salle['ville']}<br>
+                    {$salle['telephone']}<br>
+                    {$salle['gsm']}
                 </div>
-
-                <div class="reserver <?php echo ((isset($_SESSION['panier'][$salle['id_salle']])? "active" : "" )); ?>">
-                    <?php
-                    echo (isset($_SESSION['panier'][$salle['id_salle']]) && $_SESSION['panier'][$salle['id_salle']] === true) ?
-                        '<a href="' . LINK . '?nav=ficheSalles&id=' . $salle['id_salle'] . '&enlever=' . $salle['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
-                        ' <a href="' . LINK . '?nav=ficheSalles&id=' . $salle['id_salle'] . '&reserver=' . $salle['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>';
-                    ?>
-                </div>
-                <div class="reserver lien">
-                    <!--
-                    $salle['lien'] = '<a href="' . LINK . '?nav=salles#P-' . $position . '">' . $_trad['revenir'] . '</a>';
-                    $salle['reserver'] = '<a href="' . LINK . '?nav=ficheSalles&id=' . $_id .
-                        '&reserver=' . $salle['id_salle'] . '&pos=' . $position . '">Reserver</a>';
-                    -->
-                    <a href="<?php echo LINK; ?>?nav=salles&pos=<?php echo $position; ?>"><?php echo $_trad['revenir']; ?></a>
-
-                </div>
+                <form name="" method="POST" action="?nav=ficheSalles&id={$salle['id_salle']}&pos=$position">
+                    <input type="hidden" name="id" value="{$salle['id_salle']}">
+                    <input type="hidden" name="pos" value="$position">
+                    <div class="categorie">
+                        Cat. {$_trad['value'][$salle['categorie']]} :: {$salle['capacite']}{$_trad['personnes']}
+                        {$salle['produits']}
+                    </div>
+                    <div class="reserver $active">
+                        <input type="submit" name="$reserver" value="{$_trad[$reserver]}">
+                    </div>
+                    <div class="reserver lien">
+                        <a href="$lien">{$_trad['revenir']}</a>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="ligne description">
             <div>
-                <?php echo $salle['description']; ?>
+                {$salle['description']}
             </div>
         </div>
     </div>
 </div>
+EOL;

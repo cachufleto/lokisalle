@@ -98,10 +98,10 @@ function backOff_users()
                     $data['prenom'],
                     '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
                     $_trad['value'][$data['statut']],
-                    '<a href="' . LINK . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
+                    '<a href="' . LINK . '?nav=profil&id=' . $data['id'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
                     (($data['active'] == 1) ?
-                        ' <a href="' . LINK . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
-                        ' <a href="' . LINK . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
+                        ' <a href="' . LINK . '?nav=users&delete=' . $data['id'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                        ' <a href="' . LINK . '?nav=users&active=' . $data['id'] . '"><img width="25px" src="img/activerOk.png"></a>')
                 );
             }
         }
@@ -116,10 +116,10 @@ function backOff_users()
             $data['prenom'],
             '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
             $_trad['value'][$data['statut']],
-            '<a href="' . LINK . '?nav=profil&id=' . $data['id_membre'] . '" ><img width="25px" src="img/modifier.png"></a>',
+            '<a href="' . LINK . '?nav=profil&id=' . $data['id'] . '" ><img width="25px" src="img/modifier.png"></a>',
             (($data['active'] == 1) ?
-                ' <a href="' . LINK . '?nav=users&delete=' . $data['id_membre'] . '"><img width="25px" src="img/activerKo.png"></a>' :
-                ' <a href="' . LINK . '?nav=users&active=' . $data['id_membre'] . '"><img width="25px" src="img/activerOk.png"></a>')
+                ' <a href="' . LINK . '?nav=users&delete=' . $data['id'] . '"><img width="25px" src="img/activerKo.png"></a>' :
+                ' <a href="' . LINK . '?nav=users&active=' . $data['id'] . '"><img width="25px" src="img/activerOk.png"></a>')
 
         );
     }
@@ -189,7 +189,7 @@ function profilValider(&$_formulaire)
     $_trad = setTrad();
 
     // control d'intrusion du membre
-    if($_formulaire['id_membre']['sql'] != $_formulaire['id_membre']['defaut']){
+    if($_formulaire['id']['sql'] != $_formulaire['id']['defaut']){
         //_debug($_formulaire, 'SQL');
         return '<div class="alert">'.$_trad['erreur']['NULL'].'!!!!!</div>';
     }
@@ -198,14 +198,14 @@ function profilValider(&$_formulaire)
     // active le controle pour les champs telephone et gsm
     $controlTelephone = true;
 
-    $id_membre = $_formulaire['id_membre']['sql'];
+    $id_membre = $_formulaire['id']['sql'];
 
     foreach ($_formulaire as $key => $info){
 
         $label = $_trad['champ'][$key];
         $valeur = (isset($info['valide']))? $info['valide'] : NULL;
 
-        if('valide' != $key && 'id_membre' != $key){
+        if('valide' != $key && 'id' != $key){
 
             if (isset($info['maxlength']) && !testLongeurChaine($valeur, $info['maxlength']) && !empty($valeur))
             {
@@ -227,7 +227,7 @@ function profilValider(&$_formulaire)
                 switch($key){
 
                     case 'pseudo':
-                    case 'id_membre':
+                    case 'id':
                         // je ne fait riens
                         break;
 
@@ -239,7 +239,7 @@ function profilValider(&$_formulaire)
 
                         if (testFormatMail($valeur)) {
 
-                            $membre = selectMailUser($_formulaire['id_membre']['sql'], $valeur);
+                            $membre = selectMailUser($_formulaire['id']['sql'], $valeur);
 
                             // si la requete retourne un enregisterme, c'est que 'email' est deja utilisé en BD.
                             if($membre->num_rows > 0)
@@ -359,7 +359,7 @@ function profilValider(&$_formulaire)
     }else{
 
         if (!empty($sql_set)){
-            userUpdate($sql_set, $_formulaire['id_membre']['sql']);
+            userUpdate($sql_set, $_formulaire['id']['sql']);
         }
         else {
             $msg = $_trad['erreur']['inconueConnexion'];

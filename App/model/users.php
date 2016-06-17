@@ -7,9 +7,9 @@
  */
 function selecMembreJeton($jeton)
 {
-    $sql = "SELECT membres.id_membre
+    $sql = "SELECT membres.id
           FROM membres, checkinscription
-          WHERE membres.id_membre = checkinscription.id_membre
+          WHERE membres.id = checkinscription.id_membre
               AND checkinscription.checkinscription = '$jeton'";
 
     $inscription = executeRequete($sql);
@@ -23,7 +23,7 @@ function selecMembreJeton($jeton)
 
 function updateMembreJeton($id)
 {
-    $sql = "UPDATE membres SET active = 1 WHERE id_membre = $id;";
+    $sql = "UPDATE membres SET active = 1 WHERE id = $id;";
     $sql .= "DELETE FROM `checkinscription` WHERE id_membre = $id;";
 
     return executeMultiRequete($sql);
@@ -36,23 +36,23 @@ function updateMembreJeton($id)
  */
 function usersSelectWhere($sql_Where)
 {
-    $sql = "SELECT id_membre FROM membres WHERE $sql_Where;";
+    $sql = "SELECT id FROM membres WHERE $sql_Where;";
     return executeRequete($sql);
 }
 
 function usersMoinsAdmin()
 {
     // selection de tout les users sauffe le super-ADMIN
-    $sql = "SELECT m.id_membre, m.pseudo, m.nom, m.prenom, m.email, m.statut, m.active
+    $sql = "SELECT m.id, m.pseudo, m.nom, m.prenom, m.email, m.statut, m.active
         FROM membres m, checkinscription c
-        WHERE m.active = 2 AND m.id_membre = c.id_membre
+        WHERE m.active = 2 AND m.id = c.id_membre
         ORDER BY m.nom, m.prenom";
     return executeRequete($sql);
 }
 
 function selectMailUser($id, $valeur)
 {
-    $sql = "SELECT email FROM membres WHERE id_membre != ". $id ." and email='$valeur'";
+    $sql = "SELECT email FROM membres WHERE id != ". $id ." and email='$valeur'";
     return executeRequete($sql);
 }
 
@@ -68,20 +68,20 @@ function userPseudoExist($pseudo){
 
 function setUserActive($id, $active = 1){
 
-    $sql = "UPDATE membres SET active = $active WHERE id_membre = $id";
+    $sql = "UPDATE membres SET active = $active WHERE id = $id";
     executeRequete($sql);
 }
 
 function userUpdate($sql_set, $id)
 {
     // mise à jour de la base des données
-    $sql = "UPDATE membres SET $sql_set  WHERE id_membre = $id";
+    $sql = "UPDATE membres SET $sql_set  WHERE id = $id";
     executeRequete ($sql);
 }
 
 function getUserMail($info)
 {
-    $sql = "SELECT id_membre, nom, prenom, email FROM membres WHERE email = '" . $info['email']['valide'] . "'";
+    $sql = "SELECT id, nom, prenom, email FROM membres WHERE email = '" . $info['email']['valide'] . "'";
     $membre = executeRequete($sql);
     if($membre->num_rows > 0){
         $num = $membre->fetch_assoc();
@@ -92,7 +92,7 @@ function getUserMail($info)
 
 function getUserConnexion($sql_Where)
 {
-    $sql = "SELECT mdp, id_membre, email, pseudo, statut, nom, prenom, active FROM membres WHERE $sql_Where ";
+    $sql = "SELECT mdp, id, email, pseudo, statut, nom, prenom, active FROM membres WHERE $sql_Where ";
     $membre = executeRequete ($sql); // la variable $pseudo existe grace a l'extract fait prealablemrent.
 
     if($membre->num_rows === 1){
@@ -104,7 +104,7 @@ function getUserConnexion($sql_Where)
 function userChangerMDPInsert($checkinscription, $info)
 {
     $sql = "INSERT INTO checkinscription (id_membre, checkinscription)
-        VALUES ( (SELECT id_membre FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
+        VALUES ( (SELECT id FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
 
     return executeRequete($sql);
 }
@@ -114,7 +114,7 @@ function userInscriptionInsert($sql_champs, $sql_Value, $checkinscription, $info
 
     $sql = "INSERT INTO membres ($sql_champs, mdp) VALUES ($sql_Value, '$checkinscription');";
     $sql .= "INSERT INTO checkinscription (id_membre, checkinscription)
-        VALUES ( (SELECT id_membre FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
+        VALUES ( (SELECT id FROM membres WHERE email = '" . $info['email']['valide'] . "'), '$checkinscription');";
 
     return executeMultiRequete($sql);
 }
@@ -131,8 +131,8 @@ function userMailExist($email)
 
 function selectUsersActive()
 {
-    $sql = "SELECT id_membre, pseudo, nom, prenom, email, statut, active
-        FROM membres  WHERE " . (!isSuperAdmin() ? "id_membre != 1 AND active == 1 " : "active != 2") . "
+    $sql = "SELECT id, pseudo, nom, prenom, email, statut, active
+        FROM membres  WHERE " . (!isSuperAdmin() ? "id != 1 AND active == 1 " : "active != 2") . "
         ORDER BY nom, prenom";
     return executeRequete($sql);
 }
@@ -140,8 +140,8 @@ function selectUsersActive()
 function getUser($id)
 {
 
-    $sql = "SELECT prenom, nom, pseudo, email, telephone, gsm, sexe, ville, cp, adresse, statut
-            FROM membres WHERE id_membre = $id " . ( !isSuperAdmin()? " AND active != 0" : "" );
+    $sql = "SELECT id, prenom, nom, pseudo, email, telephone, gsm, sexe, ville, cp, adresse, statut
+            FROM membres WHERE id = $id " . ( !isSuperAdmin()? " AND active != 0" : "" );
 
     $data = executeRequete($sql);
 
@@ -167,7 +167,7 @@ function testADMunique($statut, $id_membre)
 
         // interdiccion de modifier le statut pour un admin si il est le seule;
         // Le super administrateur peut inhabiliter tout le monde
-        $sql = "SELECT COUNT(statut) as 'ADM' FROM membres WHERE statut = 'ADM' ". (!isSuperAdmin()? " AND id_membre != 1 " : "" );
+        $sql = "SELECT COUNT(statut) as 'ADM' FROM membres WHERE statut = 'ADM' ". (!isSuperAdmin()? " AND id != 1 " : "" );
         $ADM = executeRequete($sql);
         $num = $ADM->fetch_assoc();
 
@@ -180,7 +180,7 @@ function testADMunique($statut, $id_membre)
 
 function userUpdateMDP($mdp, $id)
 {
-    $sql = "UPDATE membres SET mdp = '" . hashCrypt($mdp) . "' WHERE id_membre = $id";
+    $sql = "UPDATE membres SET mdp = '" . hashCrypt($mdp) . "' WHERE id = $id";
     executeRequete($sql);
 }
 

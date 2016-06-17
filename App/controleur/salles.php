@@ -7,8 +7,9 @@ function salles()
     $nav = 'salles';
     $msg = '';
     $_trad = setTrad();
-    reservationSalles();
-
+    $msg = !(reservationSalles())?
+            "<script>alert('Vous devez vous conecter dabor!');</script>":
+            '';
     $table = listeSalles();
     include VUE . 'salles/salles.tpl.php';
 }
@@ -19,18 +20,23 @@ function ficheSalles()
     $_trad = setTrad();
     $msg = '';
     $_id = (int)(isset($_GET['id'])? $_GET['id'] : false);
+    $_id = (int)(isset($_POS['id'])? $_POS['id'] : $_id);
     $position = (int)(isset($_GET['pos'])? $_GET['pos'] : 1);
-    reservationSalles();
+    $position = (int)(isset($_POS['pos'])? $_POS['pos'] : $position);
+    $msg = (reservationSalles())? '' : (!(utilisateurEstConnecte())?
+                "<script>alert('Vous devez vous connecter dabor!');</script>" :
+                "<script>alert('{$_trad['erreur']['chosirProduit']}');</script>");
 
     include PARAM . 'ficheSalles.param.php';
     // on cherche la fiche dans la BDD
     // extraction des données SQL
     include FUNC . 'form.func.php';
-    if ($salle = getSalles($_formulaire, $_id)) {
+
+    if ($salle = getSalles($_id)) {
         // traitement POST du formulaire
         include VUE . 'salles/ficheSalles.tpl.php';
     } else {
-        header('Location:index.php');
+        // header('Location:index.php');
         exit();
     }
 
@@ -43,7 +49,7 @@ function backOff_salles()
     $_trad = setTrad();
 
     if(!activeSalles()){
-        $alert = "<script>alert(\"{$_trad['erreur']['manqueProduit']}\");</script>";
+        $alert = "<script>alert('{$_trad['erreur']['manqueProduit']}');</script>";
     }
 
     $table = listeSallesBO();
@@ -58,7 +64,10 @@ function backOff_editProduits()
     modCheckProduits($_formulaire, $_id);
     $form = formulaireAfficher($_formulaire);
 
+    $form .= listeProduits(getSalles($_id));
+
     include VUE . 'salles/gestionProduits.tpl.php';
+    // liste des prix
 }
 
 function backOff_gestionProduits()
