@@ -43,7 +43,7 @@ EOL;
         foreach($table['info'] as $ligne=>$salle){
             $class = ($ligne%2 == 1)? 'lng1':'lng2' ;
             $nom = strtoupper($salle['nom']);
-            $active = isset($_SESSION['panier'][$salle['ref']])? "active" : "";
+            $active = isset($_SESSION['panier'][$_SESSION['date']][$salle['ref']])? "active" : "";
 
             echo <<<EOL
             <div class="quart">

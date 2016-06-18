@@ -86,6 +86,8 @@ function getSalles($_id)
         $fiche[$key] = html_entity_decode($info);
     }
     $fiche['produits'] = listeProduitsReservation($fiche);
+    $fiche['listePrix'] =  listeProduitsReservationPrix($fiche);
+
 
     return $fiche;
 }
@@ -515,10 +517,10 @@ function listeSalles($reservation = false)
             'categorie'=>$_trad['value'][$data['categorie']],
             'photo'=>'<a href="' . LINK . '?nav=ficheSalles&id=' . $data['id_salle'] . '&pos=' . $position . '" " >
                 <img class="trombi" src="' . imageExiste($data['photo']) . '" ></a>',
-            'reservation'=>(isset($_SESSION['panier'][$data['id_salle']])) ?
+            'reservation'=>(isset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']])) ?
                 '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
                 ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>',
-            'total' => (isset($_SESSION['panier'][$data['id_salle']]['total'])? "[ Total:" . number_format($_SESSION['panier'][$data['id_salle']]['total'], 2) . "€ ]" : ""),
+            'total' => (isset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']]['total'])? "[ Total:" . number_format($_SESSION['panier'][$_SESSION['date']][$data['id_salle']]['total'], 2) . "€ ]" : ""),
             'position'=>'<a id="P-' . $position . '"></a>'
 
         );
@@ -628,7 +630,8 @@ function listeProduitsReservation(array $data)
             $ref = '';
             $i++;
 
-            $reservation = isset($_SESSION['panier'][$data['id_salle']])? $_SESSION['panier'][$data['id_salle']] : [];
+            $reservation = (isset($_SESSION['date']) && isset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']]))?
+                            $_SESSION['panier'][$_SESSION['date']][$data['id_salle']] : [];
             foreach($prixSalle as $key =>$produit){
                 $checked = '';
                 if(isset($reservation[$i]) && $reservation[$i] == $key){
@@ -659,15 +662,67 @@ function listeProduitsReservation(array $data)
                             <div class='personne total'>&nbsp;</div>
                             <div class='prix total'>" . number_format ($_total, 2) . "€</div>"
                             : "";
-    if(isset($_SESSION['panier'][$data['id_salle']])) {
-        $_SESSION['panier'][$data['id_salle']]['total'] = $_total;
+    if(isset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']])) {
+        $_SESSION['panier'][$_SESSION['date']][$data['id_salle']]['total'] = $_total;
     }
 
 
     if(empty($affiche)){
         return ['tableau'=>$_trad['produitNonDispoble'], 'reserve'=>''];
     }
+
     return ['tableau'=>$tableau, 'reserve'=>$reserve];
+}
+function listeProduitsPrixReservation($date, $data)
+{
+   $_listeReservation = '';
+    $i = $_total = 0;
+
+    if($prix = selectProduitsSalle($data['id_salle'])){
+        while($info = $prix->fetch_assoc() ){
+            $prixSalle= listeCapacites($data, $info);
+            $i++;
+            $reservation = (isset($_SESSION['panier'][$date][$data['id_salle']]))?
+                            $_SESSION['panier'][$date][$data['id_salle']] : [];
+
+            foreach($prixSalle as $key =>$produit){
+                if(isset($reservation[$i]) && $reservation[$i] == $key){
+                    $_listeReservation .= "<div class='tronche'>{$produit['libelle']} :</div>
+                                            <div class='personne'>{$produit['num']} pers.</div>
+                                            <div class='prix'>{$produit['prix']}€</div>";
+                    $_total = $_total +  $produit['valeur'];
+                }
+            }
+        }
+    }
+
+    $reserve = ($_total)? $_listeReservation .
+                            "<div class='tronche couts'>Cout :</div>
+                            <div class='personne couts'>&nbsp;</div>
+                            <div class='prix couts'>" . number_format ($_total, 2) . "€</div>"
+                            : "";
+    return ['reserve'=>$reserve, 'couts'=>$_total];
+}
+
+function listeProduitsReservationPrix($data)
+{
+    $listePrix = [];
+    if(isset($_SESSION['panier']))
+        foreach($_SESSION['panier'] as $date => $info){
+            if(isset($info[$data['id_salle']])){
+                $listePrix[$date] = listeProduitsPrixReservation($date, $data);
+            }
+    }
+
+    $_liste = '';
+    $_total = 0;
+    foreach($listePrix as $date=>$info){
+        $_liste .= "<div class='ligne date'>$date</div>".$info['reserve'];
+        $_total = $_total + $info['couts'];
+    }
+    return $_liste . "<div class='tronche total'>TOTAL :</div>
+                            <div class='personne total'>&nbsp;</div>
+                            <div class='prix total'>" . number_format ($_total, 2) . "€</div>";
 }
 
 function treeProduitsSalle($_formulaire, $_id){
@@ -721,12 +776,12 @@ function reservationSalles()
     if (!empty($_POST)) {
         if (isset($_POST['reserver'])) {
             if(isset($_POST['prix'])) {
-                $_SESSION['panier'][$_POST['id']] = isset($_POST['prix']) ? $_POST['prix'] : [];
+                $_SESSION['panier'][$_SESSION['date']][$_POST['id']] = isset($_POST['prix']) ? $_POST['prix'] : [];
             } else {
                 return false;
             }
         } else if (isset($_POST['enlever'])) {
-            unset($_SESSION['panier'][$_POST['id']]);
+            unset($_SESSION['panier'][$_SESSION['date']][$_POST['id']]);
         }
     } else if (!empty($_GET)) {
         if (isset($_GET['reserver'])) {
@@ -736,7 +791,7 @@ function reservationSalles()
             header('location:?nav=ficheSalles&id='.$_GET['reserver'].'&pos='.$_GET['pos']);
 
         } else if (isset($_GET['enlever'])) {
-            unset($_SESSION['panier'][$_GET['enlever']]);
+            unset($_SESSION['panier'][$_SESSION['date']][$_GET['enlever']]);
         }
     }
 

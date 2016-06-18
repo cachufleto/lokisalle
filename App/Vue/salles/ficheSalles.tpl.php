@@ -8,12 +8,11 @@ $reserver = 'reserver';
 $modifier = '';
 $date = disponibilite();
 
-if(isset($_SESSION['panier'][$salle['id_salle']])){
+if(isset($_SESSION['panier'][$_SESSION['date']][$salle['id_salle']])){
     $active = "active";
     $reserver = 'enlever';
     $modifier = '<input type="submit" name="reserver" value="'.$_trad['modifier'].'">';
 }
-
 
 echo <<<EOL
  <div class="ligne">
@@ -49,7 +48,7 @@ echo <<<EOL
                     </div>
                     <div class="reserve">
                         {$_trad['votreReservation']}
-                        {$salle['produits']['reserve']}
+                        {$salle['listePrix']}
                     </div>
             </div>
         </div>

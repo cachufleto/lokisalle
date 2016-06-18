@@ -228,6 +228,7 @@ $_trad['pasDansMenuMembre'] = " n'exisite pas dans le menu des membres!";
 $_trad['pasEncoreMembre'] = " Pas encore membre? ";
 $_trad['personnes'] = " personnes ";
 $_trad['priseEnCompteMDP'] = "Votre mot de passe sera reinitialisé en clicant sur ce liens qui vous est envoiyé à l'adresse mail d'inscription.";;
+$_trad['produitNonDispoble'] = "Produits non disponibles";
 $_trad['rectifier'] = "Rectifier";
 $_trad['redirigeVerConnection'] = $_trad['-bienvenu'] . "Vous serait redirigé ver la page de <a href='index.php?nav=actif'>connexion!</a>.</p>";
 $_trad['reservationOk'] = "Liste de vos reservations";

@@ -125,6 +125,13 @@
     background-color: #CCCCCC;
 }
 
+.couts{
+    border-bottom: double;
+}
+#fiche .date{
+    font-style: italic;
+    font-family:"Verdana Pro SemiBold";
+}
 @media only screen and (max-width : 780px) {
 
     #fiche {
