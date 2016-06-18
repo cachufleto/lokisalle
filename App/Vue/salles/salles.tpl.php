@@ -1,6 +1,6 @@
 <?php
 $lien = LINK . '?nav=' . $nav;
-
+$disponibilite = disponibilite();
 echo <<<EOL
 <div class="ligne">
     <h1>{$_trad['nav'][$nav]}</h1>
@@ -23,11 +23,15 @@ echo <<<EOL
                     <input type="hidden" name="ord" value="capacite">
                     <input type="submit" name="" value="{$_trad['champ']['capacite']}">
                 </form>
-            </div><div>
+            </div>
+            <div>
                 <form action="$lien" method="POST">
                     <input type="hidden" name="ord" value="categorie">
                     <input type="submit" name="" value="{$_trad['champ']['categorie']}">
                 </form>
+            </div>
+            <div>
+            $disponibilite
             </div>
         <div>&nbsp;&nbsp;</div>
     </div>

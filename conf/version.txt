@@ -1,5 +1,6 @@
-V 2:29/05
+V 2:18/06
 <!--
+V 2:18/06 : Ajout du panier
 V 2:29/05 : Ajout des salles
 V 2:22/05 : Ajout des salles
 V 2:20/05 : fiche des salles

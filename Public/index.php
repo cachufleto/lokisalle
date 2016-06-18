@@ -49,7 +49,7 @@ if(file_exists(APP . 'Public/js/' . $route[$nav]['action'] . '.js')){
 }
 
 $_link = siteHeader($_linkCss);
-$navPp = nav((utilisateurAdmin() && $_SESSION['BO'])? 'navAdmin' : '');
+$navPp = nav((utilisateurAdmin() && isset($_SESSION['BO']))? 'navAdmin' : '');
 $nav = array_key_exists($nav, $route)? $nav : 'erreur404';
 
 $footer = footer();

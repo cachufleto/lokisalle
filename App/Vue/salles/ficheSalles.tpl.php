@@ -6,6 +6,7 @@ $lien = LINK . "?nav=salles&pos=$position";
 $active = "";
 $reserver = 'reserver';
 $modifier = '';
+$date = disponibilite();
 
 if(isset($_SESSION['panier'][$salle['id_salle']])){
     $active = "active";
@@ -28,6 +29,7 @@ echo <<<EOL
         <div class="ligne">
             <div class="photo">
                 <div><img src="$href"></div>
+                $date
                {$salle['produits']['tableau']}
             </div>
             <div class="info">

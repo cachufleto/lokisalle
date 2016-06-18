@@ -7,9 +7,9 @@ function salles()
     $nav = 'salles';
     $msg = '';
     $_trad = setTrad();
-    $msg = !(reservationSalles())?
-            "<script>alert('Vous devez vous conecter dabor!');</script>":
-            '';
+    reservationSalles();
+    $alert = urlReservation();
+
     $table = listeSalles();
     include VUE . 'salles/salles.tpl.php';
 }
@@ -19,13 +19,14 @@ function ficheSalles()
     $nav = 'ficheSalles';
     $_trad = setTrad();
     $msg = '';
-    $_id = (int)(isset($_GET['id'])? $_GET['id'] : false);
-    $_id = (int)(isset($_POS['id'])? $_POS['id'] : $_id);
-    $position = (int)(isset($_GET['pos'])? $_GET['pos'] : 1);
-    $position = (int)(isset($_POS['pos'])? $_POS['pos'] : $position);
-    $msg = (reservationSalles())? '' : (!(utilisateurEstConnecte())?
-                "<script>alert('Vous devez vous connecter dabor!');</script>" :
-                "<script>alert('{$_trad['erreur']['chosirProduit']}');</script>");
+
+    $_id = data_methodes('id');
+    $position = data_methodes('position', 1);
+
+    reservationSalles();
+    // control connexion
+    // control choix des produits
+    $alert = urlReservation();
 
     include PARAM . 'ficheSalles.param.php';
     // on cherche la fiche dans la BDD
@@ -36,7 +37,7 @@ function ficheSalles()
         // traitement POST du formulaire
         include VUE . 'salles/ficheSalles.tpl.php';
     } else {
-        // header('Location:index.php');
+        header('Location:?nav=salles');
         exit();
     }
 
@@ -194,6 +195,7 @@ function reservation()
     $nav = 'reservation';
     $table = selectSallesReservations();
     $msg = (!empty($table))? $_trad['reservationOk'] : $_trad['erreur']['reservationVide'];
+    $alert = urlReservation();
 
     include VUE . "salles/salles.tpl.php";
 }

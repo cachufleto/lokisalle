@@ -89,7 +89,7 @@ $route['identifians']['action'] = 'identifians';
 
 /****** SALLES ******/
 $route['ficheSalles']['Controleur'] = 'salles.php';
-$route['ficheSalles']['action'] = (utilisateurAdmin() && $_SESSION['BO'] == 1)? 'backOff_ficheSalles' : 'ficheSalles';
+$route['ficheSalles']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_ficheSalles' : 'ficheSalles';
 
 $route['recherche']['Controleur'] = 'salles.php';
 $route['recherche']['action'] = 'recherche';
@@ -98,11 +98,11 @@ $route['reservation']['Controleur'] = 'salles.php';
 $route['reservation']['action'] = 'reservation';
 
 $route['salles']['Controleur'] = 'salles.php';
-$route['salles']['action'] = (utilisateurAdmin() && $_SESSION['BO'] == 1)? 'backOff_salles' : 'salles';
+$route['salles']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_salles' : 'salles';
 
 /****** ADMINISTRATION ******/
 
-if (utilisateurAdmin() && $_SESSION['BO'] == 1) {
+if (utilisateurAdmin() && isset($_SESSION['BO'])) {
     /****** SITE ******/
     $route['backoffice']['Controleur'] = 'site.php';
     $route['backoffice']['action'] = 'backoffice';

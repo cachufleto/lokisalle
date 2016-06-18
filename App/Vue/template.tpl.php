@@ -27,7 +27,9 @@
 </header>
 <!-- CORP -->
 <section class="mainContent">
-	<?php echo $contentPage; ?>
+	<?php
+		echo $contentPage;
+	?>
 	<div class="barre">&nbsp;</div>
 </section>
 <!-- DEBUG -->
