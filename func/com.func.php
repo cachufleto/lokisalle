@@ -217,8 +217,8 @@ function imageExiste($photo, $rep = 'photo')
 
 function urlSuivante()
 {
-	$_GET = isset($_SESSION['URLPressedente'])? $_SESSION['URLPressedente'] : $_GET;
-	unset($_SESSION['URLPressedente']);
+	$_GET = isset($_SESSION['urlReservation'])? $_SESSION['urlReservation'] : $_GET;
+	unset($_SESSION['urlReservation']);
 	$url = isset($_GET['nav'])? '?nav='.$_GET['nav'] : false;
 	if($url){
 		foreach($_GET as $key => $info){
@@ -227,3 +227,11 @@ function urlSuivante()
 	}
 	header('location:index.php'.$url);
 }
+
+function data_methodes($indice, $default = false)
+{
+	$data = (int)(isset($_POS[$indice])? $_POS[$indice] : $default);
+	$data = (int)(isset($_GET[$indice])? $_GET[$indice] : $data);
+	return $data;
+}
+

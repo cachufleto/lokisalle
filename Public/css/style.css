@@ -31,11 +31,16 @@ img {
     border-radius: 10px;
 }
 
-input{
+input,
+button{
     font: 1em "Monotype Corsiva";
     background-color: #E15007;
     border-radius: 6px;
     color: #E7E5E5;
+}
+
+button {
+    background-color: rgb(27, 76, 83);
 }
 
 h1 {
@@ -171,7 +176,7 @@ header li.drapeu img {
 }
 
 .mainHeader nav ul {
-    width: 680px;
+    width: 710px;
 }
 
 .mainFooter nav ul {
@@ -230,6 +235,9 @@ header li.drapeu img {
     -webkit-border-radius: 10px;
 }
 
+.mainContent a{
+    color: #6D1907;
+}
 .mainContent .barre{
     float: left;
     width: 1px;

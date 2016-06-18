@@ -239,4 +239,5 @@ $_trad['validerChangementMotPasse'] = $_trad['-gestion'] . "Merci de valider vot
 $_trad['validerInscription'] = $_trad['-bienvenu'] . "Merci de valider votre inscription en clicant sur ce liens qui vous est envoiyé à l'adresse mail d'inscription.";
 $_trad['validerInscriptionMail'] = $_trad['-bienvenu'] . "Merci de valider votre inscription en clicant sur ce liens";
 $_trad['votreCompteLokisalle'] = "Votre Compte sur Lokisalle";
+$_trad['votreReservation'] = "<h4>Votre Reservation en Ligne:</h4>";
 $_trad['vousNePouvezPasVousSupprimerVousMeme'] = "<span class='alert'>Vous ne pouvez pas vous supprimer!!</span>";

@@ -518,6 +518,7 @@ function listeSalles($reservation = false)
             'reservation'=>(isset($_SESSION['panier'][$data['id_salle']])) ?
                 '<a href="' . LINK . '?nav=' . $nav . '&enlever=' . $data['id_salle'] . '&pos=' . $position . '" >' . $_trad['enlever'] . '</a>' :
                 ' <a href="' . LINK . '?nav=' . $nav . '&reserver=' . $data['id_salle'] . '&pos=' . $position . '">' . $_trad['reserver'] . '</a>',
+            'total' => (isset($_SESSION['panier'][$data['id_salle']]['total'])? "[ Total:" . number_format($_SESSION['panier'][$data['id_salle']]['total'], 2) . "€ ]" : ""),
             'position'=>'<a id="P-' . $position . '"></a>'
 
         );
@@ -581,6 +582,7 @@ function listeCapacites($data, $info){
         $prix = $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i];
         $prixSalle[$i]['id'] = $info['id'];
         $prixSalle[$i]['num'] = $per;
+        $prixSalle[$i]['valeur'] = $prix *$per;
         $prixSalle[$i]['prix'] = number_format ($prix *$per , 2);
         $prixSalle[$i]['prix_personne'] = number_format ($prix , 2);
         $prixSalle[$i]['libelle'] = utf8_encode($_prixPlage[$info['id_plagehoraire']]['libelle']);
@@ -603,7 +605,6 @@ function listeProduits(array $data)
                 $affiche[$key] = $produit['num'];
             }
             $prix_salle .= "<tr><td class='tableauprix'>{$produit['libelle']}</td>$ref</tr>";
-
         }
     }
     $ref = '';
@@ -617,9 +618,10 @@ function listeProduits(array $data)
 
 function listeProduitsReservation(array $data)
 {
-    $prix_salle = $ref ='';
+    $prix_salle = $ref = $_listeReservation = '';
     $affiche = [];
-    $i=0;
+    $i = $_total = 0;
+
     if($prix = selectProduitsSalle($data['id_salle'])){
         while($info = $prix->fetch_assoc() ){
             $prixSalle= listeCapacites($data, $info);
@@ -628,7 +630,14 @@ function listeProduitsReservation(array $data)
 
             $reservation = isset($_SESSION['panier'][$data['id_salle']])? $_SESSION['panier'][$data['id_salle']] : [];
             foreach($prixSalle as $key =>$produit){
-                $checked = (isset($reservation[$i]) && $reservation[$i] == $key)? 'checked' : '';
+                $checked = '';
+                if(isset($reservation[$i]) && $reservation[$i] == $key){
+                    $checked = 'checked';
+                    $_listeReservation .= "<div class='tronche'>{$produit['libelle']} :</div>
+                                            <div class='personne'>{$produit['num']} pers.</div>
+                                            <div class='prix'>{$produit['prix']}€</div>";
+                    $_total = $_total +  $produit['valeur'];
+                }
 
                 $ref .=  "<td>" . $produit['prix'] . "€ <input type='radio' name='prix[".$i."]' value='$key' $checked></checkbox></td>";
                 $affiche[$key] = $produit['num'];
@@ -643,7 +652,22 @@ function listeProduitsReservation(array $data)
     }
     $prix_salle = "<tr><td class='tableauprix' width='90'>Max. </td>$ref</tr>" . $prix_salle;
     $_trad['produitNonDispoble'] = "Produits non disponibles";
-    return (empty($affiche))? $_trad['produitNonDispoble'] : "<table border='1' cellspacing='1' BGCOLOR='#ccc'>$prix_salle</table>";
+
+    $tableau = "<table border='1' cellspacing='1' BGCOLOR='#ccc'>$prix_salle</table>";
+    $reserve = ($_total)? $_listeReservation .
+                            "<div class='tronche total'>TOTAL :</div>
+                            <div class='personne total'>&nbsp;</div>
+                            <div class='prix total'>" . number_format ($_total, 2) . "€</div>"
+                            : "";
+    if(isset($_SESSION['panier'][$data['id_salle']])) {
+        $_SESSION['panier'][$data['id_salle']]['total'] = $_total;
+    }
+
+
+    if(empty($affiche)){
+        return ['tableau'=>$_trad['produitNonDispoble'], 'reserve'=>''];
+    }
+    return ['tableau'=>$tableau, 'reserve'=>$reserve];
 }
 
 function treeProduitsSalle($_formulaire, $_id){
@@ -739,7 +763,7 @@ function activeSalles()
     return true;
 }
 
-function urlPressedent(){
+function urlReservation(){
 
     if(isset($_GET['reserver']) OR isset($_POST['reserver'])){
 
@@ -748,7 +772,7 @@ function urlPressedent(){
          return (reservationSalles())? '' : $_trad['erreur']['produitChoix'];
         }
 
-        $_SESSION['URLPressedente'] = $_GET;
+        $_SESSION['urlReservation'] = $_GET;
         header('refresh:0;url=index.php?nav=actif');
         echo "<html>{$_trad['erreur']['produitConnexion']}</html>";
     }
