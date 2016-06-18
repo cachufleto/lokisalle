@@ -62,4 +62,4 @@ EOL;
 EOL;
         }
     }
-echo '</div>';
+echo '</div>' , $alert;

@@ -124,34 +124,34 @@ function ouvrirSession($session, $control = false)
 function isSuperAdmin()
 {
 	
-	return(utilisateurEstAdmin() AND $_SESSION['user']['id'] == 1)? true : false;
+	return(utilisateurAdmin() AND $_SESSION['user']['id'] == 1)? true : false;
 
 }
 
-# Fonction utilisateurEstAdmin()
+# Fonction utilisateurAdmin()
 # Verifie SESSION ADMIN ACTIVE
 # RETURN Boolean
-function utilisateurEstAdmin ()
+function utilisateurAdmin()
 {
 	
-	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'ADM')? true : false;
+	return(utilisateurConnecte() AND $_SESSION['user']['statut'] == 'ADM')? true : false;
 
 }
 
-# Fonction utilisateurEstAdmin()
+# Fonction utilisateurAdmin()
 # Verifie SESSION ADMIN ACTIVE
 # RETURN Boolean
 function utilisateurEstCollaborateur ()
 {
 	
-	return(utilisateurEstConnecte() AND $_SESSION['user']['statut'] == 'COL')? true : false;
+	return(utilisateurConnecte() AND $_SESSION['user']['statut'] == 'COL')? true : false;
 
 }
 
-# Fonction utilisateurEstConnecte()
+# Fonction utilisateurConnecte()
 # Verifie SESSION ACTIVE
 # RETURN Boolean
-function utilisateurEstConnecte()
+function utilisateurConnecte()
 {
 
 	return (!isset($_SESSION['user']))? false : true;
@@ -181,8 +181,8 @@ function envoiMail($message, $to = WEBMAIL)
 	return mail($to, $_trad['votreCompteLokisalle'], $message, $headers);
 }
 
-function setTrad(){
-
+function setTrad()
+{
 	// on charge la langue de base
 	require CONF . 'trad/fr/traduction.php';
 	// on surcharge la langue de l'utilisateur si different à celle de base
@@ -194,22 +194,36 @@ function setTrad(){
 
 }
 
-function setPrixPlage(){
-
+function setPrixPlage()
+{
 	include CONF . 'parametres.param.php';
 	return $_prixPlage;
 }
 
-function setPrixTranches(){
-
+function setPrixTranches()
+{
 	include CONF . 'parametres.param.php';
 	return $_tranches;
 }
 
-function imageExiste($photo, $rep = 'photo'){
-
+function imageExiste($photo, $rep = 'photo')
+{
 	if(file_exists( RACINE_SERVER . RACINE_SITE . $rep . '/' . $photo)){
 		return LINK . $rep . '/' . $photo;
 	}
 	return LINK . 'img/salles.jpg';
+}
+
+
+function urlSuivante()
+{
+	$_GET = isset($_SESSION['URLPressedente'])? $_SESSION['URLPressedente'] : $_GET;
+	unset($_SESSION['URLPressedente']);
+	$url = isset($_GET['nav'])? '?nav='.$_GET['nav'] : false;
+	if($url){
+		foreach($_GET as $key => $info){
+			$url .= ($key != 'nav')? "&$key=$info" : '';
+		}
+	}
+	header('location:index.php'.$url);
 }

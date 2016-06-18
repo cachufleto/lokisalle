@@ -468,7 +468,7 @@ function formulaireAfficherMod($_form)
 		
 		if($info['type'] != 'hidden'){
 
-			if(!isset($info['obligatoire']) || utilisateurEstAdmin()){
+			if(!isset($info['obligatoire']) || utilisateurAdmin()){
 				$label = key_exists($champ, $_trad['champ'])? $_trad['champ'][$champ] : $champ;
 				$formulaire .=  '
 				<div class="' . $ligneForm . '" >

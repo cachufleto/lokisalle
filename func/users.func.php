@@ -261,7 +261,8 @@ function inscriptionValider(&$_formulaire)
                 // Construction de la requettes
                 if(!empty($valeur)){
                     $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($info[$key]['content'] != 'int' AND $info[$key]['content'] != 'float')? "'$valeur'" : $valeur) ;
+                    $sql_Value .= ((!empty($sql_Value))? ", " : "") .
+                                  (($info['content'] != 'int' AND $info['content'] != 'float')? "'$valeur'" : $valeur) ;
                 }
             }
     }
@@ -313,12 +314,13 @@ function actifUser($_formulaire)
     if ('OK' == $msg) {
         // l'utilisateur est automatiquement connécté
         // et re-dirigé ver l'accueil
-        $_nav = 'index.php';
-        if (utilisateurEstAdmin()){
+        urlSuivante();
+        /*$_nav = 'index.php';
+        if (utilisateurAdmin()){
             $_nav = 'index.php?nav=backoffice';
         }
         header('Location:'.$_nav);
-        exit();
+        exit();*/
     }
     return $msg;
 }
@@ -421,7 +423,7 @@ function connectionValider($_formulaire)
             }
 
 
-        } elseif($membre->num_rows == 0) {
+        } else if (isset($session->num_rows)) {
             $msg .= '<br/ >'. $_trad['erreur']['erreurConnexion'];
             $_SESSION['connexion'] -= 1;
 

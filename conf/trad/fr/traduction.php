@@ -56,7 +56,6 @@ $_trad['defaut']['tranche'] = "Tranche";
 $_trad['defaut']['valider'] = "Valider";
 $_trad['defaut']['ville'] = "Mont...";
 
-
 /* trad des messages d'erreurs dans les formulaires */
 $_trad['erreur']['erreur'] = " Erreur ";
 $_trad['erreur']['acces'] = " <span class='alert'>Désoles Vous avez épuisée vos tentatives de connexion authorises<br>Veuillez quiter votre navigateur et venir plus tard !</span>";
@@ -66,7 +65,6 @@ $_trad['erreur']['ATTENTIONfaitQuoiAvec'] = " ATTENTION !!!! Vous fait Quoi avec
 $_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] = "<span style='color:red'>ATTENTION! Il est impossible de fermer la connexion à la BDD</span><br /><b>Message : </b>";
 $_trad['erreur']['capaciteMinSuperieur'] = "La capacité minimal ne peut pas être supperieur à la capacité de la salle";
 $_trad['erreur']['caracteres'] = " caracteres ";
-$_trad['erreur']['chosirProduit'] = "Vous n'avez pas selectionée de produit pour cette salle";
 $_trad['erreur']['controlTelephone'] = " Au moins un N° de téléphone doit être renseigné ";
 $_trad['erreur']['corrigerErreurDans'] = " Merci de rectifier ";
 $_trad['erreur']['deuxValeursDifferents'] = "Les deux valeurs ne correspondent pas pour ";
@@ -92,6 +90,8 @@ $_trad['erreur']['nonVide'] = " Il ne doit pas étre vide ";
 $_trad['erreur']['NULL'] = $_trad['erreur']['inconueConnexion'] . "<br/>L'information que vous demandez n'existe pas!";
 $_trad['erreur']['obligatoire'] = " est obligatoire ";
 $_trad['erreur']['problemeLorsUpload'] = "Problème lors de l'upload !";
+$_trad['erreur']['produitChoix'] = "<script>alert('Vous n\'avez pas selectionée de produit pour cette salle');</script>";
+$_trad['erreur']['produitConnexion'] = "<script>alert('Vous devez vous connecter dabor!');</script>";
 $_trad['erreur']['prixPersonne'] = "La valeur ne peut être inferieur à " . PRIX . " !";
 $_trad['erreur']['pseudoIndisponble'] = " <span class='alert'>Pseudo indisponible !</span> ";
 $_trad['erreur']['queDesChiffres'] = " Il doit comptenir que des chiffres ";

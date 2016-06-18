@@ -429,7 +429,8 @@ function editerSallesValider(&$_formulaire)
                 // Construction de la requettes
                 if(!empty($valeur)){
                     $sql_champs .= ((!empty($sql_champs))? ", " : "") . $key;
-                    $sql_Value .= ((!empty($sql_Value))? ", " : "") . (($info[$key]['content'] != 'int' AND $info[$key]['content'] != 'float')? "'$valeur'" : "$valeur") ;
+                    $sql_Value .= ((!empty($sql_Value))? ", " : "") .
+                                  (($info['content'] != 'int' AND $info['content'] != 'float')? "'$valeur'" : "$valeur") ;
                 }
             }
     }
@@ -707,7 +708,7 @@ function reservationSalles()
 
     if (!empty($_GET)) {
         if (isset($_GET['reserver'])) {
-            if(!(utilisateurEstConnecte())){
+            if(!(utilisateurConnecte())){
                 return false;
             }
             header('location:?nav=ficheSalles&id='.$_GET['reserver'].'&pos='.$_GET['pos']);
@@ -737,4 +738,20 @@ function activeSalles()
 
     }
     return true;
+}
+
+function urlPressedent(){
+
+    if(isset($_GET['reserver']) OR isset($_POST['reserver'])){
+
+        $_trad = setTrad();
+        if(utilisateurConnecte()){
+         return (reservationSalles())? '' : $_trad['erreur']['produitChoix'];
+        }
+
+        $_SESSION['URLPressedente'] = $_GET;
+        header('refresh:0;url=index.php?nav=actif');
+        echo "<html>{$_trad['erreur']['produitConnexion']}</html>";
+    }
+
 }

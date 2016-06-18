@@ -40,7 +40,7 @@ if('actif' == $nav || 'out' == $nav) {
 }
 
 // cas spécifique
-$nav = (!utilisateurEstAdmin() && $nav=='users')? 'home' : $nav;
+$nav = (!utilisateurAdmin() && $nav=='users')? 'home' : $nav;
 
 require CONF . 'route.php';
 

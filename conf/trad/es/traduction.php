@@ -52,6 +52,7 @@ $_trad['defaut']['photo'] = "Foto";
 $_trad['defaut']['prix_personne'] = "Precio";
 $_trad['defaut']['SeConnecter'] = "Connectarse";
 $_trad['defaut']['telephone'] = "03 89 76 43 21";
+$_trad['defaut']['tranche'] = "Horario";
 $_trad['defaut']['valider'] = "Validar";
 $_trad['defaut']['ville'] = "Santiago...";
 
@@ -89,6 +90,8 @@ $_trad['erreur']['nonVide'] = " Ne debe estar vacio ";
 $_trad['erreur']['NULL'] = $_trad['erreur']['inconueConnexion'] . "<br/>La informacion que solicita no existe!";
 $_trad['erreur']['obligatoire'] = " es obligatorio ";
 $_trad['erreur']['problemeLorsUpload'] = "Problema en la subida del fichero !";
+$_trad['erreur']['produitChoix'] = "<script>alert('No ha usted seleccionado un horario para esta sala');</script>";
+$_trad['erreur']['produitConnexion'] = "<script>alert('Por favor conectese para continuar!');</script>";
 $_trad['erreur']['prixPersonne'] = "El valor no puede ser inferior a " . PRIX . " !";
 $_trad['erreur']['pseudoIndisponble'] = " <span class='alert'>! Usuario indisponible !</span> ";
 $_trad['erreur']['queDesChiffres'] = " Solo se aceptan numeros";

@@ -54,7 +54,7 @@ function nav($_menu = '')
 function listeMenu()
 {
 
-    if(!utilisateurEstAdmin()) return;
+    if(!utilisateurAdmin()) return;
 
     global $_pages, $_reglesAll, $_reglesMembre, $_reglesAdmin, $navAdmin, $navFooter;
 
@@ -103,9 +103,9 @@ function liste_nav($liste='')
 
     if(empty($liste)){
 
-        $_liste = (utilisateurEstAdmin())?
+        $_liste = (utilisateurAdmin())?
             $_reglesAdmin :
-            ((utilisateurEstConnecte())?
+            ((utilisateurConnecte())?
                 $_reglesMembre :
                 $_reglesAll);
 
@@ -113,9 +113,6 @@ function liste_nav($liste='')
         // generation de la liste de nav
         $_liste = ${$liste};
     }
-
-    // Pour affichage ou edition!
-    $ADM = ($liste == 'navFooter' && preg_match('/BacOff/', $_SERVER['PHP_SELF']))? true : false;
 
     // generation de la liste de nav
     $col = count($_liste)+1;
@@ -319,7 +316,7 @@ function session()
     // changement de lang par le user
     $_SESSION['lang'] = (isset($_GET['lang']) && ($_GET['lang']=='fr' XOR $_GET['lang']=='es'))? $_GET['lang'] : $_SESSION['lang'];
 
-    if (utilisateurEstAdmin ()){
+    if (utilisateurAdmin()){
         if (isset($_GET['nav']) && $_GET['nav'] == 'backoffice') {
             $_SESSION['BO'] = TRUE;
         } else if (isset($_GET['nav']) && $_GET['nav'] == 'home') {

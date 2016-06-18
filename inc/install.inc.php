@@ -1,5 +1,5 @@
 <?php
-//if(utilisateurEstAdmin() && isset($_GET['install']) && $_GET['install'] == 'BDD')
+//if(utilisateurAdmin() && isset($_GET['install']) && $_GET['install'] == 'BDD')
 function install()
 {
     include_once MODEL . 'users.php';

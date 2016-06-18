@@ -2,7 +2,7 @@
 
 // recuparation de l'id par GET ou POST
 $_id = (int)(isset($_POST['id'])? $_POST['id'] : (isset($_GET['id'])? $_GET['id'] : $_id) );
-$_id = utilisateurEstAdmin()? (!empty($_id)? $_id : $_SESSION['user']['id']) : $_SESSION['user']['id'];
+$_id = utilisateurAdmin()? (!empty($_id)? $_id : $_SESSION['user']['id']) : $_SESSION['user']['id'];
 
 $_formulaire['statut'] = array(
 	'type' => 'null',

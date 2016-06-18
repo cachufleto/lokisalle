@@ -55,4 +55,5 @@ echo <<<EOL
         </div>
     </div>
 </div>
+$alert
 EOL;
