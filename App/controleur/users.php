@@ -50,7 +50,7 @@ function backOff_users()
     $_trad = setTrad();
     //include PARAM . 'profil.param.php';
 
-    if (!utilisateurEstAdmin()) {
+    if (!utilisateurAdmin()) {
         header('Location:index.php');
         exit();
     }
@@ -98,10 +98,11 @@ function backOff_users()
                     $data['prenom'],
                     '<a href="mailto:'. $data['email'] . '">' . $data['email'] . '</a>',
                     $_trad['value'][$data['statut']],
-                    '<a href="' . LINK . '?nav=profil&id=' . $data['id'] . '" ><img width="25px" src="img/modifier.png"></a>' . (($info == 2) ? "NEW" : ""),
+                    '<a href="' . LINK . '?nav=profil&id=' . $data['id'] . '" >
+                        <img width="25px" src="img/modifier.png"></a>' . (($data['active'] == 2) ? "NEW" : ""),
                     (($data['active'] == 1) ?
-                        ' <a href="' . LINK . '?nav=users&delete=' . $data['id'] . '"><img width="25px" src="img/activerKo.png"></a>' :
-                        ' <a href="' . LINK . '?nav=users&active=' . $data['id'] . '"><img width="25px" src="img/activerOk.png"></a>')
+                        ' <a href="' . LINK . '?nav=users&delete=' . $data['id'] . '"><img width="25px" src="img/activerOk.png"></a>' :
+                        ' <a href="' . LINK . '?nav=users&active=' . $data['id'] . '"><img width="25px" src="img/activerKo.png"></a>')
                 );
             }
         }
@@ -132,7 +133,7 @@ function profil()
     $nav = 'profil';
     $_trad = setTrad();
     include PARAM . 'profil.param.php';
-    if(utilisateurEstAdmin()) {
+    if(utilisateurAdmin()) {
         include PARAM . 'backOff_profil.param.php';
     }
     include FUNC . 'form.func.php';

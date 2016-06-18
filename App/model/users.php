@@ -160,7 +160,7 @@ function getUser($id)
 
 function testADMunique($statut, $id_membre)
 {
-    if(utilisateurEstAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
+    if(utilisateurAdmin() && $id_membre == $_SESSION['user']['id'] && $statut != 'ADM')
     {
         // interdiction de modifier le statut pour le super administrateur
         if($id_membre == 1) return true;

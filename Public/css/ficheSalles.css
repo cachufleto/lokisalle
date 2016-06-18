@@ -87,6 +87,8 @@
     background-color: #E15007;
     color: whitesmoke;
     padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     text-align: center;
     border: solid #ccc 1px;
     box-shadow: 4px 4px 2px #CCC;
