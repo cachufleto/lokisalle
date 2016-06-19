@@ -733,9 +733,13 @@ function listeProduitsReservationPrix($data)
 
 function reperDate($date)
 {
+    $__date = explode('-',$date);
+    $__date = "{$__date[2]}/{$__date[1]}/{$__date[0]}";
+
     $form = ($date != $_SESSION['date'])? "<form name='dispo' method='POST'>
-                                <input type='submit' name='date' value='$date'>
-                            </form>" : $date;
+                                <input type='hidden' name='date' value='$date'>
+                                <input type='submit' name='' value='$__date'>
+                            </form>" : "<input style='background-color: #6D1907' type='button' value='$__date'>";
     return $form;
 }
 
