@@ -31,9 +31,8 @@ echo <<<EOL
                 </form>
             </div>
             <div>
-            $disponibilite
+                $disponibilite
             </div>
-        <div>&nbsp;&nbsp;</div>
     </div>
 </div>
 <div class="ligne">
@@ -55,7 +54,7 @@ EOL;
                 <div class="ligne">
 
                         <h4 class="in_catalogue">{$salle['categorie']}</h4>
-                        <p>{$_trad['champ']['capacite']} {$salle['capacite']} {$_trad['personnes']}<br>
+                        <p>Jusqu'à {$salle['capacite']} personnes<br>
                             REF:{$salle['ref']} {$salle['total']}
                         </p>
                 </div>
@@ -66,4 +65,15 @@ EOL;
 EOL;
         }
     }
-echo '</div>' , $alert;
+echo '
+</div>
+<div classe="ligne">
+    ' . $alert . '
+</div>
+<div class="ligne">
+    <hr>
+    <div class="reserve">';
+echo listeProduitsReservationPrixTotal();
+echo '
+    </div>
+</div>';

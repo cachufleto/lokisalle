@@ -13,7 +13,7 @@ if(isset($_SESSION['panier'][$_SESSION['date']][$salle['id_salle']])){
     $reserver = 'enlever';
     $modifier = '<input type="submit" name="reserver" value="'.$_trad['modifier'].'">';
 }
-
+$min = ($salle['cap_min']<=1)? intval($salle['capacite']*0.3) : $salle['cap_min'];
 echo <<<EOL
  <div class="ligne">
     <h1>{$_trad['titre']['ficheSalles']}</h1>
@@ -41,13 +41,14 @@ echo <<<EOL
                     <input type="hidden" name="id" value="{$salle['id_salle']}">
                     <input type="hidden" name="pos" value="$position">
                     <div class="categorie">
-                        Cat. {$_trad['value'][$salle['categorie']]} :: {$salle['capacite']}{$_trad['personnes']}
+                        Cat. {$_trad['value'][$salle['categorie']]} :: $min - {$salle['capacite']} {$_trad['personnes']}
                     </div>
                     <div>
                         {$salle['description']}
                     </div>
                     <div class="reserve">
                         {$_trad['votreReservation']}
+                        <hr>
                         {$salle['listePrix']}
                     </div>
             </div>

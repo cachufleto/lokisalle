@@ -237,20 +237,22 @@ function data_methodes($indice, $default = false)
 
 function disponibilite()
 {
-	if(!isset($_SESSION['date'])){
-		// la reservation est à partir du jour suivant
-		$time = (utilisateurEstCollaborateur())? time(): (time() + 2*(60*60*24));
-		$_SESSION['date'] = date('Y-m-d',$time);
-	}
-
-	if(isset($_POST['date'])){
-		$_SESSION['date'] = $_POST['date'];
-	}
-
 	$_trad['choixsirDate'] = " A la date du: ";
 	return "<form name='dispo' method='POST'>
 			{$_trad['choixsirDate']}
 			<input type='date' name='date' value='{$_SESSION['date']}'>
+			<input type='text' name='numpersonne' placeholder='Num. Pers.' value='{$_SESSION['numpersonne']}'>
 			<input type='submit' name='' value='OK'>
 		</form>";
 }
+
+function sortIndice($data)
+{
+	foreach ($data as $id => $info) {
+		$sort[] = $id;
+	}
+	sort($sort);
+
+	return $sort;
+}
+

@@ -6,6 +6,14 @@
  * Time: 13:35
  */
 
+function recherchePernonnes(){
+    if(!empty($_SESSION['numpersonne'])){
+        $max = $_SESSION['numpersonne'] * 0.9;
+        $min = $_SESSION['numpersonne'] * 1.1;
+        return " AND capacite > $max AND 	cap_min < $min ";
+    }
+}
+
 function sallesUpdate($sql_set, $id_salle){
 
     $sql = 'UPDATE salles SET '.$sql_set.'  WHERE id_salle = '.$id_salle;
@@ -20,7 +28,7 @@ function setSallesActive($id, $active){
 
 function selectSalles()
 {
-    $sql = "SELECT * FROM salles where active = 1";
+    $sql = "SELECT * FROM salles where active = 1 " . recherchePernonnes();
     return executeRequete($sql);
 }
 
@@ -28,7 +36,7 @@ function selectSallesOrder($order, $listeId)
 {
     $sql = "SELECT id_salle, titre, capacite, categorie, photo
             FROM salles WHERE active = 1 " . ((!empty($listeId))? " AND $listeId " : "") .
-            " ORDER BY $order";
+            recherchePernonnes() . " ORDER BY $order";
     return executeRequete($sql);
 }
 
@@ -36,8 +44,9 @@ function selectSallesUsers($order)
 {
 // selection de tout les users sauffe le super-ADMIN
     $sql = "SELECT id_salle, titre, capacite, cap_min, categorie, photo, active, prix_personne, tranche
-            FROM salles " . (!isSuperAdmin() ? " WHERE active != 0 " : "") . "
-            ORDER BY $order";
+            FROM salles " . (!isSuperAdmin() ? " WHERE active != 0 " : "") .
+            recherchePernonnes() .
+            " ORDER BY $order";
     return executeRequete($sql);
 }
 
@@ -82,6 +91,8 @@ function setSalle($sql_champs, $sql_value)
 
 function selectSalleId($_id)
 {
-    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id . ( !isSuperAdmin()? " AND active != 0" : "" );
+    $sql = "SELECT * FROM salles WHERE id_salle = ". $_id .
+        ( !isSuperAdmin()? " AND active != 0" : "" ) .
+        recherchePernonnes();
     return executeRequete($sql);
 }

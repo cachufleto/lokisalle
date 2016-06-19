@@ -197,5 +197,5 @@ function reservation()
     $msg = (!empty($table))? $_trad['reservationOk'] : $_trad['erreur']['reservationVide'];
     $alert = urlReservation();
 
-    include VUE . "salles/salles.tpl.php";
+    include VUE . "salles/sallesReservation.tpl.php";
 }

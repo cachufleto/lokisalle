@@ -352,4 +352,27 @@ function session()
         unset($_GET['nav']);
 
     }
+
+    if(!isset($_SESSION['date'])){
+        // la reservation est à partir du jour suivant
+        $time = (time() + 2*(60*60*24));
+        $_SESSION['date'] = date('Y-m-d',$time);
+    }
+
+    if(isset($_POST['date'])){
+        // contrôl de la date inferieur à la date du jour
+        $_SESSION['date'] = $_POST['date'];
+    }
+
+    if(!isset($_SESSION['numpersonne'])){
+        // la reservation est à partir du jour suivant
+        $_SESSION['numpersonne'] = '';
+    }
+
+    if(isset($_POST['numpersonne'])){
+        // contrôl de la date inferieur à la date du jour
+        $_SESSION['numpersonne'] = $_POST['numpersonne'];
+    }
+
+
 }
