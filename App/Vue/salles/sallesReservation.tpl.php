@@ -55,7 +55,7 @@ EOL;
 
                         <h4 class="in_catalogue">{$salle['categorie']}</h4>
                         <p>Jusqu'à {$salle['capacite']} personnes<br>
-                            REF:{$salle['ref']} {$salle['total']}
+                            REF:{$salle['ref']}
                         </p>
                 </div>
                 <div class="ligne">

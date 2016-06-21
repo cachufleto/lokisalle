@@ -6,14 +6,6 @@
  * Time: 13:35
  */
 
-function recherchePernonnes(){
-    if(!empty($_SESSION['numpersonne'])){
-        $max = $_SESSION['numpersonne'] * 0.9;
-        $min = $_SESSION['numpersonne'] * 1.1;
-        return " AND capacite > $max AND 	cap_min < $min ";
-    }
-}
-
 function sallesUpdate($sql_set, $id_salle){
 
     $sql = 'UPDATE salles SET '.$sql_set.'  WHERE id_salle = '.$id_salle;
@@ -94,5 +86,11 @@ function selectSalleId($_id)
     $sql = "SELECT * FROM salles WHERE id_salle = ". $_id .
         ( !isSuperAdmin()? " AND active != 0" : "" ) .
         recherchePernonnes();
+    return executeRequete($sql);
+}
+
+function selectSalleReserves($date, $id)
+{
+    $sql = "SELECT tranche FROM commandes WHERE date_reserve = '$date' AND id_salle = $id";
     return executeRequete($sql);
 }

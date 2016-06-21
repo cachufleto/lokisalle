@@ -361,7 +361,7 @@ function session()
 
     if(isset($_POST['date'])){
         // contrôl de la date inferieur à la date du jour
-        $_SESSION['date'] = $_POST['date'];
+        $_SESSION['date'] = !empty($_POST['date'])? $_POST['date'] : date('Y-m-d');
     }
 
     if(!isset($_SESSION['numpersonne'])){

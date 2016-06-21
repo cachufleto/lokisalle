@@ -39,6 +39,8 @@ define('WIDTH_MAX', 10240000);    // Largeur max de l'image en pixels
 define('HEIGHT_MAX', 8500000);    // Hauteur max de l'image en pixels
 
 define('PRIX', 5.5);
+define('TVA', 0.2);
+
 //phpinfo();
 
 /********************************************/

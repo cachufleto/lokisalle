@@ -50,6 +50,27 @@ function executeRequete($req)
 	return $resultat;
 }
 
+function executeRequeteInsert($req)
+{
+	$_trad = setTrad();
+
+	_debug($req, 'SQL INSERTION');
+
+	$connexion = connectMysqli();
+
+	$resultat = $connexion->query($req);
+
+	if(!$resultat) {
+
+		die ($_trad['erreur']['ATTENTIONErreurSurRequeteSQL']);// . $req . '<br /><b>---> : </b>' . $connexion->error . '<br />');
+	}
+
+	// deconnectMysqli();
+	$resultat = $connexion->insert_id;
+	$connexion->close() or die ($_trad['erreur']['ATTENTIONImpossibleFermerConnexionBDD'] . ${$connexion}->error . '<br />');
+	return $resultat;
+}
+
 # Fonction executeMultiRequete()
 # Exe requette SQL
 # $req => string SQL
@@ -237,9 +258,9 @@ function data_methodes($indice, $default = false)
 
 function disponibilite()
 {
-	$_trad['choixsirDate'] = " A la date du: ";
+	$_trad = setTrad();
 	return "<form name='dispo' method='POST'>
-			{$_trad['choixsirDate']}
+			{$_trad['choisirDate']}
 			<input type='date' name='date' value='{$_SESSION['date']}'>
 			<input type='text' name='numpersonne' placeholder='Num. Pers.' value='{$_SESSION['numpersonne']}'>
 			<input type='submit' name='' value='OK'>
@@ -255,4 +276,66 @@ function sortIndice($data)
 
 	return $sort;
 }
+
+function recherchePernonnes(){
+	if(!empty($_SESSION['numpersonne'])){
+		$max = $_SESSION['numpersonne'] * 0.9;
+		$min = $_SESSION['numpersonne'] * 1.1;
+		return " AND capacite > $max AND 	cap_min < $min ";
+	}
+}
+
+function listeCapacites($data, $info)
+{
+	$_trad = setTrad();
+	$_prixPlage = setPrixPlage();
+	$_tranches = setPrixTranches();
+
+	$prixSalle = [];
+	$max = $data['capacite'];
+	$min = ($data['cap_min']<=1)? intval($max * 0.3) : $data['cap_min'];
+	$dif = $max - $min;
+	$it = intval(str_replace('T', '', $data['tranche']));
+	$delta = intval($dif/$it);
+
+	for ($i=1; $i<=$it; $i++){
+		$per = ($i != $it)? $min + $i*$delta : $max;
+		$prix = $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i];
+		$prixSalle[$i]['id'] = $info['id'];
+		$prixSalle[$i]['num'] = $per;
+		$prixSalle[$i]['valeur'] = $prix *$per;
+		$prixSalle[$i]['prix'] = number_format ($prix *$per , 2);
+		$prixSalle[$i]['prix_personne'] = number_format ($prix , 2);
+		$prixSalle[$i]['libelle'] = utf8_encode($_prixPlage[$info['id_plagehoraire']]['libelle']);
+		$prixSalle[$i]['description'] = utf8_encode($info['description']);
+		$prixSalle[$i]['heure_entree'] = getHeureEntree($info['id_plagehoraire']);
+	    $prixSalle[$i]['heure_depart'] = getHeureSortie($info['id_plagehoraire']);
+	}
+	return $prixSalle;
+}
+
+function getHeureEntree($id_plagehoraire)
+{
+
+}
+
+function getHeureSortie($id_plagehoraire)
+{
+
+}
+
+
+function reperDate($date)
+{
+	$date = empty($date)? date('Y-m-d') : $date;
+	$__date = explode('-',$date);
+	$__date = "{$__date[2]}/{$__date[1]}/{$__date[0]}";
+
+	$form = ($date != $_SESSION['date'])? "<form name='dispo' method='POST'>
+                                <input type='hidden' name='date' value='$date'>
+                                <input type='submit' name='' value='$__date'>
+                            </form>" : "<input style='background-color: #6D1907' type='button' value='$__date'>";
+	return $form;
+}
+
 

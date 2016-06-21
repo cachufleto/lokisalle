@@ -2,6 +2,8 @@
 include_once MODEL . 'salles.php';
 include_once FUNC . 'salles.func.php';
 
+getIndisponibilite();
+
 function salles()
 {
     $nav = 'salles';

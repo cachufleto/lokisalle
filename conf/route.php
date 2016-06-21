@@ -100,6 +100,12 @@ $route['reservation']['action'] = 'reservation';
 $route['salles']['Controleur'] = 'salles.php';
 $route['salles']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_salles' : 'salles';
 
+$route['validerCommande']['Controleur'] = 'commande.php';
+$route['validerCommande']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_commande' : 'commande';
+
+$route['validerFacture']['Controleur'] = 'commande.php';
+$route['validerFacture']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_facture' : 'facture';
+
 /****** ADMINISTRATION ******/
 
 if (utilisateurAdmin() && isset($_SESSION['BO'])) {

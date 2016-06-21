@@ -56,7 +56,7 @@ EOL;
 
                         <h4 class="in_catalogue">{$salle['categorie']}</h4>
                         <p>{$_trad['champ']['capacite']} {$salle['capacite']} {$_trad['personnes']}<br>
-                            REF:{$salle['ref']} {$salle['total']}
+                            REF:{$salle['ref']}
                         </p>
                 </div>
                 <div class="ligne">
