@@ -76,7 +76,7 @@ function modCheckSalles(&$_formulaire, $_id)
 # RETURN string alerte
 function getSalles($_id)
 {
-    $data = selectSalleId($_id) or die ($sql);
+    $data = selectSalleId($_id);
     if($data->num_rows < 1) {
         return false;
     }
@@ -293,7 +293,8 @@ function ficheSallesValider(&$_formulaire)
             sallesUpdate($sql_set, $id_salle);
         }
         else {
-            header('Location:' . LINK . '?nav=salles&pos=P-' . ($position -1) . '');
+            //header('Location:' . LINK . '?nav=salles&pos=P-' . ($position -1) . '');
+            header('Location:' . LINK . '?nav=salles&pos=P-0');
         }
         // ouverture d'une session
         $msg = "OK";
@@ -598,7 +599,7 @@ function getdisponible($date, $id)
 {
     $data = [];
     $data['tranche'] = [];
-    if($reserves = selectSalleReserves($date, $id)){
+    if($reserves = selectSalleReservesMembres($date, $id)){
             while ($info = $reserves->fetch_assoc()){
                 $data['tranche'][] = $info['tranche'];
                 $data[$info['tranche']] = $info['id_membre'];
