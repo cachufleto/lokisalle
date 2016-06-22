@@ -147,7 +147,7 @@ $_trad['nav']['salles'] = "Salas";
 $_trad['nav']['seInscrire'] = "Inscribirse";
 $_trad['nav']['toutesNosOffres'] = "Todas nuestras ofertas";
 $_trad['nav']['users'] = "Miembros"; 
-$_trad['nav']['ventes'] = "Pedidos";
+$_trad['nav']['commandes'] = "Pedidos";
 
 /* trad pour les titres des pages */
 $_trad['titre']['actif'] = "";
@@ -215,6 +215,7 @@ $_trad['enlever'] = "Retirar";
 $_trad['ERRORSaisie'] = "Por favor corrija el o los Errores en el formulario";
 $_trad['factureOk'] = "Su reserva esta registrada";
 $_trad['indefinie'] = "<span class='alert'>Indefinido</span>";
+$_trad['INDISPONIBLE'] = "<span class='alert'>Ocupado</span>";
 $_trad['inscriptionLokisalle'] = "Inscripcion Lokisalle";
 $_trad['inscrivezVous'] = " Inscribete ";
 $_trad['laRubrique'] = "La rubrica ";
@@ -230,14 +231,17 @@ $_trad['pasDansMenuFooter'] = " no existe dentro de los paràmetros del menu del
 $_trad['pasDansMenuMembre'] = " no existe dentro de los paràmetros del menu de miembros!";
 $_trad['pasEncoreMembre'] = "Aun no es miembro? ";
 $_trad['personnes'] = " personnas ";
-$_trad['priseEnCompteMDP'] = "Su Contraseña sera reiniticializada al validar su informacion con el link enviado a la direccion mail de registro.";;
+$_trad['nombrePersonnes'] = " Capacidad: ";
+$_trad['priseEnCompteMDP'] = "Su Contraseña sera reiniticializada al validar su informacion con el link enviado a la direccion mail de registro.";
 $_trad['produitNonDispoble'] = "Productos no disponibles";
 $_trad['rectifier'] = "Rectificar";
 $_trad['redirigeVerConnection'] = $_trad['-bienvenu'] . "<p>Sera usted dirigido a la pagina de <a href='index.php?nav=actif'>conexion!</a>.</p>";
 $_trad['reservationOk'] = "Lista de reservationes";
 $_trad['reserver'] = "Reservar";
+$_trad['RESERVEE'] = "<span class=''>Reservado</span>";
 $_trad['revenir'] = "Regresar";
 $_trad['select'] = "Selectionar";
+$_trad['trierPar'] = "Ordenado por: ";
 $_trad['valide'] = "Validar";
 $_trad['validerChangementMotPasse'] = $_trad['-gestion'] . "Por Favor valide su solicitud de cambio de Contraseña clicando aqui";
 $_trad['validerInscription'] = $_trad['-bienvenu'] . "Su inscription sera activada al validar su informacion con el link enviado a la direccion mail de registro.";

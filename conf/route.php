@@ -100,13 +100,18 @@ $route['reservation']['action'] = 'reservation';
 $route['salles']['Controleur'] = 'salles.php';
 $route['salles']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_salles' : 'salles';
 
-$route['validerCommande']['Controleur'] = 'commande.php';
-$route['validerCommande']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_commande' : 'commande';
-
-$route['validerFacture']['Controleur'] = 'commande.php';
-$route['validerFacture']['action'] = (utilisateurAdmin() && isset($_SESSION['BO']))? 'backOff_facture' : 'facture';
-
 /****** ADMINISTRATION ******/
+
+if (utilisateurConnecte()) {
+    $route['validerCommande']['Controleur'] = 'commande.php';
+    $route['validerCommande']['action'] = 'validerCommande';
+
+    $route['validerFacture']['Controleur'] = 'commande.php';
+    $route['validerFacture']['action'] = 'validerFacture';
+
+    $route['commandes']['Controleur'] = 'commande.php';
+    $route['commandes']['action'] = 'commandes';
+}
 
 if (utilisateurAdmin() && isset($_SESSION['BO'])) {
     /****** SITE ******/
@@ -123,5 +128,10 @@ if (utilisateurAdmin() && isset($_SESSION['BO'])) {
     /****** SALLES ******/
     $route['produits']['Controleur'] = 'salles.php';
     $route['produits']['action'] = 'backOff_gestionProduits';
+
+    /****** COMMANDES ******/
+    $route['validerCommande']['action'] = 'backOff_commande';
+    $route['validerFacture']['action'] = 'backOff_facture';
+    $route['commandes']['action'] = 'backOff_gestionCommandes';
 
 }

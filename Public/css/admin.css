@@ -11,9 +11,16 @@ body {
 }
 
 .mainHeader nav {
-	height: 82px;
+	/*height: 82px;*/
 }
 
+.mainHeader nav ul {
+	width: 820px;
+}
+
+.mainFooter nav, .mainHeader nav{
+	background-color: #3c9c89;
+}
 table {
 	width: 100%;
 	border-collapse: inherit;

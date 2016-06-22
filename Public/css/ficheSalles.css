@@ -9,8 +9,8 @@
 }
 
 #fiche {
-    width: 915px;
-    margin-left: calc( 49% - 430px);
+    width: 958px;
+    margin-left: calc( 49% - 470px);
     padding: 10px;
     border: solid #ccc 2px;
     box-shadow: 8px 8px 4px #CCC;
@@ -43,18 +43,18 @@
 
 #fiche .photo{
     float: left;
-    width: 450px;
+    width: 470px;
 }
 
 #fiche .photo img{
-    width: 450px;
-    height: 340px;
+    width: 470px;
+    height: 350px;
 }
 
 #fiche .info{
     float: left;
     padding-left: 10px;
-    width: calc(100% - 460px);
+    width: calc(100% - 480px);
 }
 
 #fiche .info .titre{

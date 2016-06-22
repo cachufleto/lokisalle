@@ -39,3 +39,20 @@ function setComandes($commande)
                                       '{$commande['reduction']}', '{$commande['prix_ttc']}');";
     return executeRequeteInsert($sql);
 }
+
+function selectProduitsCommandes()
+{
+    $date = date('Y-m-d H:i:s', (time()-10*(60*60*24)));
+    $req = "SELECT
+                r.id, r.date_facturacion,
+                c.id_salle, c.date_reserve, c.tranche, c.capacitee, c.prix, c.reduction, c.prix_TTC,
+                s.titre
+            FROM `reservations` r, `commandes` c, `salles` s
+            WHERE R.id_membre = {$_SESSION['user']['id']}
+              AND c.date_reserve >= '$date'
+              AND r.id = c.id_reservation
+              AND c.id_salle = s.id_salle
+            ORDER BY c.date_reserve ASC, c.tranche ASC";
+    return executeRequete($req);
+}
+

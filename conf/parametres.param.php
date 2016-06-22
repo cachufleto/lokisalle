@@ -13,10 +13,10 @@ $_prixPlage[3]['taux'] = 1;
 $_prixPlage[2]['taux'] = 0.95;
 $_prixPlage[1]['taux'] = 0.90;
 
-$_prixPlage[4]['libelle'] = $_trad['value']['nocturne'];
-$_prixPlage[3]['libelle'] = $_trad['value']['soiree'];
-$_prixPlage[2]['libelle'] = $_trad['value']['journee'];
-$_prixPlage[1]['libelle'] = $_trad['value']['matinee'];
+$_prixPlage[4]['libelle'] = 'nocturne';
+$_prixPlage[3]['libelle'] = 'soiree';
+$_prixPlage[2]['libelle'] = 'journee';
+$_prixPlage[1]['libelle'] = 'matinee';
 
 $_tranches = [];
 $_tranches['T1'][1] = 1;

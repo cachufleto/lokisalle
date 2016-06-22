@@ -109,7 +109,7 @@ $_pages['users'] = array(
 		'link' => LINK,
 		'affiche' => false);
 
-$_pages['ventes'] = array(
+$_pages['commandes'] = array(
 		'link' => LINK,
 		'affiche' => false);
 
@@ -131,11 +131,11 @@ $_pages['changermotpasse'] = array(
 //$_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'recherche', 'actif');
 $_reglesAll = array('home', 'inscription', 'salles', 'reservation', 'actif');
 //$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'recherche', 'out');
-$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'out');
+$_reglesMembre = array('home', 'profil', 'salles', 'reservation', 'commandes', 'out');
 //$_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'recherche', 'backoffice', 'out');
 $_reglesAdmin = array('home', 'profil', 'salles', 'reservation', 'backoffice', 'out');
 
-$navAdmin = array('home', 'salles','users','ventes','out' );
+$navAdmin = array('home', 'salles','users','commandes','out' );
 
 //$navFooter = array('mentions', 'cgv', 'plan', 'newsletter', 'contact' );
 $navFooter = array('mentions', 'cgv', 'contact' );

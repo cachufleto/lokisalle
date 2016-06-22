@@ -262,6 +262,7 @@ function disponibilite()
 	return "<form name='dispo' method='POST'>
 			{$_trad['choisirDate']}
 			<input type='date' name='date' value='{$_SESSION['date']}'>
+			{$_trad['nombrePersonnes']}
 			<input type='text' name='numpersonne' placeholder='Num. Pers.' value='{$_SESSION['numpersonne']}'>
 			<input type='submit' name='' value='OK'>
 		</form>";
@@ -287,7 +288,7 @@ function recherchePernonnes(){
 
 function listeCapacites($data, $info)
 {
-	$_trad = setTrad();
+	//$_trad = setTrad();
 	$_prixPlage = setPrixPlage();
 	$_tranches = setPrixTranches();
 
@@ -303,27 +304,13 @@ function listeCapacites($data, $info)
 		$prix = $data['prix_personne'] * $_prixPlage[$info['id_plagehoraire']]['taux'] * $_tranches[$data['tranche']][$i];
 		$prixSalle[$i]['id'] = $info['id'];
 		$prixSalle[$i]['num'] = $per;
-		$prixSalle[$i]['valeur'] = $prix *$per;
-		$prixSalle[$i]['prix'] = number_format ($prix *$per , 2);
-		$prixSalle[$i]['prix_personne'] = number_format ($prix , 2);
-		$prixSalle[$i]['libelle'] = utf8_encode($_prixPlage[$info['id_plagehoraire']]['libelle']);
-		$prixSalle[$i]['description'] = utf8_encode($info['description']);
-		$prixSalle[$i]['heure_entree'] = getHeureEntree($info['id_plagehoraire']);
-	    $prixSalle[$i]['heure_depart'] = getHeureSortie($info['id_plagehoraire']);
+		$prixSalle[$i]['prix'] = $prix *$per;
+		$prixSalle[$i]['prix_personne'] = $prix;
+		$prixSalle[$i]['libelle'] = $_prixPlage[$info['id_plagehoraire']]['libelle'];
+		$prixSalle[$i]['description'] = $info['description'];
 	}
 	return $prixSalle;
 }
-
-function getHeureEntree($id_plagehoraire)
-{
-
-}
-
-function getHeureSortie($id_plagehoraire)
-{
-
-}
-
 
 function reperDate($date)
 {
@@ -338,4 +325,26 @@ function reperDate($date)
 	return $form;
 }
 
+function controldate()
+{
+	$control = $_SESSION['date'];
+	if(isset($_POST['date'])){
+		// contrôl de la date inferieur à la date du jour
+		$dateMin = time()+(60*60*24);
+		$now = mktime(0,0,0,date('m', $dateMin),date('d', $dateMin),date('Y', $dateMin));
+		$control = date('Y-m-d', $dateMin);
+		if(preg_match('#^20(1|2)[0-9]-(0|1)[0-9]-[0-3][0-9]#' , $_POST['date'])){
+			$date = explode('-', $_POST['date']);
+			_debug($date, '$date');
+			if(checkdate($date[1],$date[2],$date[0])){
+				$timePost = mktime(0,0,0,$date[1],$date[2],$date[0]);
+				if($timePost > $now){
+					$control = $_POST['date'];
+				}
+			}
+		}
+	}
+
+	return $control;
+}
 

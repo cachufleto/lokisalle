@@ -86,6 +86,7 @@ function getSalles($_id)
         $fiche[$key] = html_entity_decode($info);
     }
     $fiche['produits'] = listeProduitsReservation($fiche);
+
     $fiche['listePrix'] =  listeProduitsReservationPrix($fiche);
 
     return $fiche;
@@ -596,10 +597,11 @@ function listeProduits(array $data)
 function getdisponible($date, $id)
 {
     $data = [];
-
+    $data['tranche'] = [];
     if($reserves = selectSalleReserves($date, $id)){
             while ($info = $reserves->fetch_assoc()){
-                $data[] = $info['tranche'];
+                $data['tranche'][] = $info['tranche'];
+                $data[$info['tranche']] = $info['id_membre'];
             }
         }
 
@@ -637,16 +639,16 @@ function getIndisponibilite()
 
 function listeProduitsReservation(array $data)
 {
-
-    $prix_salle = $ref = $_listeReservation = '';
-    $affiche = [];
+    $_trad = setTrad();
+    $prix_salle = $ref = $disponibilite = [];
+    $affiche = $_listeReservation = [];
     $i = $_total = 0;
 
     if($prix = selectProduitsSalle($data['id_salle'])){
         $disponible = getdisponible($_SESSION['date'], $data['id_salle']);
         //var_dump($disponible);
         while($info = $prix->fetch_assoc() ){
-            $reservee = in_array($info['id_plagehoraire'], $disponible);
+            $reservee = in_array($info['id_plagehoraire'], $disponible['tranche']);
             $prixSalle= listeCapacites($data, $info);
             //var_dump($prixSalle);
             $ref = '';
@@ -662,22 +664,24 @@ function listeProduitsReservation(array $data)
                     if($reservee){
                         unset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']][$key]);
                     } else {
-                        $_listeReservation .= "<div class='tronche'>{$produit['libelle']} :</div>
-                                                <div class='personne'>{$produit['num']} pers.</div>
-                                                <div class='prix'>{$produit['prix']}€</div>";
-                        $_total = $_total +  $produit['valeur'];
+
+                        $_listeReservation[] = $produit;
                     }
                 }
 
-                $ref .= "<td>" . (($reservee)? "INDISPONIBLE" : $produit['prix'] . "€
-                        <input type='radio' name='prix[".$i."]' value='$key' $checked>");
-                $ref .= "</td>";
+                $ref['produit'] = $produit;
+                $ref['reservee'] = $reservee;
+                $ref['membre'] = ($reservee AND $disponible[$info['id_plagehoraire']] == $_SESSION['user']['id'])?
+                                    true : false;
+                $ref['checked'] = $checked;
+                $disponibilite[$produit['libelle']][$key]=$ref;
                 $affiche[$key] = $produit['num'];
             }
-            $prix_salle .= "<tr><td class='tableauprix'>{$produit['libelle']}</td>$ref</tr>";
+            //$prix_salle[] = ['libelle' => $produit['libelle'], 'disponibilite'=> $disponibilite];
 
         }
     }
+/*
     $ref = '';
     foreach($affiche as $col){
         $ref .=  "<td class='tableauprix'>$col pers.</td>";
@@ -691,21 +695,17 @@ function listeProduitsReservation(array $data)
                             <div class='personne total'>&nbsp;</div>
                             <div class='prix total'>" . number_format ($_total, 2) . "€</div>"
                             : "";
-    /*if(isset($_SESSION['panier'][$_SESSION['date']][$data['id_salle']])) {
-        $_SESSION['panier'][$_SESSION['date']][$data['id_salle']]['total'] = $_total;
-    } */
-
-
     if(empty($affiche)){
         return ['tableau'=>$_trad['produitNonDispoble'], 'reserve'=>''];
     }
-
-    return ['tableau'=>$tableau, 'reserve'=>$reserve];
+*/
+    //return ['tableau'=>$tableau, 'reserve'=>$reserve];
+    return ['affiche'=>$affiche, 'disponibilite'=>$disponibilite];
 }
 
 function listeProduitsPrixReservation($date, $data)
 {
-   $_listeReservation = '';
+   $_listeReservation = [];
     $i = $_total = 0;
 
     if($prix = selectProduitsSalle($data['id_salle'])){
@@ -717,21 +717,41 @@ function listeProduitsPrixReservation($date, $data)
 
             foreach($prixSalle as $key =>$produit){
                 if(isset($reservation[$i]) && $reservation[$i] == $key){
-                    $_listeReservation .= "<div class='tronche'>{$produit['libelle']} :</div>
+                    //var_dump($produit);
+                    /*
+                    'id' => string '66' (length=2)
+                    'num' => string '150' (length=3)
+                    'prix_personne' => float 5.5
+                    'libelle' => string 'soiree' (length=6)
+                    'description' => string '18:00h - 22:00h' (length=15)
+                    */
+                    /*$_reserve['libelle'] = $produit['libelle'];
+                    $_reserve['num'] = $produit['num'];
+                    $_reserve['prix'] = $produit['prix']; */
+                    /*
+                        "<div class='tronche'>{$produit['libelle']} :</div>
                                             <div class='personne'>{$produit['num']} pers.</div>
                                             <div class='prix'>{$produit['prix']}€</div>";
-                    $_total = $_total +  $produit['valeur'];
+                    $_total = $_total +  $produit['prix'];
+                    */
+                    $_listeReservation[] = $produit;
                 }
             }
         }
     }
 
+    /*
+    "<div class='tronche'>{$produit['libelle']} :</div>
+                        <div class='personne'>{$produit['num']} pers.</div>
+                        <div class='prix'>{$produit['prix']}€</div>";
     $reserve = ($_total)? $_listeReservation .
                             "<div class='tronche couts'>Cout :</div>
                             <div class='personne couts'>&nbsp;</div>
                             <div class='prix couts'>" . number_format ($_total, 2) . "€</div>"
                             : "";
-    return ['reserve'=>$reserve, 'couts'=>$_total];
+    */
+    //return ['reserve'=>$reserve, 'couts'=>$_total];
+    return $_listeReservation;
 }
 
 function listeProduitsReservationPrix($data)
@@ -742,18 +762,27 @@ function listeProduitsReservationPrix($data)
         foreach ($listeOrdenee as $key => $date) {
             if(isset($_SESSION["panier"][$date][$data['id_salle']])){
                 $listePrix[$date] = listeProduitsPrixReservation($date, $data);
+                /*"<div class='tronche'>{$produit['libelle']} :</div>
+                        <div class='personne'>{$produit['num']} pers.</div>
+                        <div class='prix'>{$produit['prix']}€</div>";
+                $reserve = ($_total)? $_listeReservation .
+                    "<div class='tronche couts'>Cout :</div>
+                            <div class='personne couts'>&nbsp;</div>
+                            <div class='prix couts'>" . number_format ($_total, 2) . "€</div>"
+                    : "";*/
+
             }
         }
     }
-
+    return $listePrix;
     $_liste = '';
     $_total = 0;
-    foreach($listePrix as $date=>$info){
+    /*foreach($listePrix as $date=>$info){
         $_liste .= "<div class='ligne date'>" .
                             reperDate($date)
                             . "</div>".$info['reserve'];
         $_total = $_total + $info['couts'];
-    }
+    } */
     return $_liste . "<div class='tronche total'>TOTAL :</div>
                             <div class='personne total'>&nbsp;</div>
                             <div class='prix total'>" . number_format ($_total, 2) . "€</div>";
@@ -773,22 +802,8 @@ function listeProduitsReservationPrixTotal()
         }
     }
 
-    $_liste = '';
-    $_total = 0;
-    foreach($listePrix as $date=>$data){
-        foreach($data as $key=>$info){
-            $_liste .= "<div class='ligne date'>" .
-                reperDate($date)
-                . " : {$info['salle']['titre']}</div>" .
-                        $info['reservation']['reserve'];
-            $_total = $_total + $info['reservation']['couts'];
-        }
-    }
-    return !empty($_total)? $_liste . "<div class='tronche total'>TOTAL :</div>
-                            <div class='personne total'>&nbsp;</div>
-                            <div class='prix total'>" . number_format ($_total, 2) . "€</div>
-                            <div class='ligne'><div class='valider'><a href='?nav=validerCommande'><button>VALIDER LA COMMANDE</button></a></div></div>
-                            " : "";
+    return $listePrix;
+
 }
 
 

@@ -7,16 +7,17 @@ include_once MODEL . 'commande.php';
  * Date: 20/06/2016
  * Time: 01:02
  */
-function commande()
+function validerCommande()
 {
     $nav = 'commande';
     $_trad = setTrad();
-    include_once VUE . 'commande/commande.tpl.php';
+    $listePrix = listeProduitsFacture();
+
+    include_once VUE . 'commande/validerCommande.tpl.php';
 }
 
-function facture()
+function validerFacture()
 {
-
     $_trad = setTrad();
     $facture = generationProduitsFacture();
 
@@ -33,3 +34,11 @@ function facture()
     echo "<h4>{$_trad['factureOk']}</h4>";
 }
 
+function commandes()
+{
+    $nav = 'commande';
+    $_trad = setTrad();
+    $listePrix = listeProduitsCommandes();
+
+    include_once VUE . 'commande/commandes.tpl.php';
+}

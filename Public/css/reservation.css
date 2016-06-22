@@ -110,13 +110,13 @@
 
 }
 
-.tronche{
-    width: 40%;
+.titre{
+    width: 34%;
 }
-
+.tronche,
 .personne,
 .prix {
-    width: 30%;
+    width: 22%;
     text-align: right;
 }
 .total{

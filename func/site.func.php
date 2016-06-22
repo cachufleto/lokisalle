@@ -23,14 +23,15 @@ function nav($_menu = '')
 {
     $_trad = setTrad();
     listeMenu();
-    $_link = $_SERVER["QUERY_STRING"];
+    $_link = str_replace('&lang=fr', '', $_SERVER["QUERY_STRING"]);
+    $_link = str_replace('&lang=es', '', $_link);
 
     $menu = liste_nav($_menu);
     $class = $menu['class'];
     $li = $menu['menu'];
 
     if (isset($_SESSION['user'])) {
-        $li .= "<li class='" . $class . "'><a class='admin'>[";
+        $li .= "<li class='" . $class . "'><a href='' class='admin'>[";
         $li .= ($_SESSION['user']['statut'] != 'MEM') ? $_trad['value'][$_SESSION['user']['statut']] . "::" : "";
         $li .= $_SESSION['user']['user'] . ']</a></li>';
     }
@@ -359,10 +360,9 @@ function session()
         $_SESSION['date'] = date('Y-m-d',$time);
     }
 
-    if(isset($_POST['date'])){
-        // contrôl de la date inferieur à la date du jour
-        $_SESSION['date'] = !empty($_POST['date'])? $_POST['date'] : date('Y-m-d');
-    }
+
+    $_SESSION['date'] = controldate();
+
 
     if(!isset($_SESSION['numpersonne'])){
         // la reservation est à partir du jour suivant

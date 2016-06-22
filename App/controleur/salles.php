@@ -68,7 +68,34 @@ function backOff_editProduits()
     $form = formulaireAfficher($_formulaire);
 
     $form .= listeProduits(getSalles($_id));
+    /*foreach($listePrix as $date=>$info){
+        $_liste .= "<div class='ligne date'>" .
+                            reperDate($date)
+                            . "</div>".$info['reserve'];
+        $_total = $_total + $info['couts'];
+        } */
 
+
+    /*
+        $ref = '';
+        foreach($affiche as $col){
+            $ref .=  "<td class='tableauprix'>$col pers.</td>";
+        }
+        $prix_salle = "<tr><td class='tableauprix' width='90'>Max. </td>$ref</tr>" . $prix_salle;
+        $_trad['produitNonDispoble'] = "Produits non disponibles";
+
+        $tableau = "<table width='100%' border='1' cellspacing='1' BGCOLOR='#ccc'>$prix_salle</table>";
+        $reserve = ($_total)? $_listeReservation .
+                                "<div class='tronche total'>TOTAL :</div>
+                                <div class='personne total'>&nbsp;</div>
+                                <div class='prix total'>" . number_format ($_total, 2) . "€</div>"
+                                : "";
+        if(empty($affiche)){
+            return ['tableau'=>$_trad['produitNonDispoble'], 'reserve'=>''];
+        }
+    */
+    //return ['tableau'=>$tableau, 'reserve'=>$reserve];
+    //return ['affiche'=>$affiche, 'prix_salle'=>$prix_salle];
     include VUE . 'salles/gestionProduits.tpl.php';
     // liste des prix
 }
