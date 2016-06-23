@@ -372,12 +372,12 @@ header li.drapeu img {
     color:green;
 }
 .titre{
-    width: 34%;
+    width: 20%;
 }
 .tronche,
 .personne,
 .prix {
-    width: 22%;
+    width: 20%;
     text-align: right;
 }
 

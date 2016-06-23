@@ -56,3 +56,23 @@ img.trombi {
 table a{
 	color: #6D1907;
 }
+
+@media only screen and (max-width : 780px) {
+
+	.mainHeader nav ul {
+		width: 460px;
+	}
+	.mainHeader nav {
+		height: 84px;
+	}
+}
+
+@media only screen and (max-width : 473px) {
+
+	.mainHeader nav ul {
+		width: 265px;
+	}
+	.mainHeader nav {
+		height: 124px;
+	}
+}

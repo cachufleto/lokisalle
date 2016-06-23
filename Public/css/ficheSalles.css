@@ -160,6 +160,14 @@
 
 }
 
+@media only screen and (max-width: 780px){
+    #fiche .photo {
+        float: left;
+        width: 430px;
+    }
+
+}
+
 @media only screen and (max-width : 473px) {
 
     #fiche {
@@ -173,6 +181,11 @@
         /* margin-bottom: 60px; */
     }
 
+    #fiche .photo {
+        float: left;
+        width: 294px;
+    }
+
     #fiche .photo img{
         width: 295px;
         height: auto;
@@ -184,5 +197,8 @@
         width: 250px;
     }
 
-
+    #fiche .reserver {
+        height: 54px;
+    }
 }
+

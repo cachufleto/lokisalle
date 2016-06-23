@@ -26,7 +26,7 @@ header.mainHeader {
 }
 
 .mainHeader nav {
-    height: 80px;
+    height: 84px;
 }
 
 .mainHeader nav ul,
@@ -71,5 +71,10 @@ header.mainHeader {
 /* ***************************
    ===== Formulaire =====
    *************************** */
-
+    #formulaire {
+        padding: 13px;
+        display: block;
+        width: 260px;
+        margin-left: calc(50% - 135px );
+    }
 }

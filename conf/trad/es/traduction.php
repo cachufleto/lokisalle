@@ -249,3 +249,8 @@ $_trad['validerInscriptionMail'] = $_trad['-bienvenu'] . "Por Favor valide su in
 $_trad['votreCompteLokisalle'] = "Su cuenta en Lokisalle";
 $_trad['votreReservation'] = "<h4>Su Reserva en Linea:</h4>";
 $_trad['vousNePouvezPasVousSupprimerVousMeme'] = "<span class='alert'>No puede usted suprimirse a si mismo!!</span>";
+$_trad['salle'] = 'Sala';
+$_trad['client'] = 'Cliente';
+$_trad['dateReservee'] = 'Fecha de reserva';
+$_trad['horarirePers'] = 'Horario / Pers.';
+$_trad['prix'] = 'Precio';

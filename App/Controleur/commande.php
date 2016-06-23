@@ -42,3 +42,12 @@ function commandes()
 
     include_once VUE . 'commande/commandes.tpl.php';
 }
+
+function backOff_gestionCommandes()
+{
+    $nav = 'commande';
+    $_trad = setTrad();
+    $listePrix = listeProduitsGestionCommandes();
+
+    include_once VUE . 'commande/gestionCommandes.tpl.php';
+}

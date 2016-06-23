@@ -672,7 +672,7 @@ function listeProduitsReservation(array $data)
 
                 $ref['produit'] = $produit;
                 $ref['reservee'] = $reservee;
-                $ref['membre'] = ($reservee AND $disponible[$info['id_plagehoraire']] == $_SESSION['user']['id'])?
+                $ref['membre'] = (isset($_SESSION['user']['id']) && $reservee AND $disponible[$info['id_plagehoraire']] == $_SESSION['user']['id'])?
                                     true : false;
                 $ref['checked'] = $checked;
                 $disponibilite[$produit['libelle']][$key]=$ref;

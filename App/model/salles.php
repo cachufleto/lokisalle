@@ -91,6 +91,12 @@ function selectSalleId($_id)
 
 function selectSalleReserves($date, $id)
 {
+    $sql = "SELECT tranche FROM commandes WHERE date_reserve = '$date' AND id_salle = $id";
+    return executeRequete($sql);
+}
+
+function selectSalleReservesMembres($date, $id)
+{
     $sql = "SELECT c.tranche, r.id_membre
             FROM commandes c, reservations r
             WHERE c.id_salle = $id

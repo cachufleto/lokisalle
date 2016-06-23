@@ -38,6 +38,21 @@ function listeProduitsCommandes()
     return $listePrix;
 }
 
+function listeProduitsGestionCommandes()
+{
+    $listePrix = [];
+    $salles = selectProduitsGestionCommandes();
+    $Commandes = $salles->fetch_assoc();
+
+    if(isset($Commandes) && !empty($Commandes)){
+        while($Commandes = $salles->fetch_assoc()){
+            $listePrix[] = $Commandes;
+        }
+    }
+
+    return $listePrix;
+}
+
 function listeProduitsPrixFacture($date, $data)
 {
     $_listeReservation = $_reserve = [];

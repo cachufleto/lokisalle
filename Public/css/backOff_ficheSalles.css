@@ -7,3 +7,19 @@
     width: 250px;
     height: auto;
 }
+
+@media only screen and (max-width: 780px){
+    .champs img {
+        width: 130px;
+        height: auto;
+    }
+
+}
+
+@media only screen and (max-width : 473px) {
+
+    .champs img {
+        width: 130px;
+        height: auto;
+    }
+}
