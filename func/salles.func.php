@@ -857,7 +857,7 @@ function orderSalles()
 function reservationSalles()
 {
     if (!empty($_POST)) {
-        if (isset($_POST['reserver'])) {
+        if (isset($_POST['reserver']) && $_SESSION['dateTimeOk']) {
             if(isset($_POST['prix'])) {
                 $_SESSION['panier'][$_SESSION['date']][$_POST['id']] = isset($_POST['prix']) ? $_POST['prix'] : [];
             } else {
@@ -867,7 +867,7 @@ function reservationSalles()
             unset($_SESSION['panier'][$_SESSION['date']][$_POST['id']]);
         }
     } else if (!empty($_GET)) {
-        if (isset($_GET['reserver'])) {
+        if (isset($_GET['reserver']) && $_SESSION['dateTimeOk']) {
             if(!(utilisateurConnecte())){
                 return false;
             }
@@ -877,7 +877,6 @@ function reservationSalles()
             unset($_SESSION['panier'][$_SESSION['date']][$_GET['enlever']]);
         }
     }
-
     return true;
 }
 

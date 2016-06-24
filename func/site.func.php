@@ -361,7 +361,7 @@ function session()
     }
 
 
-    $_SESSION['date'] = controldate();
+    controldate();
 
 
     if(!isset($_SESSION['numpersonne'])){

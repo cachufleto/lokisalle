@@ -39,7 +39,9 @@ foreach($listePrix as $reservee=>$produit){
     $row = (($t1 < time())? (($t1 > (time() - 60*60*24))? 'now_' : 'old_') : 'row_') .($i%2);
 
     $_liste .= "<div class='ligne $row'>
-                    <a href='?nav=ficheSalles&id={$produit['id_salle']}'>
+                    <a href='?nav=ficheSalles&id={$produit['id_salle']}&reservee=".
+                    date('Y-m-d', $t1)
+                    ."'>
                     <div class='titre'>{$produit['titre']}</div>
                     <div class='tronche'>".
                     date('d M Y ', $t1)

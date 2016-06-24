@@ -27,12 +27,13 @@ if(!empty($salle['produits']['affiche'])){
     foreach($salle['produits']['disponibilite'] as $key=>$data){
         $i++;
         $prix_salle .= "<tr><td>{$_trad['value'][$key]}</td>";
+
         foreach($data as $indice => $info ){
 
             $ref = ($info['reservee'])?
-                (($info['membre'])? $_trad['RESERVEE'] : $_trad['INDISPONIBLE']) :
-                number_format($info['produit']['prix'], 2). "€
-                    <input type='radio' name='prix[$i]' value='$indice' {$info['checked']}>";
+                (($info['membre'])? $_trad['RESERVEE'] : (($_SESSION['dateTimeOk'])? $_trad['INDISPONIBLE']:"---")) :
+                (($_SESSION['dateTimeOk'])? number_format($info['produit']['prix'], 2).
+                    "€ <input type='radio' name='prix[$i]' value='$indice' {$info['checked']}>" : "---");
 
             $liteReservation .= ($info['checked'])? "<div class='tronche'>{$_trad['value'][$info['produit']['libelle']]} :</div>
                                     <div class='personne'>{$info['produit']['num']} pers.</div>

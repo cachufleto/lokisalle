@@ -165,3 +165,4 @@ function generationProduitsPrixFacture($date, $data)
     }
     return $liste;
 }
+

@@ -328,19 +328,25 @@ function reperDate($date)
 function controldate()
 {
 	$control = $_SESSION['date'];
-	if(isset($_POST['date'])){
+	$__date = isset($_POST['date'])? $_POST['date'] : (isset($_GET['reservee'])? $_GET['reservee'] : false );
+	if($__date){
 		// contrôl de la date inferieur à la date du jour
 		$dateMin = time()+(60*60*24);
 		$now = mktime(0,0,0,date('m', $dateMin),date('d', $dateMin),date('Y', $dateMin));
 		$control = date('Y-m-d', $dateMin);
-		if(preg_match('#^20(1|2)[0-9]-(0|1)[0-9]-[0-3][0-9]#' , $_POST['date'])){
-			$date = explode('-', $_POST['date']);
+		if(preg_match('#^20(1|2)[0-9]-(0|1)[0-9]-[0-3][0-9]#' , $__date)){
+			$date = explode('-', $__date);
 			_debug($date, '$date');
 			if(checkdate($date[1],$date[2],$date[0])){
 				$timePost = mktime(0,0,0,$date[1],$date[2],$date[0]);
-				if($timePost > $now){
-					$control = $_POST['date'];
+				if(isset($_POST['date']) AND $timePost > $now){
+					$_SESSION['date'] =  $__date;
+				} else {
+					$_SESSION['date'] = $__date;
 				}
+
+				$_SESSION['dateTimeOk'] = ($timePost > $now)? true : false;
+
 			}
 		}
 	}
