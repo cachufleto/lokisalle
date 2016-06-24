@@ -43,9 +43,9 @@ foreach($listePrix as $reservee=>$produit){
                     <div class='titre'>{$produit['titre']}</div>
                     <div class='membre'>{$produit['prenom']} {$produit['nom']}</div>
                     <div class='tronche'>".
-                    date('d M Y ', $t1)
+                        date('d M Y ', $t1)
                     ."</div>
-                    <div class='personne'>{$_trad['value'][$_prixPlage[$produit['tranche']]['libelle']]} / {$produit['capacitee']} pers.</div>
+                    <div class='personne'>{$_prixPlage[$produit['tranche']]['horaire']} / {$produit['capacitee']} pers.</div>
                     <div class='prix'>{$produit['prix']}€</div>
                     </a>
                 </div>";

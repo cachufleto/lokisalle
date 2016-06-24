@@ -18,6 +18,11 @@ $_prixPlage[3]['libelle'] = 'soiree';
 $_prixPlage[2]['libelle'] = 'journee';
 $_prixPlage[1]['libelle'] = 'matinee';
 
+$_prixPlage[4]['horaire'] = '08:00h - 12:00h';
+$_prixPlage[3]['horaire'] = '13:00h - 17:00h';
+$_prixPlage[2]['horaire'] = '18:00h - 22:00h';
+$_prixPlage[1]['horaire'] = '22:00h - 05:00h';
+
 $_tranches = [];
 $_tranches['T1'][1] = 1;
 
